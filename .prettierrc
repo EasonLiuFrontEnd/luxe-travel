@@ -1,0 +1,21 @@
+{
+  "singleQuote": true,
+  "semi": false,
+  "jsxSingleQuote": true,
+  "useEditorConfig": false,
+  "printWidth": 80,
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "trailingComma": "all",
+  "overrides": [
+    {
+      "files": "*.d.ts",
+      "options": {
+        "importOrderParserPlugins": [
+          "[\"typescript\", { \"dts\": true }]",
+          "decorators"
+        ]
+      }
+    }
+  ]
+}

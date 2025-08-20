@@ -1,0 +1,9 @@
+/dist
+/coverage
+/.vscode
+/node_modules
+yarn.lock
+/.github
+.eslintignore
+.prettierignore
+.DS_Store
