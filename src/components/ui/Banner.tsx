@@ -3,7 +3,7 @@
 import { useMemo } from 'react'
 import { useScrollContext } from '@/context/ScrollContext'
 import { APP_CONFIG } from '@/lib/config'
-import Button from './Button'
+import { Button } from './Button'
 import type { IBanner } from '@/types/components'
 
 const Banner = ({ logoProgress: propLogoProgress }: IBanner) => {
@@ -30,7 +30,7 @@ const Banner = ({ logoProgress: propLogoProgress }: IBanner) => {
           <p className='text-xl md:text-2xl text-gray-600 mb-8'>
             專業團隊為您打造獨一無二的旅遊體驗，讓每一刻都成為珍貴回憶
           </p>
-          <Button variant='primary' size='lg'>
+          <Button variant='default' size='lg'>
             立即諮詢行程
           </Button>
         </div>

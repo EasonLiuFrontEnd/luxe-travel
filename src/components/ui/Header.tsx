@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Logo from './Logo'
 import Navigation from './Navigation'
-import Button from './Button'
+import { Button } from './Button'
 import type { IHeader } from '@/types/components'
 
 const Header = ({
@@ -43,7 +43,7 @@ const Header = ({
               />
 
               {isConsultButtonVisible && (
-                <Button variant='primary' size='sm'>
+                <Button variant='default' size='sm'>
                   諮詢專員
                 </Button>
               )}

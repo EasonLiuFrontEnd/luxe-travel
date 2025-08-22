@@ -1,5 +1,5 @@
 import { POPULAR_DESTINATIONS } from '@/lib/constants'
-import Button from './Button'
+import { Button } from './Button'
 
 const PopularDestinations = () => {
   return (

@@ -1,0 +1,240 @@
+/* 旅遊諮詢表單專用樣式 */
+
+/* === 響應式設計增強 === */
+
+/* 觸控設備優化 */
+.touch-device .travel-inquiry-form button,
+.touch-device .travel-inquiry-form input[type='checkbox'],
+.touch-device .travel-inquiry-form input[type='radio'] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.touch-device .travel-inquiry-form label {
+  padding: 12px;
+  cursor: pointer;
+}
+
+/* 移動設備特定樣式 */
+.mobile-device .travel-inquiry-form {
+  padding: 16px;
+}
+
+.mobile-device .travel-inquiry-form .card {
+  margin: 0 -16px;
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+}
+
+.mobile-device .travel-inquiry-form .grid-cols-2 {
+  grid-template-columns: 1fr;
+}
+
+.mobile-device .travel-inquiry-form .grid-cols-3 {
+  grid-template-columns: 1fr;
+}
+
+.mobile-device .travel-inquiry-form .grid-cols-4 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* 桌面設備優化 */
+.desktop-device .travel-inquiry-form .hero-section {
+  min-height: 600px;
+}
+
+.desktop-device .travel-inquiry-form .form-container {
+  max-width: 1200px;
+}
+
+/* === 特殊響應式斷點 === */
+
+/* 超小屏幕 (320px - 480px) */
+@media screen and (max-width: 480px) {
+  .travel-inquiry-form .hero-section {
+    min-height: 300px;
+  }
+
+  .travel-inquiry-form .hero-section h1 {
+    font-size: 2rem;
+  }
+
+  .travel-inquiry-form .hero-section p {
+    font-size: 0.875rem;
+  }
+
+  .travel-inquiry-form .card {
+    padding: 1rem;
+  }
+
+  .travel-inquiry-form .space-y-8 > * + * {
+    margin-top: 1.5rem;
+  }
+}
+
+/* 小屏幕 (481px - 768px) */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .travel-inquiry-form .hero-section {
+    min-height: 400px;
+  }
+
+  .travel-inquiry-form .grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 中等屏幕 (769px - 1024px) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .travel-inquiry-form .hero-section {
+    min-height: 500px;
+  }
+
+  .travel-inquiry-form .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 大屏幕 (1025px+) */
+@media screen and (min-width: 1025px) {
+  .travel-inquiry-form .hero-section {
+    min-height: 600px;
+  }
+
+  .travel-inquiry-form .form-container {
+    padding: 3rem;
+  }
+}
+
+/* === 列印樣式 === */
+@media print {
+  .travel-inquiry-form .hero-section {
+    display: none;
+  }
+
+  .travel-inquiry-form .card {
+    box-shadow: none;
+    border: 2px solid #000000;
+  }
+
+  .travel-inquiry-form button {
+    display: none;
+  }
+
+  .travel-inquiry-form {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* === 互動狀態增強 === */
+
+/* 焦點狀態 */
+.travel-inquiry-form *:focus-visible {
+  outline: 3px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* 錯誤狀態 */
+.travel-inquiry-form [aria-invalid='true'] {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.travel-inquiry-form [aria-invalid='true']:focus {
+  outline-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+/* 成功狀態 */
+.travel-inquiry-form .success-state {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* 載入狀態 */
+.travel-inquiry-form .loading-state {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* 動畫效果 */
+.travel-inquiry-form .fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.travel-inquiry-form .slide-up {
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* === 特殊元素樣式 === */
+
+/* 年齡分組卡片 */
+.travel-inquiry-form .age-group-card {
+  transition: all 0.2s ease-in-out;
+}
+
+.travel-inquiry-form .age-group-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 檢查框和單選框增強 */
+.travel-inquiry-form input[type='checkbox'],
+.travel-inquiry-form input[type='radio'] {
+  transform: scale(1.1);
+}
+
+.travel-inquiry-form input[type='checkbox']:focus,
+.travel-inquiry-form input[type='radio']:focus {
+  transform: scale(1.2);
+}
+
+/* 提交按鈕特殊效果 */
+.travel-inquiry-form .submit-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.travel-inquiry-form .submit-button:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.6s,
+    height 0.6s;
+}
+
+.travel-inquiry-form .submit-button:active:before {
+  width: 300px;
+  height: 300px;
+}
