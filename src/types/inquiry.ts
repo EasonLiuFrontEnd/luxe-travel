@@ -1,0 +1,290 @@
+import { z } from 'zod'
+
+type DeepPartial<T> = T extends object
+  ? {
+      [P in keyof T]?: DeepPartial<T[P]>
+    }
+  : T
+
+export type TravelType =
+  | 'europe-free'
+  | 'chartered'
+  | 'deluxe-group'
+  | 'theme'
+  | 'mitsui-cruise'
+export type Gender = 'ms' | 'mr'
+export type ContactMethod = 'any' | 'phone' | 'line' | 'email'
+export type ContactSource =
+  | 'triumph-member'
+  | 'line'
+  | 'facebook'
+  | 'search'
+  | 'media'
+  | 'other'
+export type BudgetRange = '10-12' | '12-15' | '15-20' | '20+'
+export type EuropeanRegion = 'western' | 'central' | 'southern' | 'northern'
+export type Country =
+  | 'uk'
+  | 'france'
+  | 'ireland'
+  | 'netherlands'
+  | 'belgium'
+  | 'luxembourg'
+  | 'germany'
+  | 'austria'
+  | 'switzerland'
+  | 'czech'
+  | 'hungary'
+  | 'baltic'
+  | 'italy'
+  | 'spain'
+  | 'portugal'
+  | 'greece'
+  | 'croatia'
+  | 'nordic'
+
+export interface BasicInfo {
+  travelType: TravelType
+  contactName: string
+  gender: Gender
+  phoneNumber: string
+  lineId?: string
+  contactMethod: ContactMethod
+  contactTime: string
+  contactSource: ContactSource
+  otherSource?: string
+}
+
+export interface BudgetDestination {
+  budget: BudgetRange
+  countries: Country[]
+}
+
+export interface DetailedRequirements {
+  adultCount: number
+  childCount: number
+  travelDays: number
+  departureDate: string
+  wishlist?: string
+  specialRequirements?: string
+}
+
+export interface TravelInquiryFormData {
+  basicInfo: BasicInfo
+  budgetDestination: BudgetDestination
+  detailedRequirements: DetailedRequirements
+}
+
+const travelTypeSchema = z.enum(
+  ['europe-free', 'chartered', 'deluxe-group', 'theme', 'mitsui-cruise'],
+  {
+    error: '請選擇旅遊形式',
+  },
+)
+
+const genderSchema = z.enum(['ms', 'mr'], {
+  error: '請選擇稱謂',
+})
+
+const contactMethodSchema = z.enum(['any', 'phone', 'line', 'email'], {
+  error: '請選擇偏好聯絡方式',
+})
+
+const contactSourceSchema = z.enum(
+  ['triumph-member', 'line', 'facebook', 'search', 'media', 'other'],
+  {
+    error: '請選擇得知管道',
+  },
+)
+
+const budgetRangeSchema = z.enum(['10-12', '12-15', '15-20', '20+'], {
+  error: '請選擇每人預算',
+})
+
+const countrySchema = z.enum(
+  [
+    'uk',
+    'france',
+    'ireland',
+    'netherlands',
+    'belgium',
+    'luxembourg',
+    'germany',
+    'austria',
+    'switzerland',
+    'czech',
+    'hungary',
+    'baltic',
+    'italy',
+    'spain',
+    'portugal',
+    'greece',
+    'croatia',
+    'nordic',
+  ],
+  {
+    error: '請選擇有效的國家',
+  },
+)
+
+const basicInfoSchema = z.object({
+  travelType: travelTypeSchema,
+  contactName: z.string().min(1, '請輸入聯絡人姓名'),
+  gender: genderSchema,
+  phoneNumber: z
+    .string()
+    .regex(/^09\d{8}$/, '請輸入有效的台灣手機號碼格式 (09xxxxxxxx)'),
+  lineId: z.string().optional(),
+  contactMethod: contactMethodSchema,
+  contactTime: z.string().min(1, '請填入您方便的聯繫時段'),
+  contactSource: contactSourceSchema,
+  otherSource: z.string().optional(),
+})
+
+const budgetDestinationSchema = z.object({
+  budget: budgetRangeSchema,
+  countries: z.array(countrySchema).min(1, '請至少選擇一個國家'),
+})
+
+const detailedRequirementsSchema = z.object({
+  adultCount: z
+    .number()
+    .min(1, '大人數量必須至少為 1')
+    .max(20, '大人數量不能超過 20'),
+  childCount: z
+    .number()
+    .min(0, '孩童數量不能為負數')
+    .max(20, '孩童數量不能超過 20'),
+  travelDays: z
+    .number()
+    .min(1, '旅遊天數必須至少為 1')
+    .max(60, '旅遊天數不能超過 60'),
+  departureDate: z.string().min(1, '請選擇預計出發日期'),
+  wishlist: z.string().optional(),
+  specialRequirements: z.string().optional(),
+})
+
+export const travelInquiryFormSchema = z.object({
+  basicInfo: basicInfoSchema,
+  budgetDestination: budgetDestinationSchema,
+  detailedRequirements: detailedRequirementsSchema,
+})
+
+export const defaultTravelInquiryFormData: DeepPartial<TravelInquiryFormData> =
+  {
+    basicInfo: {
+      travelType: undefined,
+      contactName: '',
+      gender: undefined,
+      phoneNumber: '',
+      lineId: '',
+      contactMethod: undefined,
+      contactTime: '',
+      contactSource: undefined,
+      otherSource: '',
+    },
+    budgetDestination: {
+      budget: undefined,
+      countries: [],
+    },
+    detailedRequirements: {
+      adultCount: 1,
+      childCount: 0,
+      travelDays: 1,
+      departureDate: '',
+      wishlist: '',
+      specialRequirements: '',
+    },
+  }
+
+export const TRAVEL_TYPE_OPTIONS = [
+  { value: 'europe-free', label: '歐洲自由行' },
+  { value: 'chartered', label: '包車旅遊' },
+  { value: 'deluxe-group', label: '精緻團體行' },
+  { value: 'theme', label: '主題旅遊' },
+  { value: 'mitsui-cruise', label: '三井郵輪' },
+] as const
+
+export const GENDER_OPTIONS = [
+  { value: 'ms', label: '小姐' },
+  { value: 'mr', label: '先生' },
+] as const
+
+export const CONTACT_METHOD_OPTIONS = [
+  { value: 'any', label: '都可以' },
+  { value: 'phone', label: '手機' },
+  { value: 'line', label: 'LINE' },
+  { value: 'email', label: 'Email' },
+] as const
+
+export const CONTACT_SOURCE_OPTIONS = [
+  { value: 'triumph-member', label: '我是凱旋集團會員' },
+  { value: 'line', label: 'LINE訊息' },
+  { value: 'facebook', label: 'FB訊息' },
+  { value: 'search', label: '網路搜尋' },
+  { value: 'media', label: '廣告' },
+  { value: 'other', label: '其他' },
+] as const
+
+export const BUDGET_OPTIONS = [
+  { value: '10-12', label: '10-12萬' },
+  { value: '12-15', label: '12-15萬' },
+  { value: '15-20', label: '15-20萬' },
+  { value: '20+', label: '20萬以上' },
+] as const
+
+export const WESTERN_EUROPE_COUNTRIES = [
+  { value: 'uk', label: '英國' },
+  { value: 'france', label: '法國' },
+  { value: 'ireland', label: '愛爾蘭' },
+  { value: 'netherlands', label: '荷蘭' },
+  { value: 'belgium', label: '比利時' },
+  { value: 'luxembourg', label: '盧森堡' },
+] as const
+
+export const CENTRAL_EUROPE_COUNTRIES = [
+  { value: 'germany', label: '德國' },
+  { value: 'austria', label: '奧地利' },
+  { value: 'switzerland', label: '瑞士' },
+  { value: 'czech', label: '捷克' },
+  { value: 'hungary', label: '匈牙利' },
+  { value: 'baltic', label: '波羅地海三小國' },
+] as const
+
+export const SOUTHERN_EUROPE_COUNTRIES = [
+  { value: 'italy', label: '義大利' },
+  { value: 'spain', label: '西班牙' },
+  { value: 'portugal', label: '葡萄牙' },
+  { value: 'greece', label: '希臘' },
+  { value: 'croatia', label: '克羅埃西亞' },
+] as const
+
+export const NORTHERN_EUROPE_COUNTRIES = [
+  { value: 'nordic', label: '北歐' },
+] as const
+
+export const EUROPEAN_REGIONS = {
+  western: {
+    label: '西歐',
+    countries: WESTERN_EUROPE_COUNTRIES,
+  },
+  central: {
+    label: '中東歐',
+    countries: CENTRAL_EUROPE_COUNTRIES,
+  },
+  southern: {
+    label: '南歐',
+    countries: SOUTHERN_EUROPE_COUNTRIES,
+  },
+  northern: {
+    label: '北歐',
+    countries: NORTHERN_EUROPE_COUNTRIES,
+  },
+} as const
+
+export const ALL_COUNTRIES = [
+  ...WESTERN_EUROPE_COUNTRIES,
+  ...CENTRAL_EUROPE_COUNTRIES,
+  ...SOUTHERN_EUROPE_COUNTRIES,
+  ...NORTHERN_EUROPE_COUNTRIES,
+] as const

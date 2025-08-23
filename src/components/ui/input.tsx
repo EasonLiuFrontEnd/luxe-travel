@@ -6,9 +6,22 @@ function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
       type={type}
       data-slot='input'
       className={cn(
-        'file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-        'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
-        'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
+        // Base Figma-matching styles
+        'flex w-full bg-transparent outline-none transition-colors',
+        // Figma-specific border (bottom only) and spacing
+        'border-0 border-b border-[rgba(56,56,65,0.7)] px-0 py-3',
+        // Figma typography
+        'font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950',
+        // Figma placeholder color
+        'placeholder:text-[#b7b8c2] placeholder:font-genseki-body-m-regular',
+        // Focus states
+        'focus:border-figma-primary-950 focus:outline-none',
+        // File input styling
+        'file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-figma-primary-950',
+        // Disabled state
+        'disabled:cursor-not-allowed disabled:opacity-50',
+        // Error state
+        'aria-invalid:border-figma-function-alert',
         className,
       )}
       {...props}

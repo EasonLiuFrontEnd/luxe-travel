@@ -1,17 +1,17 @@
 export { TravelInquiryForm } from './TravelInquiryForm'
 export { HeroSection } from './HeroSection'
-export { TravelPreferencesSection } from './TravelPreferencesSection'
-export { PersonalInfoSection } from './PersonalInfoSection'
-export { ContactInfoSection } from './ContactInfoSection'
+export { BasicInfoSection } from './BasicInfoSection'
+export { BudgetDestinationSection } from './BudgetDestinationSection'
+export { DetailRequirementsSection } from './DetailRequirementsSection'
 
 export type { TravelInquiryFormProps } from './TravelInquiryForm'
 
 export type { HeroSectionProps } from './HeroSection'
 
-export type { TravelPreferencesSectionProps } from './TravelPreferencesSection'
+export type { BasicInfoSectionProps } from './BasicInfoSection'
 
-export type { PersonalInfoSectionProps } from './PersonalInfoSection'
+export type { BudgetDestinationSectionProps } from './BudgetDestinationSection'
 
-export type { ContactInfoSectionProps } from './ContactInfoSection'
+export type { DetailRequirementsSectionProps } from './DetailRequirementsSection'
 
 export { TravelInquiryForm as default } from './TravelInquiryForm'

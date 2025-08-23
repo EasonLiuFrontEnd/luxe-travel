@@ -5,7 +5,22 @@ function Textarea({ className, ...props }: React.ComponentProps<'textarea'>) {
     <textarea
       data-slot='textarea'
       className={cn(
-        'border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
+        // Base Figma-matching styles
+        'flex w-full bg-transparent outline-none transition-colors field-sizing-content',
+        // Figma-specific border (bottom only) and spacing
+        'border-0 border-b border-[rgba(56,56,65,0.7)] px-0 py-3 min-h-16',
+        // Figma typography
+        'font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950',
+        // Figma placeholder color
+        'placeholder:text-[#b7b8c2] placeholder:font-genseki-body-m-regular',
+        // Focus states
+        'focus:border-figma-primary-950 focus:outline-none',
+        // Disabled state
+        'disabled:cursor-not-allowed disabled:opacity-50',
+        // Error state
+        'aria-invalid:border-figma-function-alert',
+        // Resize behavior
+        'resize-none',
         className,
       )}
       {...props}

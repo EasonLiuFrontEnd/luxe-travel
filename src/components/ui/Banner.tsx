@@ -19,8 +19,8 @@ const Banner = ({ logoProgress: propLogoProgress }: IBanner) => {
 
   return (
     <div
-      className='relative bg-gradient-to-br from-gray-100 via-white to-gray-50 min-h-screen banner-dynamic-padding'
-      style={{ paddingTop: dynamicPadding }}
+      className='relative bg-gradient-to-br from-gray-100 via-white to-gray-50 min-h-screen banner-dynamic-padding pt-[var(--dynamic-padding)]'
+      style={{ '--dynamic-padding': dynamicPadding } as React.CSSProperties}
     >
       <div className='relative z-10 h-full flex flex-col justify-center items-center text-center px-4 py-20'>
         <div className='max-w-4xl mx-auto'>

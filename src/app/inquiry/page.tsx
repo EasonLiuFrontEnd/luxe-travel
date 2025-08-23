@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { TravelInquiryForm } from '@/components/Inquiry'
-import { TravelInquiryFormData } from '@/types/travel-inquiry'
+import { TravelInquiryFormData } from '@/types/inquiry'
 
 export default function TravelInquiryPage() {
   const [isLoading, setIsLoading] = useState(false)
