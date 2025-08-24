@@ -1,13 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { TravelInquiryForm } from '@/components/Inquiry'
-import { TravelInquiryFormData } from '@/types/inquiry'
+import { TravelInquiryForm } from '@/app/inquiry/components'
+import { TTravelInquiryFormData } from '@/types/inquiry'
 
 export default function TravelInquiryPage() {
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleFormSubmit = async (data: TravelInquiryFormData) => {
+  const handleFormSubmit = async (data: TTravelInquiryFormData) => {
     setIsLoading(true)
 
     try {

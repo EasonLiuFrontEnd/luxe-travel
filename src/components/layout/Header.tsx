@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import Logo from './Logo'
 import Navigation from './Navigation'
-import { Button } from './Button'
-import type { IHeader } from '@/types/components'
+import { Button } from '../ui/Button'
+import type { THeader } from '@/types/components'
 
 const Header = ({
   isHomePage,
@@ -13,7 +13,7 @@ const Header = ({
   isConsultButtonVisible = false,
   headerBehavior = 'fixed',
   hasTransparentHeader = false,
-}: IHeader) => {
+}: THeader) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const headerClasses = [

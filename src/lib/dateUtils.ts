@@ -3,7 +3,6 @@ export function formatDateForDisplay(dateString: string): string {
 
   const date = new Date(dateString)
 
-  // 檢查日期是否有效
   if (isNaN(date.getTime())) return ''
 
   const year = date.getFullYear()
@@ -18,9 +17,7 @@ export function formatDateForInput(dateString: string): string {
 
   const date = new Date(dateString)
 
-  // 檢查日期是否有效
   if (isNaN(date.getTime())) return ''
 
-  // 返回 YYYY-MM-DD 格式
   return date.toISOString().split('T')[0]
 }

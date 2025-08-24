@@ -3,10 +3,10 @@
 import { useMemo } from 'react'
 import { useScrollContext } from '@/context/ScrollContext'
 import { APP_CONFIG } from '@/lib/config'
-import { Button } from './Button'
-import type { IBanner } from '@/types/components'
+import { Button } from '../ui/Button'
+import type { TBanner } from '@/types/components'
 
-const Banner = ({ logoProgress: propLogoProgress }: IBanner) => {
+const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
   const { logoProgress: contextLogoProgress } = useScrollContext()
 
   const logoProgress = propLogoProgress ?? contextLogoProgress

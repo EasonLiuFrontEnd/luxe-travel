@@ -1,10 +1,10 @@
 'use client'
 
-export interface HeroSectionProps {
+export type THeroSectionProps = {
   className?: string
 }
 
-export function HeroSection({ className = '' }: HeroSectionProps) {
+export const HeroSection = ({ className = '' }: THeroSectionProps) => {
   return (
     <section className={`relative overflow-hidden h-80 ${className}`}>
       <div className='absolute inset-0 bg-cover bg-center bg-no-repeat bg-[url(https://images.unsplash.com/photo-1565552645632-d725f8bfc19f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80)]' />

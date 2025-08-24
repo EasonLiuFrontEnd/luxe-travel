@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import type { ILogo } from '@/types/components'
+import type { TLogo } from '@/types/components'
 
-const Logo = ({ scale = 0.6 }: ILogo) => {
+const Logo = ({ scale = 0.6 }: TLogo) => {
   return (
     <Link href='/'>
       <div

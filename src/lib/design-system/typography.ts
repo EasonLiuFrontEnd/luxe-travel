@@ -5,7 +5,6 @@ export const typography = {
     luxurious: ['Luxurious Script', 'cursive'],
   },
 
-  // Noto Serif TC styles
   notoSerif: {
     h1Bold: {
       fontFamily: 'Noto Serif TC',
@@ -75,7 +74,6 @@ export const typography = {
     },
   },
 
-  // GenSekiGothic2 JP styles
   genSeki: {
     h5Medium: {
       fontFamily: 'GenSekiGothic2 JP',
@@ -139,7 +137,6 @@ export const typography = {
     },
   },
 
-  // Luxurious Script styles
   luxurious: {
     decoRegular: {
       fontFamily: 'Luxurious Script',

@@ -16,22 +16,17 @@ const luxuriousScript = Luxurious_Script({
   display: 'swap',
 })
 
-interface IRootLayout {
+type TRootLayout = {
   children: React.ReactNode
 }
 
-const RootLayout = ({ children }: IRootLayout) => {
+const RootLayout = ({ children }: TRootLayout) => {
   return (
     <html
       lang='zh-TW'
       className={`${notoSerifTC.variable} ${luxuriousScript.variable}`}
     >
-      <head>
-        <link
-          href='https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap'
-          rel='stylesheet'
-        />
-      </head>
+      <head />
       <body>
         <ClientLayout>{children}</ClientLayout>
       </body>

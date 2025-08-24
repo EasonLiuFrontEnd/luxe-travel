@@ -1,79 +1,55 @@
 'use client'
-
 import { Control } from 'react-hook-form'
-
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  FormDescription,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import { Label } from '@/components/ui/label'
-
+} from '@/components/ui/Form'
+import { Input } from '@/components/ui/Input'
+import { Label } from '@/components/ui/Label'
 import {
-  TravelInquiryFormData,
+  FormSection,
+  RadioFieldGroup,
+  RadioGroup,
+  RadioGroupItem,
+  RequiredLabel,
+} from '@/components/ui'
+import {
+  TTravelInquiryFormData,
   TRAVEL_TYPE_OPTIONS,
   GENDER_OPTIONS,
   CONTACT_METHOD_OPTIONS,
   CONTACT_SOURCE_OPTIONS,
 } from '@/types/inquiry'
-
-export interface BasicInfoSectionProps {
-  control: Control<TravelInquiryFormData>
+export type TBasicInfoSectionProps = {
+  control: Control<TTravelInquiryFormData>
 }
-
-export function BasicInfoSection({ control }: BasicInfoSectionProps) {
+export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
   return (
-    <div className='flex flex-col self-stretch bg-white rounded-2xl w-full p-8 gap-4'>
-      <div className='flex flex-col gap-1'>
-        <h3 className='font-noto-serif-h5-bold text-[18px] text-figma-primary-950'>
-          基本聯絡資訊
-        </h3>
-      </div>
-
+    <FormSection title='基本聯絡資訊'>
       <div className='flex flex-col gap-6 w-full'>
-        {/* 旅遊形式 - 100% 一行 */}
         <FormField
           control={control}
           name='basicInfo.travelType'
           render={({ field }) => (
             <FormItem className='w-full'>
-              <FormLabel className='font-noto-serif-bold text-[18px] leading-[1.5] text-figma-primary-950'>
-                旅遊形式 <span className='text-figma-function-alert'>*</span>
-              </FormLabel>
+              <RequiredLabel required>旅遊形式</RequiredLabel>
               <FormControl>
                 <div className='box-border flex gap-4 items-center justify-start px-0 py-3'>
-                  <RadioGroup
-                    onValueChange={field.onChange}
+                  <RadioFieldGroup
+                    options={TRAVEL_TYPE_OPTIONS}
                     value={field.value}
-                    className='flex gap-4 items-center'
-                  >
-                    {TRAVEL_TYPE_OPTIONS.map((type) => (
-                      <Label
-                        key={type.value}
-                        htmlFor={`travel-type-${type.value}`}
-                        className='flex items-center gap-1 font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950 cursor-pointer'
-                      >
-                        <RadioGroupItem
-                          value={type.value}
-                          id={`travel-type-${type.value}`}
-                        />
-                        {type.label}
-                      </Label>
-                    ))}
-                  </RadioGroup>
+                    onValueChange={field.onChange}
+                    name='travel-type'
+                  />
                 </div>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
-        {/* 聯絡人 - 100% 寬度，姓名和性別同一行 */}
         <div className='w-full'>
           <div className='flex flex-wrap gap-0.5 items-center justify-start mb-1'>
             <div className='flex gap-1 items-center justify-start'>
@@ -85,7 +61,6 @@ export function BasicInfoSection({ control }: BasicInfoSectionProps) {
               </div>
             </div>
           </div>
-
           <div className='w-full relative'>
             <div className='flex gap-2.5 items-center justify-start px-0 py-3 w-full border-b border-[rgba(56,56,65,0.7)]'>
               <FormField
@@ -104,7 +79,6 @@ export function BasicInfoSection({ control }: BasicInfoSectionProps) {
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={control}
                 name='basicInfo.gender'
@@ -139,8 +113,6 @@ export function BasicInfoSection({ control }: BasicInfoSectionProps) {
             </div>
           </div>
         </div>
-
-        {/* 手機號碼 + LINE ID - 同一行 */}
         <div className='grid grid-cols-2 gap-4 w-full'>
           <FormField
             control={control}
@@ -163,7 +135,6 @@ export function BasicInfoSection({ control }: BasicInfoSectionProps) {
               </FormItem>
             )}
           />
-
           <FormField
             control={control}
             name='basicInfo.lineId'
@@ -189,8 +160,6 @@ export function BasicInfoSection({ control }: BasicInfoSectionProps) {
             )}
           />
         </div>
-
-        {/* 偏好聯絡方式 - 100% 一行，水平排列 */}
         <FormField
           control={control}
           name='basicInfo.contactMethod'
@@ -225,8 +194,6 @@ export function BasicInfoSection({ control }: BasicInfoSectionProps) {
             </FormItem>
           )}
         />
-
-        {/* 聯絡時間 - 100% 一行 */}
         <FormField
           control={control}
           name='basicInfo.contactTime'
@@ -237,9 +204,6 @@ export function BasicInfoSection({ control }: BasicInfoSectionProps) {
                   聯絡時間 <span className='text-figma-function-alert'>*</span>
                 </FormLabel>
               </div>
-              <FormDescription className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-500'>
-                請填入您方便的聯繫時段
-              </FormDescription>
               <FormControl>
                 <Input
                   placeholder='請填入您方便的聯繫時段'
@@ -251,8 +215,6 @@ export function BasicInfoSection({ control }: BasicInfoSectionProps) {
             </FormItem>
           )}
         />
-
-        {/* 得知管道 - 100% 一行，水平排列 */}
         <FormField
           control={control}
           name='basicInfo.contactSource'
@@ -317,8 +279,7 @@ export function BasicInfoSection({ control }: BasicInfoSectionProps) {
           )}
         />
       </div>
-    </div>
+    </FormSection>
   )
 }
-
 export default BasicInfoSection

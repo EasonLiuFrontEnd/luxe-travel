@@ -6,24 +6,30 @@ type DeepPartial<T> = T extends object
     }
   : T
 
-export type TravelType =
+export type TTravelType =
   | 'europe-free'
   | 'chartered'
   | 'deluxe-group'
   | 'theme'
   | 'mitsui-cruise'
-export type Gender = 'ms' | 'mr'
-export type ContactMethod = 'any' | 'phone' | 'line' | 'email'
-export type ContactSource =
+
+export type TGender = 'ms' | 'mr'
+
+export type TContactMethod = 'any' | 'phone' | 'line' | 'email'
+
+export type TContactSource =
   | 'triumph-member'
   | 'line'
   | 'facebook'
   | 'search'
   | 'media'
   | 'other'
-export type BudgetRange = '10-12' | '12-15' | '15-20' | '20+'
-export type EuropeanRegion = 'western' | 'central' | 'southern' | 'northern'
-export type Country =
+
+export type TBudgetRange = '10-12' | '12-15' | '15-20' | '20+'
+
+export type TEuropeanRegion = 'western' | 'central' | 'southern' | 'northern'
+
+export type TCountry =
   | 'uk'
   | 'france'
   | 'ireland'
@@ -43,24 +49,24 @@ export type Country =
   | 'croatia'
   | 'nordic'
 
-export interface BasicInfo {
-  travelType: TravelType
+export type TBasicInfo = {
+  travelType: TTravelType
   contactName: string
-  gender: Gender
+  gender: TGender
   phoneNumber: string
   lineId?: string
-  contactMethod: ContactMethod
+  contactMethod: TContactMethod
   contactTime: string
-  contactSource: ContactSource
+  contactSource: TContactSource
   otherSource?: string
 }
 
-export interface BudgetDestination {
-  budget: BudgetRange
-  countries: Country[]
+export type TBudgetDestination = {
+  budget: TBudgetRange
+  countries: TCountry[]
 }
 
-export interface DetailedRequirements {
+export type TDetailedRequirements = {
   adultCount: number
   childCount: number
   travelDays: number
@@ -69,10 +75,10 @@ export interface DetailedRequirements {
   specialRequirements?: string
 }
 
-export interface TravelInquiryFormData {
-  basicInfo: BasicInfo
-  budgetDestination: BudgetDestination
-  detailedRequirements: DetailedRequirements
+export type TTravelInquiryFormData = {
+  basicInfo: TBasicInfo
+  budgetDestination: TBudgetDestination
+  detailedRequirements: TDetailedRequirements
 }
 
 const travelTypeSchema = z.enum(
@@ -170,7 +176,7 @@ export const travelInquiryFormSchema = z.object({
   detailedRequirements: detailedRequirementsSchema,
 })
 
-export const defaultTravelInquiryFormData: DeepPartial<TravelInquiryFormData> =
+export const defaultTravelInquiryFormData: DeepPartial<TTravelInquiryFormData> =
   {
     basicInfo: {
       travelType: undefined,
@@ -203,19 +209,19 @@ export const TRAVEL_TYPE_OPTIONS = [
   { value: 'deluxe-group', label: '精緻團體行' },
   { value: 'theme', label: '主題旅遊' },
   { value: 'mitsui-cruise', label: '三井郵輪' },
-] as const
+]
 
 export const GENDER_OPTIONS = [
   { value: 'ms', label: '小姐' },
   { value: 'mr', label: '先生' },
-] as const
+]
 
 export const CONTACT_METHOD_OPTIONS = [
   { value: 'any', label: '都可以' },
   { value: 'phone', label: '手機' },
   { value: 'line', label: 'LINE' },
   { value: 'email', label: 'Email' },
-] as const
+]
 
 export const CONTACT_SOURCE_OPTIONS = [
   { value: 'triumph-member', label: '我是凱旋集團會員' },
@@ -224,14 +230,14 @@ export const CONTACT_SOURCE_OPTIONS = [
   { value: 'search', label: '網路搜尋' },
   { value: 'media', label: '廣告' },
   { value: 'other', label: '其他' },
-] as const
+]
 
 export const BUDGET_OPTIONS = [
   { value: '10-12', label: '10-12萬' },
   { value: '12-15', label: '12-15萬' },
   { value: '15-20', label: '15-20萬' },
   { value: '20+', label: '20萬以上' },
-] as const
+]
 
 export const WESTERN_EUROPE_COUNTRIES = [
   { value: 'uk', label: '英國' },
@@ -240,7 +246,7 @@ export const WESTERN_EUROPE_COUNTRIES = [
   { value: 'netherlands', label: '荷蘭' },
   { value: 'belgium', label: '比利時' },
   { value: 'luxembourg', label: '盧森堡' },
-] as const
+]
 
 export const CENTRAL_EUROPE_COUNTRIES = [
   { value: 'germany', label: '德國' },
@@ -249,7 +255,7 @@ export const CENTRAL_EUROPE_COUNTRIES = [
   { value: 'czech', label: '捷克' },
   { value: 'hungary', label: '匈牙利' },
   { value: 'baltic', label: '波羅地海三小國' },
-] as const
+]
 
 export const SOUTHERN_EUROPE_COUNTRIES = [
   { value: 'italy', label: '義大利' },
@@ -257,11 +263,9 @@ export const SOUTHERN_EUROPE_COUNTRIES = [
   { value: 'portugal', label: '葡萄牙' },
   { value: 'greece', label: '希臘' },
   { value: 'croatia', label: '克羅埃西亞' },
-] as const
+]
 
-export const NORTHERN_EUROPE_COUNTRIES = [
-  { value: 'nordic', label: '北歐' },
-] as const
+export const NORTHERN_EUROPE_COUNTRIES = [{ value: 'nordic', label: '北歐' }]
 
 export const EUROPEAN_REGIONS = {
   western: {
@@ -280,11 +284,11 @@ export const EUROPEAN_REGIONS = {
     label: '北歐',
     countries: NORTHERN_EUROPE_COUNTRIES,
   },
-} as const
+}
 
 export const ALL_COUNTRIES = [
   ...WESTERN_EUROPE_COUNTRIES,
   ...CENTRAL_EUROPE_COUNTRIES,
   ...SOUTHERN_EUROPE_COUNTRIES,
   ...NORTHERN_EUROPE_COUNTRIES,
-] as const
+]

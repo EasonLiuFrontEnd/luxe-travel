@@ -1,26 +1,26 @@
-export interface IBaseComponent {
+export type TBaseComponent = {
   children?: React.ReactNode
   className?: string
 }
 
-export interface INavItem {
+export type TNavItem = {
   name: string
   href: string
   hasSubmenu?: boolean
 }
 
-export interface IService {
+export type TService = {
   title: string
   desc: string
 }
 
-export interface IDestination {
+export type TDestination = {
   name: string
   desc: string
   color: string
 }
 
-export interface IScrollContext {
+export type TScrollContext = {
   scrollY: number
   logoProgress: number
 }

@@ -1,94 +1,66 @@
 'use client'
-
 import { Control } from 'react-hook-form'
-
 import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
-  FormDescription,
-} from '@/components/ui/form'
-import { Checkbox } from '@/components/ui/checkbox'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import { Label } from '@/components/ui/label'
-
+} from '@/components/ui/Form'
+import { Label } from '@/components/ui/Label'
 import {
-  TravelInquiryFormData,
+  Checkbox,
+  FormSection,
+  RadioFieldGroup,
+  RequiredLabel,
+} from '@/components/ui'
+import {
+  TTravelInquiryFormData,
   BUDGET_OPTIONS,
   EUROPEAN_REGIONS,
+  TCountry,
 } from '@/types/inquiry'
-
-export interface BudgetDestinationSectionProps {
-  control: Control<TravelInquiryFormData>
+export type TBudgetDestinationSectionProps = {
+  control: Control<TTravelInquiryFormData>
 }
-
-export function BudgetDestinationSection({
+export const BudgetDestinationSection = ({
   control,
-}: BudgetDestinationSectionProps) {
+}: TBudgetDestinationSectionProps) => {
   return (
-    <div className='flex flex-col self-stretch w-full p-8 gap-4 rounded-2xl border border-figma-secondary-500 bg-white'>
-      <div className='flex flex-col gap-1'>
-        <h3 className='font-noto-serif-h5-bold text-[18px] text-figma-primary-950'>
-          預算與目的地
-        </h3>
-      </div>
-
+    <FormSection title='預算與目的地' hasBorder>
       <div className='space-y-8'>
         <FormField
           control={control}
           name='budgetDestination.budget'
           render={({ field }) => (
             <FormItem>
-              <div className='flex flex-wrap gap-0.5 items-center justify-start'>
-                <FormLabel className='font-noto-serif-bold text-[18px] leading-[1.5] text-figma-primary-950'>
-                  每人預算 <span className='text-figma-function-alert'>*</span>
-                </FormLabel>
-                <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950'>
-                  （不含午晚餐及部分自理當地城市內交通費用）
-                </span>
-              </div>
+              <RequiredLabel
+                required
+                subText='（不含午晚餐及部分自理當地城市內交通費用）'
+              >
+                每人預算
+              </RequiredLabel>
               <FormControl>
-                <RadioGroup
-                  onValueChange={field.onChange}
+                <RadioFieldGroup
+                  options={BUDGET_OPTIONS}
                   value={field.value}
+                  onValueChange={field.onChange}
+                  name='budget'
                   className='grid grid-cols-2 md:grid-cols-4 gap-4'
-                >
-                  {BUDGET_OPTIONS.map((budget) => (
-                    <Label
-                      key={budget.value}
-                      htmlFor={`budget-${budget.value}`}
-                      className='flex items-center gap-2 font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950 cursor-pointer'
-                    >
-                      <RadioGroupItem
-                        value={budget.value}
-                        id={`budget-${budget.value}`}
-                      />
-                      {budget.label}
-                    </Label>
-                  ))}
-                </RadioGroup>
+                  labelClassName='flex items-center gap-2 font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950 cursor-pointer'
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
         <FormField
           control={control}
           name='budgetDestination.countries'
           render={({ field }) => (
             <FormItem>
-              <div className='flex flex-wrap gap-0.5 items-center justify-start'>
-                <FormLabel className='font-noto-serif-bold text-[18px] leading-[1.5] text-figma-primary-950'>
-                  想去的國家組合{' '}
-                  <span className='text-figma-function-alert'>*</span>
-                </FormLabel>
-                <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-500'>
-                  可複選
-                </span>
-              </div>
+              <RequiredLabel required subText='可複選'>
+                想去的國家組合
+              </RequiredLabel>
               <FormControl>
                 <div className='flex gap-6 items-start justify-start w-full'>
                   {Object.entries(EUROPEAN_REGIONS).map(
@@ -97,17 +69,12 @@ export function BudgetDestinationSection({
                         key={regionKey}
                         className='flex-1 flex flex-col gap-1 relative'
                       >
-                        {/* 垂直分隔線 */}
                         {index > 0 && (
                           <div className='absolute left-[-12px] top-0 bottom-0 w-px bg-figma-primary-300'></div>
                         )}
-
-                        {/* 區域標題 */}
                         <div className='font-genseki-body-s-bold text-[16px] leading-[1.5] text-figma-secondary-500 tracking-[0.96px] mb-1'>
                           {region.label}
                         </div>
-
-                        {/* 國家選項 */}
                         <div className='flex flex-wrap gap-4 items-center justify-start py-3'>
                           {region.countries.map((country) => (
                             <Label
@@ -117,17 +84,20 @@ export function BudgetDestinationSection({
                             >
                               <Checkbox
                                 id={`country-${country.value}`}
-                                checked={field.value?.includes(country.value)}
+                                checked={field.value?.includes(
+                                  country.value as TCountry,
+                                )}
                                 onCheckedChange={(checked) => {
                                   if (checked) {
                                     field.onChange([
                                       ...field.value,
-                                      country.value,
+                                      country.value as TCountry,
                                     ])
                                   } else {
                                     field.onChange(
                                       field.value?.filter(
-                                        (item) => item !== country.value,
+                                        (item) =>
+                                          item !== (country.value as TCountry),
                                       ),
                                     )
                                   }
@@ -147,8 +117,7 @@ export function BudgetDestinationSection({
           )}
         />
       </div>
-    </div>
+    </FormSection>
   )
 }
-
 export default BudgetDestinationSection

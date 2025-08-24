@@ -1,8 +1,3 @@
-/* 旅遊諮詢表單專用樣式 */
-
-/* === 響應式設計增強 === */
-
-/* 觸控設備優化 */
 .touch-device .travel-inquiry-form button,
 .touch-device .travel-inquiry-form input[type='checkbox'],
 .touch-device .travel-inquiry-form input[type='radio'] {
@@ -15,7 +10,6 @@
   cursor: pointer;
 }
 
-/* 移動設備特定樣式 */
 .mobile-device .travel-inquiry-form {
   padding: 16px;
 }
@@ -39,7 +33,6 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
-/* 桌面設備優化 */
 .desktop-device .travel-inquiry-form .hero-section {
   min-height: 600px;
 }
@@ -48,9 +41,6 @@
   max-width: 1200px;
 }
 
-/* === 特殊響應式斷點 === */
-
-/* 超小屏幕 (320px - 480px) */
 @media screen and (max-width: 480px) {
   .travel-inquiry-form .hero-section {
     min-height: 300px;
@@ -73,7 +63,6 @@
   }
 }
 
-/* 小屏幕 (481px - 768px) */
 @media screen and (min-width: 481px) and (max-width: 768px) {
   .travel-inquiry-form .hero-section {
     min-height: 400px;
@@ -84,7 +73,6 @@
   }
 }
 
-/* 中等屏幕 (769px - 1024px) */
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   .travel-inquiry-form .hero-section {
     min-height: 500px;
@@ -95,7 +83,6 @@
   }
 }
 
-/* 大屏幕 (1025px+) */
 @media screen and (min-width: 1025px) {
   .travel-inquiry-form .hero-section {
     min-height: 600px;
@@ -106,7 +93,6 @@
   }
 }
 
-/* === 列印樣式 === */
 @media print {
   .travel-inquiry-form .hero-section {
     display: none;
@@ -127,16 +113,12 @@
   }
 }
 
-/* === 互動狀態增強 === */
-
-/* 焦點狀態 */
 .travel-inquiry-form *:focus-visible {
   outline: 3px solid #3b82f6;
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* 錯誤狀態 */
 .travel-inquiry-form [aria-invalid='true'] {
   border-color: #ef4444 !important;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
@@ -147,19 +129,16 @@
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
 }
 
-/* 成功狀態 */
 .travel-inquiry-form .success-state {
   border-color: #10b981 !important;
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
-/* 載入狀態 */
 .travel-inquiry-form .loading-state {
   opacity: 0.7;
   pointer-events: none;
 }
 
-/* 動畫效果 */
 .travel-inquiry-form .fade-in {
   animation: fadeIn 0.3s ease-in-out;
 }
@@ -190,9 +169,6 @@
   }
 }
 
-/* === 特殊元素樣式 === */
-
-/* 年齡分組卡片 */
 .travel-inquiry-form .age-group-card {
   transition: all 0.2s ease-in-out;
 }
@@ -202,7 +178,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* 檢查框和單選框增強 */
 .travel-inquiry-form input[type='checkbox'],
 .travel-inquiry-form input[type='radio'] {
   transform: scale(1.1);
@@ -213,7 +188,6 @@
   transform: scale(1.2);
 }
 
-/* 提交按鈕特殊效果 */
 .travel-inquiry-form .submit-button {
   position: relative;
   overflow: hidden;

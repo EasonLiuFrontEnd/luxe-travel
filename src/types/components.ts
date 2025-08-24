@@ -1,6 +1,6 @@
-import { IBaseComponent } from './index'
+import { TBaseComponent } from './index'
 
-export interface IHeader extends IBaseComponent {
+export type THeader = TBaseComponent & {
   isHomePage: boolean
   logoScale?: number
   isNavbarVisible?: boolean
@@ -9,21 +9,21 @@ export interface IHeader extends IBaseComponent {
   hasTransparentHeader?: boolean
 }
 
-export interface ILogo extends IBaseComponent {
+export type TLogo = TBaseComponent & {
   scale?: number
 }
 
-export interface INavigation extends IBaseComponent {
+export type TNavigation = TBaseComponent & {
   isVisible?: boolean
   isMenuOpen?: boolean
   onMenuToggle?: () => void
 }
 
-export interface IBanner extends IBaseComponent {
+export type TBanner = TBaseComponent & {
   logoProgress?: number
 }
 
-export interface IButton extends IBaseComponent {
+export type TButton = TBaseComponent & {
   variant?: 'primary' | 'secondary' | 'ghost'
   size?: 'sm' | 'md' | 'lg'
   onClick?: () => void

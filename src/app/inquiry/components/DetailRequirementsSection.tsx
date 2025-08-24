@@ -1,44 +1,29 @@
 'use client'
-
 import { Control } from 'react-hook-form'
-
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  FormDescription,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+} from '@/components/ui/Form'
 import { Button } from '@/components/ui/Button'
-
-import { TravelInquiryFormData } from '@/types/inquiry'
+import { CounterInput, FormSection } from '@/components/ui'
+import { TTravelInquiryFormData } from '@/types/inquiry'
 import { CalendarIcon } from '@/components/ui/CalendarIcon'
 import { formatDateForDisplay } from '@/lib/dateUtils'
-
-export interface DetailRequirementsSectionProps {
-  control: Control<TravelInquiryFormData>
+export type TDetailRequirementsSectionProps = {
+  control: Control<TTravelInquiryFormData>
   isLoading?: boolean
 }
-
-export function DetailRequirementsSection({
+export const DetailRequirementsSection = ({
   control,
   isLoading = false,
-}: DetailRequirementsSectionProps) {
+}: TDetailRequirementsSectionProps) => {
   return (
-    <div className='flex flex-col self-stretch bg-white rounded-2xl w-full p-8 gap-4'>
-      <div className='flex flex-col gap-1'>
-        <h3 className='font-noto-serif-h5-bold text-[18px] text-figma-primary-950'>
-          詳細需求
-        </h3>
-      </div>
-
+    <FormSection title='詳細需求'>
       <div className='space-y-6 w-full'>
-        {/* 預計人數、預計旅遊天數、預計出發日 - 水平三欄佈局 */}
         <div className='flex gap-8 items-start justify-start w-full'>
-          {/* 預計人數 */}
           <div className='flex flex-col gap-1 items-start justify-start shrink-0'>
             <div className='flex flex-wrap gap-0.5 items-center justify-start'>
               <div className='flex gap-1 items-center justify-start'>
@@ -56,98 +41,35 @@ export function DetailRequirementsSection({
                 name='detailedRequirements.adultCount'
                 render={({ field }) => (
                   <FormItem className='w-[218px]'>
-                    <div className='flex gap-2.5 items-center justify-start px-0 py-3 border-b border-[rgba(56,56,65,0.7)]'>
-                      <div className='flex-1 font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950'>
-                        大人
-                      </div>
-                      <button
-                        type='button'
-                        className='backdrop-blur-sm rounded-[25px] border border-[#b7b8c2] p-[2px] shrink-0 cursor-pointer hover:opacity-80'
-                        onClick={() =>
-                          field.onChange(Math.max(1, field.value - 1))
-                        }
-                      >
-                        <div className='size-4 flex items-center justify-center'>
-                          <span className='text-[#b7b8c2] text-xs'>-</span>
-                        </div>
-                      </button>
-                      <div className='flex gap-[3px] items-center justify-start'>
-                        <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950'>
-                          {field.value}
-                        </span>
-                        <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950'>
-                          位
-                        </span>
-                      </div>
-                      <button
-                        type='button'
-                        className='backdrop-blur-sm rounded-[25px] border border-figma-primary-950 p-[2px] shrink-0 cursor-pointer hover:opacity-80'
-                        onClick={() =>
-                          field.onChange(Math.min(20, field.value + 1))
-                        }
-                      >
-                        <div className='size-4 flex items-center justify-center'>
-                          <span className='text-figma-primary-950 text-xs'>
-                            +
-                          </span>
-                        </div>
-                      </button>
-                    </div>
+                    <CounterInput
+                      label='大人'
+                      value={field.value}
+                      onChange={field.onChange}
+                      min={1}
+                      max={20}
+                    />
                     <FormMessage />
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={control}
                 name='detailedRequirements.childCount'
                 render={({ field }) => (
                   <FormItem className='w-[249px]'>
-                    <div className='flex gap-2.5 items-center justify-start px-0 py-3 border-b border-[rgba(56,56,65,0.7)]'>
-                      <div className='flex-1 font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950'>
-                        孩童
-                      </div>
-                      <button
-                        type='button'
-                        className='backdrop-blur-sm rounded-[25px] border border-[#b7b8c2] p-[2px] shrink-0 cursor-pointer hover:opacity-80'
-                        onClick={() =>
-                          field.onChange(Math.max(0, field.value - 1))
-                        }
-                      >
-                        <div className='size-4 flex items-center justify-center'>
-                          <span className='text-[#b7b8c2] text-xs'>-</span>
-                        </div>
-                      </button>
-                      <div className='flex gap-[3px] items-center justify-start'>
-                        <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950'>
-                          {field.value}
-                        </span>
-                        <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950'>
-                          位
-                        </span>
-                      </div>
-                      <button
-                        type='button'
-                        className='backdrop-blur-sm rounded-[25px] border border-figma-primary-950 p-[2px] shrink-0 cursor-pointer hover:opacity-80'
-                        onClick={() =>
-                          field.onChange(Math.min(20, field.value + 1))
-                        }
-                      >
-                        <div className='size-4 flex items-center justify-center'>
-                          <span className='text-figma-primary-950 text-xs'>
-                            +
-                          </span>
-                        </div>
-                      </button>
-                    </div>
+                    <CounterInput
+                      label='孩童'
+                      value={field.value}
+                      onChange={field.onChange}
+                      min={0}
+                      max={20}
+                    />
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
           </div>
-
-          {/* 預計旅遊天數 */}
           <div className='flex-1 flex flex-col gap-1 items-start justify-start min-w-0'>
             <div className='flex flex-wrap gap-0.5 items-center justify-start'>
               <div className='flex gap-1 items-center justify-start'>
@@ -164,50 +86,19 @@ export function DetailRequirementsSection({
               name='detailedRequirements.travelDays'
               render={({ field }) => (
                 <FormItem className='w-full'>
-                  <div className='flex gap-2.5 items-center justify-start px-0 py-3 border-b border-[rgba(56,56,65,0.7)] w-full'>
-                    <div className='font-genseki-body-m-regular w-100% text-[16px] leading-[1.2] text-figma-primary-950'>
-                      旅遊天數
-                    </div>
-                    <button
-                      type='button'
-                      className='backdrop-blur-sm rounded-[25px] border border-[#b7b8c2] p-[2px] shrink-0'
-                      onClick={() =>
-                        field.onChange(Math.max(1, field.value - 1))
-                      }
-                    >
-                      <div className='size-4 flex items-center justify-center'>
-                        <span className='text-[#b7b8c2] text-xs'>-</span>
-                      </div>
-                    </button>
-                    <div className='flex gap-[3px] items-center justify-start'>
-                      <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950'>
-                        {field.value}
-                      </span>
-                      <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950'>
-                        天
-                      </span>
-                    </div>
-                    <button
-                      type='button'
-                      className='backdrop-blur-sm rounded-[25px] border border-figma-primary-950 p-[2px] shrink-0 cursor-pointer hover:opacity-80'
-                      onClick={() =>
-                        field.onChange(Math.min(60, field.value + 1))
-                      }
-                    >
-                      <div className='size-4 flex items-center justify-center'>
-                        <span className='text-figma-primary-950 text-xs'>
-                          +
-                        </span>
-                      </div>
-                    </button>
-                  </div>
+                  <CounterInput
+                    label='旅遊天數'
+                    value={field.value}
+                    onChange={field.onChange}
+                    min={1}
+                    max={60}
+                    unit='天'
+                  />
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-
-          {/* 預計出發日 */}
           <div className='flex-1 flex flex-col gap-1 items-start justify-start min-w-0'>
             <div className='flex flex-wrap gap-0.5 items-center justify-start'>
               <div className='flex gap-1 items-center justify-start'>
@@ -259,8 +150,6 @@ export function DetailRequirementsSection({
             />
           </div>
         </div>
-
-        {/* 心願清單 */}
         <FormField
           control={control}
           name='detailedRequirements.wishlist'
@@ -295,8 +184,6 @@ export function DetailRequirementsSection({
             </FormItem>
           )}
         />
-
-        {/* 其他特別需求 */}
         <FormField
           control={control}
           name='detailedRequirements.specialRequirements'
@@ -331,8 +218,6 @@ export function DetailRequirementsSection({
             </FormItem>
           )}
         />
-
-        {/* 個資聲明 */}
         <div className='flex flex-col justify-center font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950 mt-8'>
           <p className='leading-6'>
             典藏旅遊遵循「個人資料保護法」以妥善處理、利用本表所載之個人資料，並採取資料保護措施。
@@ -341,8 +226,6 @@ export function DetailRequirementsSection({
             info@luxetravel.com.tw
           </p>
         </div>
-
-        {/* 送出按鈕 */}
         <div className='flex justify-end pt-4'>
           <Button
             type='submit'
@@ -354,8 +237,7 @@ export function DetailRequirementsSection({
           </Button>
         </div>
       </div>
-    </div>
+    </FormSection>
   )
 }
-
 export default DetailRequirementsSection

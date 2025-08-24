@@ -1,5 +1,4 @@
 export const colors = {
-  // Primary colors
   primary: {
     0: '#ffffff',
     50: '#f7f7f8',
@@ -10,7 +9,6 @@ export const colors = {
     950: '#383841',
   },
 
-  // Secondary colors
   secondary: {
     50: '#fcfaf7',
     100: '#f7f4ec',
@@ -22,14 +20,12 @@ export const colors = {
     default: '#383841',
   },
 
-  // Neutral/Background colors
   neutral: {
     0: '#ffffff',
     50: '#f5f5f5',
     950: '#333333',
   },
 
-  // Accent colors
   accent: {
     blueNormal: '#8bc3de',
     blueLight: '#edf9ff',
@@ -38,20 +34,17 @@ export const colors = {
     brown: '#995d2f',
   },
 
-  // Function colors
   function: {
     alert: '#d6111a',
     availableNormal: '#00d475',
     availableLight: '#0cf38b',
   },
 
-  // Grayscale colors
   grayscale: {
     gray200: '#EBEBEB',
     white: '#ffffff',
   },
 
-  // Theme colors
   theme: {
     black: '#333333',
     darkGray: '#6f6f6f',

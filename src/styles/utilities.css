@@ -40,9 +40,6 @@
     display: none;
   }
 
-  /* Figma Design System Typography Utilities */
-
-  /* Noto Serif TC */
   .font-noto-serif-h1-bold {
     font-family: var(--font-noto-serif-tc);
     font-size: 96px;
@@ -120,7 +117,6 @@
     line-height: 1.5;
   }
 
-  /* GenSekiGothic2 JP */
   .font-genseki-h5-medium {
     font-family: var(--font-genseki-gothic);
     font-size: 24px;
@@ -191,7 +187,6 @@
     line-height: 1.5;
   }
 
-  /* Luxurious Script */
   .font-luxurious-deco-regular {
     font-family: var(--font-luxurious-script);
     font-size: 48px;
@@ -206,7 +201,6 @@
     line-height: 1.2;
   }
 
-  /* Figma Design System Color Utilities */
   .text-figma-primary-0 {
     color: var(--color-figma-primary-0);
   }
@@ -326,7 +320,6 @@
     background-color: var(--color-figma-accent-yellow-light);
   }
 
-  /* Figma Design System Spacing Utilities */
   .p-figma-0 {
     padding: var(--spacing-0);
   }
@@ -456,7 +449,6 @@
     gap: var(--spacing-13);
   }
 
-  /* Interactive States for Figma Design */
   .figma-button-primary {
     background-color: var(--color-figma-secondary-500);
     color: var(--color-figma-neutral-0);

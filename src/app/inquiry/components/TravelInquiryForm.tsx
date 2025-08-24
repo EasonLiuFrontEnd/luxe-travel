@@ -3,36 +3,36 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { Form } from '@/components/ui/form'
 import {
-  TravelInquiryFormData,
   travelInquiryFormSchema,
   defaultTravelInquiryFormData,
+  TTravelInquiryFormData,
 } from '@/types/inquiry'
 
 import { HeroSection } from './HeroSection'
 import { BasicInfoSection } from './BasicInfoSection'
 import { BudgetDestinationSection } from './BudgetDestinationSection'
 import { DetailRequirementsSection } from './DetailRequirementsSection'
+import { Form } from '../../../components/ui/Form'
 
-export interface TravelInquiryFormProps {
-  onSubmit?: (data: TravelInquiryFormData) => void | Promise<void>
+export type TTravelInquiryFormProps = {
+  onSubmit?: (data: TTravelInquiryFormData) => void | Promise<void>
   className?: string
   isLoading?: boolean
 }
 
-export function TravelInquiryForm({
+export const TravelInquiryForm = ({
   onSubmit,
   className = '',
   isLoading = false,
-}: TravelInquiryFormProps) {
-  const form = useForm<TravelInquiryFormData>({
+}: TTravelInquiryFormProps) => {
+  const form = useForm<TTravelInquiryFormData>({
     resolver: zodResolver(travelInquiryFormSchema),
     defaultValues: defaultTravelInquiryFormData,
     mode: 'onChange',
   })
 
-  const handleSubmit = async (data: TravelInquiryFormData) => {
+  const handleSubmit = async (data: TTravelInquiryFormData) => {
     try {
       console.log('旅遊諮詢表單提交:', data)
       await onSubmit?.(data)

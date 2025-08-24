@@ -1,11 +1,11 @@
 import { NAV_ITEMS, DESTINATIONS } from '@/lib/constants'
-import type { INavigation } from '@/types/components'
+import type { TNavigation } from '@/types/components'
 
 const Navigation = ({
   isVisible = true,
   isMenuOpen = false,
   onMenuToggle = () => {},
-}: INavigation) => {
+}: TNavigation) => {
   if (!isVisible) return null
 
   return (

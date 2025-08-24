@@ -43,12 +43,10 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* Figma Design System Fonts */
   --font-noto-serif-tc: var(--font-noto-serif-tc);
   --font-luxurious-script: var(--font-luxurious-script);
   --font-genseki-gothic: 'Noto Sans JP', sans-serif;
 
-  /* Figma Design System Colors */
   --color-figma-primary-0: #ffffff;
   --color-figma-primary-50: #f7f7f8;
   --color-figma-primary-100: #eeeef0;
@@ -80,7 +78,6 @@
   --color-figma-function-available-normal: #00d475;
   --color-figma-function-available-light: #0cf38b;
 
-  /* Figma Design System Spacing */
   --spacing-0: 0px;
   --spacing-1: 2px;
   --spacing-2: 4px;

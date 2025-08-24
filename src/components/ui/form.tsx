@@ -13,7 +13,7 @@ import {
 } from 'react-hook-form'
 
 import { cn } from '@/lib/utils'
-import { Label } from '@/components/ui/label'
+import { Label } from '@/components/ui/Label'
 import { useContext, useId, createContext, ComponentProps } from 'react'
 
 const Form = FormProvider
@@ -73,7 +73,7 @@ const FormItemContext = createContext<FormItemContextValue>(
   {} as FormItemContextValue,
 )
 
-function FormItem({ className, ...props }: ComponentProps<'div'>) {
+const FormItem = ({ className, ...props }: ComponentProps<'div'>) => {
   const id = useId()
 
   return (
@@ -87,10 +87,10 @@ function FormItem({ className, ...props }: ComponentProps<'div'>) {
   )
 }
 
-function FormLabel({
+const FormLabel = ({
   className,
   ...props
-}: React.ComponentProps<typeof LabelPrimitive.Root>) {
+}: React.ComponentProps<typeof LabelPrimitive.Root>) => {
   const { error, formItemId } = useFormField()
 
   return (
@@ -104,7 +104,7 @@ function FormLabel({
   )
 }
 
-function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
+const FormControl = ({ ...props }: React.ComponentProps<typeof Slot>) => {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
 
   return (
@@ -122,7 +122,10 @@ function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
   )
 }
 
-function FormDescription({ className, ...props }: React.ComponentProps<'p'>) {
+const FormDescription = ({
+  className,
+  ...props
+}: React.ComponentProps<'p'>) => {
   const { formDescriptionId } = useFormField()
 
   return (
@@ -135,7 +138,7 @@ function FormDescription({ className, ...props }: React.ComponentProps<'p'>) {
   )
 }
 
-function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
+const FormMessage = ({ className, ...props }: React.ComponentProps<'p'>) => {
   const { error, formMessageId } = useFormField()
   const body = error ? String(error?.message ?? '') : props.children
 

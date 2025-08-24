@@ -1,8 +1,8 @@
-interface CalendarIconProps {
+type TCalendarIconProps = {
   className?: string
 }
 
-export function CalendarIcon({ className = '' }: CalendarIconProps) {
+export const CalendarIcon = ({ className = '' }: TCalendarIconProps) => {
   return (
     <svg
       width='20'
