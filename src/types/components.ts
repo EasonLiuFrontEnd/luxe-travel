@@ -25,7 +25,7 @@ export interface IBanner extends IBaseComponent {
 
 export interface IButton extends IBaseComponent {
   variant?: 'primary' | 'secondary' | 'ghost'
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
   onClick?: () => void
   disabled?: boolean
 }

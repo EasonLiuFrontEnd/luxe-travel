@@ -19,21 +19,13 @@ const Banner = ({ logoProgress: propLogoProgress }: IBanner) => {
 
   return (
     <div
-      className='relative bg-gradient-to-br from-gray-100 via-white to-gray-50 min-h-screen banner-dynamic-padding'
+      className='relative min-h-screen banner-dynamic-padding'
       style={{ paddingTop: dynamicPadding }}
     >
-      <div className='relative z-10 h-full flex flex-col justify-center items-center text-center px-4 py-20'>
-        <div className='max-w-4xl mx-auto'>
-          <h1 className='text-4xl md:text-6xl font-bold text-gray-800 mb-6'>
-            開啟您的夢想之旅
-          </h1>
-          <p className='text-xl md:text-2xl text-gray-600 mb-8'>
-            專業團隊為您打造獨一無二的旅遊體驗，讓每一刻都成為珍貴回憶
-          </p>
-          <Button variant='primary' size='lg'>
-            立即諮詢行程
-          </Button>
-        </div>
+      <div className='relative h-[50vh] max-w-[80vw] m-auto text-center mt-12 bg-[url(/banner.jpg)] bg-cover rounded-s-2xl'>
+        <Button variant='primary' size='3xl' className='self-start absolute left-0 bottom-0 rounded-se-xl font-semibold text-[rgb(61,84,0)] bg-gray-50 hover:scale-105'>
+          即刻預約 · 輕鬆啟程
+        </Button>
       </div>
 
       <div

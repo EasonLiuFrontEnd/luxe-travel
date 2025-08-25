@@ -15,15 +15,3 @@
   backdrop-filter: blur(8px);
   background-color: rgba(255, 255, 255, 0.95);
 }
-
-.btn-primary {
-  @apply bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 shadow-lg;
-}
-
-.btn-secondary {
-  @apply bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-lg font-medium transition-all duration-300;
-}
-
-.btn-ghost {
-  @apply text-gray-700 hover:text-amber-600 transition-colors duration-200;
-}
