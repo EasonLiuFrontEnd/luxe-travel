@@ -15,7 +15,7 @@ const Navigation = ({
           <a
             key={item.name}
             href={item.href}
-            className='text-gray-700 hover:text-amber-600 transition-colors duration-200 font-medium text-sm'
+            className='text-gray-700 hover:text-amber-600 transition-colors duration-200 font-bold'
           >
             {item.name}
           </a>

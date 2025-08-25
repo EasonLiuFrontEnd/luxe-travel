@@ -25,7 +25,7 @@ const Header = ({
         : 'relative',
     hasTransparentHeader && isHomePage
       ? 'bg-transparent'
-      : 'bg-white header-container',
+      : 'bg-gray-50 header-container',
   ].join(' ')
 
   return (
