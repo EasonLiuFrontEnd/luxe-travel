@@ -1,7 +1,12 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { APP_CONFIG } from '@/lib/config'
 
-export const useThrottledScroll = () => {
+type TScrollState = {
+  scrollY: number
+  isScrolling: boolean
+}
+
+export const useThrottledScroll = (): TScrollState => {
   const [scrollY, setScrollY] = useState(0)
   const [isScrolling, setIsScrolling] = useState(false)
   const frameId = useRef<number | null>(null)
@@ -43,4 +48,4 @@ export const useThrottledScroll = () => {
   return { scrollY, isScrolling }
 }
 
-export const useScroll = useThrottledScroll
+export const useScroll = (): TScrollState => useThrottledScroll()

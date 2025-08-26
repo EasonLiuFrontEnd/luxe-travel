@@ -1,6 +1,6 @@
-import Banner from '@/components/ui/Banner'
-import Services from '@/components/ui/Services'
-import PopularDestinations from '@/components/ui/PopularDestinations'
+import Banner from '@/components/sections/Banner'
+import Services from '@/components/sections/Services'
+import PopularDestinations from '@/components/sections/PopularDestinations'
 
 const HomePage = () => {
   return (
