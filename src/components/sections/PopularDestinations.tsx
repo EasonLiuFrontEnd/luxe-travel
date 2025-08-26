@@ -3,7 +3,7 @@ import { Button } from '../ui'
 
 const PopularDestinations = () => {
   return (
-    <section className='py-20 px-4 bg-gray-50'>
+    <section className='py-20 px-4 bg-figma-neutral-50'>
       <div className='max-w-6xl mx-auto'>
         <h2 className='text-3xl font-bold text-gray-800 mb-12 text-center'>
           熱門目的地
