@@ -3,7 +3,7 @@
 import { useMemo } from 'react'
 import { useScrollContext } from '@/context/ScrollContext'
 import { APP_CONFIG } from '@/lib/config'
-import { Button } from '../ui/Button'
+import BannerButton from '../customUI/BannerButton'
 import type { TBanner } from '@/types/components'
 
 const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
@@ -37,10 +37,10 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
         </div>
       </div>
       <div className='relative h-[60vh] bg-[url(/banner.jpg)] bg-cover bg-center rounded-2xl'>
-        <Button variant='primary' size='3xl' className='absolute left-0 bottom-0 self-start flex items-center rounded-se-xl font-semibold text-[rgb(61,84,0)] bg-gray-50 hover:scale-105'>
+        <BannerButton variant='primary' size='3xl' className='absolute left-0 bottom-0 self-start flex items-center rounded-se-xl font-semibold text-[rgb(61,84,0)] bg-gray-50 hover:scale-105'>
           即刻預約 · 輕鬆啟程
           <img src="/bannerArrow.svg" alt="Banner Arrow" className='pl-5' />
-        </Button>
+        </BannerButton>
       </div>
     </div>
   )
