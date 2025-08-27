@@ -7,7 +7,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/Form'
-import { Button } from '@/components/customUI/BannerButton'
+import { Button } from '@/components/ui/Button'
 import { CounterInput, FormSection } from '@/components/ui'
 import { TTravelInquiryFormData } from '@/types/inquiry'
 import { CalendarIcon } from '@/components/ui/CalendarIcon'

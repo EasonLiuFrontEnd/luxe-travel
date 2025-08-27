@@ -34,6 +34,7 @@ const ClientLayout = ({ children }: TBaseComponent) => {
       <Header
         isHomePage={pageConfig.type === 'home'}
         logoScale={logoScale}
+        logoProgress={logoProgress}
         isNavbarVisible={isNavbarVisible}
         isConsultButtonVisible={isConsultButtonVisible}
         headerBehavior={pageConfig.headerBehavior}

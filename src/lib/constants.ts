@@ -1,19 +1,11 @@
 export const NAV_ITEMS = [
-  { name: '關於典藏', href: '#about' },
+  { name: '團體專區', href: '#group' },
   { name: '自由行專區', href: '#individual' },
   { name: '包車旅遊', href: '#charter' },
-  { name: '團體專區', href: '#group' },
   { name: '三井郵輪', href: '#cruise' },
+  { name: '關於典藏', href: '#about' },
 ] as const
 
-export const DESTINATIONS = [
-  { name: '深度旅遊', href: '#deep-travel' },
-  { name: '英國', href: '#uk', hasSubmenu: true },
-  { name: 'FIT套裝', href: '#fit' },
-  { name: '德國啤酒節', href: '#beer-festival' },
-  { name: '黑法白市童話', href: '#fairy-tale' },
-  { name: '花季', href: '#flower-season' },
-] as const
 
 export const SERVICES = [
   { title: '團體旅遊', desc: '精心規劃的團體行程，專業導遊陪同' },
@@ -54,3 +46,74 @@ export const POPULAR_DESTINATIONS = [
     color: 'from-yellow-400 to-yellow-600',
   },
 ] as const
+
+export const DROPDOWN_MENUS = {
+  '團體專區': [
+    { label: '深度旅遊', href: '#deep-travel' },
+    { 
+      label: '主題旅遊', 
+      href: '#theme-travel',
+      hasSubmenu: true, 
+      submenuItems: [
+        { label: '歐洲古堡之旅', href: '#castle-tour' },
+        { label: '櫻花季專案', href: '#sakura-tour' },
+        { label: '美食饗宴之旅', href: '#gourmet-tour' },
+        { label: '藝術文化巡禮', href: '#culture-tour' }
+      ]
+    }
+  ],
+  '自由行專區': [
+    { label: '城市漫遊', href: '#city-tour' },
+    { 
+      label: '主題旅遊', 
+      href: '#individual-theme',
+      hasSubmenu: true, 
+      submenuItems: [
+        { label: '浪漫蜜月之旅', href: '#honeymoon-tour' },
+        { label: '親子家庭遊', href: '#family-tour' },
+        { label: '背包客專案', href: '#backpacker-tour' }
+      ]
+    },
+  ],
+  '包車旅遊': [
+    { label: '深度旅遊', href: '#charter-deep' },
+    { 
+      label: '主題旅遊', 
+      href: '#charter-theme',
+      hasSubmenu: true, 
+      submenuItems: [
+        { label: '商務包車', href: '#business-charter' },
+        { label: '觀光包車', href: '#sightseeing-charter' },
+        { label: '機場接送', href: '#airport-transfer' },
+        { label: '婚紗包車', href: '#wedding-charter' },
+        { label: '長途包車', href: '#long-distance-charter' }
+      ]
+    }
+  ],
+  '三井郵輪': [
+    { label: '深度旅遊', href: '#cruise-deep' },
+    { 
+      label: '主題旅遊', 
+      href: '#cruise-theme',
+      hasSubmenu: true, 
+      submenuItems: [
+        { label: '地中海郵輪', href: '#mediterranean-cruise' },
+        { label: '加勒比海郵輪', href: '#caribbean-cruise' }
+      ]
+    }
+  ],
+  '關於典藏': [
+    { label: '公司介紹', href: '#company-intro' },
+    { label: '服務理念', href: '#service-concept' },
+    { 
+      label: '聯絡我們', 
+      href: '#contact',
+      hasSubmenu: true, 
+      submenuItems: [
+        { label: '台北辦公室', href: '#taipei-office' },
+        { label: '高雄辦公室', href: '#kaohsiung-office' },
+        { label: '線上客服', href: '#online-service' }
+      ]
+    }
+  ]
+}

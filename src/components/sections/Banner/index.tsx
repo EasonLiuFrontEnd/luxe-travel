@@ -24,14 +24,14 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
       className='relative min-h-screen banner-dynamic-padding max-w-[76vw] m-auto'
       style={{ '--dynamic-padding': dynamicPadding } as React.CSSProperties}
     >
-      <div className='z-10 sticky top-0 flex flex-col'>
-        <h1 className='text-right font-noto-serif-h1-bold text-figma-neutral-950'>
-          <div className='inline-block bg-figma-neutral-50 rounded-es-2xl pt-4 px-4 pb-1'>
+      <div className='z-10 sticky top-0'>
+        <h1 className='flex flex-col text-right font-noto-serif-h1-bold text-figma-neutral-950'>
+          <div className='self-end bg-figma-neutral-50 rounded-es-2xl pt-4 px-4 pb-1'>
             歐洲自由行
           </div>
           <div
             className={cn(
-              'inline-block bg-figma-neutral-50 rounded-bl-2xl pt-1 px-4 pb-4',
+              'self-end bg-figma-neutral-50 rounded-bl-2xl pt-1 px-4 pb-4',
               styles['concave-border-1'],
             )}
           >
@@ -63,7 +63,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
             variant='primary'
             size='3xl'
             className={cn(
-              'flex items-center rounded-se-xl font-semibold text-[rgb(61,84,0)] bg-figma-neutral-50 hover:scale-105',
+              'flex items-center rounded-se-xl font-semibold text-[rgb(61,84,0)] bg-figma-neutral-50',
               styles['concave-border-4'],
               styles['concave-border-5'],
             )}

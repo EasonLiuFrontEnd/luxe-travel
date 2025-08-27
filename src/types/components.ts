@@ -3,6 +3,7 @@ import { TBaseComponent } from './index'
 export type THeader = TBaseComponent & {
   isHomePage: boolean
   logoScale?: number
+  logoProgress?: number
   isNavbarVisible?: boolean
   isConsultButtonVisible?: boolean
   headerBehavior?: 'fixed' | 'sticky' | 'static'
@@ -17,6 +18,7 @@ export type TNavigation = TBaseComponent & {
   isVisible?: boolean
   isMenuOpen?: boolean
   onMenuToggle?: () => void
+  logoProgress?: number
 }
 
 export type TBanner = TBaseComponent & {
