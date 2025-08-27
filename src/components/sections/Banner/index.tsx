@@ -32,7 +32,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
           <div
             className={cn(
               'inline-block bg-figma-neutral-50 rounded-bl-2xl pt-1 px-4 pb-4',
-              styles['concave-border-tr'],
+              styles['concave-border-1'],
             )}
           >
             精緻首選
@@ -42,12 +42,17 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
           <p
             className={cn(
               'self-end text-right bg-figma-neutral-50 py-1',
-              styles['concave-border-r'],
+              styles['concave-border-2'],
             )}
           >
             典藏旅遊30年經驗團隊服務
           </p>
-          <p className='self-end bg-figma-neutral-50 rounded-s-2xl py-[10px] px-4'>
+          <p
+            className={cn(
+              'self-end bg-figma-neutral-50 rounded-s-2xl py-[10px] px-4',
+              styles['concave-border-3'],
+            )}
+          >
             為您客製化旅程，典藏經典回憶
           </p>
         </div>
@@ -59,7 +64,8 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
             size='3xl'
             className={cn(
               'flex items-center rounded-se-xl font-semibold text-[rgb(61,84,0)] bg-figma-neutral-50 hover:scale-105',
-              styles['concave-border-bl'],
+              styles['concave-border-4'],
+              styles['concave-border-5'],
             )}
           >
             即刻預約 · 輕鬆啟程
