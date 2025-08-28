@@ -12,10 +12,10 @@ export type THeader = TBaseComponent & {
 
 export type TLogo = TBaseComponent & {
   scale?: number
+  isNavbarLogo?: boolean
 }
 
 export type TNavigation = TBaseComponent & {
-  isVisible?: boolean
   isMenuOpen?: boolean
   onMenuToggle?: () => void
   logoProgress?: number

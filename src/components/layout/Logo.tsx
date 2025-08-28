@@ -3,12 +3,15 @@ import type { TLogo } from '@/types/components'
 
 const logoImage = "/logo.svg"
 
-const Logo = ({ scale = 0.6 }: TLogo) => {
+const Logo = ({ scale = 0.34, isNavbarLogo = false }: TLogo) => {
   return (
     <Link href='/'>
       <div
         className='flex items-center logo-container scale-[var(--logo-scale)]'
-        style={{ '--logo-scale': scale } as React.CSSProperties}
+        style={{
+          '--logo-scale': scale,
+          transformOrigin: isNavbarLogo ? undefined : '0% 0%'
+        } as React.CSSProperties}
       >
         <img 
           src={logoImage}

@@ -5,7 +5,6 @@ import type { TNavigation } from '@/types/components'
 import DropdownMenu from '../ui/DropdownMenu'
 
 const Navigation = ({
-  isVisible = true,
   isMenuOpen = false,
   onMenuToggle = () => {},
   logoProgress = 0,
@@ -39,8 +38,6 @@ const Navigation = ({
     setActiveDropdown(activeDropdown === itemName ? null : itemName)
   }
 
-  if (!isVisible) return null
-
   return (
     <>
       <div className='hidden min-[375px]:flex items-center space-x-6'>
@@ -72,8 +69,7 @@ const Navigation = ({
         </div>
       </div>
 
-      {logoProgress >= 1 && (
-        <div className='absolute top-full left-0 right-0 border-t border-[var(--color-figma-secondary-500)] bg-transparent'>
+      <div className='absolute top-full left-0 right-0 bg-transparent'>
           <div className='flex items-center justify-end px-[48px]'>
             <Link href='/inquiry'>
               <div className='bg-figma-secondary-500 p-4 rounded-b-2xl cursor-pointer hover:opacity-90 transition-opacity'>
@@ -84,7 +80,6 @@ const Navigation = ({
             </Link>
           </div>
         </div>
-      )}
 
       <button
         onClick={onMenuToggle}

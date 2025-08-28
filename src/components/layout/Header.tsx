@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Logo from './Logo'
 import Navigation from './Navigation'
-import BannerButton from '../customUI/BannerButton'
 import type { THeader } from '@/types/components'
 
 const Header = ({
@@ -16,11 +15,8 @@ const Header = ({
   hasTransparentHeader = false,
 }: THeader) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-
-  const containerHeight = logoProgress >= 1 ? 'h-[123px]' : 'py-4'
-  
   const headerClasses = [
-    'top-0 left-0 right-0 z-50',
+    'z-50',
     headerBehavior === 'fixed'
       ? 'fixed'
       : headerBehavior === 'sticky'
@@ -30,23 +26,25 @@ const Header = ({
       ? 'bg-transparent'
       : 'bg-figma-neutral-50 header-container',
   ].join(' ')
-
+  const opacityClass =  logoProgress >= 1 ? 'transition-opacity duration-1000 ease-in-out opacity-100' : 'opacity-0 pointer-events-none'
+  
   return (
-    <div className={headerClasses}>
-      <div className='px-[48px]'>
-        <div className={`flex items-center justify-between ${containerHeight}`}>
-          <Logo scale={logoScale} />
-          <div className='flex items-center py-12 px-1 gap-2'>
-            <Navigation
-              isVisible={isNavbarVisible}
-              isMenuOpen={isMenuOpen}
-              onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
-              logoProgress={logoProgress}
-            />
-          </div>
+    <>
+      <div className={`${headerClasses} top-10 px-[48px] pt-4 ${logoProgress >= 0.999 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+        <Logo scale={logoScale} isNavbarLogo={false} />
+      </div>
+      
+      <div className={`${headerClasses} ${opacityClass} h-[123px] flex items-center justify-between px-[48px] border-b border-[var(--color-figma-secondary-500)]`}>
+        <Logo scale={logoScale} isNavbarLogo={logoProgress >= 1} />
+        <div className='flex items-center py-12 px-1 gap-2'>
+          <Navigation
+            isMenuOpen={isMenuOpen}
+            onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
+            logoProgress={logoProgress}
+          />
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
