@@ -24,19 +24,19 @@ const Header = ({
         : 'relative',
     hasTransparentHeader && isHomePage && logoProgress < 1
       ? 'bg-transparent'
-      : 'bg-figma-neutral-50 header-container',
+      : 'bg-figma-neutral-50 backdrop-filter: blur(8px);',
   ].join(' ')
-  const opacityClass =  logoProgress >= 1 ? 'transition-opacity duration-1000 ease-in-out opacity-100' : 'opacity-0 pointer-events-none'
-  
+  const opacityClass = logoProgress >= 1 ? 'transition-opacity duration-1000 ease-in-out opacity-100' : 'opacity-0 pointer-events-none'
+
   return (
     <>
       <div className={`${headerClasses} top-10 px-[48px] pt-4 ${logoProgress >= 0.999 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
         <Logo scale={logoScale} isNavbarLogo={false} />
       </div>
-      
-      <div className={`${headerClasses} ${opacityClass} h-[123px] flex items-center justify-between px-[48px] border-b border-[var(--color-figma-secondary-500)]`}>
+
+      <div className={`${headerClasses} ${opacityClass} w-full h-[123px] flex items-center justify-between px-[48px] border-b border-[var(--color-figma-secondary-500)]`}>
         <Logo scale={logoScale} isNavbarLogo={logoProgress >= 1} />
-        <div className='flex items-center py-12 px-1 gap-2'>
+        <div className='flex items-center px-1'>
           <Navigation
             isMenuOpen={isMenuOpen}
             onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}

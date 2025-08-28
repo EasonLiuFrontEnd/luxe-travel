@@ -34,7 +34,7 @@ const DropdownMenu = ({ isVisible, items, onClose }: DropdownProps) => {
       const rect = (event.currentTarget as HTMLElement).getBoundingClientRect()
       const submenuWidth = 200
       const screenWidth = window.innerWidth
-      
+
       if (rect.right + submenuWidth > screenWidth) {
         setSubmenuPosition('left')
       } else {
@@ -49,8 +49,8 @@ const DropdownMenu = ({ isVisible, items, onClose }: DropdownProps) => {
   }
 
   return (
-    <div 
-      className="absolute top-9 left-0 bg-white z-50"
+    <div
+      className="absolute mt-[16px] left-0 bg-white z-50"
       onMouseLeave={() => {
         setActiveSubmenu(null)
         onClose()
@@ -63,30 +63,27 @@ const DropdownMenu = ({ isVisible, items, onClose }: DropdownProps) => {
           onMouseEnter={(e) => handleSubmenuEnter(item.label, e)}
           onMouseLeave={handleSubmenuLeave}
         >
-          <div className="py-[8px] pr-[8px] pl-[12px] cursor-pointer hover:bg-figma-neutral-50 transition-colors duration-300">
-            <div className="flex items-center justify-between min-w-[130px] h-[24px] text-figma-primary-500 font-noto-serif-body-m-semibold hover:text-figma-secondary-500 transition-colors duration-300">
+          <div className="py-[8px] pr-[8px] pl-[12px] cursor-pointer hover:bg-figma-accent-yellow-light transition duration-300">
+            <div className="flex items-center justify-between min-w-[130px] h-[24px] text-figma-primary-500 font-noto-serif-body-m-semibold hover:text-figma-secondary-500 transition duration-300">
               {item.label}
               {item.hasSubmenu && (
-                <img 
-                  src="/chevron-right.svg" 
-                  alt=">" 
-                  className="w-3 h-4" 
-                />
+                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10" fill="none">
+                  <path d="M1 9L5 5L1 1" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
               )}
             </div>
           </div>
 
           {/* 二級選單 */}
           {item.hasSubmenu && activeSubmenu === item.label && item.submenuItems && (
-            <div className={`absolute top-0 bg-white ${
-              submenuPosition === 'right' ? 'left-full' : 'right-full'
-            }`}>
+            <div className={`absolute top-0 bg-white ${submenuPosition === 'right' ? 'left-full' : 'right-full'
+              }`}>
               {item.submenuItems.map((subItem, subIndex) => (
                 <div
                   key={subIndex}
-                  className="py-[8px] pr-[8px] pl-[12px] cursor-pointer hover:bg-figma-neutral-50 transition-colors duration-300"
+                  className="py-[8px] pr-[8px] pl-[12px] cursor-pointer hover:bg-figma-accent-yellow-light transition duration-300"
                 >
-                  <div className="min-w-[96px] h-[24px] text-figma-primary-500 font-noto-serif-body-m-semibold hover:text-figma-secondary-500 transition-colors duration-300 whitespace-nowrap">
+                  <div className="min-w-[96px] h-[24px] text-figma-primary-500 font-noto-serif-body-m-semibold hover:text-figma-secondary-500 transition duration-300 whitespace-nowrap">
                     {subItem.label}
                   </div>
                 </div>

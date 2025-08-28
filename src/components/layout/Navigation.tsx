@@ -2,57 +2,40 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { NAV_ITEMS, DROPDOWN_MENUS } from '@/lib/constants'
 import type { TNavigation } from '@/types/components'
-import DropdownMenu from '../ui/DropdownMenu'
+import DropdownMenu from './DropdownMenu'
 
 const Navigation = ({
   isMenuOpen = false,
-  onMenuToggle = () => {},
+  onMenuToggle = () => { },
   logoProgress = 0,
 }: TNavigation) => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
 
   useEffect(() => {
-    const handleClickOutside = () => {
-      setActiveDropdown(null)
-    }
-
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setActiveDropdown(null)
       }
     }
 
-    if (activeDropdown) {
-      document.addEventListener('click', handleClickOutside)
-      document.addEventListener('keydown', handleEscape)
-    }
-
+    document.addEventListener('keydown', handleEscape)
     return () => {
-      document.removeEventListener('click', handleClickOutside)
       document.removeEventListener('keydown', handleEscape)
     }
-  }, [activeDropdown])
-
-
-  const handleNavItemClick = (itemName: string) => {
-    setActiveDropdown(activeDropdown === itemName ? null : itemName)
-  }
+  }, [])
 
   return (
     <>
       <div className='hidden min-[375px]:flex items-center space-x-6'>
         {NAV_ITEMS.map((item) => (
-          <div key={item.name} className='relative'>
-            <button
-              onClick={(e) => {
-                e.stopPropagation()
-                handleNavItemClick(item.name)
-              }}
-              className='font-noto-serif-body-l-semibold text-figma-primary-950 cursor-pointer'
-            >
-              {item.name}
-            </button>
-            
+          <div
+            key={item.name}
+            className='relative'
+            onMouseEnter={() => setActiveDropdown(item.name)}
+            onMouseLeave={() => setActiveDropdown(null)}
+          >
+            <button className='font-noto-serif-body-l-semibold text-figma-primary-950 cursor-pointer'>{item.name}</button>
+            <div className="absolute top-full left-0 right-0 h-[16px] bg-transparent" />
             <DropdownMenu
               isVisible={activeDropdown === item.name}
               items={DROPDOWN_MENUS[item.name as keyof typeof DROPDOWN_MENUS] || []}
@@ -70,16 +53,16 @@ const Navigation = ({
       </div>
 
       <div className='absolute top-full left-0 right-0 bg-transparent'>
-          <div className='flex items-center justify-end px-[48px]'>
-            <Link href='/inquiry'>
-              <div className='bg-figma-secondary-500 p-4 rounded-b-2xl cursor-pointer hover:opacity-90 transition-opacity'>
-                <span className="font-genseki-body-m-medium text-figma-primary-0 px-4 py-0">
-                  諮詢單
-                </span>
-              </div>
-            </Link>
-          </div>
+        <div className='flex items-center justify-end px-[48px]'>
+          <Link href='/inquiry'>
+            <div className='p-4 rounded-b-2xl cursor-pointer bg-figma-secondary-500 hover:bg-figma-secondary-950 transition duration-300'>
+              <span className="font-genseki-body-m-medium text-figma-primary-0 px-4 py-0">
+                諮詢單
+              </span>
+            </div>
+          </Link>
         </div>
+      </div>
 
       <button
         onClick={onMenuToggle}
