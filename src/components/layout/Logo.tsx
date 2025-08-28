@@ -13,7 +13,7 @@ const Logo = ({ scale = 0.34, isNavbarLogo = false }: TLogo) => {
           transformOrigin: isNavbarLogo ? undefined : '0% 0%'
         } as React.CSSProperties}
       >
-        <img 
+        <img
           src={logoImage}
           alt="典藏旅遊 LUXE TRAVEL"
           className="block w-[527px] h-[140px] aspect-[463/123]"
