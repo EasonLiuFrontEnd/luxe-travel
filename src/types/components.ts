@@ -12,7 +12,6 @@ export type THeader = TBaseComponent & {
 
 export type TLogo = TBaseComponent & {
   scale?: number
-  isNavbarLogo?: boolean
 }
 
 export type TNavigation = TBaseComponent & {

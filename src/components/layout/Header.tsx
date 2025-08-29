@@ -26,15 +26,15 @@ const Header = ({
       ? 'bg-transparent'
       : 'bg-figma-neutral-50 backdrop-filter: blur(8px);',
     logoProgress >= 1
-      ? 'h-[123px]'
-      : 'py-4'
+      ? 'border-b border-[var(--color-figma-secondary-500)]'
+      : ''
   ].join(' ')
-  const opacityClass = logoProgress >= 1 ? 'transition-opacity duration-1000 ease-in-out opacity-100' : 'opacity-0 pointer-events-none'
+  const opacityClass = logoProgress >= 1 ? 'transition-opacity duration-1200 ease-in-out opacity-100' : 'opacity-0 pointer-events-none'
 
   return (
-    <div className={`${headerClasses} w-full flex items-center justify-between px-[48px] border-b border-[var(--color-figma-secondary-500)]`}>
+    <div className={`${headerClasses} w-full flex items-center justify-between px-[48px]`}>
       <Logo scale={logoScale} />
-      <div className={`flex items-center py-12 px-1 gap-2 ${opacityClass}`}>
+      <div className={`flex items-center py-[48px] px-2 ${opacityClass}`}>
         <Navigation
           isMenuOpen={isMenuOpen}
           onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}

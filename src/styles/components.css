@@ -1,5 +1,5 @@
 .logo-container {
-  transform-origin: left center;
+  transform-origin: left top;
   transition: transform 0.5s ease-in-out;
 }
 
