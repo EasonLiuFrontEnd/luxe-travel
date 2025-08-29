@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Logo from './Logo'
 import Navigation from './Navigation'
+import ConsultButton from '@/components/ui/ConsultButton'
 import type { THeader } from '@/types/components'
 
 const Header = ({
@@ -32,14 +33,20 @@ const Header = ({
   const opacityClass = logoProgress >= 1 ? 'transition-opacity duration-1200 ease-in-out opacity-100' : 'opacity-0 pointer-events-none'
 
   return (
-    <div className={`${headerClasses} w-full flex items-center justify-between px-[48px]`}>
-      <Logo scale={logoScale} />
-      <div className={`flex items-center py-[48px] px-2 ${opacityClass}`}>
+    <div className={`${headerClasses} w-full flex items-center justify-between p-[48px] max-[374px]:p-[12px]`}>
+      <div className='max-[374px]:hidden'>
+        <Logo scale={logoScale} />
+      </div>
+      <div className='min-[375px]:hidden'>
+        <Logo scale={1} />
+      </div>
+      <div className={`flex items-center px-2 ${opacityClass}`}>
         <Navigation
           isMenuOpen={isMenuOpen}
           onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
           logoProgress={logoProgress}
         />
+      <ConsultButton className='min-[375px]:hidden'/>
       </div>
     </div>
   )

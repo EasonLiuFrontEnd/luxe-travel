@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { NAV_ITEMS, DROPDOWN_MENUS } from '@/lib/constants'
 import type { TNavigation } from '@/types/components'
 import DropdownMenu from './DropdownMenu'
+import ConsultButton from '@/components/ui/ConsultButton'
 
 const Navigation = ({
   isMenuOpen = false,
@@ -50,17 +51,7 @@ const Navigation = ({
         </svg>
       </div>
 
-      <div className='absolute top-full left-0 right-0 bg-transparent'>
-        <div className='flex items-center justify-end px-[48px]'>
-          <Link href='/inquiry'>
-            <div className='p-4 rounded-b-2xl cursor-pointer bg-figma-secondary-500 hover:bg-figma-secondary-950 transition duration-300'>
-              <span className="font-genseki-body-m-medium text-figma-primary-0 px-4 py-0">
-                諮詢單
-              </span>
-            </div>
-          </Link>
-        </div>
-      </div>
+      <ConsultButton />
 
       <button
         onClick={onMenuToggle}
