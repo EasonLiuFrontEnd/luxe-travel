@@ -3,7 +3,6 @@
 import { useMemo } from 'react'
 import { useScrollContext } from '@/context/ScrollContext'
 import { APP_CONFIG } from '@/lib/config'
-import BannerButton from '../../customUI/BannerButton'
 import type { TBanner } from '@/types/components'
 import { cn } from '@/lib/utils'
 import styles from './styles.module.css'
@@ -21,56 +20,59 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
 
   return (
     <div
-      className='relative min-h-screen banner-dynamic-padding max-w-[76vw] m-auto'
+      className='min-h-screen banner-dynamic-padding pt-[152px] px-[48px]'
       style={{ '--dynamic-padding': dynamicPadding } as React.CSSProperties}
     >
-      <div className='z-10 sticky top-0'>
-        <h1 className='flex flex-col text-right font-noto-serif-h1-bold text-figma-neutral-950'>
-          <div className='self-end bg-figma-neutral-50 rounded-es-2xl pt-4 px-4 pb-1'>
-            歐洲自由行
+      <div className='z-10 sticky top-[123px] -mt-[250px]'>
+          <h1 className='flex flex-col text-right font-noto-serif-h1-bold text-figma-neutral-950'>
+            <div className='self-end bg-figma-neutral-50 rounded-es-2xl pt-[16px] px-[16px] pb-[4px]'>
+              歐洲自由行
+            </div>
+            <div
+              className={cn(
+                'self-end bg-figma-neutral-50 rounded-bl-2xl pt-[4px] px-[16px] pb-[16px]',
+                styles['concave-border-1'],
+              )}
+            >
+              精緻首選
+            </div>
+          </h1>
+          <div className='font-genseki-h5-medium flex flex-col text-figma-primary-950'>
+            <p
+              className={cn(
+                'self-end text-right bg-figma-neutral-50 py-[4px] px-[16px]',
+                styles['concave-border-2'],
+              )}
+            >
+              典藏旅遊30年經驗團隊服務
+            </p>
+            <p
+              className={cn(
+                'self-end bg-figma-neutral-50 rounded-s-2xl py-[10px] px-[16px]',
+                styles['concave-border-3'],
+              )}
+            >
+              為您客製化旅程，典藏經典回憶
+            </p>
           </div>
-          <div
-            className={cn(
-              'self-end bg-figma-neutral-50 rounded-bl-2xl pt-1 px-4 pb-4',
-              styles['concave-border-1'],
-            )}
-          >
-            精緻首選
-          </div>
-        </h1>
-        <div className='font-genseki-h5-medium flex flex-col text-figma-primary-950'>
-          <p
-            className={cn(
-              'self-end text-right bg-figma-neutral-50 py-1',
-              styles['concave-border-2'],
-            )}
-          >
-            典藏旅遊30年經驗團隊服務
-          </p>
-          <p
-            className={cn(
-              'self-end bg-figma-neutral-50 rounded-s-2xl py-[10px] px-4',
-              styles['concave-border-3'],
-            )}
-          >
-            為您客製化旅程，典藏經典回憶
-          </p>
         </div>
-      </div>
-      <div className='relative h-[60vh] bg-[url(/banner.jpg)] bg-cover bg-center rounded-2xl'>
+      <div className='relative h-[662px] bg-[url(/banner.jpg)] bg-cover bg-center rounded-2xl'>
+        
         <div className={cn('absolute left-0 bottom-0 self-start')}>
-          <BannerButton
-            variant='primary'
-            size='3xl'
+          <button
             className={cn(
-              'flex items-center rounded-se-xl font-semibold text-[rgb(61,84,0)] bg-figma-neutral-50',
+              'flex items-center rounded-se-xl font-noto-serif-h4-bold text-figma-secondary-950 bg-figma-neutral-50 py-[11px] px-[32px] cursor-pointer ',
               styles['concave-border-4'],
               styles['concave-border-5'],
             )}
           >
             即刻預約 · 輕鬆啟程
-            <img src='/bannerArrow.svg' alt='Banner Arrow' className='pl-5' />
-          </BannerButton>
+            <svg xmlns="http://www.w3.org/2000/svg" width="76" height="38" viewBox="0 0 76 38" fill="none" 
+              className={styles['arrow']}
+            >
+              <path d="M68.088 25.3333H29.0072V22.1666H56.4279L45.2549 15.6153L46.8568 12.8846L68.088 25.3333Z" fill="#926D3C"/>
+            </svg>
+          </button>
         </div>
       </div>
     </div>

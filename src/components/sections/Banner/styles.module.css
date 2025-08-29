@@ -35,12 +35,12 @@
   padding-left: 16px;
   &::before {
     content: '';
-    width: 32px;
+    width: 36px;
     height: 100%;
     display: block;
     position: absolute;
     background-color: var(--color-figma-neutral-50);
-    left: -32px;
+    left: -36px;
     top: 0;
     bottom: 0;
     mask:
@@ -50,9 +50,9 @@
         var(--color-figma-neutral-50) 50%
       ),
       radial-gradient(
-        circle 16px at center,
-        transparent 16px,
-        var(--color-figma-neutral-50) 16px
+        circle 18px at center,
+        transparent 18px,
+        var(--color-figma-neutral-50) 18px
       );
     mask-composite: intersect;
   }
@@ -149,4 +149,12 @@
       );
     mask-composite: intersect;
   }
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+}
+
+button:hover .arrow {
+  transform: scaleX(1.2) translateX(-8px);
 }
