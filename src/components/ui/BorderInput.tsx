@@ -12,7 +12,7 @@ export const BorderInput = forwardRef<HTMLInputElement, TBorderInputProps>(
 
     return (
       <div className='w-full relative'>
-        <div className='flex flex-wrap gap-2.5 items-center justify-start px-0 py-3 w-full border-b border-[rgba(56,56,65,0.7)]'>
+        <div className='flex flex-wrap gap-2.5 items-center justify-start px-0 py-3 w-full border-b border-figma-primary-950-70'>
           <input
             ref={ref}
             className={cn(

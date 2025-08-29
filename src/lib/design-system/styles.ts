@@ -28,7 +28,7 @@ export const formStyles = {
 
   input: {
     base: 'flex w-full bg-transparent outline-none transition-colors',
-    border: 'border-0 border-b border-[rgba(56,56,65,0.7)] px-0 py-3',
+    border: 'border-0 border-b border-figma-primary-950-70 px-0 py-3',
     font: 'font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950',
     placeholder: 'placeholder:text-figma-primary-300',
     focus: 'focus:border-figma-primary-950 focus:outline-none',
@@ -45,7 +45,7 @@ export const formStyles = {
 
   counter: {
     container:
-      'flex gap-2.5 items-center justify-start px-0 py-3 border-b border-[rgba(56,56,65,0.7)]',
+      'flex gap-2.5 items-center justify-start px-0 py-3 border-b border-figma-primary-950-70',
     label:
       'flex-1 font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950',
     button: {

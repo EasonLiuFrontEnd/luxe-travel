@@ -7,6 +7,8 @@ export const colors = {
     400: '#737373',
     500: '#5b5b6e',
     950: '#383841',
+    // 透明版本
+    '950-70': 'rgba(56,56,65,0.7)',
   },
 
   secondary: {
@@ -23,6 +25,9 @@ export const colors = {
   neutral: {
     0: '#ffffff',
     50: '#f5f5f5',
+    100: '#ebebeb',
+    200: '#bdbdbd',
+    300: '#737373',
     950: '#333333',
   },
 
@@ -41,8 +46,12 @@ export const colors = {
   },
 
   grayscale: {
-    gray200: '#EBEBEB',
-    white: '#ffffff',
+    0: '#ffffff',
+    50: '#f5f5f5',
+    100: '#ebebeb',
+    200: '#bdbdbd',
+    300: '#737373',
+    950: '#333333',
   },
 
   theme: {
@@ -70,6 +79,7 @@ export const designTokenColors = {
   'primary-400': colors.primary[400],
   'primary-500': colors.primary[500],
   'primary-950': colors.primary[950],
+  'primary-950-70': colors.primary['950-70'],
 
   'secondary-50': colors.secondary[50],
   'secondary-100': colors.secondary[100],
@@ -94,8 +104,12 @@ export const designTokenColors = {
   'function-available-normal': colors.function.availableNormal,
   'function-available-light': colors.function.availableLight,
 
-  'grayscale-gray-200': colors.grayscale.gray200,
-  'grayscale-white': colors.grayscale.white,
+  'grayscale-0': colors.grayscale[0],
+  'grayscale-50': colors.grayscale[50],
+  'grayscale-100': colors.grayscale[100],
+  'grayscale-200': colors.grayscale[200],
+  'grayscale-300': colors.grayscale[300],
+  'grayscale-950': colors.grayscale[950],
 
   'theme-black': colors.theme.black,
   'theme-dark-gray': colors.theme.darkGray,
