@@ -32,7 +32,7 @@ const Logo = ({ scale = 0.34, isMobile = false }: TLogo & { isMobile?: boolean }
         <img
           src={logoImage}
           alt="典藏旅遊 LUXE TRAVEL"
-          className="block w-[527px] h-[140px] max-xs:w-[181px] max-xs:h-[48px]"
+          className="block w-[181px] h-[48px] xs:w-[527px] xs:h-[140px]"
           data-node-id="422:1672"
         />
       </div>
