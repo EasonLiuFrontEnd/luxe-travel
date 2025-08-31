@@ -18,7 +18,7 @@ const Header = ({
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const baseClasses = 'z-50 w-full flex items-center justify-between'
-  const mobileClasses = 'max-[374px]:bg-figma-neutral-50 max-[374px]:border-b max-[374px]:border-[var(--color-figma-secondary-500)] max-[374px]:p-[12px]'
+  const mobileClasses = 'max-xs:bg-figma-neutral-50 max-xs:border-b max-xs:border-[var(--color-figma-secondary-500)] max-xs:p-[12px]'
   const desktopClasses = 'p-[48px]'
   const positionClass = headerBehavior === 'fixed' ? 'fixed' : headerBehavior === 'sticky' ? 'sticky' : 'relative'
   const backgroundClass = hasTransparentHeader && isHomePage && logoProgress < 1 ? 'bg-transparent' : 'bg-figma-neutral-50 backdrop-filter: blur(8px);'
@@ -28,16 +28,16 @@ const Header = ({
 
   return (
     <div className={headerClasses}>
-      <div className='max-[374px]:hidden'>
+      <div className='max-xs:hidden'>
         <Logo scale={logoScale} />
       </div>
-      <div className={`flex items-center px-2 max-[374px]:w-full max-[374px]:px-0 max-[374px]:opacity-100 ${opacityClass}`}>
+      <div className={`flex items-center px-2 max-xs:w-full max-xs:px-0 max-xs:opacity-100 ${opacityClass}`}>
         <Navigation
           isMenuOpen={isMenuOpen}
           onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
           logoProgress={logoProgress}
         />
-        <ConsultButton className='min-[375px]:hidden' />
+        <ConsultButton className='xs:hidden' />
       </div>
     </div>
   )

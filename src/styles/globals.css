@@ -96,6 +96,8 @@
   --spacing-11: 80px;
   --spacing-12: 120px;
   --spacing-13: 200px;
+  
+  --breakpoint-xs: 375px;
 }
 
 :root {
