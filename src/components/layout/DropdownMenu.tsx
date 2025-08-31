@@ -1,33 +1,16 @@
 'use client'
 
 import { useState } from 'react'
+import { TDropdownMenu, TDropdownItem } from '@/types/components'
 
-interface SubmenuItem {
-  label: string
-  href: string
-}
-
-interface DropdownItem {
-  label: string
-  href: string
-  hasSubmenu?: boolean
-  submenuItems?: SubmenuItem[]
-}
-
-interface DropdownProps {
-  isVisible: boolean
-  items: DropdownItem[]
-  onClose: () => void
-}
-
-const DropdownMenu = ({ isVisible, items, onClose }: DropdownProps) => {
+const DropdownMenu = ({ isVisible, items, onClose }: TDropdownMenu) => {
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null)
   const [submenuPosition, setSubmenuPosition] = useState<'right' | 'left'>('right')
 
   if (!isVisible) return null
 
   const handleSubmenuEnter = (label: string, event: React.MouseEvent) => {
-    const item = items.find(item => item.label === label)
+    const item = items.find((item: TDropdownItem) => item.label === label)
     if (item?.hasSubmenu) {
       setActiveSubmenu(label)
 

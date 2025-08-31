@@ -24,6 +24,11 @@ export type TBanner = TBaseComponent & {
   logoProgress?: number
 }
 
+export type TBannerCarousel = TBaseComponent & {
+  images?: string[]
+  autoPlayInterval?: number
+}
+
 export type TButton = TBaseComponent & {
   variant?: 'primary' | 'secondary' | 'ghost'
   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
@@ -37,4 +42,22 @@ export type TDestinationCard = TBaseComponent & {
   englishName: string
   countryPattern?: string
   size?: 'default' | 'compact'
+}
+
+export type TSubmenuItem = {
+  label: string
+  href: string
+}
+
+export type TDropdownItem = {
+  label: string
+  href: string
+  hasSubmenu?: boolean
+  submenuItems?: TSubmenuItem[]
+}
+
+export type TDropdownMenu = TBaseComponent & {
+  isVisible: boolean
+  items: TDropdownItem[]
+  onClose: () => void
 }

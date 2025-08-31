@@ -262,11 +262,11 @@
     display: block;
     position: absolute;
     background-color: var(--color-figma-neutral-50);
-    left: -32px;
+    right: -32px;
     bottom: 0;
     mask:
       linear-gradient(
-        to left,
+        to right,
         var(--color-figma-neutral-50) 50%,
         transparent 50%
       ),
