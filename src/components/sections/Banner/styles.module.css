@@ -313,3 +313,16 @@
 button:hover .arrow {
   transform: scaleX(1.2) translateX(-8px);
 }
+
+@keyframes airplane-fly-down {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, 568px);
+  }
+}
+
+.airplane-animated {
+  animation: airplane-fly-down 5s ease-in-out forwards;
+}

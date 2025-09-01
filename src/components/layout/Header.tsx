@@ -22,7 +22,9 @@ const Header = ({
   const desktopClasses = 'p-[48px]'
   const positionClass = headerBehavior === 'fixed' ? 'fixed' : headerBehavior === 'sticky' ? 'sticky' : 'relative'
   const backgroundClass = hasTransparentHeader && isHomePage && logoProgress < 1 ? 'bg-transparent' : 'bg-figma-neutral-50 backdrop-filter: blur(8px);'
-  const borderClass = logoProgress >= 1 ? 'border-b border-[var(--color-figma-secondary-500)]' : ''
+  const borderClass = logoProgress >= 1
+    ? 'border-b border-[var(--color-figma-secondary-500)] transition-all duration-1200 ease-in-out'
+    : 'border-b border-transparent transition-all duration-1200 ease-in-out'
   const headerClasses = `${baseClasses} ${mobileClasses} ${desktopClasses} ${positionClass} ${backgroundClass} ${borderClass}`
   const opacityClass = logoProgress >= 1 ? 'transition-opacity duration-1200 ease-in-out opacity-100' : 'opacity-0 pointer-events-none'
 
