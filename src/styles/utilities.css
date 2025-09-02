@@ -1,5 +1,4 @@
 @layer utilities {
-  /* 專門的字體族類別 - 只設定 font-family */
   .font-family-noto-serif {
     font-family: var(--font-noto-serif-tc);
   }

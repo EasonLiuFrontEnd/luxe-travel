@@ -1,0 +1,39 @@
+.gradientTitle {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent calc(100% - 26px),
+    #e5d9bf calc(100% - 26px),
+    #e5d9bf 100%
+  );
+}
+
+.decoBar {
+  position: relative;
+}
+
+.decoBar::before,
+.decoBar::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 1px;
+  background-color: #e5d9bf;
+}
+
+.decoBar::before {
+  left: calc(100% + 24px);
+}
+
+.decoBar::after {
+  right: calc(100% + 24px);
+}
+
+@media (max-width: 1023px) {
+  .decoBar::before,
+  .decoBar::after {
+    content: none;
+  }
+}

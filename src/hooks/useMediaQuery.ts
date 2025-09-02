@@ -9,15 +9,13 @@ export const useMediaQuery = (): TMediaQueryState => {
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 374px)')
-    
+
     const handleMediaChange = (e: MediaQueryListEvent) => {
       setIsMobile(e.matches)
     }
 
-    // Set initial state
     setIsMobile(mediaQuery.matches)
 
-    // Listen for changes
     mediaQuery.addEventListener('change', handleMediaChange)
 
     return () => {

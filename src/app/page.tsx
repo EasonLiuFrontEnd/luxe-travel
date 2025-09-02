@@ -1,6 +1,5 @@
-import Banner from '@/components/sections/Banner'
-import Services from '@/components/sections/Services'
-import BookShelfSection from '@/components/sections/BookShelfSection'
+import Banner from '@/components/pages/home/Banner'
+import BookShelfSection from '@/components/pages/home/BookShelfSection'
 
 const HomePage = () => {
   return (
@@ -8,7 +7,6 @@ const HomePage = () => {
       <Banner />
       <div className='relative z-10 bg-figma-neutral-50'>
         <BookShelfSection />
-        <Services />
       </div>
     </div>
   )

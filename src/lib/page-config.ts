@@ -3,7 +3,6 @@ import { APP_CONFIG } from './config'
 export type TPageType =
   | 'home'
   | 'about'
-  | 'services'
   | 'destinations'
   | 'contact'
   | 'search'
@@ -34,15 +33,6 @@ export const PAGE_CONFIGS: Record<string, TPageConfig> = {
     hasScrollAnimation: false,
     hasTransparentHeader: false,
     showConsultButton: false,
-    headerBehavior: 'sticky',
-    footerStyle: 'default',
-    showHeader: true,
-  },
-  '/services': {
-    type: 'services',
-    hasScrollAnimation: false,
-    hasTransparentHeader: false,
-    showConsultButton: true,
     headerBehavior: 'sticky',
     footerStyle: 'default',
     showHeader: true,
