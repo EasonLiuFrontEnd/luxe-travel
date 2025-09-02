@@ -57,7 +57,7 @@
     &::before {
       display: none;
     }
-    
+
     &::after {
       display: block;
     }
@@ -89,7 +89,7 @@
       );
     mask-composite: intersect;
   }
-  
+
   &::after {
     content: '';
     width: 32px;
@@ -123,7 +123,7 @@
     &::before {
       display: none;
     }
-    
+
     &::after {
       display: block;
     }
@@ -191,7 +191,7 @@
     &::before {
       display: none;
     }
-    
+
     &::after {
       display: block;
     }

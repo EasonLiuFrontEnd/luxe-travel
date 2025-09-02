@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import type { TDestinationCard } from '@/types/components'
 import { cn } from '@/lib/utils'
@@ -79,11 +79,8 @@ const DestinationCard = ({
   // 旋轉角度由外部 props containerClassName 控制
 
   return (
-    <div 
-      className={cn(
-        containerClasses, 
-        getBackgroundColor(),
-      )} 
+    <div
+      className={cn(containerClasses, getBackgroundColor())}
       data-destination-card
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
@@ -93,13 +90,17 @@ const DestinationCard = ({
       {/* 主要文字內容區域 */}
       <div className='flex flex-col gap-3 items-center text-[var(--color-figma-primary-950)] pt-[16px]'>
         {/* 編號 */}
-        <p className="font-family-noto-serif font-medium text-[16px] lg:text-[20px] lg:leading-[120%] tracking-[0%] lg:tracking-[8%]">{number}</p>
+        <p className='font-family-noto-serif font-medium text-[16px] lg:text-[20px] lg:leading-[120%] tracking-[0%] lg:tracking-[8%]'>
+          {number}
+        </p>
         {/* 目的地名稱 */}
-        <p className="font-family-genseki font-medium text-[16px] lg:text-[24px] lg:leading-[120%] tracking-[0px]">{destination}</p>
+        <p className='font-family-genseki font-medium text-[16px] lg:text-[24px] lg:leading-[120%] tracking-[0px]'>
+          {destination}
+        </p>
       </div>
 
       {/* 旋轉的英文標題 */}
-      <p className="absolute bottom-[16px] left-[16px] rotate-[270deg] origin-top-left font-family-luxurious text-[var(--color-figma-primary-950)] text-[24px] lg:text-[48px] tracking-[10%] leading-[100%] text-center whitespace-nowrap">
+      <p className='absolute bottom-[16px] left-[16px] rotate-[270deg] origin-top-left font-family-luxurious text-[var(--color-figma-primary-950)] text-[24px] lg:text-[48px] tracking-[10%] leading-[100%] text-center whitespace-nowrap'>
         {englishName}
       </p>
 
@@ -112,10 +113,12 @@ const DestinationCard = ({
           patternContainerClassName,
         )}
         style={{ ['--pattern-top' as any]: patternTopOffset || '20px' }}
-        src={countryPattern || '/patterns/hr-croatia.svg'} width={182} height={533}
+        src={countryPattern || '/patterns/hr-croatia.svg'}
+        width={182}
+        height={533}
       />
     </div>
   )
 }
 
-export default DestinationCard 
+export default DestinationCard

@@ -1,13 +1,8 @@
-import React from 'react';
-import ArrowSvg from '../../assets/bannerArrow.svg';
+import React from 'react'
+import ArrowSvg from '../../assets/bannerArrow.svg'
 
 function BannerArrow() {
-  return (
-      <img
-        src={ArrowSvg}
-        alt="Banner Arrow"
-      />
-  );
+  return <img src={ArrowSvg} alt='Banner Arrow' />
 }
 
-export default BannerArrow;
+export default BannerArrow

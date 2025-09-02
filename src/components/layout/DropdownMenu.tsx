@@ -5,7 +5,9 @@ import { TDropdownMenu, TDropdownItem } from '@/types/components'
 
 const DropdownMenu = ({ isVisible, items, onClose }: TDropdownMenu) => {
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null)
-  const [submenuPosition, setSubmenuPosition] = useState<'right' | 'left'>('right')
+  const [submenuPosition, setSubmenuPosition] = useState<'right' | 'left'>(
+    'right',
+  )
 
   if (!isVisible) return null
 
@@ -33,7 +35,7 @@ const DropdownMenu = ({ isVisible, items, onClose }: TDropdownMenu) => {
 
   return (
     <div
-      className="absolute mt-[16px] left-0 bg-white z-50"
+      className='absolute mt-[16px] left-0 bg-white z-50'
       onMouseLeave={() => {
         setActiveSubmenu(null)
         onClose()
@@ -42,37 +44,53 @@ const DropdownMenu = ({ isVisible, items, onClose }: TDropdownMenu) => {
       {items.map((item, index) => (
         <div
           key={index}
-          className="relative"
+          className='relative'
           onMouseEnter={(e) => handleSubmenuEnter(item.label, e)}
           onMouseLeave={handleSubmenuLeave}
         >
-          <div className="py-[8px] pr-[8px] pl-[12px] cursor-pointer hover:bg-figma-accent-yellow-light transition duration-300">
-            <div className="flex items-center justify-between min-w-[130px] h-[24px] text-figma-primary-500 font-noto-serif-body-m-semibold hover:text-figma-secondary-500 transition duration-300">
+          <div className='py-[8px] pr-[8px] pl-[12px] cursor-pointer hover:bg-figma-accent-yellow-light transition duration-300'>
+            <div className='flex items-center justify-between min-w-[130px] h-[24px] text-figma-primary-500 font-noto-serif-body-m-semibold hover:text-figma-secondary-500 transition duration-300'>
               {item.label}
               {item.hasSubmenu && (
-                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10" fill="none">
-                  <path d="M1 9L5 5L1 1" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='6'
+                  height='10'
+                  viewBox='0 0 6 10'
+                  fill='none'
+                >
+                  <path
+                    d='M1 9L5 5L1 1'
+                    stroke='currentColor'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                  />
                 </svg>
               )}
             </div>
           </div>
 
           {/* 二級選單 */}
-          {item.hasSubmenu && activeSubmenu === item.label && item.submenuItems && (
-            <div className={`absolute top-0 bg-white ${submenuPosition === 'right' ? 'left-full' : 'right-full'
-              }`}>
-              {item.submenuItems.map((subItem, subIndex) => (
-                <div
-                  key={subIndex}
-                  className="py-[8px] pr-[8px] pl-[12px] cursor-pointer hover:bg-figma-accent-yellow-light transition duration-300"
-                >
-                  <div className="min-w-[96px] h-[24px] text-figma-primary-500 font-noto-serif-body-m-semibold hover:text-figma-secondary-500 transition duration-300 whitespace-nowrap">
-                    {subItem.label}
+          {item.hasSubmenu &&
+            activeSubmenu === item.label &&
+            item.submenuItems && (
+              <div
+                className={`absolute top-0 bg-white ${
+                  submenuPosition === 'right' ? 'left-full' : 'right-full'
+                }`}
+              >
+                {item.submenuItems.map((subItem, subIndex) => (
+                  <div
+                    key={subIndex}
+                    className='py-[8px] pr-[8px] pl-[12px] cursor-pointer hover:bg-figma-accent-yellow-light transition duration-300'
+                  >
+                    <div className='min-w-[96px] h-[24px] text-figma-primary-500 font-noto-serif-body-m-semibold hover:text-figma-secondary-500 transition duration-300 whitespace-nowrap'>
+                      {subItem.label}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
         </div>
       ))}
     </div>
