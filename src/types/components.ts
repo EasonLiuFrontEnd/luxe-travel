@@ -42,6 +42,11 @@ export type TDestinationCard = TBaseComponent & {
   englishName: string
   countryPattern?: string
   size?: 'default' | 'compact'
+  onClick?: () => void
+  isActive?: boolean
+  containerClassName?: string
+  patternContainerClassName?: string
+  patternTopOffset?: string
 }
 
 export type TSearchIcon = {

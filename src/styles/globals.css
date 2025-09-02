@@ -177,3 +177,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* 新增：透明色變數 */
+:root {
+  --color-figma-primary-950-70: rgba(56,56,65,0.7);
+}
