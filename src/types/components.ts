@@ -47,7 +47,6 @@ export type TDestinationCard = TBaseComponent & {
   containerClassName?: string
   patternContainerClassName?: string
   patternTopOffset?: string
-  style?: React.CSSProperties
 }
 
 export type TSearchIcon = {

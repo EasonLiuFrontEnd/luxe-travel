@@ -2,7 +2,8 @@
 
 import type { TDestinationCard } from '@/types/components'
 import { cn } from '@/lib/utils'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import styles from './styles.module.css'
 
 // 圖示映射表
 const PATTERN_MAP = {
@@ -43,7 +44,7 @@ const DestinationCard = ({
   const [isPatternVisible, setIsPatternVisible] = useState(false)
 
   // 當 isActive 改變時，更新圖案顯示狀態
-  React.useEffect(() => {
+  useEffect(() => {
     setIsPatternVisible(isActive)
   }, [isActive])
 
@@ -106,11 +107,8 @@ const DestinationCard = ({
       <img
         alt={`${destination} pattern`}
         className={cn(
-          'max-w-none absolute left-[15px] w-[107px] h-[311px]',
-          'lg:w-[182px] lg:h-[533px]',
-          'top-[var(--pattern-top)]',
-          'transition-all duration-500 ease-in-out',
-          isPatternVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95',
+          styles.pattern,
+          isPatternVisible ? styles.patternVisible : styles.patternHidden,
           patternContainerClassName,
         )}
         style={{ ['--pattern-top' as any]: patternTopOffset || '20px' }}
@@ -120,4 +118,4 @@ const DestinationCard = ({
   )
 }
 
-export default DestinationCard
+export default DestinationCard 

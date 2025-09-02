@@ -1,7 +1,8 @@
 "use client"
 
 import React, { useState, useRef, useEffect } from 'react'
-import DestinationCard from '@/components/customUI/DestinationCard'
+import DestinationCard from '@/components/customUI/DestinationCard/index'
+import styles from './styles.module.css'
 
 const BookShelf = () => {
   const [activeCardId, setActiveCardId] = useState<string | null>(null)
@@ -148,7 +149,7 @@ const BookShelf = () => {
       >
         <div
           ref={trackRef}
-          className='flex items-end gap-3 transform translate-x-[var(--tx)] [will-change:transform]'
+          className={styles.track}
           style={{ ['--tx' as any]: `${translateX}px` }}
         >
           {cards.map((c, idx) => {
@@ -162,23 +163,27 @@ const BookShelf = () => {
             console.log(`Card ${c.number}: ${className}`)
             
             return (
-              <DestinationCard
-                key={c.id}
-                number={c.number}
-                destination={c.destination}
-                englishName={c.english}
-                countryPattern={c.pattern}
-                isActive={activeCardId === c.id}
-                onClick={() => handleCardClick(c.id)}
-                containerClassName={className}
-                patternTopOffset={patternTopOffsets[idx]}
+              <div
+                className={styles.bookContainer}
                 style={{ 
                   ['--w' as any]: `${webWidth}px`, 
                   ['--h' as any]: `${webHeight}px`,
-                  marginLeft: bookMargins[idx].left,
-                  marginRight: bookMargins[idx].right
+                  ['--book-margin-left' as any]: bookMargins[idx].left,
+                  ['--book-margin-right' as any]: bookMargins[idx].right
                 }}
-              />
+              >
+                <DestinationCard
+                  key={c.id}
+                  number={c.number}
+                  destination={c.destination}
+                  englishName={c.english}
+                  countryPattern={c.pattern}
+                  isActive={activeCardId === c.id}
+                  onClick={() => handleCardClick(c.id)}
+                  containerClassName={className}
+                  patternTopOffset={patternTopOffsets[idx]}
+                />
+              </div>
             )
           })}
         </div>
