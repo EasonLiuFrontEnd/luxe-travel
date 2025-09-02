@@ -4,35 +4,13 @@ import type { TDestinationCard } from '@/types/components'
 import { cn } from '@/lib/utils'
 import React, { useState, useEffect } from 'react'
 import styles from './styles.module.css'
-
-// 圖示映射表
-const PATTERN_MAP = {
-  croatia: '/patterns/hr-croatia.svg',
-  italy: '/patterns/it-italy.svg',
-  france: '/patterns/fr-france.svg',
-  germany: '/patterns/de-germany.svg',
-  spain: '/patterns/es-spain.svg',
-  greece: '/patterns/gr-greece.svg',
-  uk: '/patterns/gb-uk.svg',
-  ireland: '/patterns/ie-ireland.svg',
-  netherlands: '/patterns/nl-netherlands.svg',
-  belgium: '/patterns/be-belgium.svg',
-  austria: '/patterns/at-austria.svg',
-  switzerland: '/patterns/ch-switzerland.svg',
-  czech: '/patterns/cz-czech.svg',
-  hungary: '/patterns/hu-hungary.svg',
-  baltic: '/patterns/baltic-states.svg',
-  portugal: '/patterns/pt-portugal.svg',
-  luxembourg: '/patterns/lu-luxembourg.svg',
-  nordic: '/patterns/nordic-countries.svg',
-} as const
+import Image from 'next/image'
 
 const DestinationCard = ({
   number,
   destination,
   englishName,
   countryPattern,
-  size = 'default',
   className,
   onClick,
   isActive = false,
@@ -105,7 +83,7 @@ const DestinationCard = ({
       </p>
 
       {/* 裝飾圖案 */}
-      <img
+      <Image
         alt={`${destination} pattern`}
         className={cn(
           styles.pattern,

@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 import BannerCarousel from './BannerCarousel'
 import styles from './styles.module.css'
 import AirplaneIcon from '../../svg/banner/AirplaneIcon'
+import Image from 'next/image'
 
 const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
   const { logoProgress: contextLogoProgress } = useScrollContext()
@@ -96,15 +97,27 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
           </div>
         </div>
         <BannerCarousel
-          images={['/banner.jpg', '/banner2.jpg']}
+          images={['/banner/banner.jpg', '/banner/banner2.jpg']}
           autoPlayInterval={10000}
         />
       </div>
       <div className='flex justify-end w-full px-[48px] max-xs:hidden'>
         <AirplaneIcon />
-        <img src='/slogan.svg' alt='slogan' className='pl-[24px]' />
+        <Image
+          src='/banner/slogan.svg'
+          alt='slogan'
+          className='pl-[24px]'
+          width={500}
+          height={100}
+        />
       </div>
-      <img src='/mobileSlogan.svg' alt='mobile slogan' className='xs:hidden' />
+      <Image
+        src='/banner/mobileSlogan.svg'
+        alt='mobile slogan'
+        className='xs:hidden'
+        width={300}
+        height={80}
+      />
     </>
   )
 }

@@ -10,7 +10,6 @@ import SearchIcon from '../svg/header/SearchIcon'
 const Navigation = ({
   isMenuOpen = false,
   onMenuToggle = () => {},
-  logoProgress = 0,
 }: TNavigation) => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
 

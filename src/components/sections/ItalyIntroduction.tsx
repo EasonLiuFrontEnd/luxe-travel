@@ -1,10 +1,12 @@
+import Image from 'next/image'
+
 const ItalyIntroduction = () => {
   return (
     <div className='w-full lg:flex-[0_0_39.2%] lg:max-w-[753.6px] pb-7 px-[17px] lg:pl-7 lg:pr-0'>
       <div className='flex flex-col items-center gap-5 lg:gap-7 lg:max-w-[705px]'>
         {/* 圖片區域 */}
         <div className='relative'>
-          <img
+          <Image
             src='/book-shell/introduction/it.jpg'
             alt='義大利介紹圖片'
             className='aspect-[216/160] lg:aspect-[705/347] object-cover rounded-2xl'

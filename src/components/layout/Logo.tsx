@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import type { TLogo } from '@/types/components'
+import Image from 'next/image'
 
-const logoImage = '/logo.svg'
+const logoImage = '/header/logo.svg'
 
 const Logo = ({
   scale = 0.34,
@@ -11,11 +12,12 @@ const Logo = ({
     return (
       <Link href='/'>
         <div className='flex items-center'>
-          <img
+          <Image
             src={logoImage}
             alt='典藏旅遊 LUXE TRAVEL'
-            className='block w-[181px] h-[48px]'
-            data-node-id='422:1672'
+            className='block'
+            width={181}
+            height={48}
           />
         </div>
       </Link>
@@ -33,11 +35,12 @@ const Logo = ({
           } as React.CSSProperties
         }
       >
-        <img
+        <Image
           src={logoImage}
           alt='典藏旅遊 LUXE TRAVEL'
           className='block w-[181px] h-[48px] xs:w-[527px] xs:h-[140px]'
-          data-node-id='422:1672'
+          width={527}
+          height={140}
         />
       </div>
     </Link>

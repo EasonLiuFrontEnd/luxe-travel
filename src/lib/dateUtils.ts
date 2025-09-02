@@ -1,4 +1,4 @@
-export function formatDateForDisplay(dateString: string): string {
+export const formatDateForDisplay = (dateString: string) => {
   if (!dateString) return ''
 
   const date = new Date(dateString)
@@ -12,7 +12,7 @@ export function formatDateForDisplay(dateString: string): string {
   return `${year}年${month}月${day}日`
 }
 
-export function formatDateForInput(dateString: string): string {
+export const formatDateForInput = (dateString: string) => {
   if (!dateString) return ''
 
   const date = new Date(dateString)

@@ -11,9 +11,10 @@ import {
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { TBannerCarousel } from '@/types/components'
 import styles from './styles.module.css'
+import Image from 'next/image'
 
 const BannerCarousel = ({
-  images = ['/banner.jpg'],
+  images = ['/banner/banner.jpg'],
   autoPlayInterval = 10000,
   className,
 }: TBannerCarousel) => {
@@ -54,10 +55,12 @@ const BannerCarousel = ({
                 className,
               )}
             >
-              <img
+              <Image
                 src={image}
                 alt='BannerCarousel'
-                className='w-full h-full object-cover'
+                className='object-cover'
+                fill
+                priority={index === 0}
               />
             </div>
           </CarouselItem>

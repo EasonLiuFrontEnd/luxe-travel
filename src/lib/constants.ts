@@ -6,13 +6,6 @@ export const NAV_ITEMS = [
   { name: '關於典藏', href: '#about' },
 ] as const
 
-export const SERVICES = [
-  { title: '團體旅遊', desc: '精心規劃的團體行程，專業導遊陪同' },
-  { title: '自由行', desc: '彈性安排，自在探索世界各地美景' },
-  { title: '包車服務', desc: '專屬司機，舒適便利的交通安排' },
-  { title: '郵輪旅遊', desc: '豪華郵輪體驗，海上度假新選擇' },
-] as const
-
 export const POPULAR_DESTINATIONS = [
   {
     name: '英國',

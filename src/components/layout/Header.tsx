@@ -10,8 +10,6 @@ const Header = ({
   isHomePage,
   logoScale = 0.34,
   logoProgress = 0,
-  isNavbarVisible = true,
-  isConsultButtonVisible = false,
   headerBehavior = 'fixed',
   hasTransparentHeader = false,
 }: THeader) => {
