@@ -127,7 +127,7 @@ export const DetailRequirementsSection = ({
                       }
                     }}
                   >
-                    <div className='flex items-center justify-between px-0 py-3 border-b border-[rgba(56,56,65,0.7)] w-full hover:border-figma-primary-950 transition-colors duration-200'>
+                    <div className='flex items-center justify-between px-0 py-3 border-b border-figma-primary-950-70 w-full hover:border-figma-primary-950 transition-colors duration-200'>
                       <span className='font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950'>
                         {field.value
                           ? formatDateForDisplay(field.value)

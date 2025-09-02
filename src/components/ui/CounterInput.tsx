@@ -36,7 +36,7 @@ export const CounterInput = ({
   return (
     <div
       className={cn(
-        'flex gap-2.5 items-center justify-start px-0 py-3 border-b border-[rgba(56,56,65,0.7)]',
+        'flex gap-2.5 items-center justify-start px-0 py-3 border-b border-figma-primary-950-70',
         className,
       )}
     >
@@ -46,12 +46,12 @@ export const CounterInput = ({
 
       <button
         type='button'
-        className='backdrop-blur-sm rounded-[25px] border border-[#b7b8c2] p-[2px] shrink-0 cursor-pointer hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed'
+        className='backdrop-blur-sm rounded-[25px] border border-figma-primary-300 p-[2px] shrink-0 cursor-pointer hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed'
         onClick={handleDecrement}
         disabled={disabled || value <= min}
       >
         <div className='size-4 flex items-center justify-center'>
-          <span className='text-[#b7b8c2] text-xs'>-</span>
+          <span className='text-figma-primary-300 text-xs'>-</span>
         </div>
       </button>
 
