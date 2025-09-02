@@ -56,7 +56,6 @@ export type TSearchIcon = {
 }
 
 export type TDeleteIcon = {
-  color?: string
   size?: string
   onClick?: () => void
 }

@@ -52,7 +52,6 @@ const SearchPage = () => {
             />
             {searchValue && (
               <DeleteIcon
-                color='#926D3C'
                 size={isMobile ? '19' : '20'}
                 onClick={handleClearSearch}
               />

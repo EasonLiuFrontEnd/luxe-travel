@@ -1,10 +1,6 @@
 import { TDeleteIcon } from '@/types/components'
 
-const DeleteIcon = ({
-  color = '#BDA05E',
-  size = '16',
-  onClick,
-}: TDeleteIcon) => {
+const DeleteIcon = ({ size = '16', onClick }: TDeleteIcon) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

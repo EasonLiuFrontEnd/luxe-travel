@@ -6,6 +6,10 @@ import React, { useState, useEffect } from 'react'
 import styles from './styles.module.css'
 import Image from 'next/image'
 
+type TStyle = React.CSSProperties & {
+  [key in `--${string}`]?: string | number
+}
+
 const DestinationCard = ({
   number,
   destination,
@@ -55,6 +59,9 @@ const DestinationCard = ({
   }
 
   // 旋轉角度由外部 props containerClassName 控制
+  const imageStyle: TStyle = {
+    '--pattern-top': patternTopOffset || '20px',
+  }
 
   return (
     <div
@@ -90,7 +97,7 @@ const DestinationCard = ({
           isPatternVisible ? styles.patternVisible : styles.patternHidden,
           patternContainerClassName,
         )}
-        style={{ ['--pattern-top' as any]: patternTopOffset || '20px' }}
+        style={imageStyle}
         src={countryPattern || '/patterns/hr-croatia.svg'}
         width={182}
         height={533}
