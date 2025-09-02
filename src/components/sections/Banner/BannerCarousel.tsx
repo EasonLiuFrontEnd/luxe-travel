@@ -57,7 +57,6 @@ const BannerCarousel = ({
         ))}
       </CarouselContent>
 
-      {/* 即刻預約按鈕 */}
       <div className='absolute bottom-0 max-xs:right-0 xs:left-0'>
         <button
           className={cn(
@@ -86,7 +85,6 @@ const BannerCarousel = ({
         </button>
       </div>
 
-      {/* Navigation Buttons */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-4 z-10">
         <button
           onClick={() => api?.scrollPrev()}

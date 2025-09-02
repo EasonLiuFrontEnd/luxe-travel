@@ -44,6 +44,18 @@ export type TDestinationCard = TBaseComponent & {
   size?: 'default' | 'compact'
 }
 
+export type TSearchIcon = {
+  color?: string
+  size?: string
+  onClick?: () => void
+}
+
+export type TDeleteIcon = {
+  color?: string
+  size?: string
+  onClick?: () => void
+}
+
 export type TSubmenuItem = {
   label: string
   href: string

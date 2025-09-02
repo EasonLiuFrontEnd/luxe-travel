@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import styles from './styles.module.css'
 
-const AirplaneIcon = ({ className = '' }: { className?: string }) => {
+const AirplaneIcon = ({ className = '' }) => {
   const [isAnimated, setIsAnimated] = useState(false)
   const ref = useRef<SVGSVGElement>(null)
 
@@ -12,7 +12,7 @@ const AirplaneIcon = ({ className = '' }: { className?: string }) => {
           setIsAnimated(true)
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     )
 
     if (ref.current) {
@@ -48,11 +48,6 @@ const AirplaneIcon = ({ className = '' }: { className?: string }) => {
           <rect x="-4.43945" y="-12" width="24" height="63" fill="#383841" />
         </g>
       </g>
-      <defs>
-        <clipPath id="clip0_396_1092">
-          <rect width="39.5604" height="43" fill="white" transform="matrix(-1 0 0 -1 39.5605 43)" />
-        </clipPath>
-      </defs>
     </svg>
   )
 }
