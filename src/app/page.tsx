@@ -1,5 +1,5 @@
-import Banner from '@/components/sections/Banner'
-import BookShelfSection from '@/components/sections/BookShelfSection'
+import Banner from '@/components/pages/home/Banner'
+import BookShelfSection from '@/components/pages/home/BookShelfSection'
 
 const HomePage = () => {
   return (

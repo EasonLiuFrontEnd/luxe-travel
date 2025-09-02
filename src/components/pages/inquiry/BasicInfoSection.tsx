@@ -22,7 +22,7 @@ import {
   GENDER_OPTIONS,
   CONTACT_METHOD_OPTIONS,
   CONTACT_SOURCE_OPTIONS,
-} from '@/types/inquiry'
+} from './TravelInquiryForm'
 export type TBasicInfoSectionProps = {
   control: Control<TTravelInquiryFormData>
 }

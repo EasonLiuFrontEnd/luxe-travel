@@ -3,6 +3,11 @@ export type TBaseComponent = {
   className?: string
 }
 
+export type TScrollContext = {
+  scrollY: number
+  logoProgress: number
+}
+
 export type TNavItem = {
   name: string
   href: string
@@ -18,11 +23,6 @@ export type TDestination = {
   name: string
   desc: string
   color: string
-}
-
-export type TScrollContext = {
-  scrollY: number
-  logoProgress: number
 }
 
 export type TPageRoute =

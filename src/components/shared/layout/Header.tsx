@@ -4,7 +4,17 @@ import { useState } from 'react'
 import Logo from './Logo'
 import Navigation from './Navigation'
 import ConsultButton from '@/components/ui/ConsultButton'
-import type { THeader } from '@/types/components'
+import type { TBaseComponent } from '@/types'
+
+export type THeader = TBaseComponent & {
+  isHomePage: boolean
+  logoScale?: number
+  logoProgress?: number
+  isNavbarVisible?: boolean
+  isConsultButtonVisible?: boolean
+  headerBehavior?: 'fixed' | 'sticky' | 'static'
+  hasTransparentHeader?: boolean
+}
 
 const Header = ({
   isHomePage,

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import styles from '@/components/sections/Banner/styles.module.css'
+import styles from '@/components/pages/home/Banner/styles.module.css'
 
 const AirplaneIcon = ({ className = '' }) => {
   const [isAnimated, setIsAnimated] = useState(false)

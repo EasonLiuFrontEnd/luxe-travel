@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/Form'
 import { Button } from '@/components/ui/Button'
 import { CounterInput, FormSection } from '@/components/ui'
-import { TTravelInquiryFormData } from '@/types/inquiry'
+import { TTravelInquiryFormData } from './TravelInquiryForm'
 import { CalendarIcon } from '@/components/ui/CalendarIcon'
 import { formatDateForDisplay } from '@/lib/dateUtils'
 export type TDetailRequirementsSectionProps = {

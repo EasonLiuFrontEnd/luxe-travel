@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
-import DestinationCard from '@/components/customUI/DestinationCard/index'
+import DestinationCard from '@/components/pages/home/DestinationCard/index'
 import styles from './styles.module.css'
 import { bookShelfData } from './config'
 

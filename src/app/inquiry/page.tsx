@@ -1,8 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { TravelInquiryForm } from '@/app/inquiry/components'
-import { TTravelInquiryFormData } from '@/types/inquiry'
+import {
+  TravelInquiryForm,
+  TTravelInquiryFormData,
+} from '@/components/pages/inquiry'
 
 const TravelInquiryPage = () => {
   const [isLoading, setIsLoading] = useState(false)

@@ -4,7 +4,10 @@ export { BasicInfoSection } from './BasicInfoSection'
 export { BudgetDestinationSection } from './BudgetDestinationSection'
 export { DetailRequirementsSection } from './DetailRequirementsSection'
 
-export type { TTravelInquiryFormProps } from './TravelInquiryForm'
+export type {
+  TTravelInquiryFormProps,
+  TTravelInquiryFormData,
+} from './TravelInquiryForm'
 export type { THeroSectionProps } from './HeroSection'
 export type { TBasicInfoSectionProps } from './BasicInfoSection'
 export type { TBudgetDestinationSectionProps } from './BudgetDestinationSection'

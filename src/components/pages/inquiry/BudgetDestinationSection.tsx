@@ -18,7 +18,7 @@ import {
   BUDGET_OPTIONS,
   EUROPEAN_REGIONS,
   TCountry,
-} from '@/types/inquiry'
+} from './TravelInquiryForm'
 export type TBudgetDestinationSectionProps = {
   control: Control<TTravelInquiryFormData>
 }

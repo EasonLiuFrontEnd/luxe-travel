@@ -1,4 +1,8 @@
-import { TSearchIcon } from '@/types/components'
+export type TSearchIcon = {
+  color?: string
+  size?: string
+  onClick?: () => void
+}
 
 const SearchIcon = ({
   color = '#BDA05E',

@@ -1,6 +1,19 @@
 'use client'
 
-import type { TDestinationCard } from '@/types/components'
+import type { TBaseComponent } from '@/types'
+
+export type TDestinationCard = TBaseComponent & {
+  number: string
+  destination: string
+  englishName: string
+  countryPattern?: string
+  size?: 'default' | 'compact'
+  onClick?: () => void
+  isActive?: boolean
+  containerClassName?: string
+  patternContainerClassName?: string
+  patternTopOffset?: string
+}
 import { cn } from '@/lib/utils'
 import React, { useState, useEffect } from 'react'
 import styles from './styles.module.css'
@@ -98,7 +111,7 @@ const DestinationCard = ({
           patternContainerClassName,
         )}
         style={imageStyle}
-        src={countryPattern || '/patterns/hr-croatia.svg'}
+        src={countryPattern || '/home/patterns/hr-croatia.svg'}
         width={182}
         height={533}
       />

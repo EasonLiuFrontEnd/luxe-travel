@@ -1,8 +1,12 @@
 import Link from 'next/link'
-import type { TLogo } from '@/types/components'
+import type { TBaseComponent } from '@/types'
 import Image from 'next/image'
 
-const logoImage = '/header/logo.svg'
+export type TLogo = TBaseComponent & {
+  scale?: number
+}
+
+const logoImage = '/shared/icons/logo.svg'
 
 const Logo = ({
   scale = 0.34,

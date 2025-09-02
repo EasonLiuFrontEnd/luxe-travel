@@ -1,7 +1,25 @@
 'use client'
 
 import { useState } from 'react'
-import { TDropdownMenu, TDropdownItem } from '@/types/components'
+import type { TBaseComponent } from '@/types'
+
+export type TSubmenuItem = {
+  label: string
+  href: string
+}
+
+export type TDropdownItem = {
+  label: string
+  href: string
+  hasSubmenu?: boolean
+  submenuItems?: TSubmenuItem[]
+}
+
+export type TDropdownMenu = TBaseComponent & {
+  isVisible: boolean
+  items: TDropdownItem[]
+  onClose: () => void
+}
 
 const DropdownMenu = ({ isVisible, items, onClose }: TDropdownMenu) => {
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null)

@@ -1,11 +1,17 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { NAV_ITEMS, DROPDOWN_MENUS } from '@/lib/constants'
-import type { TNavigation } from '@/types/components'
+import type { TBaseComponent } from '@/types'
+
+export type TNavigation = TBaseComponent & {
+  isMenuOpen?: boolean
+  onMenuToggle?: () => void
+  logoProgress?: number
+}
 import DropdownMenu from './DropdownMenu'
 import ConsultButton from '@/components/ui/ConsultButton'
 import Logo from './Logo'
-import SearchIcon from '../svg/header/SearchIcon'
+import SearchIcon from '@/components/shared/icons/header/SearchIcon'
 
 const Navigation = ({
   isMenuOpen = false,

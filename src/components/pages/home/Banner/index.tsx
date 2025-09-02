@@ -3,11 +3,15 @@
 import { useMemo } from 'react'
 import { useScrollContext } from '@/context/ScrollContext'
 import { APP_CONFIG } from '@/lib/config'
-import type { TBanner } from '@/types/components'
+import type { TBaseComponent } from '@/types'
+
+export type TBanner = TBaseComponent & {
+  logoProgress?: number
+}
 import { cn } from '@/lib/utils'
 import BannerCarousel from './BannerCarousel'
 import styles from './styles.module.css'
-import AirplaneIcon from '../../svg/banner/AirplaneIcon'
+import AirplaneIcon from '@/components/shared/icons/banner/AirplaneIcon'
 import Image from 'next/image'
 
 const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
@@ -97,14 +101,14 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
           </div>
         </div>
         <BannerCarousel
-          images={['/banner/banner.jpg', '/banner/banner2.jpg']}
+          images={['/home/banners/banner.jpg', '/home/banners/banner2.jpg']}
           autoPlayInterval={10000}
         />
       </div>
       <div className='flex justify-end w-full px-[48px] max-xs:hidden'>
         <AirplaneIcon />
         <Image
-          src='/banner/slogan.svg'
+          src='/home/banners/slogan.svg'
           alt='slogan'
           className='pl-[24px]'
           width={500}
@@ -112,7 +116,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
         />
       </div>
       <Image
-        src='/banner/mobileSlogan.svg'
+        src='/home/banners/mobileSlogan.svg'
         alt='mobile slogan'
         className='xs:hidden'
         width={300}

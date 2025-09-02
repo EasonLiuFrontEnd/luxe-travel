@@ -1,4 +1,7 @@
-import { TDeleteIcon } from '@/types/components'
+export type TDeleteIcon = {
+  size?: string
+  onClick?: () => void
+}
 
 const DeleteIcon = ({ size = '16', onClick }: TDeleteIcon) => {
   return (
