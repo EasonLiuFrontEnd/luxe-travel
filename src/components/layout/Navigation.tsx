@@ -5,7 +5,7 @@ import type { TNavigation } from '@/types/components'
 import DropdownMenu from './DropdownMenu'
 import ConsultButton from '@/components/ui/ConsultButton'
 import Logo from './Logo'
-import SearchIcon from './SearchIcon'
+import SearchIcon from '../svg/header/SearchIcon'
 
 const Navigation = ({
   isMenuOpen = false,

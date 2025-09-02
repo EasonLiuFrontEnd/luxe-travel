@@ -7,7 +7,7 @@ import type { TBanner } from '@/types/components'
 import { cn } from '@/lib/utils'
 import BannerCarousel from './BannerCarousel'
 import styles from './styles.module.css'
-import AirplaneIcon from './AirplaneIcon'
+import AirplaneIcon from '../../svg/banner/AirplaneIcon'
 
 const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
   const { logoProgress: contextLogoProgress } = useScrollContext()

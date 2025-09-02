@@ -1,10 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import SearchIcon from '@/components/layout/SearchIcon'
+import SearchIcon from '@/components/svg/header/SearchIcon'
 import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import DeleteIcon from '@/components/layout/DeleteIcon'
+import DeleteIcon from '@/components/svg/header/DeleteIcon'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 const SearchPage = () => {
