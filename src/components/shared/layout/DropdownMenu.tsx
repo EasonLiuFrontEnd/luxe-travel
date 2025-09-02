@@ -88,7 +88,6 @@ const DropdownMenu = ({ isVisible, items, onClose }: TDropdownMenu) => {
             </div>
           </div>
 
-          {/* 二級選單 */}
           {item.hasSubmenu &&
             activeSubmenu === item.label &&
             item.submenuItems && (

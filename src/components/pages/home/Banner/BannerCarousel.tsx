@@ -26,7 +26,6 @@ const BannerCarousel = ({
   const [api, setApi] = useState<CarouselApi>()
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
-  // 自動播放功能
   useEffect(() => {
     if (!api || !isAutoPlaying) return
 
@@ -37,7 +36,6 @@ const BannerCarousel = ({
     return () => clearInterval(interval)
   }, [api, isAutoPlaying, autoPlayInterval])
 
-  // 滑鼠懸停控制
   const handleMouseEnter = () => setIsAutoPlaying(false)
   const handleMouseLeave = () => setIsAutoPlaying(true)
 

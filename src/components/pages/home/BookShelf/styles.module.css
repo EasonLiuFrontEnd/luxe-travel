@@ -1,4 +1,3 @@
-/* 拖曳軌道樣式 */
 .track {
   display: flex;
   align-items: end;
@@ -7,7 +6,6 @@
   will-change: transform;
 }
 
-/* 書本容器樣式 */
 .bookContainer {
   width: var(--w);
   height: var(--h);

@@ -20,12 +20,9 @@ const BookShelfSection = () => {
         </div>
       </div>
 
-      {/* 主要佈局：mobile column-reverse；desktop 左書架、右介紹 */}
       <div className='flex flex-col-reverse lg:flex-row border-b border-[var(--color-figma-secondary-500)]'>
-        {/* 書架區域 */}
         <BookShelf />
 
-        {/* 義大利介紹區塊 */}
         <ItalyIntroduction />
       </div>
     </div>

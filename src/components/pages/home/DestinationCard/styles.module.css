@@ -1,4 +1,3 @@
-/* 圖案樣式 */
 .pattern {
   max-width: none;
   position: absolute;
@@ -19,7 +18,6 @@
   transform: scale(0.95);
 }
 
-/* 響應式樣式 */
 @media (min-width: 1024px) {
   .pattern {
     width: 182px;

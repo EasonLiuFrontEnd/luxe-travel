@@ -14,10 +14,8 @@ export const useMediaQuery = (): TMediaQueryState => {
       setIsMobile(e.matches)
     }
 
-    // Set initial state
     setIsMobile(mediaQuery.matches)
 
-    // Listen for changes
     mediaQuery.addEventListener('change', handleMediaChange)
 
     return () => {
