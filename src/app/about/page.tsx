@@ -36,7 +36,7 @@ const AboutPage = () => {
                 </p>
               </div>
 
-              <div className='bg-gray-50 p-8 rounded-lg'>
+              <div className='bg-figma-neutral-50 p-8 rounded-lg'>
                 <h3 className='text-xl font-bold text-gray-800 mb-4'>
                   服務特色
                 </h3>

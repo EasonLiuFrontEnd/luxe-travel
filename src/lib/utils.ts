@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: never[]) => unknown>(
   func: T,
   wait: number,
 ): (...args: Parameters<T>) => void {
@@ -17,7 +17,7 @@ export function debounce<T extends (...args: any[]) => any>(
   }
 }
 
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: never[]) => unknown>(
   func: T,
   limit: number,
 ): (...args: Parameters<T>) => void {
@@ -37,7 +37,11 @@ export function formatPath(path: string): string {
 }
 
 export function isExternalLink(href: string): boolean {
-  return href.startsWith('http') || href.startsWith('//')
+  return (
+    /^https?:\/\//.test(href) ||
+    href.includes('mailto:') ||
+    href.includes('tel:')
+  )
 }
 
 export function generatePageTitle(pageName?: string): string {

@@ -1,16 +1,16 @@
 'use client'
 
 import { createContext, useContext, useMemo } from 'react'
-import type { IScrollContext } from '@/types'
+import type { TScrollContext } from '@/types'
 
-const ScrollContext = createContext<IScrollContext | undefined>(undefined)
+const ScrollContext = createContext<TScrollContext | undefined>(undefined)
 
-interface IScrollProvider {
+type TScrollProvider = {
   children: React.ReactNode
-  value: IScrollContext
+  value: TScrollContext
 }
 
-export const ScrollProvider = ({ children, value }: IScrollProvider) => {
+export const ScrollProvider = ({ children, value }: TScrollProvider) => {
   const memoizedValue = useMemo(
     () => ({
       scrollY: value.scrollY,
@@ -26,7 +26,7 @@ export const ScrollProvider = ({ children, value }: IScrollProvider) => {
   )
 }
 
-export const useScrollContext = () => {
+export const useScrollContext = (): TScrollContext => {
   const context = useContext(ScrollContext)
   if (context === undefined) {
     throw new Error('useScrollContext must be used within a ScrollProvider')

@@ -3,15 +3,17 @@
 import { usePathname } from 'next/navigation'
 import { useMemo } from 'react'
 import { useScroll } from '@/hooks/useScroll'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { ScrollProvider } from '@/context/ScrollContext'
-import Header from '@/components/ui/Header'
-import Footer from '@/components/ui/Footer'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
 import { getPageConfig, calculateLogoAnimation } from '@/lib/page-config'
-import type { IBaseComponent } from '@/types'
+import type { TBaseComponent } from '@/types'
 
-const ClientLayout = ({ children }: IBaseComponent) => {
+const ClientLayout = ({ children }: TBaseComponent) => {
   const pathname = usePathname()
   const { scrollY } = useScroll()
+  const { isMobile } = useMediaQuery()
 
   const pageConfig = useMemo(() => getPageConfig(pathname), [pathname])
 
@@ -29,16 +31,26 @@ const ClientLayout = ({ children }: IBaseComponent) => {
     [scrollY, logoProgress],
   )
 
+  const shouldShowHeader = useMemo(() => {
+    if (pageConfig.type === 'search') {
+      return isMobile
+    }
+    return pageConfig.showHeader
+  }, [pageConfig.showHeader, pageConfig.type, isMobile])
+
   return (
     <ScrollProvider value={scrollContextValue}>
-      <Header
-        isHomePage={pageConfig.type === 'home'}
-        logoScale={logoScale}
-        isNavbarVisible={isNavbarVisible}
-        isConsultButtonVisible={isConsultButtonVisible}
-        headerBehavior={pageConfig.headerBehavior}
-        hasTransparentHeader={pageConfig.hasTransparentHeader}
-      />
+      {shouldShowHeader && (
+        <Header
+          isHomePage={pageConfig.type === 'home'}
+          logoScale={logoScale}
+          logoProgress={logoProgress}
+          isNavbarVisible={isNavbarVisible}
+          isConsultButtonVisible={isConsultButtonVisible}
+          headerBehavior={pageConfig.headerBehavior}
+          hasTransparentHeader={pageConfig.hasTransparentHeader}
+        />
+      )}
       <main>{children}</main>
       <Footer />
     </ScrollProvider>

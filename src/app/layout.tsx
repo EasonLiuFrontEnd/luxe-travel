@@ -1,13 +1,32 @@
 import '../styles/globals.css'
 import ClientLayout from './ClientLayout'
+import { Noto_Serif_TC, Luxurious_Script } from 'next/font/google'
 
-interface IRootLayout {
+const notoSerifTC = Noto_Serif_TC({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-noto-serif-tc',
+  display: 'swap',
+})
+
+const luxuriousScript = Luxurious_Script({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-luxurious-script',
+  display: 'swap',
+})
+
+type TRootLayout = {
   children: React.ReactNode
 }
 
-const RootLayout = ({ children }: IRootLayout) => {
+const RootLayout = ({ children }: TRootLayout) => {
   return (
-    <html lang='zh-TW'>
+    <html
+      lang='zh-TW'
+      className={`${notoSerifTC.variable} ${luxuriousScript.variable}`}
+    >
+      <head />
       <body>
         <ClientLayout>{children}</ClientLayout>
       </body>

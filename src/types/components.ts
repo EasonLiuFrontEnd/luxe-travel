@@ -1,31 +1,75 @@
-import { IBaseComponent } from './index'
+import { TBaseComponent } from './index'
 
-export interface IHeader extends IBaseComponent {
+export type THeader = TBaseComponent & {
   isHomePage: boolean
   logoScale?: number
+  logoProgress?: number
   isNavbarVisible?: boolean
   isConsultButtonVisible?: boolean
   headerBehavior?: 'fixed' | 'sticky' | 'static'
   hasTransparentHeader?: boolean
 }
 
-export interface ILogo extends IBaseComponent {
+export type TLogo = TBaseComponent & {
   scale?: number
 }
 
-export interface INavigation extends IBaseComponent {
-  isVisible?: boolean
+export type TNavigation = TBaseComponent & {
   isMenuOpen?: boolean
   onMenuToggle?: () => void
-}
-
-export interface IBanner extends IBaseComponent {
   logoProgress?: number
 }
 
-export interface IButton extends IBaseComponent {
+export type TBanner = TBaseComponent & {
+  logoProgress?: number
+}
+
+export type TBannerCarousel = TBaseComponent & {
+  images?: string[]
+  autoPlayInterval?: number
+}
+
+export type TButton = TBaseComponent & {
   variant?: 'primary' | 'secondary' | 'ghost'
   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
   onClick?: () => void
   disabled?: boolean
+}
+
+export type TDestinationCard = TBaseComponent & {
+  number: string
+  destination: string
+  englishName: string
+  countryPattern?: string
+  size?: 'default' | 'compact'
+}
+
+export type TSearchIcon = {
+  color?: string
+  size?: string
+  onClick?: () => void
+}
+
+export type TDeleteIcon = {
+  color?: string
+  size?: string
+  onClick?: () => void
+}
+
+export type TSubmenuItem = {
+  label: string
+  href: string
+}
+
+export type TDropdownItem = {
+  label: string
+  href: string
+  hasSubmenu?: boolean
+  submenuItems?: TSubmenuItem[]
+}
+
+export type TDropdownMenu = TBaseComponent & {
+  isVisible: boolean
+  items: TDropdownItem[]
+  onClose: () => void
 }
