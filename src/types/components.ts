@@ -30,3 +30,17 @@ export type TButton = TBaseComponent & {
   onClick?: () => void
   disabled?: boolean
 }
+
+export type TDestinationCard = TBaseComponent & {
+  number: string
+  destination: string
+  englishName: string
+  countryPattern?: string
+  size?: 'default' | 'compact'
+  onClick?: () => void
+  isActive?: boolean
+  containerClassName?: string
+  patternContainerClassName?: string
+  patternTopOffset?: string
+  style?: React.CSSProperties
+}

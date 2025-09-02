@@ -1,0 +1,9 @@
+.gradientTitle {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent calc(100% - 26px),
+    #E5D9BF calc(100% - 26px),
+    #E5D9BF 100%
+  );
+} 

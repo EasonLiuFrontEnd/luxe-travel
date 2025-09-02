@@ -1,4 +1,17 @@
 @layer utilities {
+  /* 專門的字體族類別 - 只設定 font-family */
+  .font-family-noto-serif {
+    font-family: var(--font-noto-serif-tc);
+  }
+
+  .font-family-genseki {
+    font-family: var(--font-genseki-gothic);
+  }
+
+  .font-family-luxurious {
+    font-family: var(--font-luxurious-script);
+  }
+
   .glass-effect {
     backdrop-filter: blur(10px);
     background-color: rgba(255, 255, 255, 0.8);
