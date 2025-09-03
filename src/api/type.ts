@@ -1,4 +1,6 @@
-export interface TPagination {
+import { UseQueryResult } from '@tanstack/react-query'
+
+export type TPagination = {
   page: number
   pageSize: number
   total: number
@@ -13,7 +15,12 @@ export interface TApiResponse<T> {
   pagination?: TPagination
 }
 
-export interface TAdvantages {
+export type TUseHomeQueryResult<TData, TMock> = {
+  query: UseQueryResult<TData, Error>
+  mock: TMock
+}
+
+export type TAdvantages = {
   id: string
   moduleId: string
   imageUrl: string
@@ -24,7 +31,7 @@ export interface TAdvantages {
   updatedAt: string
 }
 
-export interface TConcern {
+export type TConcern = {
   id: string
   moduleId: string
   number: string
@@ -34,7 +41,7 @@ export interface TConcern {
   updatedAt: string
 }
 
-export interface TMenuItem {
+export type TMenuItem = {
   id: string
   title: string
   linkUrl: string
@@ -47,7 +54,7 @@ export interface TMenuItem {
   children: TMenuItem[]
 }
 
-export interface TBanners {
+export type TBanners = {
   id: string
   imageUrl: string
   title: string
@@ -59,7 +66,7 @@ export interface TBanners {
   updatedAt: string
 }
 
-export interface TBooks {
+export type TBooks = {
   id: string
   imageUrl: string
   title: string

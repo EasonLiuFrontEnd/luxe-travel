@@ -1,26 +1,15 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import apiClient from '../client'
-import { TAdvantages, TAdvantagesResponse } from '../type'
+import { TAdvantages, TAdvantagesResponse, TUseHomeQueryResult } from '../type'
 
 const fetchAdvantages = async (): Promise<TAdvantages[]> => {
   const response = await apiClient.get<TAdvantagesResponse>(
     '/api/admin/advantages',
   )
-  return response.data.rows || []
+  return response?.data?.rows || []
 }
 
-export const useAdvantages = (): UseQueryResult<TAdvantages[], Error> => {
-  return useQuery({
-    queryKey: ['advantages'],
-    queryFn: fetchAdvantages,
-    staleTime: 30 * 60 * 1000,
-    gcTime: 60 * 60 * 1000,
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
-  })
-}
-
-export const advantagesApiMock = {
+export const advantagesApiMock: TAdvantagesResponse = {
   status: true,
   message: '成功取得 Advantage 模組與清單',
   rows: [
@@ -79,4 +68,19 @@ export const advantagesApiMock = {
     total: 4,
     pageCount: 1,
   },
+}
+
+export const useAdvantages = (): TUseHomeQueryResult<
+  TAdvantages[],
+  TAdvantagesResponse
+> => {
+  const query = useQuery({
+    queryKey: ['advantages'],
+    queryFn: fetchAdvantages,
+    staleTime: 30 * 60 * 1000,
+    gcTime: 60 * 60 * 1000,
+    retry: 3,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+  })
+  return { query, mock: advantagesApiMock }
 }

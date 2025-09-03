@@ -3,22 +3,22 @@ export {
   useConcerns,
   useMenu,
   useBanners,
-  useCountryShowcases,
+  useBooks,
 } from './home'
 
 export type {
-  TAdvantage,
+  TAdvantages,
   TConcern,
   TMenuItem,
-  TBanner,
-  TCountryShowcase,
+  TBanners,
+  TBooks,
   TPagination,
   TApiResponse,
   TAdvantagesResponse,
   TConcernsResponse,
   TMenuResponse,
   TBannersResponse,
-  TCountryShowcasesResponse,
+  TBooksResponse,
 } from './type'
 
 export { default as apiClient } from './client'

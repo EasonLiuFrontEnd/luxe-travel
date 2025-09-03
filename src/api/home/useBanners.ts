@@ -1,24 +1,15 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import apiClient from '../client'
-import { TBanners, TBannersResponse } from '../type'
+import { TBanners, TBannersResponse, TUseHomeQueryResult } from '../type'
 
 const fetchBanners = async (): Promise<TBanners[]> => {
   const response = await apiClient.get<TBannersResponse>('/api/admin/banners')
-  return response.data.rows || []
+  return response?.data?.rows || []
 }
 
-export const useBanners = (): UseQueryResult<TBanners[], Error> => {
-  return useQuery({
-    queryKey: ['banners'],
-    queryFn: fetchBanners,
-    staleTime: 15 * 60 * 1000,
-    gcTime: 60 * 60 * 1000,
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
-  })
-}
-
-export const bannerApi = {
+export const bannersApiMock: TBannersResponse = {
+  status: true,
+  message: '成功取得 Banner 列表',
   rows: [
     {
       id: '68b054a9564da72a7ab17540',
@@ -39,4 +30,20 @@ export const bannerApi = {
     total: 1,
     pageCount: 1,
   },
+}
+
+export const useBanners = (): TUseHomeQueryResult<
+  TBanners[],
+  TBannersResponse
+> => {
+  const query = useQuery({
+    queryKey: ['banners'],
+    queryFn: fetchBanners,
+    staleTime: 15 * 60 * 1000,
+    gcTime: 60 * 60 * 1000,
+    retry: 3,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+  })
+
+  return { query, mock: bannersApiMock }
 }

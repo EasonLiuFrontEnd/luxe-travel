@@ -1,29 +1,17 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import apiClient from '../client'
-import { TBooks, TBooksResponse } from '../type'
+import { TBooks, TBooksResponse, TUseHomeQueryResult } from '../type'
 
 const fetchBooksData = async (): Promise<TBooks[]> => {
   const response = await apiClient.get<TBooksResponse>(
     '/api/admin/country-showcases',
   )
-  return response.data.rows || []
+  return response?.data?.rows || []
 }
 
-export const useBooks = (): UseQueryResult<TBooks[], Error> => {
-  return useQuery({
-    queryKey: ['books'],
-    queryFn: fetchBooksData,
-    staleTime: 30 * 60 * 1000,
-    gcTime: 60 * 60 * 1000,
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
-  })
-}
-
-/**
- * @description 以下是書本的資料，點選書本後，要呼叫每本書裡面的 linkUrl 取得下面行程的資料
- */
-export const booksApiMock = {
+export const booksApiMock: TBooksResponse = {
+  status: true,
+  message: '成功取得書本列表',
   rows: [
     {
       id: '68b05373564da72a7ab17536',
@@ -162,4 +150,17 @@ export const booksApiMock = {
     total: 10,
     pageCount: 1,
   },
+}
+
+export const useBooks = (): TUseHomeQueryResult<TBooks[], TBooksResponse> => {
+  const query = useQuery({
+    queryKey: ['books'],
+    queryFn: fetchBooksData,
+    staleTime: 30 * 60 * 1000,
+    gcTime: 60 * 60 * 1000,
+    retry: 3,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+  })
+
+  return { query, mock: booksApiMock }
 }

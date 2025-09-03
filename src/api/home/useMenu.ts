@@ -1,24 +1,13 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import apiClient from '../client'
-import { TMenuItem, TMenuResponse } from '../type'
+import { TMenuItem, TMenuResponse, TUseHomeQueryResult } from '../type'
 
 const fetchMenu = async (): Promise<TMenuItem[]> => {
   const response = await apiClient.get<TMenuResponse>('/api/admin/menu')
-  return response.data.data || []
+  return response?.data?.data || []
 }
 
-export const useMenu = (): UseQueryResult<TMenuItem[], Error> => {
-  return useQuery({
-    queryKey: ['menu'],
-    queryFn: fetchMenu,
-    staleTime: 30 * 60 * 1000,
-    gcTime: 60 * 60 * 1000,
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
-  })
-}
-
-export const menuApiMock = {
+export const menuApiMock: TMenuResponse = {
   status: true,
   message: '成功取得選單列表',
   data: [
@@ -67,6 +56,7 @@ export const menuApiMock = {
           parentId: '68b0553165cf8e1dc78c18bb',
           createdAt: '2025-08-28T13:10:57.038Z',
           updatedAt: '2025-09-01T06:30:20.580Z',
+          children: [],
         },
       ],
     },
@@ -119,4 +109,17 @@ export const menuApiMock = {
       children: [],
     },
   ],
+}
+
+export const useMenu = (): TUseHomeQueryResult<TMenuItem[], TMenuResponse> => {
+  const query = useQuery({
+    queryKey: ['menu'],
+    queryFn: fetchMenu,
+    staleTime: 30 * 60 * 1000,
+    gcTime: 60 * 60 * 1000,
+    retry: 3,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+  })
+
+  return { query, mock: menuApiMock }
 }
