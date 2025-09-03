@@ -42,7 +42,6 @@ const Logo = ({
         <Image
           src={logoImage}
           alt='典藏旅遊 LUXE TRAVEL'
-          className='block w-[181px] h-[48px] xs:w-[527px] xs:h-[140px]'
           width={527}
           height={140}
         />

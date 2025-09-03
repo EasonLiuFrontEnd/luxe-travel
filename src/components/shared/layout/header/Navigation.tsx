@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { NAV_ITEMS, DROPDOWN_MENUS } from '@/lib/constants'
 import type { TBaseComponent } from '@/types'
@@ -12,12 +11,22 @@ import DropdownMenu from './DropdownMenu'
 import ConsultButton from '@/components/ui/ConsultButton'
 import Logo from './Logo'
 import SearchIcon from '@/components/shared/icons/header/SearchIcon'
+import Search from './Search'
 
 const Navigation = ({
   isMenuOpen = false,
   onMenuToggle = () => {},
 }: TNavigation) => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+
+  const toggleSearch = () => {
+    setIsSearchOpen(!isSearchOpen)
+  }
+
+  const closeSearch = () => {
+    setIsSearchOpen(false)
+  }
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -56,18 +65,18 @@ const Navigation = ({
           </div>
         ))}
       </div>
-      <Link href='/search' className='p-3 ml-[25px] max-xs:hidden'>
-        <SearchIcon />
-      </Link>
+      <button onClick={toggleSearch} className='p-3 ml-[25px] max-xs:hidden'>
+        <SearchIcon className='cursor-pointer' />
+      </button>
 
       <ConsultButton />
 
       <div className='flex xs:hidden w-full justify-between items-center'>
         <Logo isMobile={true} />
         <div className='flex items-center'>
-          <Link href='/search' className='p-3'>
+          <button onClick={toggleSearch} className='p-3'>
             <SearchIcon />
-          </Link>
+          </button>
           <button
             onClick={onMenuToggle}
             className='text-gray-700 hover:text-amber-600 transition-colors duration-200 p-3'
@@ -121,6 +130,8 @@ const Navigation = ({
           </div>
         </div>
       )}
+
+      <Search isOpen={isSearchOpen} onClose={closeSearch} />
     </>
   )
 }
