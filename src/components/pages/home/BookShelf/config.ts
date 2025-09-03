@@ -25,7 +25,7 @@ export const bookShelfData: TBook[] = [
     number: '01',
     destination: '克羅埃西亞',
     english: 'Republic of Croatia',
-    pattern: '/home/patterns/hr-croatia.svg',
+    pattern: '/home/itinerary/hr-croatia/pattern.svg',
     size: {
       mobileClassName: 'w-[112px] h-[394px]',
       web: { width: '152px', height: '458px' },
@@ -39,7 +39,7 @@ export const bookShelfData: TBook[] = [
     number: '02',
     destination: '捷克',
     english: 'Czech Republic',
-    pattern: '/home/patterns/cz-czech.svg',
+    pattern: '/home/itinerary/cz-czech/pattern.svg',
     size: {
       mobileClassName: 'w-[64px] h-[334px]',
       web: { width: '80px', height: '398px' },
@@ -53,7 +53,7 @@ export const bookShelfData: TBook[] = [
     number: '03',
     destination: '葡萄牙',
     english: 'Portugal',
-    pattern: '/home/patterns/pt-portugal.svg',
+    pattern: '/home/itinerary/pt-portugal/pattern.svg',
     size: {
       mobileClassName: 'w-[80px] h-[360px]',
       web: { width: '104px', height: '424px' },
@@ -67,7 +67,7 @@ export const bookShelfData: TBook[] = [
     number: '04',
     destination: '瑞士',
     english: 'Switzerland',
-    pattern: '/home/patterns/ch-switzerland.svg',
+    pattern: '/home/itinerary/ch-switzerland/pattern.svg',
     size: {
       mobileClassName: 'w-[86.87px] h-[269.72px]',
       web: { width: '108.37px', height: '334.72px' },
@@ -81,7 +81,7 @@ export const bookShelfData: TBook[] = [
     number: '05',
     destination: '愛爾蘭',
     english: 'Ireland',
-    pattern: '/home/patterns/ie-ireland.svg',
+    pattern: '/home/itinerary/ie-ireland/pattern.svg',
     size: {
       mobileClassName: 'w-[80px] h-[326px]',
       web: { width: '104px', height: '390px' },
@@ -95,7 +95,7 @@ export const bookShelfData: TBook[] = [
     number: '06',
     destination: '德國',
     english: 'Germany',
-    pattern: '/home/patterns/de-germany.svg',
+    pattern: '/home/itinerary/de-germany/pattern.svg',
     size: {
       mobileClassName: 'w-[64px] h-[394px]',
       web: { width: '80px', height: '458px' },
@@ -109,7 +109,7 @@ export const bookShelfData: TBook[] = [
     number: '07',
     destination: '匈牙利',
     english: 'Hungary',
-    pattern: '/home/patterns/hu-hungary.svg',
+    pattern: '/home/itinerary/hu-hungary/pattern.svg',
     size: {
       mobileClassName: 'w-[108.27px] h-[333.58px]',
       web: { width: '137.6px', height: '397.58px' },
@@ -123,7 +123,7 @@ export const bookShelfData: TBook[] = [
     number: '08',
     destination: '西班牙',
     english: 'Spain',
-    pattern: '/home/patterns/es-spain.svg',
+    pattern: '/home/itinerary/es-spain/pattern.svg',
     size: {
       mobileClassName: 'w-[80px] h-[261px]',
       web: { width: '104px', height: '325px' },
@@ -137,7 +137,7 @@ export const bookShelfData: TBook[] = [
     number: '09',
     destination: '希臘',
     english: 'Greece',
-    pattern: '/home/patterns/gr-greece.svg',
+    pattern: '/home/itinerary/gr-greece/pattern.svg',
     size: {
       mobileClassName: 'w-[64px] h-[378px]',
       web: { width: '80px', height: '442px' },
@@ -151,7 +151,7 @@ export const bookShelfData: TBook[] = [
     number: '10',
     destination: '比利時',
     english: 'Belgium',
-    pattern: '/home/patterns/be-belgium.svg',
+    pattern: '/home/itinerary/be-belgium/pattern.svg',
     size: {
       mobileClassName: 'w-[80px] h-[344px]',
       web: { width: '104px', height: '408px' },
@@ -165,7 +165,7 @@ export const bookShelfData: TBook[] = [
     number: '11',
     destination: '義大利',
     english: 'Italy',
-    pattern: '/home/patterns/it-italy.svg',
+    pattern: '/home/itinerary/it-italy/pattern.svg',
     size: {
       mobileClassName: 'w-[107.05px] h-[319.63px]',
       web: { width: '136.38px', height: '383.63px' },
@@ -179,7 +179,7 @@ export const bookShelfData: TBook[] = [
     number: '12',
     destination: '奧地利',
     english: 'Austria',
-    pattern: '/home/patterns/at-austria.svg',
+    pattern: '/home/itinerary/at-austria/pattern.svg',
     size: {
       mobileClassName: 'w-[89.09px] h-[264.43px]',
       web: { width: '115.28px', height: '328.43px' },
@@ -193,7 +193,7 @@ export const bookShelfData: TBook[] = [
     number: '13',
     destination: '英國',
     english: 'United Kingdom',
-    pattern: '/home/patterns/gb-uk.svg',
+    pattern: '/home/itinerary/gb-uk/pattern.svg',
     size: {
       mobileClassName: 'w-[64px] h-[394px]',
       web: { width: '80px', height: '458px' },
@@ -207,7 +207,7 @@ export const bookShelfData: TBook[] = [
     number: '14',
     destination: '法國',
     english: 'France',
-    pattern: '/home/patterns/fr-france.svg',
+    pattern: '/home/itinerary/fr-france/pattern.svg',
     size: {
       mobileClassName: 'w-[75.98px] h-[346.54px]',
       web: { width: '94.19px', height: '410.54px' },
@@ -221,7 +221,7 @@ export const bookShelfData: TBook[] = [
     number: '15',
     destination: '波羅地海三小國',
     english: 'Baltic States',
-    pattern: '/home/patterns/baltic-states.svg',
+    pattern: '/home/itinerary/baltic-states/pattern.svg',
     size: {
       mobileClassName: 'w-[144px] h-[304px]',
       web: { width: '200px', height: '368px' },
@@ -235,7 +235,7 @@ export const bookShelfData: TBook[] = [
     number: '16',
     destination: '荷蘭',
     english: 'Netherlands',
-    pattern: '/home/patterns/nl-netherlands.svg',
+    pattern: '/home/itinerary/nl-netherlands/pattern.svg',
     size: {
       mobileClassName: 'w-[64px] h-[354px]',
       web: { width: '80px', height: '418px' },
@@ -249,7 +249,7 @@ export const bookShelfData: TBook[] = [
     number: '17',
     destination: '北歐',
     english: 'Scandi',
-    pattern: '/home/patterns/nordic-countries.svg',
+    pattern: '/home/itinerary/nordic-countries/pattern.svg',
     size: {
       mobileClassName: 'w-[86.95px] h-[270.72px]',
       web: { width: '108.37px', height: '334.72px' },
@@ -263,7 +263,7 @@ export const bookShelfData: TBook[] = [
     number: '18',
     destination: '盧森堡',
     english: 'Luxembourg',
-    pattern: '/home/patterns/lu-luxembourg.svg',
+    pattern: '/home/itinerary/lu-luxembourg/pattern.svg',
     size: {
       mobileClassName: 'w-[80px] h-[378px]',
       web: { width: '104px', height: '442px' },
