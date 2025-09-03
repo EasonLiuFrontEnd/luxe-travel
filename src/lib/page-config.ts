@@ -5,7 +5,6 @@ export type TPageType =
   | 'about'
   | 'destinations'
   | 'contact'
-  | 'search'
   | 'default'
 
 export type TPageConfig = {
@@ -15,7 +14,6 @@ export type TPageConfig = {
   showConsultButton: boolean
   headerBehavior: 'fixed' | 'sticky' | 'static'
   footerStyle: 'default' | 'minimal'
-  showHeader: boolean
 }
 
 export const PAGE_CONFIGS: Record<string, TPageConfig> = {
@@ -26,7 +24,6 @@ export const PAGE_CONFIGS: Record<string, TPageConfig> = {
     showConsultButton: true,
     headerBehavior: 'fixed',
     footerStyle: 'default',
-    showHeader: true,
   },
   '/about': {
     type: 'about',
@@ -35,7 +32,6 @@ export const PAGE_CONFIGS: Record<string, TPageConfig> = {
     showConsultButton: false,
     headerBehavior: 'sticky',
     footerStyle: 'default',
-    showHeader: true,
   },
   '/destinations': {
     type: 'destinations',
@@ -44,7 +40,6 @@ export const PAGE_CONFIGS: Record<string, TPageConfig> = {
     showConsultButton: true,
     headerBehavior: 'sticky',
     footerStyle: 'default',
-    showHeader: true,
   },
   '/contact': {
     type: 'contact',
@@ -53,16 +48,6 @@ export const PAGE_CONFIGS: Record<string, TPageConfig> = {
     showConsultButton: false,
     headerBehavior: 'sticky',
     footerStyle: 'minimal',
-    showHeader: true,
-  },
-  '/search': {
-    type: 'search',
-    hasScrollAnimation: false,
-    hasTransparentHeader: false,
-    showConsultButton: false,
-    headerBehavior: 'static',
-    footerStyle: 'minimal',
-    showHeader: false,
   },
 }
 
@@ -73,7 +58,6 @@ export const DEFAULT_PAGE_CONFIG: TPageConfig = {
   showConsultButton: false,
   headerBehavior: 'sticky',
   footerStyle: 'default',
-  showHeader: true,
 }
 
 export const getPageConfig = (pathname: string): TPageConfig => {

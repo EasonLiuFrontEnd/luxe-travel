@@ -111,16 +111,16 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
           src='/home/banners/slogan.svg'
           alt='slogan'
           className='pl-[24px]'
-          width={500}
-          height={100}
+          width={1084}
+          height={231}
         />
       </div>
       <Image
-        src='/home/banners/mobileSlogan.svg'
+        src='/home/banners/mobile-slogan.svg'
         alt='mobile slogan'
         className='xs:hidden'
-        width={300}
-        height={80}
+        width={352}
+        height={430}
       />
     </>
   )

@@ -6,7 +6,7 @@ const ItalyIntroduction = () => {
       <div className='flex flex-col items-center gap-5 lg:gap-7 lg:max-w-[705px]'>
         <div className='relative'>
           <Image
-            src='/book-shell/introduction/it.jpg'
+            src='/home/introduction/it.jpg'
             alt='義大利介紹圖片'
             className='aspect-[216/160] lg:aspect-[705/347] object-cover rounded-2xl'
             width={705}
