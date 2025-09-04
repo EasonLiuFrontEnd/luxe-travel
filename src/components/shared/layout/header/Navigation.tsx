@@ -11,6 +11,7 @@ import DropdownMenu from './DropdownMenu'
 import ConsultButton from '@/components/ui/ConsultButton'
 import Logo from './Logo'
 import SearchIcon from '@/components/shared/icons/header/SearchIcon'
+import MenuIcon from '@/components/shared/icons/header/MenuIcon'
 import Search from './Search'
 
 const Navigation = ({
@@ -20,8 +21,12 @@ const Navigation = ({
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
 
-  const toggleSearch = () => {
-    setIsSearchOpen(!isSearchOpen)
+  const openSearch = () => {
+    setIsSearchOpen(true)
+    setActiveDropdown(null)
+    if (isMenuOpen) {
+      onMenuToggle()
+    }
   }
 
   const closeSearch = () => {
@@ -65,51 +70,23 @@ const Navigation = ({
           </div>
         ))}
       </div>
-      <button onClick={toggleSearch} className='p-3 ml-[25px] max-xs:hidden'>
-        <SearchIcon className='cursor-pointer' />
+      <button className='p-3 ml-[25px] max-xs:hidden'>
+        <SearchIcon onClick={openSearch} />
       </button>
 
       <ConsultButton />
 
-      <div className='flex xs:hidden w-full justify-between items-center'>
+      <div className='max-xs:z-60 flex xs:hidden w-full justify-between items-center'>
         <Logo isMobile={true} />
         <div className='flex items-center'>
-          <button onClick={toggleSearch} className='p-3'>
-            <SearchIcon />
+          <button className='p-3'>
+            <SearchIcon onClick={openSearch} />
           </button>
           <button
-            onClick={onMenuToggle}
-            className='text-gray-700 hover:text-amber-600 transition-colors duration-200 p-3'
+            onClick={isSearchOpen ? closeSearch : onMenuToggle}
+            className='p-3'
           >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='24'
-              height='24'
-              viewBox='0 0 24 24'
-              fill='none'
-            >
-              <path
-                d='M4 12H20'
-                stroke='#BDA05E'
-                strokeWidth='2'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-              />
-              <path
-                d='M4 18H20'
-                stroke='#BDA05E'
-                strokeWidth='2'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-              />
-              <path
-                d='M4 6H20'
-                stroke='#BDA05E'
-                strokeWidth='2'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-              />
-            </svg>
+            <MenuIcon isOpen={isSearchOpen || isMenuOpen} />
           </button>
         </div>
       </div>
