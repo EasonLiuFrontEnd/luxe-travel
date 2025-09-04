@@ -6,17 +6,20 @@ export type TNavigation = TBaseComponent & {
   isMenuOpen?: boolean
   onMenuToggle?: () => void
   logoProgress?: number
+  showConsultButton?: boolean
 }
 import DropdownMenu from './DropdownMenu'
 import ConsultButton from '@/components/ui/ConsultButton'
 import Logo from './Logo'
 import SearchIcon from '@/components/shared/icons/header/SearchIcon'
 import MenuIcon from '@/components/shared/icons/header/MenuIcon'
+import NavigationHoverIcon from '@/components/shared/icons/header/NavigationHoverIcon'
 import Search from './Search'
 
 const Navigation = ({
   isMenuOpen = false,
-  onMenuToggle = () => {},
+  onMenuToggle = () => { },
+  showConsultButton = false,
 }: TNavigation) => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -56,7 +59,10 @@ const Navigation = ({
             onMouseEnter={() => setActiveDropdown(item.name)}
             onMouseLeave={() => setActiveDropdown(null)}
           >
-            <button className='font-noto-serif-body-l-semibold text-figma-primary-950 cursor-pointer'>
+            <button className='font-noto-serif-body-l-semibold text-figma-primary-950 hover:text-figma-secondary-950 cursor-pointer pt-[48px] relative'>
+              {activeDropdown === item.name && (
+                <NavigationHoverIcon className='absolute top-0 right-[50%] translate-x-[50%]' />
+              )}
               {item.name}
             </button>
             <div className='absolute top-full left-0 right-0 h-[16px] bg-transparent' />
@@ -74,7 +80,10 @@ const Navigation = ({
         <SearchIcon onClick={openSearch} />
       </button>
 
-      <ConsultButton />
+      <ConsultButton
+        className={`max-xs:hidden transition-opacity duration-800 ${showConsultButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
+      />
 
       <div className='max-xs:z-60 flex xs:hidden w-full justify-between items-center'>
         <Logo isMobile={true} />
@@ -92,19 +101,17 @@ const Navigation = ({
       </div>
 
       {isMenuOpen && (
-        <div className='max-xs:block hidden border-t border-gray-200 bg-white absolute top-full left-0 right-0'>
-          <div className='px-4 py-4 space-y-3 max-w-7xl mx-auto'>
-            {NAV_ITEMS.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className='block text-gray-700 hover:text-amber-600 transition-colors duration-200 font-medium text-sm'
-                onClick={onMenuToggle}
-              >
-                {item.name}
-              </a>
-            ))}
-          </div>
+        <div className='block xs:hidden absolute top-full left-0 right-0 mt-px pt-[48px] px-[20px] space-y-7 bg-figma-neutral-50'>
+          {NAV_ITEMS.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              className='block font-noto-serif-body-m-medium py-[12px] px-[5px]'
+              onClick={onMenuToggle}
+            >
+              {item.name}
+            </a>
+          ))}
         </div>
       )}
 

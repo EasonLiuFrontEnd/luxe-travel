@@ -6,6 +6,7 @@ import Navigation from './Navigation'
 import ConsultButton from '@/components/ui/ConsultButton'
 import type { TBaseComponent } from '@/types'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { useScroll } from '@/hooks/useScroll'
 
 export type THeader = TBaseComponent & {
   isHomePage: boolean
@@ -26,8 +27,11 @@ const Header = ({
 }: THeader) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { isMobile } = useMediaQuery()
+  const { scrollY } = useScroll()
 
-  const baseClasses = 'z-50 w-full flex items-center justify-between p-[12px] xs:p-[48px] bg-figma-neutral-50'
+  const showConsultButton = scrollY > 797
+
+  const baseClasses = 'z-50 w-full flex items-center justify-between max-xs:p-[12px] xs:pb-[48px] xs:px-[48px]  bg-figma-neutral-50'
   const positionClass =
     headerBehavior === 'fixed'
       ? 'fixed'
@@ -39,14 +43,13 @@ const Header = ({
       ? 'xs:bg-transparent'
       : ''
   const borderColor =
-    isMobile 
+    isMobile
       ? 'border-[var(--color-figma-secondary-500)]'
-      : logoProgress >= 1 
-        ? 'border-[var(--color-figma-secondary-500)]' 
+      : logoProgress >= 1
+        ? 'border-[var(--color-figma-secondary-500)]'
         : 'border-transparent'
-  const borderClass = `border-b ${borderColor} ${
-    !isMobile ? 'transition-all duration-1200 ease-in-out' : ''
-  }`
+  const borderClass = `border-b ${borderColor} ${!isMobile ? 'transition-all duration-1200 ease-in-out' : ''
+    }`
   const headerClasses = `${baseClasses} ${positionClass} ${backgroundClass} ${borderClass}`
   const opacityClass =
     logoProgress >= 1
@@ -65,6 +68,7 @@ const Header = ({
           isMenuOpen={isMenuOpen}
           onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
           logoProgress={logoProgress}
+          showConsultButton={showConsultButton}
         />
         <ConsultButton className='xs:hidden' />
       </div>

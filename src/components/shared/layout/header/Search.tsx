@@ -41,7 +41,7 @@ const Search = ({ isOpen, onClose }: TSearch) => {
   if (!isOpen) return null
 
   return (
-    <div className='fixed inset-0 bg-figma-primary-50 w-full h-full overflow-y-auto py-[24px]'>
+    <div className='fixed inset-0 bg-figma-primary-50 w-full h-full overflow-y-auto py-[24px] max-xs:mt-[73px]'>
       <div className='max-xs:hidden flex justify-end w-full'>
         <button
           onClick={onClose}
