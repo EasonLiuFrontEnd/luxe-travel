@@ -1,4 +1,6 @@
-export interface TPagination {
+import { UseQueryResult } from '@tanstack/react-query'
+
+export type TPagination = {
   page: number
   pageSize: number
   total: number
@@ -13,7 +15,12 @@ export interface TApiResponse<T> {
   pagination?: TPagination
 }
 
-export interface TAdvantage {
+export type TUseHomeQueryResult<TData, TMock> = {
+  query: UseQueryResult<TData, Error>
+  mock: TMock
+}
+
+export type TAdvantages = {
   id: string
   moduleId: string
   imageUrl: string
@@ -24,7 +31,7 @@ export interface TAdvantage {
   updatedAt: string
 }
 
-export interface TConcern {
+export type TConcern = {
   id: string
   moduleId: string
   number: string
@@ -34,7 +41,7 @@ export interface TConcern {
   updatedAt: string
 }
 
-export interface TMenuItem {
+export type TMenuItem = {
   id: string
   title: string
   linkUrl: string
@@ -47,7 +54,7 @@ export interface TMenuItem {
   children: TMenuItem[]
 }
 
-export interface TBanner {
+export type TBanners = {
   id: string
   imageUrl: string
   title: string
@@ -59,7 +66,7 @@ export interface TBanner {
   updatedAt: string
 }
 
-export interface TCountryShowcase {
+export type TBooks = {
   id: string
   imageUrl: string
   title: string
@@ -72,8 +79,8 @@ export interface TCountryShowcase {
   updatedAt: string
 }
 
-export interface TAdvantagesResponse extends TApiResponse<TAdvantage> {
-  rows: TAdvantage[]
+export interface TAdvantagesResponse extends TApiResponse<TAdvantages> {
+  rows: TAdvantages[]
 }
 
 export interface TConcernsResponse extends TApiResponse<TConcern> {
@@ -84,11 +91,10 @@ export interface TMenuResponse extends TApiResponse<TMenuItem> {
   data: TMenuItem[]
 }
 
-export interface TBannersResponse extends TApiResponse<TBanner> {
-  rows: TBanner[]
+export interface TBannersResponse extends TApiResponse<TBanners> {
+  rows: TBanners[]
 }
 
-export interface TCountryShowcasesResponse
-  extends TApiResponse<TCountryShowcase> {
-  rows: TCountryShowcase[]
+export interface TBooksResponse extends TApiResponse<TBooks> {
+  rows: TBooks[]
 }
