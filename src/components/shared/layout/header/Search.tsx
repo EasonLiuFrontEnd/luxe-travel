@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import SearchIcon from '@/components/shared/icons/header/SearchIcon'
-import DeleteIcon from '@/components/shared/icons/header/DeleteIcon'
+import CloseIcon from '@/components/shared/icons/header/CloseIcon'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import type { TBaseComponent } from '@/types'
 import { cn } from '@/lib/utils'
@@ -72,7 +72,7 @@ const Search = ({ isOpen, onClose }: TSearch) => {
               autoFocus
             />
             {searchValue && (
-              <DeleteIcon
+              <CloseIcon
                 size={isMobile ? '19' : '20'}
                 onClick={handleClearSearch}
               />

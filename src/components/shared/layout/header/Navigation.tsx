@@ -8,6 +8,7 @@ export type TNavigation = TBaseComponent & {
   logoProgress?: number
   showConsultButton?: boolean
 }
+
 import DropdownMenu from './DropdownMenu'
 import ConsultButton from '@/components/ui/ConsultButton'
 import Logo from './Logo'
@@ -15,6 +16,8 @@ import SearchIcon from '@/components/shared/icons/header/SearchIcon'
 import MenuIcon from '@/components/shared/icons/header/MenuIcon'
 import NavigationHoverIcon from '@/components/shared/icons/header/NavigationHoverIcon'
 import Search from './Search'
+import Image from 'next/image'
+import DropdownCloseIcon from '../../icons/header/DropdownCloseIcon'
 
 const Navigation = ({
   isMenuOpen = false,
@@ -36,6 +39,10 @@ const Navigation = ({
     setIsSearchOpen(false)
   }
 
+  const handlePageNavigation = (href: string) => {
+    console.log('Navigate to:', href)
+  }
+
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -49,29 +56,36 @@ const Navigation = ({
     }
   }, [])
 
+  useEffect(() => {
+    if (!isMenuOpen) {
+      setActiveDropdown(null)
+    }
+  }, [isMenuOpen])
+
   return (
     <>
       <div className='hidden xs:flex items-center space-x-6'>
         {NAV_ITEMS.map((item) => (
           <div
-            key={item.name}
+            key={item.label}
             className='relative'
-            onMouseEnter={() => setActiveDropdown(item.name)}
+            onMouseEnter={() => setActiveDropdown(item.label)}
             onMouseLeave={() => setActiveDropdown(null)}
           >
             <button className='font-noto-serif-body-l-semibold text-figma-primary-950 hover:text-figma-secondary-950 cursor-pointer pt-[48px] relative'>
-              {activeDropdown === item.name && (
+              {activeDropdown === item.label && (
                 <NavigationHoverIcon className='absolute top-0 right-[50%] translate-x-[50%]' />
               )}
-              {item.name}
+              {item.label}
             </button>
             <div className='absolute top-full left-0 right-0 h-[16px] bg-transparent' />
             <DropdownMenu
-              isVisible={activeDropdown === item.name}
+              isVisible={activeDropdown === item.label}
               items={
-                DROPDOWN_MENUS[item.name as keyof typeof DROPDOWN_MENUS] || []
+                DROPDOWN_MENUS[item.label as keyof typeof DROPDOWN_MENUS] || []
               }
               onClose={() => setActiveDropdown(null)}
+              onPageNavigation={handlePageNavigation}
             />
           </div>
         ))}
@@ -99,19 +113,54 @@ const Navigation = ({
           </button>
         </div>
       </div>
-
       {isMenuOpen && (
-        <div className='block xs:hidden absolute top-full left-0 right-0 mt-px pt-[48px] px-[20px] space-y-7 bg-figma-neutral-50'>
-          {NAV_ITEMS.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className='block font-noto-serif-body-m-medium py-[12px] px-[5px]'
-              onClick={onMenuToggle}
-            >
-              {item.name}
-            </a>
-          ))}
+        <div className='flex flex-col xs:hidden absolute top-full left-0 right-0 mt-px pt-[48px] space-y-7 bg-figma-neutral-50  h-[calc(100dvh-73px)]'>
+          {NAV_ITEMS.map((item) => {
+            const menuItems = DROPDOWN_MENUS[item.label as keyof typeof DROPDOWN_MENUS] || []
+            const hasDropdown = menuItems.length > 0
+
+            return (
+              <div key={item.label} className='space-y-0'>
+                <div
+                  className={
+                    `flex justify-between items-center font-noto-serif-body-m-medium py-[12px] px-[40px] cursor-pointer
+                    ${activeDropdown === item.label ? 'text-figma-secondary-950' : ''}`
+                  }
+                  onClick={() => hasDropdown ?
+                    setActiveDropdown(activeDropdown === item.label ? null : item.label)
+                    : onMenuToggle()
+                  }
+                >
+                  {item.label}
+                  {hasDropdown && (
+                    <DropdownCloseIcon
+                      className={
+                        `transition-transform duration-600 ease-in-out 
+                          ${activeDropdown === item.label
+                          ? 'rotate-180'
+                          : 'rotate-135'
+                        }`}
+                    />
+                  )}
+                </div>
+                {hasDropdown && (
+                  <DropdownMenu
+                    isVisible={activeDropdown === item.label}
+                    items={menuItems}
+                    onClose={onMenuToggle}
+                    onPageNavigation={handlePageNavigation}
+                  />
+                )}
+              </div>
+            )
+          })}
+          <Image
+            src='/shared/icons/footer-logo.svg'
+            alt='footer-logo'
+            className='w-full mt-auto'
+            width={375}
+            height={33}
+          />
         </div>
       )}
 

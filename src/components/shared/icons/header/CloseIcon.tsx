@@ -1,14 +1,14 @@
-export type TDeleteIcon = {
+export type TCloseIcon = {
   size?: string
   className?: string
   onClick?: () => void
 }
 
-const DeleteIcon = ({
+const CloseIcon = ({
   size = '16',
   className,
   onClick
-}: TDeleteIcon) => {
+}: TCloseIcon) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -27,4 +27,4 @@ const DeleteIcon = ({
   )
 }
 
-export default DeleteIcon
+export default CloseIcon
