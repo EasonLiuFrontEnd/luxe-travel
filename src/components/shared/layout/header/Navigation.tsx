@@ -64,7 +64,7 @@ const Navigation = ({
 
   return (
     <>
-      <div className='hidden xs:flex items-center space-x-6'>
+      <div className='hidden xs:flex items-center space-x-7'>
         {NAV_ITEMS.map((item) => (
           <div
             key={item.label}
@@ -89,10 +89,10 @@ const Navigation = ({
             />
           </div>
         ))}
+        <button className='pt-[48px] px-[8px] max-xs:hidden'>
+          <SearchIcon onClick={openSearch} />
+        </button>
       </div>
-      <button className='p-3 ml-[25px] max-xs:hidden'>
-        <SearchIcon onClick={openSearch} />
-      </button>
 
       <ConsultButton
         className={`max-xs:hidden transition-opacity duration-800 ${showConsultButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
@@ -155,8 +155,8 @@ const Navigation = ({
             )
           })}
           <Image
-            src='/shared/icons/footer-logo.svg'
-            alt='footer-logo'
+            src='/shared/icons/company-name.svg'
+            alt='company-name'
             className='w-full mt-auto'
             width={375}
             height={33}
