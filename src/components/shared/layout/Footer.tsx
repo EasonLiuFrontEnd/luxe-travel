@@ -44,7 +44,7 @@ const Footer = () => {
         </div>
         <div className='flex flex-col justify-between items-center self-stretch'>
           <Image
-            src='/shared/icons/footer-logo.svg'
+            src='/home/footer/footer-logo.svg'
             alt='footer-logo'
             width={321}
             height={57}
@@ -52,7 +52,7 @@ const Footer = () => {
           <div className='flex justify-center gap-[24px]'>
             <a href="">
               <Image
-                src='/shared/icons/facebook.svg'
+                src='/home/footer/facebook.svg'
                 alt='facebook'
                 width={24}
                 height={24}
@@ -60,7 +60,7 @@ const Footer = () => {
             </a>
             <a href="">
               <Image
-                src='/shared/icons/instagram.svg'
+                src='/home/footer/instagram.svg'
                 alt='instagram'
                 width={24}
                 height={24}
@@ -68,7 +68,7 @@ const Footer = () => {
             </a>
             <a href="">
               <Image
-                src='/shared/icons/line.svg'
+                src='/home/footer/line.svg'
                 alt='line'
                 width={24}
                 height={24}
@@ -76,7 +76,7 @@ const Footer = () => {
             </a>
             <a href="">
               <Image
-                src='/shared/icons/phone.svg'
+                src='/home/footer/phone.svg'
                 alt='phone'
                 width={24}
                 height={24}
