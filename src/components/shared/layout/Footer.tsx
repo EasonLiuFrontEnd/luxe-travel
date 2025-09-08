@@ -20,8 +20,8 @@ const Footer = () => {
         `}>
         返回頂部
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-          <path d="M5 12.666L12 5.66602L19 12.666" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M12 19.666V5.66602" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M5 12.666L12 5.66602L19 12.666" stroke="#333333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M12 19.666V5.66602" stroke="#333333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
       <div className='flex justify-between pb-[48px] mb-[48px] border-b-[1.5px] border-white'>
