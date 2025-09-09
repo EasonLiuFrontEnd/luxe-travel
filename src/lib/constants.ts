@@ -109,3 +109,9 @@ export const DROPDOWN_MENUS = {
     },
   ],
 }
+export const SOCIAL_MEDIAS = [
+  { src: '/home/footer/facebook.svg', alt: 'facebook', href: '#' },
+  { src: '/home/footer/instagram.svg', alt: 'instagram', href: '#' },
+  { src: '/home/footer/line.svg', alt: 'line', href: '#' },
+  { src: '/home/footer/phone.svg', alt: 'phone', href: '#' },
+] as const
