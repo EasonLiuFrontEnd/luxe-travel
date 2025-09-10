@@ -121,6 +121,9 @@ export const useMenu = (): TUseHomeQueryResult<TMenuItem[], TMenuResponse> => {
   const query = useQuery<TMenuItem[], AxiosError<TApiResponse<TMenuItem[]>>>({
     queryKey: ['menu'],
     queryFn: fetchMenu,
+    retry: 2,
+    retryDelay: 1000,
+    staleTime: 5 * 60 * 1000,
   })
 
   return { query, mock: menuApiMock }
