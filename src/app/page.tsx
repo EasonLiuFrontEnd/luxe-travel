@@ -1,6 +1,7 @@
 import Banner from '@/components/pages/home/Banner'
 import BookShelfSection from '@/components/pages/home/BookShelfSection'
 import RecommendationSection from '@/components/pages/home/RecommendationSection'
+import Feedback from '@/components/pages/home/Feedback'
 
 const HomePage = () => {
   return (
@@ -8,6 +9,7 @@ const HomePage = () => {
       <Banner />
       <BookShelfSection />
       <RecommendationSection />
+      <Feedback />
     </div>
   )
 }

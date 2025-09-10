@@ -249,6 +249,13 @@
     line-height: 1.5;
   }
 
+  .font-genseki-footer-medium {
+    font-family: var(--font-genseki-gothic);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
   .font-luxurious-deco-regular {
     font-family: var(--font-luxurious-script);
     font-size: 48px;

@@ -6,26 +6,41 @@ export type TNavigation = TBaseComponent & {
   isMenuOpen?: boolean
   onMenuToggle?: () => void
   logoProgress?: number
+  showConsultButton?: boolean
 }
+
 import DropdownMenu from './DropdownMenu'
 import ConsultButton from '@/components/ui/ConsultButton'
 import Logo from './Logo'
 import SearchIcon from '@/components/shared/icons/header/SearchIcon'
+import MenuIcon from '@/components/shared/icons/header/MenuIcon'
+import NavigationHoverIcon from '@/components/shared/icons/header/NavigationHoverIcon'
 import Search from './Search'
+import Image from 'next/image'
+import DropdownCloseIcon from '../../icons/header/DropdownCloseIcon'
 
 const Navigation = ({
   isMenuOpen = false,
-  onMenuToggle = () => {},
+  onMenuToggle = () => { },
+  showConsultButton = false,
 }: TNavigation) => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
 
-  const toggleSearch = () => {
-    setIsSearchOpen(!isSearchOpen)
+  const openSearch = () => {
+    setIsSearchOpen(true)
+    setActiveDropdown(null)
+    if (isMenuOpen) {
+      onMenuToggle()
+    }
   }
 
   const closeSearch = () => {
     setIsSearchOpen(false)
+  }
+
+  const handlePageNavigation = (href: string) => {
+    console.log('Navigate to:', href)
   }
 
   useEffect(() => {
@@ -41,93 +56,111 @@ const Navigation = ({
     }
   }, [])
 
+  useEffect(() => {
+    if (!isMenuOpen) {
+      setActiveDropdown(null)
+    }
+  }, [isMenuOpen])
+
   return (
     <>
-      <div className='hidden xs:flex items-center space-x-6'>
+      <div className='hidden xs:flex items-center space-x-7'>
         {NAV_ITEMS.map((item) => (
           <div
-            key={item.name}
+            key={item.label}
             className='relative'
-            onMouseEnter={() => setActiveDropdown(item.name)}
+            onMouseEnter={() => setActiveDropdown(item.label)}
             onMouseLeave={() => setActiveDropdown(null)}
           >
-            <button className='font-noto-serif-body-l-semibold text-figma-primary-950 cursor-pointer'>
-              {item.name}
+            <button className='font-noto-serif-body-l-semibold text-figma-primary-950 hover:text-figma-secondary-950 cursor-pointer pt-[48px] relative'>
+              {activeDropdown === item.label && (
+                <NavigationHoverIcon className='absolute top-0 right-[50%] translate-x-[50%]' />
+              )}
+              {item.label}
             </button>
             <div className='absolute top-full left-0 right-0 h-[16px] bg-transparent' />
             <DropdownMenu
-              isVisible={activeDropdown === item.name}
+              isVisible={activeDropdown === item.label}
               items={
-                DROPDOWN_MENUS[item.name as keyof typeof DROPDOWN_MENUS] || []
+                DROPDOWN_MENUS[item.label as keyof typeof DROPDOWN_MENUS] || []
               }
               onClose={() => setActiveDropdown(null)}
+              onPageNavigation={handlePageNavigation}
             />
           </div>
         ))}
+        <button className='pt-[48px] px-[8px] max-xs:hidden'>
+          <SearchIcon onClick={openSearch} />
+        </button>
       </div>
-      <button onClick={toggleSearch} className='p-3 ml-[25px] max-xs:hidden'>
-        <SearchIcon className='cursor-pointer' />
-      </button>
 
-      <ConsultButton />
+      <ConsultButton
+        className={`max-xs:hidden transition-opacity duration-800 ${showConsultButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
+      />
 
-      <div className='flex xs:hidden w-full justify-between items-center'>
+      <div className='max-xs:z-60 flex xs:hidden w-full justify-between items-center'>
         <Logo isMobile={true} />
         <div className='flex items-center'>
-          <button onClick={toggleSearch} className='p-3'>
-            <SearchIcon />
+          <button className='p-3'>
+            <SearchIcon onClick={openSearch} />
           </button>
           <button
-            onClick={onMenuToggle}
-            className='text-gray-700 hover:text-amber-600 transition-colors duration-200 p-3'
+            onClick={isSearchOpen ? closeSearch : onMenuToggle}
+            className='p-3'
           >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='24'
-              height='24'
-              viewBox='0 0 24 24'
-              fill='none'
-            >
-              <path
-                d='M4 12H20'
-                stroke='#BDA05E'
-                strokeWidth='2'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-              />
-              <path
-                d='M4 18H20'
-                stroke='#BDA05E'
-                strokeWidth='2'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-              />
-              <path
-                d='M4 6H20'
-                stroke='#BDA05E'
-                strokeWidth='2'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-              />
-            </svg>
+            <MenuIcon isOpen={isSearchOpen || isMenuOpen} />
           </button>
         </div>
       </div>
-
       {isMenuOpen && (
-        <div className='max-xs:block hidden border-t border-gray-200 bg-white absolute top-full left-0 right-0'>
-          <div className='px-4 py-4 space-y-3 max-w-7xl mx-auto'>
-            {NAV_ITEMS.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className='block text-gray-700 hover:text-amber-600 transition-colors duration-200 font-medium text-sm'
-                onClick={onMenuToggle}
-              >
-                {item.name}
-              </a>
-            ))}
-          </div>
+        <div className='flex flex-col xs:hidden absolute top-full left-0 right-0 mt-px pt-[48px] space-y-7 bg-figma-neutral-50  h-[calc(100dvh-73px)]'>
+          {NAV_ITEMS.map((item) => {
+            const menuItems = DROPDOWN_MENUS[item.label as keyof typeof DROPDOWN_MENUS] || []
+            const hasDropdown = menuItems.length > 0
+
+            return (
+              <div key={item.label} className='space-y-0'>
+                <div
+                  className={
+                    `flex justify-between items-center font-noto-serif-body-m-medium py-[12px] px-[40px] cursor-pointer
+                    ${activeDropdown === item.label ? 'text-figma-secondary-950' : ''}`
+                  }
+                  onClick={() => hasDropdown ?
+                    setActiveDropdown(activeDropdown === item.label ? null : item.label)
+                    : onMenuToggle()
+                  }
+                >
+                  {item.label}
+                  {hasDropdown && (
+                    <DropdownCloseIcon
+                      className={
+                        `transition-transform duration-600 ease-in-out 
+                          ${activeDropdown === item.label
+                          ? 'rotate-180'
+                          : 'rotate-135'
+                        }`}
+                    />
+                  )}
+                </div>
+                {hasDropdown && (
+                  <DropdownMenu
+                    isVisible={activeDropdown === item.label}
+                    items={menuItems}
+                    onClose={onMenuToggle}
+                    onPageNavigation={handlePageNavigation}
+                  />
+                )}
+              </div>
+            )
+          })}
+          <Image
+            src='/shared/icons/company-name.svg'
+            alt='company-name'
+            className='w-full mt-auto'
+            width={375}
+            height={33}
+          />
         </div>
       )}
 

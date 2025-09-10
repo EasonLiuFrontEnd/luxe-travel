@@ -5,6 +5,8 @@ import Logo from './Logo'
 import Navigation from './Navigation'
 import ConsultButton from '@/components/ui/ConsultButton'
 import type { TBaseComponent } from '@/types'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { useScroll } from '@/hooks/useScroll'
 
 export type THeader = TBaseComponent & {
   isHomePage: boolean
@@ -24,11 +26,12 @@ const Header = ({
   hasTransparentHeader = false,
 }: THeader) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { isMobile } = useMediaQuery()
+  const { scrollY } = useScroll()
 
-  const baseClasses = 'z-50 w-full flex items-center justify-between'
-  const mobileClasses =
-    'max-xs:bg-figma-neutral-50 max-xs:border-b max-xs:border-[var(--color-figma-secondary-500)] max-xs:p-[12px]'
-  const desktopClasses = 'p-[48px]'
+  const showConsultButton = scrollY > 797
+
+  const baseClasses = 'z-50 w-full flex items-center justify-between max-xs:p-[12px] xs:pb-[48px] xs:px-[48px]  bg-figma-neutral-50'
   const positionClass =
     headerBehavior === 'fixed'
       ? 'fixed'
@@ -37,17 +40,21 @@ const Header = ({
         : 'relative'
   const backgroundClass =
     hasTransparentHeader && isHomePage && logoProgress < 1
-      ? 'bg-transparent'
-      : 'bg-figma-neutral-50 backdrop-filter: blur(8px);'
-  const borderClass =
-    logoProgress >= 1
-      ? 'border-b border-[var(--color-figma-secondary-500)] transition-all duration-1200 ease-in-out'
-      : 'border-b border-transparent transition-all duration-1200 ease-in-out'
-  const headerClasses = `${baseClasses} ${mobileClasses} ${desktopClasses} ${positionClass} ${backgroundClass} ${borderClass}`
+      ? 'xs:bg-transparent'
+      : ''
+  const borderColor =
+    isMobile
+      ? 'border-[var(--color-figma-secondary-500)]'
+      : logoProgress >= 1
+        ? 'border-[var(--color-figma-secondary-500)]'
+        : 'border-transparent'
+  const borderClass = `border-b ${borderColor} ${!isMobile ? 'transition-all duration-1200 ease-in-out' : ''
+    }`
+  const headerClasses = `${baseClasses} ${positionClass} ${backgroundClass} ${borderClass}`
   const opacityClass =
     logoProgress >= 1
       ? 'transition-opacity duration-1200 ease-in-out opacity-100'
-      : 'opacity-0 pointer-events-none'
+      : 'max-xs:opacity-100 opacity-0 xs:pointer-events-none'
 
   return (
     <div className={headerClasses}>
@@ -61,6 +68,7 @@ const Header = ({
           isMenuOpen={isMenuOpen}
           onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
           logoProgress={logoProgress}
+          showConsultButton={showConsultButton}
         />
         <ConsultButton className='xs:hidden' />
       </div>

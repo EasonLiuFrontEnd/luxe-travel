@@ -1,9 +1,9 @@
 export const NAV_ITEMS = [
-  { name: '團體專區', href: '#group' },
-  { name: '自由行專區', href: '#individual' },
-  { name: '包車旅遊', href: '#charter' },
-  { name: '三井郵輪', href: '#cruise' },
-  { name: '關於典藏', href: '#about' },
+  { label: '團體專區', href: '#group' },
+  { label: '自由行專區', href: '#individual' },
+  { label: '包車旅遊', href: '#charter' },
+  { label: '三井郵輪', href: '#cruise' },
+  { label: '關於典藏', href: '#about' },
 ] as const
 
 export const POPULAR_DESTINATIONS = [
@@ -109,3 +109,9 @@ export const DROPDOWN_MENUS = {
     },
   ],
 }
+export const SOCIAL_MEDIAS = [
+  { src: '/home/footer/facebook.svg', alt: 'facebook', href: '#' },
+  { src: '/home/footer/instagram.svg', alt: 'instagram', href: '#' },
+  { src: '/home/footer/line.svg', alt: 'line', href: '#' },
+  { src: '/home/footer/phone.svg', alt: 'phone', href: '#' },
+] as const

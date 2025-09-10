@@ -4,7 +4,7 @@ import { useCallback, useRef, useState, useEffect } from 'react'
 
 export const useBookShelfScroll = () => {
   const bookShelfRef = useRef<HTMLDivElement>(null)
-  const trackRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
   const [isFixed, setIsFixed] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
   const isScrollingHorizontally = useRef(false)
