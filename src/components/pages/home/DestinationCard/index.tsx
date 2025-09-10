@@ -103,7 +103,7 @@ const DestinationCard = ({
           patternContainerClassName,
         )}
         style={imageStyle}
-        src={countryPattern || '/home/patterns/hr-croatia.svg'}
+        src={countryPattern || '/home/itinerary/hr-croatia/pattern.svg'}
         width={182}
         height={533}
       />
