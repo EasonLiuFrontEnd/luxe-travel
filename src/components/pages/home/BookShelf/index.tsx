@@ -4,25 +4,24 @@ import React, { useState } from 'react'
 import DestinationCard from '@/components/pages/home/DestinationCard/index'
 import styles from './styles.module.css'
 import { bookShelfData } from './config'
-import { useBookShelfScroll } from '@/hooks/useBookShelfScroll'
 
 type TStyle = React.CSSProperties & {
   [key in `--${string}`]?: string | number
 }
 
-const BookShelf = () => {
+type TBookShelfProps = {
+  trackRef?: React.RefObject<HTMLDivElement>
+}
+
+const BookShelf = ({ trackRef }: TBookShelfProps) => {
   const [activeCardId, setActiveCardId] = useState<string | null>(null)
-  const { bookShelfRef, trackRef } = useBookShelfScroll()
 
   const handleCardClick = (cardId: string) => {
     setActiveCardId(cardId)
   }
 
-
-
   return (
     <div 
-      ref={bookShelfRef}
       className='w-full flex items-end lg:flex-[0_0_59.5%] lg:max-w-[1142.4px] min-w-0 lg:border-r lg:border-[var(--color-figma-secondary-500)]'
     >
       <div className='relative overflow-hidden w-full'>

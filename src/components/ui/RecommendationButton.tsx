@@ -18,7 +18,7 @@ const RecommendationButton = ({
 
   return (
     <div 
-      className={`box-border flex gap-2 items-center justify-end px-3 py-1 relative rounded-[18px] border border-solid cursor-pointer transition-colors duration-300 ease-out ${variantStyles[variant]} ${className}`}
+      className={`box-border flex gap-2 items-center justify-end px-4 py-2 relative rounded-[18px] border border-solid cursor-pointer transition-colors duration-300 ease-out ${variantStyles[variant]} ${className}`}
       {...props}
     >
       <div className="font-family-genseki text-[14px] leading-[1.5] whitespace-nowrap">

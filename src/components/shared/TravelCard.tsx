@@ -1,6 +1,8 @@
+'use client'
+
 import type { TBaseComponent } from '@/types'
 import IconCta from '@/components/shared/icons/IconCta'
-
+import Image from 'next/image'
 type TTravelCardProps = TBaseComponent & {
   image: string
   tagText: string
@@ -44,29 +46,32 @@ const TravelCard = ({
 
   return (
     <div 
-      className={`flex flex-col gap-3 grow min-w-0 rounded-[16px] cursor-pointer group ${className}`}
+      className={`flex flex-row md:grid md:grid-rows-subgrid md:row-span-4 gap-3 rounded-[16px] lg:rounded-[16px] rounded-[4px] cursor-pointer w-full min-w-0 group ${className}`}
       onClick={onClick}
     >
-      <div className="aspect-square overflow-hidden relative rounded-[4px] w-full">
-        <div 
-          className="absolute w-full h-full bg-center bg-cover bg-no-repeat rounded-[4px] transition-transform duration-300 ease-out group-hover:scale-110"
-          style={{ backgroundImage: `url(${image})` }}
+      <div className="w-full max-w-[96px] md:max-w-full aspect-square aspect-[120/120] overflow-hidden relative rounded-[4px]">
+        <Image
+          src={image}
+          alt={title}
+          className="absolute w-full h-full object-cover rounded-[4px] hover-fade-scale"
+          width={238}
+          height={238}
         />
-        <div className={`absolute ${tagColorStyles[tagColor]} box-border flex gap-2.5 items-center justify-center px-1 py-0 right-0 top-2`}>
-          <div className="font-family-genseki text-[12px] leading-[1.5] text-white whitespace-nowrap">
+        <div className={`absolute ${tagColorStyles[tagColor]} box-border flex gap-2.5 items-center justify-center px-1 py-0 left-0 lg:right-0 lg:left-auto top-3 lg:top-3 top-2`}>
+          <div className="font-family-genseki text-[12px] leading-[1.5] text-white whitespace-nowrap px-2">
             {tagText}
           </div>
         </div>
       </div>
-      
-      <div className="flex flex-col gap-3 items-end justify-start w-full">
-        <div className="flex flex-col gap-2 items-start justify-start w-full">
-          <div className={`flex flex-wrap gap-1.5 items-center justify-between w-full ${hoverTitle ? 'relative overflow-hidden' : ''}`}>
-            <div className={`font-family-genseki text-[var(--color-figma-primary-950)] text-[14px] leading-[1.5] whitespace-nowrap ${hoverTitle ? 'transition-transform duration-300 ease-out group-hover:-translate-y-full' : ''}`}>
+
+      <div className="flex flex-col gap-3 items-end justify-start w-full md:hidden">
+        <div className="flex flex-col gap-2 items-start justify-between w-full">
+          <div className={`flex flex-wrap gap-1.5 items-center justify-start w-full ${hoverTitle ? 'relative overflow-hidden' : ''}`}>
+            <div className={`font-family-genseki text-[var(--color-figma-primary-950)] text-[14px] leading-[1.5] ${hoverTitle ? 'transition-opacity duration-300 ease-out group-hover:opacity-0' : ''}`}>
               {title}
             </div>
             {hoverTitle && (
-              <div className="font-family-genseki text-[var(--color-figma-primary-950)] text-[14px] leading-[1.5] whitespace-nowrap absolute top-full transition-transform duration-300 ease-out group-hover:-translate-y-full">
+              <div className="font-family-genseki text-[var(--color-figma-primary-950)] text-[14px] leading-[1.5] absolute top-0 left-0 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100">
                 {hoverTitle}
               </div>
             )}
@@ -74,18 +79,18 @@ const TravelCard = ({
           
           <div className="flex flex-col gap-4 items-end justify-start w-full">
             <div className={`font-family-genseki font-medium text-[var(--color-figma-primary-950)] text-[16px] leading-[1.5] w-full ${hoverDescription ? 'relative overflow-hidden' : ''}`}>
-              <div className={`${hoverDescription ? 'transition-transform duration-300 ease-out group-hover:-translate-y-full' : ''}`}>
+              <div className={`${hoverDescription ? 'transition-opacity duration-300 ease-out group-hover:opacity-0' : ''}`}>
                 {description}
               </div>
               {hoverDescription && (
-                <div className="absolute top-full transition-transform duration-300 ease-out group-hover:-translate-y-full">
+                <div className="absolute top-0 left-0 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100">
                   {hoverDescription}
                 </div>
               )}
             </div>
             
             <div className="flex items-center justify-between w-full">
-              <div className={`font-family-noto-serif font-semibold text-[18px] leading-[1.5] whitespace-nowrap ${priceColorStyles[priceColor]}`}>
+              <div className={`font-family-noto-serif font-semibold text-[18px] leading-[1.5] ${priceColorStyles[priceColor]}`}>
                 {price}
               </div>
               <div className={`h-6 w-12 relative ${arrowColorStyles[tagColor]}`}>
@@ -93,6 +98,37 @@ const TravelCard = ({
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className={`hidden md:flex flex-wrap gap-1.5 items-center justify-start w-full min-w-0 ${hoverTitle ? 'relative overflow-hidden' : ''}`}>
+        <div className={`font-family-genseki text-[var(--color-figma-primary-950)] text-[14px] leading-[1.5] ${hoverTitle ? 'transition-opacity duration-300 ease-out group-hover:opacity-0' : ''}`}>
+          {title}
+        </div>
+        {hoverTitle && (
+          <div className="font-family-genseki text-[var(--color-figma-primary-950)] text-[14px] leading-[1.5] absolute top-0 left-0 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100">
+            {hoverTitle}
+          </div>
+        )}
+      </div>
+
+      <div className={`hidden md:block font-family-genseki font-medium text-[var(--color-figma-primary-950)] text-[16px] leading-[1.5] w-full min-w-0 ${hoverDescription ? 'relative overflow-hidden' : ''}`}>
+        <div className={`${hoverDescription ? 'transition-opacity duration-300 ease-out group-hover:opacity-0' : ''}`}>
+          {description}
+        </div>
+        {hoverDescription && (
+          <div className="absolute top-0 left-0 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100">
+            {hoverDescription}
+          </div>
+        )}
+      </div>
+
+      <div className="hidden md:flex items-center justify-between w-full min-w-0">
+        <div className={`font-family-noto-serif font-semibold text-[18px] leading-[1.5] ${priceColorStyles[priceColor]}`}>
+          {price}
+        </div>
+        <div className={`h-6 w-12 relative ${arrowColorStyles[tagColor]}`}>
+          <IconCta />
         </div>
       </div>
     </div>
