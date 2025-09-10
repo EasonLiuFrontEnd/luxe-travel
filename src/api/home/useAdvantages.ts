@@ -1,11 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
+import type { AxiosError } from 'axios'
 import apiClient from '../client'
-import { TAdvantages, TAdvantagesResponse, TUseHomeQueryResult } from '../type'
+import {
+  TAdvantages,
+  TAdvantagesResponse,
+  TUseHomeQueryResult,
+  TApiResponse,
+} from '../type'
 
 const fetchAdvantages = async (): Promise<TAdvantages[]> => {
-  const response = await apiClient.get<TAdvantagesResponse>(
-    '/api/admin/advantages',
-  )
+  const response = await apiClient.get<TAdvantagesResponse>('/admin/advantages')
   return response?.data?.rows || []
 }
 
@@ -74,13 +78,12 @@ export const useAdvantages = (): TUseHomeQueryResult<
   TAdvantages[],
   TAdvantagesResponse
 > => {
-  const query = useQuery({
+  const query = useQuery<
+    TAdvantages[],
+    AxiosError<TApiResponse<TAdvantages[]>>
+  >({
     queryKey: ['advantages'],
     queryFn: fetchAdvantages,
-    staleTime: 30 * 60 * 1000,
-    gcTime: 60 * 60 * 1000,
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   })
   return { query, mock: advantagesApiMock }
 }

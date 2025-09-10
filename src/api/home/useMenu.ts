@@ -1,9 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
+import type { AxiosError } from 'axios'
 import apiClient from '../client'
-import { TMenuItem, TMenuResponse, TUseHomeQueryResult } from '../type'
+import {
+  TMenuItem,
+  TMenuResponse,
+  TUseHomeQueryResult,
+  TApiResponse,
+} from '../type'
 
 const fetchMenu = async (): Promise<TMenuItem[]> => {
-  const response = await apiClient.get<TMenuResponse>('/api/admin/menu')
+  const response = await apiClient.get<TMenuResponse>('/admin/menu')
   return response?.data?.data || []
 }
 
@@ -112,13 +118,9 @@ export const menuApiMock: TMenuResponse = {
 }
 
 export const useMenu = (): TUseHomeQueryResult<TMenuItem[], TMenuResponse> => {
-  const query = useQuery({
+  const query = useQuery<TMenuItem[], AxiosError<TApiResponse<TMenuItem[]>>>({
     queryKey: ['menu'],
     queryFn: fetchMenu,
-    staleTime: 30 * 60 * 1000,
-    gcTime: 60 * 60 * 1000,
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   })
 
   return { query, mock: menuApiMock }

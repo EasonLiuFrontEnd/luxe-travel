@@ -1,9 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
+import type { AxiosError } from 'axios'
 import apiClient from '../client'
-import { TBanners, TBannersResponse, TUseHomeQueryResult } from '../type'
+import {
+  TBanners,
+  TBannersResponse,
+  TUseHomeQueryResult,
+  TApiResponse,
+} from '../type'
 
 const fetchBanners = async (): Promise<TBanners[]> => {
-  const response = await apiClient.get<TBannersResponse>('/api/admin/banners')
+  const response = await apiClient.get<TBannersResponse>('/admin/banners')
   return response?.data?.rows || []
 }
 
@@ -36,13 +42,10 @@ export const useBanners = (): TUseHomeQueryResult<
   TBanners[],
   TBannersResponse
 > => {
-  const query = useQuery({
+  const query = useQuery<TBanners[], AxiosError<TApiResponse<TBanners[]>>>({
     queryKey: ['banners'],
     queryFn: fetchBanners,
     staleTime: 15 * 60 * 1000,
-    gcTime: 60 * 60 * 1000,
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   })
 
   return { query, mock: bannersApiMock }
