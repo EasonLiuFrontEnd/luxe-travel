@@ -4,12 +4,12 @@ import { usePathname } from 'next/navigation'
 import { useMemo } from 'react'
 import { useScroll } from '@/hooks/useScroll'
 import { ScrollProvider } from '@/context/ScrollContext'
-import Header from '@/components/ui/Header'
-import Footer from '@/components/ui/Footer'
+import Header from '@/components/shared/layout/header/Header'
+import Footer from '@/components/shared/layout/Footer'
 import { getPageConfig, calculateLogoAnimation } from '@/lib/page-config'
-import type { IBaseComponent } from '@/types'
+import type { TBaseComponent } from '@/types'
 
-const ClientLayout = ({ children }: IBaseComponent) => {
+const ClientLayout = ({ children }: TBaseComponent) => {
   const pathname = usePathname()
   const { scrollY } = useScroll()
 
@@ -34,6 +34,7 @@ const ClientLayout = ({ children }: IBaseComponent) => {
       <Header
         isHomePage={pageConfig.type === 'home'}
         logoScale={logoScale}
+        logoProgress={logoProgress}
         isNavbarVisible={isNavbarVisible}
         isConsultButtonVisible={isConsultButtonVisible}
         headerBehavior={pageConfig.headerBehavior}

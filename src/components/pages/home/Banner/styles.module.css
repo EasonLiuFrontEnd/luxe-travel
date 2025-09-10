@@ -1,0 +1,328 @@
+.concave-border-1 {
+  position: relative;
+  &::before {
+    content: '';
+    width: 32px;
+    height: 32px;
+    display: block;
+    position: absolute;
+    background-color: var(--color-figma-neutral-50);
+    left: -32px;
+    top: 0;
+    bottom: 0;
+    mask:
+      linear-gradient(
+        to right,
+        transparent 50%,
+        var(--color-figma-neutral-50) 50%
+      ),
+      linear-gradient(
+        to bottom,
+        var(--color-figma-neutral-50) 50%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle 16px at center,
+        transparent 16px,
+        var(--color-figma-neutral-50) 16px
+      );
+    mask-composite: intersect;
+  }
+
+  &::after {
+    content: '';
+    width: 56px;
+    height: 56px;
+    display: none;
+    position: absolute;
+    background-color: var(--color-figma-neutral-50);
+    right: -56px;
+    top: 4;
+    bottom: 0;
+    mask:
+      linear-gradient(
+        to left,
+        transparent 50%,
+        var(--color-figma-neutral-50) 50%
+      ),
+      radial-gradient(
+        circle 28px at center,
+        transparent 28px,
+        var(--color-figma-neutral-50) 28px
+      );
+    mask-composite: intersect;
+  }
+
+  @media (max-width: 374px) {
+    &::before {
+      display: none;
+    }
+
+    &::after {
+      display: block;
+    }
+  }
+}
+
+.concave-border-2 {
+  position: relative;
+  &::before {
+    content: '';
+    width: 36px;
+    height: 100%;
+    display: block;
+    position: absolute;
+    background-color: var(--color-figma-neutral-50);
+    left: -36px;
+    top: 0;
+    bottom: 0;
+    mask:
+      linear-gradient(
+        to right,
+        transparent 50%,
+        var(--color-figma-neutral-50) 50%
+      ),
+      radial-gradient(
+        circle 18px at center,
+        transparent 18px,
+        var(--color-figma-neutral-50) 18px
+      );
+    mask-composite: intersect;
+  }
+
+  &::after {
+    content: '';
+    width: 32px;
+    height: 32px;
+    display: none;
+    position: absolute;
+    background-color: var(--color-figma-neutral-50);
+    right: -32px;
+    top: 0;
+    bottom: 0;
+    mask:
+      linear-gradient(
+        to left,
+        transparent 50%,
+        var(--color-figma-neutral-50) 50%
+      ),
+      linear-gradient(
+        to top,
+        var(--color-figma-neutral-50) 50%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle 16px at center,
+        transparent 16px,
+        var(--color-figma-neutral-50) 16px
+      );
+    mask-composite: intersect;
+  }
+
+  @media (max-width: 374px) {
+    &::before {
+      display: none;
+    }
+
+    &::after {
+      display: block;
+    }
+  }
+}
+
+.concave-border-3 {
+  position: relative;
+  &::before {
+    content: '';
+    width: 32px;
+    height: 32px;
+    display: block;
+    position: absolute;
+    background-color: var(--color-figma-neutral-50);
+    bottom: -32px;
+    right: 0;
+    mask:
+      linear-gradient(
+        to right,
+        transparent 50%,
+        var(--color-figma-neutral-50) 50%
+      ),
+      linear-gradient(
+        to bottom,
+        var(--color-figma-neutral-50) 50%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle 16px at center,
+        transparent 16px,
+        var(--color-figma-neutral-50) 16px
+      );
+    mask-composite: intersect;
+  }
+  &::after {
+    content: '';
+    width: 32px;
+    height: 32px;
+    display: none;
+    position: absolute;
+    background-color: var(--color-figma-neutral-50);
+    bottom: -32px;
+    left: 0;
+    mask:
+      linear-gradient(
+        to left,
+        transparent 50%,
+        var(--color-figma-neutral-50) 50%
+      ),
+      linear-gradient(
+        to bottom,
+        var(--color-figma-neutral-50) 50%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle 16px at center,
+        transparent 16px,
+        var(--color-figma-neutral-50) 16px
+      );
+    mask-composite: intersect;
+  }
+
+  @media (max-width: 374px) {
+    &::before {
+      display: none;
+    }
+
+    &::after {
+      display: block;
+    }
+  }
+}
+
+.concave-border-4 {
+  position: relative;
+  &::before {
+    content: '';
+    width: 32px;
+    height: 32px;
+    display: block;
+    position: absolute;
+    background-color: var(--color-figma-neutral-50);
+    left: 0;
+    top: -32px;
+    mask:
+      linear-gradient(
+        to right,
+        var(--color-figma-neutral-50) 50%,
+        transparent 50%
+      ),
+      linear-gradient(
+        to bottom,
+        transparent 50%,
+        var(--color-figma-neutral-50) 50%
+      ),
+      radial-gradient(
+        circle 16px at center,
+        transparent 16px,
+        var(--color-figma-neutral-50) 16px
+      );
+    mask-composite: intersect;
+  }
+
+  @media (max-width: 374px) {
+    &::before {
+      right: 0;
+      left: auto;
+      mask:
+        linear-gradient(
+          to left,
+          var(--color-figma-neutral-50) 50%,
+          transparent 50%
+        ),
+        linear-gradient(
+          to bottom,
+          transparent 50%,
+          var(--color-figma-neutral-50) 50%
+        ),
+        radial-gradient(
+          circle 16px at center,
+          transparent 16px,
+          var(--color-figma-neutral-50) 16px
+        );
+      mask-composite: intersect;
+    }
+  }
+}
+
+.concave-border-5 {
+  position: relative;
+  &::after {
+    content: '';
+    width: 32px;
+    height: 32px;
+    display: block;
+    position: absolute;
+    background-color: var(--color-figma-neutral-50);
+    right: -32px;
+    bottom: 0;
+    mask:
+      linear-gradient(
+        to right,
+        var(--color-figma-neutral-50) 50%,
+        transparent 50%
+      ),
+      linear-gradient(
+        to top,
+        var(--color-figma-neutral-50) 50%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle 16px at center,
+        transparent 16px,
+        var(--color-figma-neutral-50) 16px
+      );
+    mask-composite: intersect;
+  }
+  @media (max-width: 374px) {
+    &::after {
+      left: -32px;
+      mask:
+        linear-gradient(
+          to left,
+          var(--color-figma-neutral-50) 50%,
+          transparent 50%
+        ),
+        linear-gradient(
+          to top,
+          var(--color-figma-neutral-50) 50%,
+          transparent 50%
+        ),
+        radial-gradient(
+          circle 16px at center,
+          transparent 16px,
+          var(--color-figma-neutral-50) 16px
+        );
+      mask-composite: intersect;
+    }
+  }
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+}
+
+button:hover .arrow {
+  transform: scaleX(1.2) translateX(-8px);
+}
+
+@keyframes airplane-fly-down {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, 568px);
+  }
+}
+
+.airplane-animated {
+  animation: airplane-fly-down 5s ease-in-out forwards;
+}

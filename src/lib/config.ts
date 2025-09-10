@@ -6,9 +6,9 @@ export const APP_CONFIG = {
   },
 
   LOGO: {
-    MIN_SCALE: 0.6,
+    MIN_SCALE: 0.34,
     MAX_SCALE: 1.0,
-    SCALE_FACTOR: 0.4,
+    SCALE_FACTOR: 0.66,
   },
 
   BREAKPOINTS: {

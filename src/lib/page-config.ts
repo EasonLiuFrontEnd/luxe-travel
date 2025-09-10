@@ -3,12 +3,11 @@ import { APP_CONFIG } from './config'
 export type TPageType =
   | 'home'
   | 'about'
-  | 'services'
   | 'destinations'
   | 'contact'
   | 'default'
 
-export interface IPageConfig {
+export type TPageConfig = {
   type: TPageType
   hasScrollAnimation: boolean
   hasTransparentHeader: boolean
@@ -17,7 +16,7 @@ export interface IPageConfig {
   footerStyle: 'default' | 'minimal'
 }
 
-export const PAGE_CONFIGS: Record<string, IPageConfig> = {
+export const PAGE_CONFIGS: Record<string, TPageConfig> = {
   '/': {
     type: 'home',
     hasScrollAnimation: true,
@@ -31,14 +30,6 @@ export const PAGE_CONFIGS: Record<string, IPageConfig> = {
     hasScrollAnimation: false,
     hasTransparentHeader: false,
     showConsultButton: false,
-    headerBehavior: 'sticky',
-    footerStyle: 'default',
-  },
-  '/services': {
-    type: 'services',
-    hasScrollAnimation: false,
-    hasTransparentHeader: false,
-    showConsultButton: true,
     headerBehavior: 'sticky',
     footerStyle: 'default',
   },
@@ -60,7 +51,7 @@ export const PAGE_CONFIGS: Record<string, IPageConfig> = {
   },
 }
 
-export const DEFAULT_PAGE_CONFIG: IPageConfig = {
+export const DEFAULT_PAGE_CONFIG: TPageConfig = {
   type: 'default',
   hasScrollAnimation: false,
   hasTransparentHeader: false,
@@ -69,14 +60,21 @@ export const DEFAULT_PAGE_CONFIG: IPageConfig = {
   footerStyle: 'default',
 }
 
-export const getPageConfig = (pathname: string): IPageConfig => {
+export const getPageConfig = (pathname: string): TPageConfig => {
   return PAGE_CONFIGS[pathname] || DEFAULT_PAGE_CONFIG
+}
+
+type TLogoAnimation = {
+  logoProgress: number
+  logoScale: number
+  isNavbarVisible: boolean
+  isConsultButtonVisible: boolean
 }
 
 export const calculateLogoAnimation = (
   scrollY: number,
-  pageConfig: IPageConfig,
-) => {
+  pageConfig: TPageConfig,
+): TLogoAnimation => {
   if (!pageConfig.hasScrollAnimation) {
     return {
       logoProgress: 1,

@@ -1,14 +1,12 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
+export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs))
 
-export function debounce<T extends (...args: any[]) => any>(
+export const debounce = <T extends (...args: never[]) => unknown>(
   func: T,
   wait: number,
-): (...args: Parameters<T>) => void {
+): ((...args: Parameters<T>) => void) => {
   let timeout: NodeJS.Timeout | null = null
 
   return (...args: Parameters<T>) => {
@@ -17,44 +15,41 @@ export function debounce<T extends (...args: any[]) => any>(
   }
 }
 
-export function throttle<T extends (...args: any[]) => any>(
+export const throttle = <T extends (...args: never[]) => unknown>(
   func: T,
   limit: number,
-): (...args: Parameters<T>) => void {
+): ((...args: Parameters<T>) => void) => {
   let inThrottle: boolean
 
   return (...args: Parameters<T>) => {
-    if (!inThrottle) {
-      func(...args)
-      inThrottle = true
-      setTimeout(() => (inThrottle = false), limit)
-    }
+    if (inThrottle) return
+    func(...args)
+    inThrottle = true
+    setTimeout(() => (inThrottle = false), limit)
   }
 }
 
-export function formatPath(path: string): string {
-  return path.startsWith('/') ? path : `/${path}`
-}
+export const formatPath = (path: string) =>
+  path.startsWith('/') ? path : `/${path}`
 
-export function isExternalLink(href: string): boolean {
-  return href.startsWith('http') || href.startsWith('//')
-}
+export const isExternalLink = (href: string) =>
+  /^https?:\/\//.test(href) || href.includes('mailto:') || href.includes('tel:')
 
-export function generatePageTitle(pageName?: string): string {
+export const generatePageTitle = (pageName?: string) => {
   const baseTitle = 'Luxe Travel - 典藏旅遊'
   return pageName ? `${pageName} | ${baseTitle}` : baseTitle
 }
 
-export function scrollToElement(elementId: string, offset: number = 0): void {
+export const scrollToElement = (elementId: string, offset: number = 0) => {
   const element = document.getElementById(elementId)
-  if (element) {
-    const elementPosition =
-      element.getBoundingClientRect().top + window.pageYOffset
-    const offsetPosition = elementPosition - offset
+  if (!element) return
 
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth',
-    })
-  }
+  const elementPosition =
+    element.getBoundingClientRect().top + window.pageYOffset
+  const offsetPosition = elementPosition - offset
+
+  window.scrollTo({
+    top: offsetPosition,
+    behavior: 'smooth',
+  })
 }
