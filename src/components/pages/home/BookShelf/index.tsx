@@ -1,9 +1,10 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import DestinationCard from '@/components/pages/home/DestinationCard/index'
 import styles from './styles.module.css'
-import { bookShelfData } from './config'
+import { useBooks } from '@/api/home/useBooks'
+import { transformBooksData } from './utils'
 
 type TStyle = React.CSSProperties & {
   [key in `--${string}`]?: string | number
@@ -16,6 +17,25 @@ type TBookShelfProps = {
 const BookShelf = ({ trackRef }: TBookShelfProps) => {
   const [activeCardId, setActiveCardId] = useState<string | null>(null)
 
+  const { query: booksQuery, mock } = useBooks()
+  const {
+    data: booksData,
+    isLoading: isBooksLoading,
+    error: booksError,
+  } = booksQuery
+
+  const displayData = useMemo(() => {
+    if (booksError || !booksData) {
+      return transformBooksData(mock.rows)
+    }
+
+    if (isBooksLoading) {
+      return []
+    }
+
+    return transformBooksData(booksData)
+  }, [booksError, booksData, isBooksLoading, mock.rows])
+
   const handleCardClick = (cardId: string) => {
     setActiveCardId(cardId)
   }
@@ -26,7 +46,7 @@ const BookShelf = ({ trackRef }: TBookShelfProps) => {
     >
       <div className='relative overflow-hidden w-full bottom-[1px]'>
         <div ref={trackRef} className={styles.track}>
-          {bookShelfData.map((card) => {
+          {displayData.map((card) => {
             const {
               id,
               number,
