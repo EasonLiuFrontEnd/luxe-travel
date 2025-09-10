@@ -9,10 +9,9 @@ export const useBookShelfScroll = () => {
   const [scrollProgress, setScrollProgress] = useState(0)
   const isScrollingHorizontally = useRef(false)
   const maxScrollX = useRef(0)
-  const hasBeenInDetectionArea = useRef(false) // 是否曾經進入過偵測範圍
-  const hasLeftFarEnough = useRef(true) // 是否已經離開足夠遠（初始為 true 讓第一次可以觸發）
+  const hasBeenInDetectionArea = useRef(false)
+  const hasLeftFarEnough = useRef(true)
   
-  // 確保首次載入時可以觸發
   useEffect(() => {
     hasLeftFarEnough.current = true
   }, [])
@@ -50,15 +49,11 @@ export const useBookShelfScroll = () => {
       const rect = bookShelfRef.current.getBoundingClientRect()
       const isBottomAtViewport = Math.abs(rect.bottom - window.innerHeight) <= 50
       
-      
-      // 如果在偵測範圍內
       if (isBottomAtViewport) {
-        // 如果還沒被鎖定，且沒有曾經進入過偵測範圍
         if (!isFixed && !hasBeenInDetectionArea.current) {
-          // 首次進入或重新進入（已離開足夠遠）
           if (hasLeftFarEnough.current) {
             hasBeenInDetectionArea.current = true
-            hasLeftFarEnough.current = false // 重置離開標記
+            hasLeftFarEnough.current = false
             setIsFixed(true)
             lockBodyScroll()
             isScrollingHorizontally.current = true
@@ -66,15 +61,13 @@ export const useBookShelfScroll = () => {
           }
         }
       } else {
-        // 如果不在偵測範圍內
-        const farFromDetection = rect.bottom > window.innerHeight + 100 // 離偵測範圍 100px 以上（往下滑）
-        const farAboveDetection = rect.bottom < window.innerHeight - 100 // 離偵測範圍 100px 以上（往上滑）
+        const farFromDetection = rect.bottom > window.innerHeight + 100
+        const farAboveDetection = rect.bottom < window.innerHeight - 100
         
         if ((farFromDetection || farAboveDetection) && !hasLeftFarEnough.current) {
           hasLeftFarEnough.current = true
         }
         
-        // 如果曾經進入過偵測範圍，重置標記
         if (hasBeenInDetectionArea.current) {
           hasBeenInDetectionArea.current = false
         }

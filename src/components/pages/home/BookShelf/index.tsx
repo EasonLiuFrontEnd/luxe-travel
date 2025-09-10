@@ -24,7 +24,7 @@ const BookShelf = ({ trackRef }: TBookShelfProps) => {
     <div 
       className='w-full flex items-end lg:flex-[0_0_59.5%] lg:max-w-[1142.4px] min-w-0 lg:border-r lg:border-[var(--color-figma-secondary-500)]'
     >
-      <div className='relative overflow-hidden w-full'>
+      <div className='relative overflow-hidden w-full bottom-[1px]'>
         <div ref={trackRef} className={styles.track}>
           {bookShelfData.map((card) => {
             const {
