@@ -30,15 +30,7 @@ const ClientProvider = ({ children }: TBaseComponent) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Suspense
-        fallback={
-          <div className='flex items-center justify-center min-h-screen'>
-            載入中...
-          </div>
-        }
-      >
-        {children}
-      </Suspense>
+      <Suspense fallback={<div />}>{children}</Suspense>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   )
