@@ -21,7 +21,7 @@ import DropdownCloseIcon from '../../icons/header/DropdownCloseIcon'
 
 const Navigation = ({
   isMenuOpen = false,
-  onMenuToggle = () => { },
+  onMenuToggle = () => {},
   showConsultButton = false,
 }: TNavigation) => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
@@ -95,8 +95,9 @@ const Navigation = ({
       </div>
 
       <ConsultButton
-        className={`max-xs:hidden transition-opacity duration-800 ${showConsultButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          }`}
+        className={`max-xs:hidden transition-opacity duration-800 ${
+          showConsultButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
       />
 
       <div className='max-xs:z-60 flex xs:hidden w-full justify-between items-center'>
@@ -116,30 +117,32 @@ const Navigation = ({
       {isMenuOpen && (
         <div className='flex flex-col xs:hidden absolute top-full left-0 right-0 mt-px pt-[48px] space-y-7 bg-figma-neutral-50  h-[calc(100dvh-73px)]'>
           {NAV_ITEMS.map((item) => {
-            const menuItems = DROPDOWN_MENUS[item.label as keyof typeof DROPDOWN_MENUS] || []
+            const menuItems =
+              DROPDOWN_MENUS[item.label as keyof typeof DROPDOWN_MENUS] || []
             const hasDropdown = menuItems.length > 0
 
             return (
               <div key={item.label} className='space-y-0'>
                 <div
-                  className={
-                    `flex justify-between items-center font-noto-serif-body-m-medium py-[12px] px-[40px] cursor-pointer
-                    ${activeDropdown === item.label ? 'text-figma-secondary-950' : ''}`
-                  }
-                  onClick={() => hasDropdown ?
-                    setActiveDropdown(activeDropdown === item.label ? null : item.label)
-                    : onMenuToggle()
+                  className={`flex justify-between items-center font-noto-serif-body-m-medium py-[12px] px-[40px] cursor-pointer
+                    ${activeDropdown === item.label ? 'text-figma-secondary-950' : ''}`}
+                  onClick={() =>
+                    hasDropdown
+                      ? setActiveDropdown(
+                          activeDropdown === item.label ? null : item.label,
+                        )
+                      : onMenuToggle()
                   }
                 >
                   {item.label}
                   {hasDropdown && (
                     <DropdownCloseIcon
-                      className={
-                        `transition-transform duration-600 ease-in-out 
-                          ${activeDropdown === item.label
-                          ? 'rotate-180'
-                          : 'rotate-135'
-                        }`}
+                      className={`transition-transform duration-600 ease-in-out 
+                          ${
+                            activeDropdown === item.label
+                              ? 'rotate-180'
+                              : 'rotate-135'
+                          }`}
                     />
                   )}
                 </div>
