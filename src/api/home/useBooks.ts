@@ -1,10 +1,16 @@
 import { useQuery } from '@tanstack/react-query'
+import type { AxiosError } from 'axios'
 import apiClient from '../client'
-import { TBooks, TBooksResponse, TUseHomeQueryResult } from '../type'
+import {
+  TBooks,
+  TBooksResponse,
+  TUseHomeQueryResult,
+  TApiResponse,
+} from '../type'
 
 const fetchBooksData = async (): Promise<TBooks[]> => {
   const response = await apiClient.get<TBooksResponse>(
-    '/api/admin/country-showcases',
+    '/admin/country-showcases',
   )
   return response?.data?.rows || []
 }
@@ -153,13 +159,9 @@ export const booksApiMock: TBooksResponse = {
 }
 
 export const useBooks = (): TUseHomeQueryResult<TBooks[], TBooksResponse> => {
-  const query = useQuery({
+  const query = useQuery<TBooks[], AxiosError<TApiResponse<TBooks[]>>>({
     queryKey: ['books'],
     queryFn: fetchBooksData,
-    staleTime: 30 * 60 * 1000,
-    gcTime: 60 * 60 * 1000,
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   })
 
   return { query, mock: booksApiMock }

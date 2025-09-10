@@ -11,7 +11,7 @@ const BookShelfSection = () => {
   const { transformY } = useBannerBookShelfScroll()
 
   return (
-    <div 
+    <div
       ref={bookShelfRef}
       data-bookshelf-section
       className={`z-10 bg-figma-neutral-50 pt-[60px] lg:pt-[120px] border-t border-[var(--color-figma-secondary-500)] ${

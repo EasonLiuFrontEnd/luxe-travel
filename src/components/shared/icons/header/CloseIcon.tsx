@@ -4,11 +4,7 @@ export type TCloseIcon = {
   onClick?: () => void
 }
 
-const CloseIcon = ({
-  size = '16',
-  className,
-  onClick
-}: TCloseIcon) => {
+const CloseIcon = ({ size = '16', className, onClick }: TCloseIcon) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

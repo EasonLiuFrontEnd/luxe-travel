@@ -23,8 +23,8 @@ const RecommendationSection = () => {
           src="/home/itinerary/bg.png" width={1824} height={511}
         />
       </div>
-        
-      <div className="grid grid-cols-1 lg:grid-cols-2 justify-center gap-6 xl:gap-[60px] items-center w-full">
+
+      <div className='grid grid-cols-1 lg:grid-cols-2 justify-center gap-6 xl:gap-[60px] items-center w-full'>
         <FreeTourRecommendation />
         <GroupTourRecommendation />
       </div>

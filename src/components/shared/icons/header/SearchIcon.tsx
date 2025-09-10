@@ -9,7 +9,7 @@ const SearchIcon = ({
   color = '#BDA05E',
   size = '19',
   className,
-  onClick
+  onClick,
 }: TSearchIcon) => {
   return (
     <svg

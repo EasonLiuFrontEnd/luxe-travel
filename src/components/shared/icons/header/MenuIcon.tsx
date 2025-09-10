@@ -4,11 +4,7 @@ export type TMenuIcon = {
   className?: string
 }
 
-const MenuIcon = ({
-  isOpen = false,
-  onClick,
-  className
-}: TMenuIcon) => {
+const MenuIcon = ({ isOpen = false, onClick, className }: TMenuIcon) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -26,9 +22,11 @@ const MenuIcon = ({
           isOpen ? 'opacity-100' : 'opacity-0'
         }`}
       />
-      <g className={`transition-all duration-800 ease-in-out ${
-        isOpen ? 'opacity-0' : 'opacity-100'
-      }`}>
+      <g
+        className={`transition-all duration-800 ease-in-out ${
+          isOpen ? 'opacity-0' : 'opacity-100'
+        }`}
+      >
         <path
           d='M4 6H20'
           stroke='#BDA05E'

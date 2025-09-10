@@ -4,7 +4,9 @@ import { useCallback, useRef, useState, useEffect } from 'react'
 
 export const useBookShelfScroll = () => {
   const bookShelfRef = useRef<HTMLDivElement>(null)
-  const trackRef = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
+  const trackRef = useRef<HTMLDivElement>(
+    null,
+  ) as React.RefObject<HTMLDivElement>
   const [isFixed, setIsFixed] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
   const isScrollingHorizontally = useRef(false)
@@ -27,25 +29,26 @@ export const useBookShelfScroll = () => {
   const calculateMaxScroll = useCallback(() => {
     if (!trackRef.current) return 0
     const trackWidth = trackRef.current.scrollWidth
-    const containerWidth = trackRef.current.parentElement?.offsetWidth || trackRef.current.offsetWidth
+    const containerWidth =
+      trackRef.current.parentElement?.offsetWidth ||
+      trackRef.current.offsetWidth
     return Math.max(0, trackWidth - containerWidth)
   }, [])
 
   const updateBookPosition = useCallback((progress: number) => {
     if (!trackRef.current) return
-    
+
     const clampedProgress = Math.max(0, Math.min(1, progress))
     const translateX = -clampedProgress * maxScrollX.current
-    
+
     trackRef.current.style.transform = `translateX(${translateX}px)`
     setScrollProgress(clampedProgress)
   }, [])
 
-
   useEffect(() => {
     const handleScroll = () => {
       if (!bookShelfRef.current || isScrollingHorizontally.current) return
-      
+
       const rect = bookShelfRef.current.getBoundingClientRect()
       const isBottomAtViewport = Math.abs(rect.bottom - window.innerHeight) <= 50
       
@@ -75,7 +78,7 @@ export const useBookShelfScroll = () => {
     }
 
     window.addEventListener('scroll', handleScroll)
-    
+
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
@@ -88,12 +91,12 @@ export const useBookShelfScroll = () => {
       event.preventDefault()
       event.stopPropagation()
 
-             const delta = event.deltaY
-       const scrollAmount = 0.03
-       const newProgress = scrollProgress + (delta > 0 ? scrollAmount : -scrollAmount)
-       
-       
-       if (newProgress <= 0) {
+      const delta = event.deltaY
+      const scrollAmount = 0.03
+      const newProgress =
+        scrollProgress + (delta > 0 ? scrollAmount : -scrollAmount)
+
+      if (newProgress <= 0) {
         setScrollProgress(0)
         updateBookPosition(0)
         setIsFixed(false)
@@ -101,7 +104,7 @@ export const useBookShelfScroll = () => {
         isScrollingHorizontally.current = false
         return
       }
-      
+
       if (newProgress >= 1) {
         setScrollProgress(1)
         updateBookPosition(1)
@@ -110,10 +113,10 @@ export const useBookShelfScroll = () => {
         isScrollingHorizontally.current = false
         return
       }
-      
+
       updateBookPosition(newProgress)
     }
-    
+
     if (isFixed) {
       window.addEventListener('wheel', wheelHandler, { passive: false })
     }
@@ -133,6 +136,6 @@ export const useBookShelfScroll = () => {
     bookShelfRef,
     trackRef,
     isFixed,
-    scrollProgress
+    scrollProgress,
   }
 }
