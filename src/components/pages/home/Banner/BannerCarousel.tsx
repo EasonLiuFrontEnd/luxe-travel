@@ -25,6 +25,17 @@ const BannerCarousel = ({
 }: TBannerCarousel) => {
   const [api, setApi] = useState<CarouselApi>()
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [current, setCurrent] = useState(0)
+
+  useEffect(() => {
+    if (!api) return
+
+    setCurrent(api.selectedScrollSnap())
+
+    api.on('select', () => {
+      setCurrent(api.selectedScrollSnap())
+    })
+  }, [api])
 
   useEffect(() => {
     if (!api || !isAutoPlaying) return
@@ -38,6 +49,10 @@ const BannerCarousel = ({
 
   const handleMouseEnter = () => setIsAutoPlaying(false)
   const handleMouseLeave = () => setIsAutoPlaying(true)
+
+  const formatNumber = (num: number) => {
+    return String(num).padStart(2, '0')
+  }
 
   return (
     <Carousel
@@ -113,7 +128,7 @@ const BannerCarousel = ({
         </button>
       </div>
 
-      <div className='absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-4 z-10'>
+      <div className='absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center space-x-4 z-10'>
         <button
           onClick={() => api?.scrollPrev()}
           className={cn(
@@ -124,6 +139,10 @@ const BannerCarousel = ({
         >
           <ChevronLeft className='w-6 h-6' />
         </button>
+
+        <div className='max-xs:hidden font-genseki-h5-medium text-figma-neutral-0'>
+          {formatNumber(current + 1)}/{formatNumber(images.length)}
+        </div>
 
         <button
           onClick={() => api?.scrollNext()}
