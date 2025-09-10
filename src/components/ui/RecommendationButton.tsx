@@ -5,23 +5,25 @@ type TRecommendationButtonProps = TBaseComponent & {
   variant?: 'primary' | 'secondary'
 }
 
-const RecommendationButton = ({ 
-  text, 
-  variant = 'primary', 
+const RecommendationButton = ({
+  text,
+  variant = 'primary',
   className = '',
-  ...props 
+  ...props
 }: TRecommendationButtonProps) => {
   const variantStyles = {
-    primary: 'border-[var(--color-figma-secondary-500)] text-[var(--color-figma-secondary-500)] hover:border-[var(--color-figma-secondary-950)] hover:text-[var(--color-figma-secondary-950)]',
-    secondary: 'border-[var(--color-figma-primary-500)] text-[var(--color-figma-primary-500)] hover:border-[var(--color-figma-secondary-950)] hover:text-[var(--color-figma-secondary-950)]'
+    primary:
+      'border-[var(--color-figma-secondary-500)] text-[var(--color-figma-secondary-500)] hover:border-[var(--color-figma-secondary-950)] hover:text-[var(--color-figma-secondary-950)]',
+    secondary:
+      'border-[var(--color-figma-primary-500)] text-[var(--color-figma-primary-500)] hover:border-[var(--color-figma-secondary-950)] hover:text-[var(--color-figma-secondary-950)]',
   }
 
   return (
-    <div 
+    <div
       className={`box-border flex gap-2 items-center justify-end px-4 py-2 relative rounded-[18px] border border-solid cursor-pointer transition-colors duration-300 ease-out ${variantStyles[variant]} ${className}`}
       {...props}
     >
-      <div className="font-family-genseki text-[14px] leading-[1.5] whitespace-nowrap">
+      <div className='font-family-genseki text-[14px] leading-[1.5] whitespace-nowrap'>
         {text}
       </div>
     </div>

@@ -9,7 +9,7 @@ const BookShelfSection = () => {
   const { bookShelfRef, trackRef, isFixed } = useBookShelfScroll()
 
   return (
-    <div 
+    <div
       ref={bookShelfRef}
       className={`z-10 bg-figma-neutral-50 pt-[60px] lg:pt-[120px] border-t border-[var(--color-figma-secondary-500)] ${
         isFixed ? 'fixed bottom-0 left-0 right-0 pt-0' : 'relative'

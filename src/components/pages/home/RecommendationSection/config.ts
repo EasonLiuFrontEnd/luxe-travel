@@ -16,7 +16,7 @@ export const freeTourData: TTourData[] = [
     tagText: '獨旅首選',
     title: '小資5日輕鬆遊',
     description: '義大利',
-    price: '＄100,100'
+    price: '＄100,100',
   },
   {
     id: '2',
@@ -24,7 +24,7 @@ export const freeTourData: TTourData[] = [
     tagText: '銀髮族最愛',
     title: '孝親輕鬆休閒10日遊',
     description: '義大利 / 西班牙 / 法國',
-    price: '＄142,900'
+    price: '＄142,900',
   },
   {
     id: '3',
@@ -32,8 +32,8 @@ export const freeTourData: TTourData[] = [
     tagText: '古蹟巡禮',
     title: '親子五人暑假快樂遊',
     description: '義大利 / 西班牙 / 法國',
-    price: '＄167,900'
-  }
+    price: '＄167,900',
+  },
 ]
 
 export const groupTourData: TTourData[] = [
@@ -45,7 +45,7 @@ export const groupTourData: TTourData[] = [
     description: '西葡珍寶探尋16天',
     price: '＄199,900',
     hoverTitle: '新婚夫妻15日蜜月遊',
-    hoverDescription: '義大利 / 西班牙 / 法國'
+    hoverDescription: '義大利 / 西班牙 / 法國',
   },
   {
     id: '2',
@@ -53,7 +53,7 @@ export const groupTourData: TTourData[] = [
     tagText: '地中海巡禮',
     title: '藍色愛琴海',
     description: '伊比利亞半島14日深度之旅',
-    price: '＄179,900'
+    price: '＄179,900',
   },
   {
     id: '3',
@@ -61,6 +61,6 @@ export const groupTourData: TTourData[] = [
     tagText: '尊爵體驗',
     title: '蔚藍與玫瑰的優雅',
     description: '逐光義法海岸12天',
-    price: '＄269,900'
-  }
+    price: '＄269,900',
+  },
 ]

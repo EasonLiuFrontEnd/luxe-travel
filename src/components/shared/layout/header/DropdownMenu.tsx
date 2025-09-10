@@ -29,7 +29,7 @@ const DropdownMenu = ({
   isVisible,
   items,
   onClose,
-  onPageNavigation = () => { }
+  onPageNavigation = () => {},
 }: TDropdownMenu) => {
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null)
   const [submenuPosition, setSubmenuPosition] = useState<'right' | 'left'>(
@@ -76,22 +76,20 @@ const DropdownMenu = ({
       {items.map((item, index) => (
         <div key={index} className='relative'>
           <div
-            className={
-              `flex items-center font-genseki-gothic leading-[1.5] text-figma-primary-400 py-[8px] px-[40px] gap-[8px]
-              ${activeSubmenu === item.label ? 'text-figma-secondary-500' : ''}`
-            }
+            className={`flex items-center font-genseki-gothic leading-[1.5] text-figma-primary-400 py-[8px] px-[40px] gap-[8px]
+              ${activeSubmenu === item.label ? 'text-figma-secondary-500' : ''}`}
             onClick={() => handleClickToggleSubmenu(item)}
           >
             {'- ' + item.label}
             {item.hasSubmenu && (
               <DropdownCloseIcon
                 isMobile={true}
-                className={
-                  `transition-transform duration-600 ease-in-out 
-                          ${activeSubmenu === item.label
-                    ? 'rotate-180'
-                    : 'rotate-135'
-                  }`}
+                className={`transition-transform duration-600 ease-in-out 
+                          ${
+                            activeSubmenu === item.label
+                              ? 'rotate-180'
+                              : 'rotate-135'
+                          }`}
               />
             )}
           </div>
@@ -100,7 +98,10 @@ const DropdownMenu = ({
             activeSubmenu === item.label &&
             item.submenuItems && (
               <div className='overflow-x-auto scrollbar-hide scroll-smooth'>
-                <div className='flex gap-4 py-[8px] px-[40px]' style={{ scrollSnapType: 'x mandatory' }}>
+                <div
+                  className='flex gap-4 py-[8px] px-[40px]'
+                  style={{ scrollSnapType: 'x mandatory' }}
+                >
                   {item.submenuItems.map((subItem, subIndex) => (
                     <div
                       key={subIndex}
@@ -168,8 +169,9 @@ const DropdownMenu = ({
             activeSubmenu === item.label &&
             item.submenuItems && (
               <div
-                className={`absolute top-0 bg-white ${submenuPosition === 'right' ? 'left-full' : 'right-full'
-                  }`}
+                className={`absolute top-0 bg-white ${
+                  submenuPosition === 'right' ? 'left-full' : 'right-full'
+                }`}
               >
                 {item.submenuItems.map((subItem, subIndex) => (
                   <div

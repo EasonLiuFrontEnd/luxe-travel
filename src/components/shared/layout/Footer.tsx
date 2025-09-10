@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import{ SOCIAL_MEDIAS }from '@/lib/constants'
+import { SOCIAL_MEDIAS } from '@/lib/constants'
 
 const Footer = () => {
   const scrollToTop = () => {
@@ -18,22 +18,37 @@ const Footer = () => {
           text-figma-neutral-950  bg-figma-secondary-100
           rounded-bl-[16px] border-0
           cursor-pointer
-        `}>
+        `}
+      >
         返回頂部
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-          <path d="M5 12.666L12 5.66602L19 12.666" stroke="#333333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M12 19.666V5.66602" stroke="#333333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          width='24'
+          height='25'
+          viewBox='0 0 24 25'
+          fill='none'
+        >
+          <path
+            d='M5 12.666L12 5.66602L19 12.666'
+            stroke='#333333'
+            strokeWidth='2'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+          />
+          <path
+            d='M12 19.666V5.66602'
+            stroke='#333333'
+            strokeWidth='2'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+          />
         </svg>
       </button>
       <div className='flex justify-between max-xs:flex-col max-xs:gap-[32px] pb-[32px] xs:pb-[48px] mb-[48px] text-center border-b-[1.5px] border-white'>
         <div className='font-genseki-body-s-regular xs:text-left space-y-3 max-xs:order-2'>
-          <p >
-            <span className='pr-[16px]'>
-              代表人 / 項國棟
-            </span>
-            <span>
-              聯絡人 / 彭宗裕
-            </span>
+          <p>
+            <span className='pr-[16px]'>代表人 / 項國棟</span>
+            <span>聯絡人 / 彭宗裕</span>
           </p>
           <p>台北市中山區南京東路三段101號12樓</p>
           <p>info@luxetravel.com.tw</p>
@@ -51,14 +66,9 @@ const Footer = () => {
             height={57}
           />
           <div className='flex justify-center gap-[24px]'>
-            {SOCIAL_MEDIAS.map(media => (
+            {SOCIAL_MEDIAS.map((media) => (
               <a key={media.alt} href={media.href}>
-                <Image
-                  src={media.src}
-                  alt={media.alt}
-                  width={24}
-                  height={24}
-                />
+                <Image src={media.src} alt={media.alt} width={24} height={24} />
               </a>
             ))}
           </div>
@@ -71,11 +81,21 @@ const Footer = () => {
         </div>
       </div>
       <div className='flex justify-center items-center flex-wrap gap-[20px] font-noto-serif-body-m-semibold mb-0'>
-        <a href="" className='py-[8px] px-[4px]'>關於典藏</a>
-        <a href="" className='py-[8px] px-[4px]'>自由行專區</a>
-        <a href="" className='py-[8px] px-[4px]'>包車旅遊</a>
-        <a href="" className='py-[8px] px-[4px]'>團體專區</a>
-        <a href="" className='py-[8px] px-[4px]'>三井郵輪</a>
+        <a href='' className='py-[8px] px-[4px]'>
+          關於典藏
+        </a>
+        <a href='' className='py-[8px] px-[4px]'>
+          自由行專區
+        </a>
+        <a href='' className='py-[8px] px-[4px]'>
+          包車旅遊
+        </a>
+        <a href='' className='py-[8px] px-[4px]'>
+          團體專區
+        </a>
+        <a href='' className='py-[8px] px-[4px]'>
+          三井郵輪
+        </a>
       </div>
       <Image
         src='/shared/icons/company-name.svg'
