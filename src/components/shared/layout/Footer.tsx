@@ -7,7 +7,7 @@ const Footer = () => {
   }
 
   return (
-    <footer className='relative bg-figma-primary-950 text-white py-[80px] px-[12px] lg:pt-[60px] lg:pb-[200px] lg:px-[60px] space-y-10'>
+    <footer className='relative bg-figma-primary-950 text-white py-[80px] px-[12px] lg:pt-[60px] lg:pb-[200px] lg:px-[60px] space-y-10 bg-[url("/shared/icons/background-books.svg")] bg-repeat'>
       <button
         onClick={scrollToTop}
         className={`
