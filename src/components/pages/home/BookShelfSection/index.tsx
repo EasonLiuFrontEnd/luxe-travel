@@ -14,14 +14,11 @@ const BookShelfSection = () => {
     <div
       ref={bookShelfRef}
       data-bookshelf-section
-      className={`z-10 bg-figma-neutral-50 pt-[60px] lg:pt-[120px] border-t border-[var(--color-figma-secondary-500)] ${
-        isFixed ? 'fixed left-0 right-0 pt-0' : 'relative'
-      }`}
+      className='z-10 bg-figma-neutral-50 pt-[60px] lg:pt-[120px] border-t border-[var(--color-figma-secondary-500)] relative transition-transform duration-300 ease-out'
       style={{
-        transform: isFixed ? 'none' : `translateY(-${transformY}px)`,
-        bottom: isFixed ? '0' : 'auto',
-        transition: isFixed ? 'none' : 'transform 300ms ease-out'
-      }}
+        '--transform-y': `${transformY}px`,
+        transform: 'translateY(calc(-1 * var(--transform-y)))'
+      } as React.CSSProperties}
     >
       <div data-bookshelf-title className='mb-[32px] lg:mb-[48px] flex flex-col items-center'>
         <h2

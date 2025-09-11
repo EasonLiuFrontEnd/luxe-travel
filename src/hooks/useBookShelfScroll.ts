@@ -9,22 +9,7 @@ export const useBookShelfScroll = () => {
   ) as React.RefObject<HTMLDivElement>
   const [isFixed, setIsFixed] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
-  const isScrollingHorizontally = useRef(false)
   const maxScrollX = useRef(0)
-  const hasBeenInDetectionArea = useRef(false)
-  const hasLeftFarEnough = useRef(true)
-  
-  useEffect(() => {
-    hasLeftFarEnough.current = true
-  }, [])
-
-  const lockBodyScroll = useCallback(() => {
-    document.body.style.height = '100vh'
-  }, [])
-
-  const unlockBodyScroll = useCallback(() => {
-    document.body.style.height = ''
-  }, [])
 
   const calculateMaxScroll = useCallback(() => {
     if (!trackRef.current) return 0
@@ -45,44 +30,98 @@ export const useBookShelfScroll = () => {
     setScrollProgress(clampedProgress)
   }, [])
 
+  const handleTouchStart = useCallback((e: TouchEvent) => {
+    const touch = e.touches[0]
+    if (touch) {
+      ;(e.target as any)._startX = touch.clientX
+      ;(e.target as any)._startY = touch.clientY
+    }
+  }, [])
+
+  const preventVerticalScroll = useCallback((e: Event) => {
+    if (e.type === 'scroll') {
+      e.preventDefault()
+      e.stopPropagation()
+      return false
+    }
+    if (e.type === 'touchmove' && isFixed) {
+      const touchEvent = e as TouchEvent
+      const touch = touchEvent.touches[0]
+      if (touch) {
+        const startY = (touchEvent.target as any)._startY || touch.clientY
+        const deltaY = touch.clientY - startY
+        
+        const pixelScrollAmount = 30
+        const progressIncrement = maxScrollX.current > 0 ? pixelScrollAmount / maxScrollX.current : 0.03
+        const newProgress = scrollProgress + (deltaY > 0 ? -progressIncrement : progressIncrement)
+
+        if (newProgress <= 0) {
+          setScrollProgress(0)
+          updateBookPosition(0)
+          setIsFixed(false)
+          unlockBodyScroll()
+        } else if (newProgress >= 1) {
+          setScrollProgress(1)
+          updateBookPosition(1)
+          setIsFixed(false)
+          unlockBodyScroll()
+        } else {
+          updateBookPosition(newProgress)
+        }
+
+        ;(touchEvent.target as any)._startY = touch.clientY
+      }
+      
+      e.preventDefault()
+      e.stopPropagation()
+      return false
+    }
+  }, [isFixed, scrollProgress, updateBookPosition])
+
+  const unlockBodyScroll = useCallback(() => {
+    window.removeEventListener('scroll', preventVerticalScroll)
+    window.removeEventListener('touchstart', handleTouchStart)
+    window.removeEventListener('touchmove', preventVerticalScroll)
+  }, [preventVerticalScroll, handleTouchStart])
+
+  const lockBodyScroll = useCallback(() => {
+    window.addEventListener('scroll', preventVerticalScroll, { passive: false })
+    window.addEventListener('touchstart', handleTouchStart, { passive: false })
+    window.addEventListener('touchmove', preventVerticalScroll, { passive: false })
+  }, [preventVerticalScroll, handleTouchStart])
+
   useEffect(() => {
     const handleScroll = () => {
-      if (!bookShelfRef.current || isScrollingHorizontally.current) return
+      if (!bookShelfRef.current) return
 
       const rect = bookShelfRef.current.getBoundingClientRect()
       const isBottomAtViewport = Math.abs(rect.bottom - window.innerHeight) <= 50
       
-      if (isBottomAtViewport) {
-        if (!isFixed && !hasBeenInDetectionArea.current) {
-          if (hasLeftFarEnough.current) {
-            hasBeenInDetectionArea.current = true
-            hasLeftFarEnough.current = false
-            setIsFixed(true)
-            lockBodyScroll()
-            isScrollingHorizontally.current = true
-            maxScrollX.current = calculateMaxScroll()
-          }
-        }
-      } else {
-        const farFromDetection = rect.bottom > window.innerHeight + 100
-        const farAboveDetection = rect.bottom < window.innerHeight - 100
-        
-        if ((farFromDetection || farAboveDetection) && !hasLeftFarEnough.current) {
-          hasLeftFarEnough.current = true
-        }
-        
-        if (hasBeenInDetectionArea.current) {
-          hasBeenInDetectionArea.current = false
-        }
+      if (isBottomAtViewport && !isFixed) {
+        setIsFixed(true)
+        maxScrollX.current = calculateMaxScroll()
+      } else if (!isBottomAtViewport && isFixed && scrollProgress === 0) {
+        setIsFixed(false)
+        unlockBodyScroll()
       }
     }
 
-    window.addEventListener('scroll', handleScroll)
+    if (!isFixed) {
+      window.addEventListener('scroll', handleScroll)
+    }
 
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [isFixed, lockBodyScroll, calculateMaxScroll])
+  }, [isFixed, scrollProgress, calculateMaxScroll, unlockBodyScroll])
+
+  useEffect(() => {
+    if (isFixed) {
+      lockBodyScroll()
+    } else {
+      unlockBodyScroll()
+    }
+  }, [isFixed, lockBodyScroll, unlockBodyScroll])
 
   useEffect(() => {
     const wheelHandler = (event: WheelEvent) => {
@@ -92,16 +131,16 @@ export const useBookShelfScroll = () => {
       event.stopPropagation()
 
       const delta = event.deltaY
-      const scrollAmount = 0.03
+      const pixelScrollAmount = 30
+      const progressIncrement = maxScrollX.current > 0 ? pixelScrollAmount / maxScrollX.current : 0.03
       const newProgress =
-        scrollProgress + (delta > 0 ? scrollAmount : -scrollAmount)
+        scrollProgress + (delta > 0 ? progressIncrement : -progressIncrement)
 
       if (newProgress <= 0) {
         setScrollProgress(0)
         updateBookPosition(0)
         setIsFixed(false)
         unlockBodyScroll()
-        isScrollingHorizontally.current = false
         return
       }
 
@@ -110,7 +149,6 @@ export const useBookShelfScroll = () => {
         updateBookPosition(1)
         setIsFixed(false)
         unlockBodyScroll()
-        isScrollingHorizontally.current = false
         return
       }
 

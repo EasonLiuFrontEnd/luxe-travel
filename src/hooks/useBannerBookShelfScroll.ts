@@ -24,21 +24,26 @@ export const useBannerBookShelfScroll = () => {
   useEffect(() => {
     const handleScroll = () => {
       const bookShelfTitleElement = document.querySelector('[data-bookshelf-title]')
-      const bookShelfSection = document.querySelector('[data-bookshelf-section]')
+      const bookShelfSection = document.querySelector('[data-bookshelf-section]') as HTMLElement
       
       if (!bookShelfTitleElement || !bookShelfSection) return
 
       const currentScrollY = window.scrollY
       const isScrollingDown = currentScrollY > lastScrollY.current
       const titleRect = bookShelfTitleElement.getBoundingClientRect()
-      const titleBottom = titleRect.bottom
+      const titleTop = titleRect.top
       const windowHeight = window.innerHeight
 
-      if (titleBottom <= windowHeight && titleBottom > 0) {
-        const progress = Math.max(0, Math.min(1, (windowHeight - titleBottom) / windowHeight))
-        const availableSpace = windowHeight - headerHeight
-        const maxMoveDistance = Math.min(availableSpace, 300)
-        const targetTransformY = progress * maxMoveDistance
+      const bookShelfRect = bookShelfSection.getBoundingClientRect()
+      const bookShelfBottom = bookShelfRect.bottom
+      const bookShelfHeight = bookShelfRect.height
+
+      if (titleTop <= windowHeight && titleTop > 0) {
+        const progress = Math.max(0, Math.min(1, (windowHeight - titleTop) / windowHeight))
+        
+        const maxTransformDistance = Math.max(0, bookShelfHeight - windowHeight)
+        const targetTransformY = progress * maxTransformDistance
+
 
         if (isScrollingDown) {
           const newTransformY = Math.max(transformY, targetTransformY)
@@ -48,8 +53,10 @@ export const useBannerBookShelfScroll = () => {
           const newTransformY = Math.min(maxTransformY.current, targetTransformY)
           setTransformY(newTransformY)
         }
-      } else if (titleBottom <= 0) {
-        if (isScrollingDown) {
+      } else if (titleTop <= 0) {
+        if (Math.abs(bookShelfBottom - windowHeight) <= 10) {
+          setTransformY(maxTransformY.current)
+        } else if (isScrollingDown) {
           setTransformY(maxTransformY.current)
         }
       } else {
