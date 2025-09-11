@@ -131,7 +131,7 @@ const Feedback = () => {
           ))}
         </div>
       </div>
-      <div className='w-[1440px] hidden lg:flex justify-end mx-auto px-[24px]'>
+      <div className='w-[75vw] hidden lg:flex justify-end mx-auto px-[24px]'>
         <button
           onClick={handlePrevious}
           disabled={!canGoLeft}

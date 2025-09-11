@@ -105,14 +105,21 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
           autoPlayInterval={10000}
         />
       </div>
-      <div className='flex justify-end w-full px-[48px]'>
+      <div className='flex justify-end w-full lg:px-[48px] max-xs:px-[12px]'>
         <AirplaneIcon className='max-lg:hidden'/>
         <Image
           src='/home/banners/slogan.svg'
           alt='slogan'
-          className='pl-[24px]'
+          className='lg:pl-[24px] max-xs:hidden'
           width={1084}
           height={231}
+        />
+        <Image
+          src='/home/banners/mobile-slogan.svg'
+          alt='mobile slogan'
+          className='xs:hidden '
+          width={352}
+          height={430}
         />
       </div>
     </>
