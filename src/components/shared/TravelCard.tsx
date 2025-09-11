@@ -66,10 +66,10 @@ const TravelCard = ({
         </div>
       </div>
 
-      <div className='flex flex-col gap-3 items-end justify-start w-full md:hidden'>
-        <div className='flex flex-col gap-2 items-start justify-between w-full'>
+      <div className='flex flex-col md:contents gap-3 md:gap-0 items-end md:items-start justify-start w-full'>
+        <div className='flex flex-col md:contents gap-2 md:gap-0 items-start justify-between w-full'>
           <div
-            className={`flex flex-wrap gap-1.5 items-center justify-start w-full ${hoverTitle ? 'relative overflow-hidden' : ''}`}
+            className={`flex flex-wrap gap-1.5 items-center justify-start w-full min-w-0 ${hoverTitle ? 'relative overflow-hidden' : ''}`}
           >
             <div
               className={`font-family-genseki text-[var(--color-figma-primary-950)] text-[14px] leading-[1.5] ${hoverTitle ? 'transition-opacity duration-300 ease-out group-hover:opacity-0' : ''}`}
@@ -83,9 +83,9 @@ const TravelCard = ({
             )}
           </div>
 
-          <div className='flex flex-col gap-4 items-end justify-start w-full'>
+          <div className='flex flex-col md:contents gap-4 md:gap-0 items-end md:items-start justify-start w-full'>
             <div
-              className={`font-family-genseki font-medium text-[var(--color-figma-primary-950)] text-[16px] leading-[1.5] w-full ${hoverDescription ? 'relative overflow-hidden' : ''}`}
+              className={`font-family-genseki font-medium text-[var(--color-figma-primary-950)] text-[16px] leading-[1.5] w-full min-w-0 ${hoverDescription ? 'relative overflow-hidden' : ''}`}
             >
               <div
                 className={`${hoverDescription ? 'transition-opacity duration-300 ease-out group-hover:opacity-0' : ''}`}
@@ -99,60 +99,19 @@ const TravelCard = ({
               )}
             </div>
 
-            <div className='flex items-center justify-between w-full'>
+            <div className='flex items-center justify-between w-full min-w-0'>
               <div
                 className={`font-family-noto-serif font-semibold text-[18px] leading-[1.5] ${priceColorStyles[priceColor]}`}
               >
                 {price}
               </div>
               <div
-                className={`h-6 w-12 relative ${arrowColorStyles[tagColor]}`}
+                className={`flex justify-end items-center h-[24px] w-[48px] ${arrowColorStyles[tagColor]}`}
               >
                 <IconCta />
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div
-        className={`hidden md:flex flex-wrap gap-1.5 items-center justify-start w-full min-w-0 ${hoverTitle ? 'relative overflow-hidden' : ''}`}
-      >
-        <div
-          className={`font-family-genseki text-[var(--color-figma-primary-950)] text-[14px] leading-[1.5] ${hoverTitle ? 'transition-opacity duration-300 ease-out group-hover:opacity-0' : ''}`}
-        >
-          {title}
-        </div>
-        {hoverTitle && (
-          <div className='font-family-genseki text-[var(--color-figma-primary-950)] text-[14px] leading-[1.5] absolute top-0 left-0 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100'>
-            {hoverTitle}
-          </div>
-        )}
-      </div>
-
-      <div
-        className={`hidden md:block font-family-genseki font-medium text-[var(--color-figma-primary-950)] text-[16px] leading-[1.5] w-full min-w-0 ${hoverDescription ? 'relative overflow-hidden' : ''}`}
-      >
-        <div
-          className={`${hoverDescription ? 'transition-opacity duration-300 ease-out group-hover:opacity-0' : ''}`}
-        >
-          {description}
-        </div>
-        {hoverDescription && (
-          <div className='absolute top-0 left-0 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100'>
-            {hoverDescription}
-          </div>
-        )}
-      </div>
-
-      <div className='hidden md:flex items-center justify-between w-full min-w-0'>
-        <div
-          className={`font-family-noto-serif font-semibold text-[18px] leading-[1.5] ${priceColorStyles[priceColor]}`}
-        >
-          {price}
-        </div>
-        <div className={`h-6 w-12 relative ${arrowColorStyles[tagColor]}`}>
-          <IconCta />
         </div>
       </div>
     </div>
