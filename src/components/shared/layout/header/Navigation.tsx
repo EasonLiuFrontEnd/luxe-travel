@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react'
-import { NAV_ITEMS, DROPDOWN_MENUS } from '@/lib/constants'
+import { useState, useEffect, useMemo } from 'react'
+import { useRouter } from 'next/navigation'
+import { useMenu } from '@/api/home/useMenu'
+import { transformMenuData } from './utils'
 import type { TBaseComponent } from '@/types'
 
-export type TNavigation = TBaseComponent & {
+type TNavigation = TBaseComponent & {
   isMenuOpen?: boolean
   onMenuToggle?: () => void
   logoProgress?: number
@@ -26,6 +28,26 @@ const Navigation = ({
 }: TNavigation) => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const { push } = useRouter()
+
+  const { query: menuQuery, mock } = useMenu()
+  const {
+    data: menuData,
+    isLoading: isMenuLoading,
+    error: menuError,
+  } = menuQuery
+
+  const { navItems, dropdownMenus } = useMemo(() => {
+    if (menuError || !menuData) {
+      return transformMenuData(mock.data)
+    }
+
+    if (isMenuLoading) {
+      return { navItems: [], dropdownMenus: {} }
+    }
+
+    return transformMenuData(menuData)
+  }, [menuError, menuData, isMenuLoading, mock.data])
 
   const openSearch = () => {
     setIsSearchOpen(true)
@@ -40,7 +62,7 @@ const Navigation = ({
   }
 
   const handlePageNavigation = (href: string) => {
-    console.log('Navigate to:', href)
+    push(href)
   }
 
   useEffect(() => {
@@ -64,8 +86,8 @@ const Navigation = ({
 
   return (
     <>
-      <div className='hidden lg:flex items-center space-x-7'>
-        {NAV_ITEMS.map((item) => (
+      <div className='hidden xs:flex items-center space-x-7'>
+        {navItems.map((item) => (
           <div
             key={item.label}
             className='relative'
@@ -82,7 +104,7 @@ const Navigation = ({
             <DropdownMenu
               isVisible={activeDropdown === item.label}
               items={
-                DROPDOWN_MENUS[item.label as keyof typeof DROPDOWN_MENUS] || []
+                dropdownMenus[item.label as keyof typeof dropdownMenus] || []
               }
               onClose={() => setActiveDropdown(null)}
               onPageNavigation={handlePageNavigation}
@@ -115,10 +137,10 @@ const Navigation = ({
         </div>
       </div>
       {isMenuOpen && (
-        <div className='flex flex-col lg:hidden absolute top-full left-0 right-0 mt-px pt-[48px] space-y-7 bg-figma-neutral-50  h-[calc(100dvh-73px)]'>
-          {NAV_ITEMS.map((item) => {
+        <div className='flex flex-col xs:hidden absolute top-full left-0 right-0 mt-px pt-[48px] space-y-7 bg-figma-neutral-50  h-[calc(100dvh-73px)]'>
+          {navItems.map((item) => {
             const menuItems =
-              DROPDOWN_MENUS[item.label as keyof typeof DROPDOWN_MENUS] || []
+              dropdownMenus[item.label as keyof typeof dropdownMenus] || []
             const hasDropdown = menuItems.length > 0
 
             return (
@@ -172,4 +194,5 @@ const Navigation = ({
   )
 }
 
+export type { TNavigation }
 export default Navigation
