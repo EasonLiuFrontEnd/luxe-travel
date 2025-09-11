@@ -12,7 +12,7 @@ type TNavigation = TBaseComponent & {
 }
 
 import DropdownMenu from './DropdownMenu'
-import ConsultButton from '@/components/ui/ConsultButton'
+import ConsultButton from '@/components/shared/layout/header/ConsultButton'
 import Logo from './Logo'
 import SearchIcon from '@/components/shared/icons/header/SearchIcon'
 import MenuIcon from '@/components/shared/icons/header/MenuIcon'
@@ -111,18 +111,18 @@ const Navigation = ({
             />
           </div>
         ))}
-        <button className='pt-[48px] px-[8px] max-xs:hidden'>
+        <button className='pt-[48px] px-[8px] max-lg:hidden'>
           <SearchIcon onClick={openSearch} />
         </button>
       </div>
 
       <ConsultButton
-        className={`max-xs:hidden transition-opacity duration-800 ${
+        className={`max-lg:hidden transition-opacity duration-800 ${
           showConsultButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       />
 
-      <div className='max-xs:z-60 flex xs:hidden w-full justify-between items-center'>
+      <div className='max-lg:z-60 flex lg:hidden w-full justify-between items-center'>
         <Logo isMobile={true} />
         <div className='flex items-center'>
           <button className='p-3'>

@@ -3,12 +3,17 @@
 import FeedbackCard from './FeedbackCard'
 import { useState, useRef } from 'react'
 import type { TFeedbackType } from './FeedbackCard'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 const Feedback = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const touchStartX = useRef(0)
   const touchEndX = useRef(0)
   const containerRef = useRef<HTMLDivElement>(null)
+  const { isMobile } = useMediaQuery()
+  const gradientStyle = {
+    background: 'linear-gradient(to bottom, transparent 0%, transparent calc(100% - 26px), #e5d9bf calc(100% - 26px), #e5d9bf 100%)'
+  }
 
   const cardData: { type: TFeedbackType }[] = [
     { type: 'detailed' },
@@ -31,8 +36,6 @@ const Feedback = () => {
   }
 
   const getTranslateX = (index: number) => {
-    const isMobile = typeof window !== 'undefined' ? window.innerWidth < 1024 : true
-
     let translateX = 0
     for (let i = 0; i < index; i++) {
       const cardWidth = getCardWidth(cardData[i].type, isMobile)
@@ -42,7 +45,6 @@ const Feedback = () => {
   }
 
   const getMaxIndex = () => {
-    const isMobile = typeof window !== 'undefined' ? window.innerWidth < 1024 : true
     let containerWidth: number
 
     if (isMobile) {
@@ -109,7 +111,12 @@ const Feedback = () => {
 
   return (
     <div className='flex flex-col items-center py-[60px] px-[12px] lg:py-[120px] lg:px-[48px] bg-neutral-50'>
-      <h2 className='h-[89px] py-[6px] px-[12px] font-noto-serif-h2-bold text-figma-primary-950 box-border border-b-[26px] border-figma-secondary-300'>真實旅客回饋</h2>
+      <h2
+        className='font-noto-serif-tc font-bold text-[32px] lg:text-[64px] lg:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px]'
+        style={gradientStyle}
+      >
+        真實旅客回饋
+      </h2>
       <div className='flex self-stretch min-h-[587px] mb-[60px] overflow-hidden'>
         <div
           ref={containerRef}

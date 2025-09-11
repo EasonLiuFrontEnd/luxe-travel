@@ -31,7 +31,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
         className={cn(
           'banner-dynamic-padding',
           'pt-[168px] px-[12px]',
-          'xs:pt-[152px] xs:px-[48px]',
+          'lg:pt-[152px] lg:px-[48px]',
         )}
         style={{ '--dynamic-padding': dynamicPadding } as React.CSSProperties}
       >
@@ -39,31 +39,31 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
           className={cn(
             'z-10 sticky',
             'top-[104px] -mt-[192px]',
-            'xs:top-[123px] xs:-mt-[250px]',
+            'lg:top-[123px] lg:-mt-[250px]',
           )}
         >
           <h1
             className={cn(
               'flex flex-col text-right text-figma-neutral-950',
-              'font-noto-serif-tc font-bold text-[40px] xs:text-[96px] leading-[1.2]',
+              'font-noto-serif-tc font-bold text-[40px] lg:text-[96px] leading-[1.2]',
             )}
           >
             <div
               className={cn(
-                'self-end max-xs:self-start',
-                'bg-figma-neutral-50 max-xs:rounded-ee-xl xs:rounded-es-2xl',
+                'self-end max-lg:self-start',
+                'bg-figma-neutral-50 max-lg:rounded-ee-xl lg:rounded-es-2xl',
                 'pt-[12px] pb-[4px] px-[12px]',
-                'xs:pt-[16px] xs:px-[16px]',
+                'lg:pt-[16px] lg:px-[16px]',
               )}
             >
               歐洲自由行
             </div>
             <div
               className={cn(
-                'self-end max-xs:self-start',
-                'bg-figma-neutral-50 xs:rounded-bl-2xl',
+                'self-end max-lg:self-start',
+                'bg-figma-neutral-50 lg:rounded-bl-2xl',
                 'py-[4px] px-[12px]',
-                'xs:pt-[4px] xs:pb-[16px] xs:px-[16px]',
+                'lg:pt-[4px] lg:pb-[16px] lg:px-[16px]',
                 styles['concave-border-1'],
               )}
             >
@@ -73,15 +73,15 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
           <div
             className={cn(
               'flex flex-col text-figma-primary-950',
-              'font-genseki-gothic font-medium xs:text-[24px] text-[16px] xs:leading-[1.2] leading-[1.5]',
+              'font-genseki-gothic font-medium lg:text-[24px] text-[16px] lg:leading-[1.2] leading-[1.5]',
             )}
           >
             <p
               className={cn(
-                'self-end max-xs:self-start text-right',
-                'bg-figma-neutral-50 max-xs:rounded-se-xl',
+                'self-end max-lg:self-start text-right',
+                'bg-figma-neutral-50 max-lg:rounded-se-xl',
                 'py-[4px] px-[12px]',
-                'xs:py-[4px] xs:px-[16px]',
+                'lg:py-[4px] lg:px-[16px]',
                 styles['concave-border-2'],
               )}
             >
@@ -89,10 +89,10 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
             </p>
             <p
               className={cn(
-                'self-end max-xs:self-start',
-                'bg-figma-neutral-50 max-xs:rounded-e-xl xs:rounded-s-2xl',
+                'self-end max-lg:self-start',
+                'bg-figma-neutral-50 max-lg:rounded-e-xl lg:rounded-s-2xl',
                 'pt-[4px] pb-[12px] px-[12px]',
-                'xs:py-[10px] xs:px-[16px]',
+                'lg:py-[10px] lg:px-[16px]',
                 styles['concave-border-3'],
               )}
             >
@@ -105,8 +105,8 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
           autoPlayInterval={10000}
         />
       </div>
-      <div className='flex justify-end w-full px-[48px] max-xs:hidden'>
-        <AirplaneIcon />
+      <div className='flex justify-end w-full px-[48px]'>
+        <AirplaneIcon className='max-lg:hidden'/>
         <Image
           src='/home/banners/slogan.svg'
           alt='slogan'
@@ -115,13 +115,6 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
           height={231}
         />
       </div>
-      <Image
-        src='/home/banners/mobile-slogan.svg'
-        alt='mobile slogan'
-        className='xs:hidden'
-        width={352}
-        height={430}
-      />
     </>
   )
 }
