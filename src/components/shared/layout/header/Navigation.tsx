@@ -86,7 +86,7 @@ const Navigation = ({
 
   return (
     <>
-      <div className='hidden xs:flex items-center space-x-7'>
+      <div className='hidden lg:flex items-center space-x-7'>
         {navItems.map((item) => (
           <div
             key={item.label}
@@ -137,7 +137,7 @@ const Navigation = ({
         </div>
       </div>
       {isMenuOpen && (
-        <div className='flex flex-col xs:hidden absolute top-full left-0 right-0 mt-px pt-[48px] space-y-7 bg-figma-neutral-50  h-[calc(100dvh-73px)]'>
+        <div className='flex flex-col lg:hidden absolute top-full left-0 right-0 mt-px pt-[48px] space-y-7 bg-figma-neutral-50  h-[calc(100dvh-73px)]'>
           {navItems.map((item) => {
             const menuItems =
               dropdownMenus[item.label as keyof typeof dropdownMenus] || []
