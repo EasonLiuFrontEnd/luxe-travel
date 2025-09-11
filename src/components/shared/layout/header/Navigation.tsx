@@ -10,7 +10,7 @@ export type TNavigation = TBaseComponent & {
 }
 
 import DropdownMenu from './DropdownMenu'
-import ConsultButton from '@/components/ui/ConsultButton'
+import ConsultButton from '@/components/shared/layout/header/ConsultButton'
 import Logo from './Logo'
 import SearchIcon from '@/components/shared/icons/header/SearchIcon'
 import MenuIcon from '@/components/shared/icons/header/MenuIcon'
@@ -64,7 +64,7 @@ const Navigation = ({
 
   return (
     <>
-      <div className='hidden xs:flex items-center space-x-7'>
+      <div className='hidden lg:flex items-center space-x-7'>
         {NAV_ITEMS.map((item) => (
           <div
             key={item.label}
@@ -89,18 +89,18 @@ const Navigation = ({
             />
           </div>
         ))}
-        <button className='pt-[48px] px-[8px] max-xs:hidden'>
+        <button className='pt-[48px] px-[8px] max-lg:hidden'>
           <SearchIcon onClick={openSearch} />
         </button>
       </div>
 
       <ConsultButton
-        className={`max-xs:hidden transition-opacity duration-800 ${
+        className={`max-lg:hidden transition-opacity duration-800 ${
           showConsultButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       />
 
-      <div className='max-xs:z-60 flex xs:hidden w-full justify-between items-center'>
+      <div className='max-lg:z-60 flex lg:hidden w-full justify-between items-center'>
         <Logo isMobile={true} />
         <div className='flex items-center'>
           <button className='p-3'>
@@ -115,7 +115,7 @@ const Navigation = ({
         </div>
       </div>
       {isMenuOpen && (
-        <div className='flex flex-col xs:hidden absolute top-full left-0 right-0 mt-px pt-[48px] space-y-7 bg-figma-neutral-50  h-[calc(100dvh-73px)]'>
+        <div className='flex flex-col lg:hidden absolute top-full left-0 right-0 mt-px pt-[48px] space-y-7 bg-figma-neutral-50  h-[calc(100dvh-73px)]'>
           {NAV_ITEMS.map((item) => {
             const menuItems =
               DROPDOWN_MENUS[item.label as keyof typeof DROPDOWN_MENUS] || []
