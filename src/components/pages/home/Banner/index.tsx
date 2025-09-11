@@ -33,7 +33,9 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
           'pt-[168px] px-[12px]',
           'lg:pt-[152px] lg:px-[48px]',
         )}
-        style={{ '--dynamic-padding': dynamicPadding } as React.CSSProperties}
+        style={{ 
+          '--dynamic-padding': dynamicPadding
+        } as React.CSSProperties}
       >
         <div
           className={cn(
@@ -105,7 +107,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
           autoPlayInterval={10000}
         />
       </div>
-      <div className='flex justify-end w-full lg:px-[48px] max-xs:px-[12px]'>
+      <div className='flex justify-end w-full lg:px-[48px] max-xs:px-[12px] sticky top-0'>
         <AirplaneIcon className='max-lg:hidden'/>
         <Image
           src='/home/banners/slogan.svg'
