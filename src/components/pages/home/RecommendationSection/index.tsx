@@ -16,7 +16,7 @@ const RecommendationSection = () => {
         transition: 'margin-top 300ms ease-out'
       }}
     >
-      <div className="absolute flex justify-center items-end w-full h-full top-0 left-0">
+      <div className="absolute flex justify-center items-end w-full h-full top-0 left-0 bg-figma-neutral-50">
         <Image 
           alt="背景裝飾" 
           className="object-cover lg:block hidden"
