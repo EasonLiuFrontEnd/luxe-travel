@@ -1,6 +1,30 @@
+'use client'
+
+import { useMemo } from 'react'
+import { useConcerns } from '@/api/home/useConcerns'
 import StickyNotes from "./StickyNotes"
 
 const Concerns = () => {
+  const { query: concernsQuery, mock } = useConcerns()
+  const {
+    data: concernsData,
+    isLoading: isConcernsLoading,
+    error: concernsError,
+  } = concernsQuery
+  
+  const effectiveData = useMemo(() => {
+    if (concernsError || !concernsData) {
+      return mock.rows
+    }
+
+    if (isConcernsLoading) {
+      return mock.rows
+    }
+
+    // 使用 API 資料
+    return concernsData
+  }, [concernsError, concernsData, isConcernsLoading, mock.rows])
+
   const gradientStyle = {
     background: 'linear-gradient(to bottom, transparent 0%, transparent calc(100% - 26px), #e5d9bf calc(100% - 26px), #e5d9bf 100%)'
   }
@@ -23,8 +47,22 @@ const Concerns = () => {
       >
         歐洲自由行規劃煩惱多？
       </h2>
-      <div className="flex">
-        <StickyNotes />
+      <div className="flex flex-wrap justify-center gap-8">
+        {effectiveData.map((concern, index) => {
+          const rotations = [-2.23, 1.82, 3.73, -3.15, 2.23]
+          const colors = ['#BDA05E', '#8BC3DE', '#5B5B6E', '#FFD900', '#BDA05E']
+          const marginBottoms = ['0', '28', '0', '26', '0']
+
+          return (
+            <StickyNotes 
+              key={concern.id}
+              data={concern}
+              rotation={rotations[index]}
+              color={colors[index]}
+              marginBottom={marginBottoms[index]}
+            />
+          )
+        })}
       </div>
     </div>
   )
