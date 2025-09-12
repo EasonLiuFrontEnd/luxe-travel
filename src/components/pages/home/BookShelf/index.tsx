@@ -93,16 +93,9 @@ const BookShelf = ({ trackRef }: TBookShelfProps) => {
       className='w-full flex items-end lg:flex-[0_0_59.5%] lg:max-w-[1142.4px] min-w-0 lg:border-r lg:border-[var(--color-figma-secondary-500)] relative'
     >
       {showArrow && (
-        <div className='absolute top-[88px] right-[24px] z-10 bg-transparent border border-[var(--color-figma-secondary-500)] rounded-[41px] pt-3 px-4 pb-4 text-[var(--color-figma-primary-950)] transition-opacity duration-300 ease-out'>
-          <svg
-            className='w-[20px] h-[6px]'
-            viewBox='0 0 25 9'
-            fill='none'
-          >
-            <path
-              d='M25.0029 8.5H0.320312V6.5H17.6387L10.582 2.3623L11.5938 0.637695L25.0029 8.5Z'
-              fill='currentColor'
-            />
+        <div className='absolute top-[88px] right-[24px] z-10 bg-transparent border border-[var(--color-figma-secondary-950)] rounded-[41px] pt-3 px-4 pb-4 text-[var(--color-figma-primary-950)] transition-opacity duration-300 ease-out'>
+          <svg width="20" height="6" viewBox="0 0 25 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 6H0V8H1V7V6ZM21 7V8H24.6824L21.5058 6.13736L21 7ZM1 7V8H21V7V6H1V7ZM21 7L21.5058 6.13736L11.2733 0.137361L10.7674 1L10.2616 1.86264L20.4942 7.86264L21 7Z" fill="#926D3C"/>
           </svg>
         </div>
       )}
