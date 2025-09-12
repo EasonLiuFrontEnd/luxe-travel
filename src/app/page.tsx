@@ -9,8 +9,8 @@ const HomePage = () => {
     <div className='min-h-screen bg-figma-neutral-50'>
       <Banner />
       <BookShelfSection />
-      <Concerns />
       <RecommendationSection />
+      <Concerns />
       <Feedback />
     </div>
   )
