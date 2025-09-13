@@ -4,6 +4,7 @@ import React, { useState, useMemo, useEffect } from 'react'
 import DestinationCard from '../DestinationCard/index'
 import styles from './styles.module.css'
 import { useBooks } from '@/api/home/useBooks'
+import { useSelectedCountry } from '@/hooks/useSelectedCountry'
 import { transformBooksData } from './utils'
 
 type TStyle = React.CSSProperties & {
@@ -25,6 +26,7 @@ const BookShelf = ({ trackRef }: TBookShelfProps) => {
     isLoading: isBooksLoading,
     error: booksError,
   } = booksQuery
+  const { setSelectedCountryId } = useSelectedCountry()
 
   const displayData = useMemo(() => {
     if (booksError || !booksData) {
@@ -40,6 +42,7 @@ const BookShelf = ({ trackRef }: TBookShelfProps) => {
 
   const handleCardClick = (cardId: string) => {
     setActiveCardId(cardId)
+    setSelectedCountryId(cardId)
   }
 
   useEffect(() => {
