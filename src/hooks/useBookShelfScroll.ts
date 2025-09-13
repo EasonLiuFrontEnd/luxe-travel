@@ -104,16 +104,33 @@ export const useBookShelfScroll = () => {
     const handleScroll = () => {
       if (!bookShelfRef.current) return
 
-      const rect = bookShelfRef.current.getBoundingClientRect()
-      const isBottomAtViewport =
-        Math.abs(rect.bottom - window.innerHeight) <= 50
+      // 找到 RecommendationSection
+      const recommendationSection = document.querySelector('.recommendation-section') as HTMLElement
+      
+      if (recommendationSection) {
+        // 檢查 RecommendationSection 頂部是否碰到視窗底部
+        const recommendationRect = recommendationSection.getBoundingClientRect()
+        const isRecommendationAtBottom = Math.abs(recommendationRect.top - window.innerHeight) <= 50
 
-      if (isBottomAtViewport && !isFixed) {
-        setIsFixed(true)
-        maxScrollX.current = calculateMaxScroll()
-      } else if (!isBottomAtViewport && isFixed && scrollProgress === 0) {
-        setIsFixed(false)
-        unlockBodyScroll()
+        if (isRecommendationAtBottom && !isFixed) {
+          setIsFixed(true)
+          maxScrollX.current = calculateMaxScroll()
+        } else if (!isRecommendationAtBottom && isFixed && scrollProgress === 0) {
+          setIsFixed(false)
+          unlockBodyScroll()
+        }
+      } else {
+        // 降級方案：如果找不到 RecommendationSection，使用原本的邏輯
+        const rect = bookShelfRef.current.getBoundingClientRect()
+        const isBottomAtViewport = Math.abs(rect.bottom - window.innerHeight) <= 50
+
+        if (isBottomAtViewport && !isFixed) {
+          setIsFixed(true)
+          maxScrollX.current = calculateMaxScroll()
+        } else if (!isBottomAtViewport && isFixed && scrollProgress === 0) {
+          setIsFixed(false)
+          unlockBodyScroll()
+        }
       }
     }
 
