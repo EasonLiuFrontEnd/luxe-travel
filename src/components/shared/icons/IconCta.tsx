@@ -4,7 +4,7 @@ type TIconCtaProps = {
 
 const IconCta = ({ className = '' }: TIconCtaProps) => {
   return (
-    <div className={`relative w-[37.68px] h-[7.86px] right-0 ${className}`}>
+    <div className={`relative h-[9px] right-0 ${className}`}>
       <svg
         className='w-[24.68px] h-[7.86px] absolute right-0 top-0 group-hover:opacity-0 transition-all duration-300 ease-out'
         viewBox='0 0 25 9'

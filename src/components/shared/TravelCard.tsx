@@ -105,10 +105,9 @@ const TravelCard = ({
               >
                 {price}
               </div>
-              <div
-                className={`flex justify-end items-center h-[24px] w-[48px] ${arrowColorStyles[tagColor]}`}
-              >
-                <IconCta />
+
+              <div className='w-[24.68px] group-hover:w-[37.68px] transition-all duration-300 overflow-hidden'>
+                <IconCta className={`${arrowColorStyles[tagColor]}`} />
               </div>
             </div>
           </div>

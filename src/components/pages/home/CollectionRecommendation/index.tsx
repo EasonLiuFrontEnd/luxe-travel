@@ -1,103 +1,60 @@
 'use client'
 
 import { useState } from 'react'
-import InteractiveMap from './InteractiveMap'
-import type { TBaseComponent } from '@/types'
 import Image from 'next/image'
-import IconCta from '@/components/shared/icons/IconCta'
+import InteractiveMap from './InteractiveMap'
+import RecommendationList from './RecommendationList'
+import type { TBaseComponent } from '@/types'
+import { regionData } from './config'
 
 type TCollectionRecommendationProps = TBaseComponent
 
-const CollectionRecommendation = ({ className }: TCollectionRecommendationProps) => {
-  const [selectedRegion, setSelectedRegion] = useState<string | null>(null)
+const CollectionRecommendation = ({
+  className,
+}: TCollectionRecommendationProps) => {
+  const firstRegionId = Object.keys(regionData)[0]
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(
+    firstRegionId,
+  )
 
   return (
-    <section className={`py-16 px-4 ${className} bg-[var(--color-figma-secondary-100)] relative`}>
+    <section
+      className={`py-16 px-4 bg-[var(--color-figma-secondary-100)] relative ${className}`}
+    >
       <div className='max-w-7xl mx-auto relative'>
-        <div className='absolute top-0 left-0 w-full h-full bg-figma-neutral-50'>
+        <div className='w-full bg-figma-neutral-50 relative rounded-2xl overflow-hidden'>
           <Image
-            alt="背景裝飾"
-            className="object-cover rounded-2xl h-full"
-            src="/home/recommend/bg.jpg" width={1824} height={695}
+            alt='背景裝飾'
+            className='object-cover'
+            src='/home/recommend/bg.jpg'
+            fill
           />
-        </div>
 
-        <h2 className='text-center absolute top-0 text-4xl font-bold text-gray-900 left-1/2 -translate-x-1/2 bg-[var(--color-figma-secondary-100)] px-6 py-4 rounded-bl-2xl rounded-br-2xl'>
-          典藏推薦
-        </h2>
+          <div className='absolute inset-0 bg-black/20 rounded-2xl'></div>
 
-        <InteractiveMap
-          selectedRegion={selectedRegion}
-          onRegionSelect={setSelectedRegion}
-        />
-      </div>
+          <div className='relative z-10'>
+            <h2
+              className='text-center font-family-noto-serif text-[32px] leading-[1.5] font-bold text-[#383841] bg-[var(--color-figma-secondary-100)] px-4 py-3 rounded-bl-2xl rounded-br-2xl mx-auto w-fit
+                           lg:text-[64px] lg:leading-[1.2] lg:px-7 lg:py-4'
+            >
+              典藏推薦
+            </h2>
 
-      <div>
-        <div className='group'>
-          <Image src="/home/recommend/area-1.jpg" alt="推薦地點-1" width={60} height={60} />
-
-          <div>
-            <p>孝親輕鬆休閒10日遊</p>
-
-            <div>
-              <p>愛爾蘭</p>
-              <IconCta />
+            <div className='mt-8 lg:mt-10 flex justify-center'>
+              <div className='w-[361px] h-[435px] lg:w-[402px] lg:h-[485px] relative'>
+                <InteractiveMap
+                  selectedRegion={selectedRegion}
+                  onRegionSelect={setSelectedRegion}
+                />
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div className='group'>
-          <Image src="/home/recommend/area-2.jpg" alt="推薦地點-2" width={60} height={60} />
-
-          <div>
-            <p>親子五人暑假快樂遊</p>
-
-            <div>
-              <p>奧地利</p>
-              <IconCta />
-            </div>
-          </div>
-        </div>
-
-        <div className='group'>
-          <Image src="/home/recommend/area-3.jpg" alt="推薦地點-3" width={60} height={60} />
-
-          <div>
-            <p>小資5日輕鬆遊</p>
-
-            <div>
-              <p>比利時</p>
-              <IconCta />
-            </div>
-          </div>
-        </div>
-
-        <div className='group'>
-          <Image src="/home/recommend/area-4.jpg" alt="推薦地點-4" width={60} height={60} />
-
-          <div>
-            <p>新婚夫妻15日蜜月遊</p>
-
-            <div>
-              <p>英國</p>
-              <IconCta />
-            </div>
-          </div>
-        </div>
-
-        <div className='group'>
-          <Image src="/home/recommend/area-5.jpg" alt="推薦地點-5" width={60} height={60} />
-
-          <div>
-            <p>閨蜜6日渡假遊</p>
-
-            <div>
-              <p>西班牙</p>
-              <IconCta />
-            </div>
+            <div className='h-12 lg:h-7'></div>
           </div>
         </div>
       </div>
+
+      <RecommendationList />
     </section>
   )
 }
