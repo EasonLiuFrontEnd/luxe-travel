@@ -86,18 +86,17 @@ const InteractiveMap = ({
       {selectedRegionData && (
         <div
           className='absolute left-1/2 top-0 -translate-x-full translate-y-0 pr-0
-                          xl:left-0 xl:top-1/2 xl:-translate-x-full xl:-translate-y-1/2 xl:pr-[29px]
-                          md:left-0 md:top-0 md:-translate-x-[60px] md:translate-y-0 md:pr-0'
+                          md:left-0 md:top-0 md:-translate-x-[60px] md:translate-y-0 md:pr-0
+                          xl:left-0 xl:top-1/2 xl:-translate-x-full xl:-translate-y-1/2 xl:pr-[29px]'
         >
           <div
             className='flex flex-col items-center justify-start relative mt-0
-                            md:flex-row md:items-center md:justify-start md:mt-0
-                            xl:flex-row xl:items-center xl:justify-start xl:mt-0'
+                            md:flex-row md:items-center md:justify-start'
           >
             <div
-              className='bg-white box-border flex flex-col gap-1 items-center justify-center p-3 rounded-xl shadow-lg max-w-none
+              className='bg-white box-border flex flex-col gap-1 items-center justify-center p-3 rounded-xl shadow-lg
                               md:flex-row md:gap-5 md:items-center md:justify-start md:p-5 md:rounded-2xl md:max-w-[90vw]
-                              xl:flex-row xl:gap-5 xl:items-center xl:justify-start xl:p-5 xl:rounded-2xl xl:max-w-none'
+                              xl:max-w-none'
             >
               <div
                 className='bg-center bg-cover bg-no-repeat rounded size-20 flex-shrink-0
@@ -108,11 +107,11 @@ const InteractiveMap = ({
               />
               <div
                 className='flex flex-col justify-between w-auto h-auto
-                                md:h-full md:w-[220px]'
+                                md:min-h-[100px] md:w-[180px] xl:w-[220px]'
               >
                 <div
                   className='flex flex-col items-center text-[#383841]
-                                  md:gap-1.5 md:items-start md:justify-start'
+                                  md:gap-1.5 md:items-start'
                 >
                   <div
                     className='text-sm leading-[1.5] font-normal hidden

@@ -19,9 +19,9 @@ const CollectionRecommendation = ({
 
   return (
     <section
-      className={`py-16 px-4 bg-[var(--color-figma-secondary-100)] relative ${className}`}
+      className={`pb-[60px] lg:py-[120px] px-[clamp(12px,2.5vw,48px)] bg-[var(--color-figma-secondary-100)] relative xl:sticky xl:top-[-50px] xl:left-0 ${className || ''}`}
     >
-      <div className='max-w-7xl mx-auto relative'>
+      <div className='mx-auto relative'>
         <div className='w-full bg-figma-neutral-50 relative rounded-2xl overflow-hidden'>
           <Image
             alt='背景裝飾'
@@ -40,7 +40,7 @@ const CollectionRecommendation = ({
               典藏推薦
             </h2>
 
-            <div className='mt-8 lg:mt-10 flex justify-center'>
+            <div className='mt-[40px] flex justify-center'>
               <div className='w-[361px] h-[435px] lg:w-[402px] lg:h-[485px] relative'>
                 <InteractiveMap
                   selectedRegion={selectedRegion}
@@ -49,7 +49,7 @@ const CollectionRecommendation = ({
               </div>
             </div>
 
-            <div className='h-12 lg:h-7'></div>
+            <div className='h-[69px]'></div>
           </div>
         </div>
       </div>

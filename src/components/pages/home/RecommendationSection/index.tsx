@@ -10,7 +10,7 @@ const RecommendationSection = () => {
 
   return (
     <div 
-      className="recommendation-section bg-[var(--color-figma-primary-50)] relative box-border flex justify-center py-20 px-4 border-b border-[var(--color-figma-secondary-500)]"
+      className="recommendation-section bg-[var(--color-figma-primary-50)] relative box-border flex justify-center pt-[32px] pb-[60px] xl:py-20 px-[clamp(12px,2.5vw,48px)] border-y border-[var(--color-figma-secondary-500)]"
       style={{
         marginTop: `-${transformY}px`,
         transition: 'margin-top 300ms ease-out'
