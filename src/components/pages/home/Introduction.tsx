@@ -3,19 +3,19 @@ import Image from 'next/image'
 const Introduction = () => {
   return (
     <div
-      className={`w-full lg:flex-[0_0_39.2%] lg:max-w-[753.6px] pb-7 px-[17px] lg:pl-7 lg:pr-0`}
+      className={`w-full xl:flex-[0_0_39.2%] xl:max-w-[753.6px] pb-7 px-[17px] xl:pl-7 xl:pr-0`}
     >
-      <div className='flex flex-col items-center gap-5 lg:gap-7 lg:max-w-[705px]'>
-        <div className='relative mx-[62.5px] lg:mx-0'>
+      <div className='flex flex-col items-center gap-5 xl:gap-7 xl:max-w-[705px]'>
+        <div className='relative mx-[62.5px] xl:mx-0'>
           <Image
             src='/home/itinerary/it-italy/introduction.jpg'
             alt='義大利介紹圖片'
-            className='aspect-[216/160] lg:aspect-[705/347] object-cover rounded-2xl'
+            className='aspect-[216/160] xl:aspect-[705/347] object-cover rounded-2xl'
             width={705}
             height={347}
           />
-          <div className='absolute top-0 right-0 bg-[var(--color-figma-neutral-50)] lg:px-7 lg:py-4 px-5 py-3 rounded-tr-2xl rounded-bl-2xl'>
-            <span className='font-family-noto-serif font-bold lg:text-2xl text-lg leading-[120%] text-[var(--color-figma-primary-950)]'>
+          <div className='absolute top-0 right-0 bg-[var(--color-figma-neutral-50)] xl:px-7 xl:py-4 px-5 py-3 rounded-tr-2xl rounded-bl-2xl'>
+            <span className='font-family-noto-serif font-bold xl:text-2xl text-lg leading-[120%] text-[var(--color-figma-primary-950)]'>
               義大利
             </span>
           </div>

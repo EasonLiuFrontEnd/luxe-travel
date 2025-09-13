@@ -112,9 +112,9 @@ const Feedback = () => {
   }
 
   return (
-    <div className='relative flex flex-col items-center py-[60px] px-[12px] lg:py-[120px] lg:px-[48px] bg-neutral-50'>
+    <div className='relative flex flex-col items-center py-[60px] px-[12px] xl:py-[120px] xl:px-[48px] bg-neutral-50'>
       <h2
-        className='font-noto-serif-tc font-bold text-[32px] lg:text-[64px] lg:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px]'
+        className='font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px]'
         style={gradientStyle}
       >
         真實旅客回饋
@@ -122,7 +122,7 @@ const Feedback = () => {
       <div className='flex self-stretch min-h-[587px] mb-[60px] overflow-hidden'>
         <div
           ref={containerRef}
-          className='flex gap-x-[24px] mt-[60px] lg:mt-[120px] transition-transform duration-300'
+          className='flex gap-x-[24px] mt-[60px] xl:mt-[120px] transition-transform duration-300'
           style={{ transform: `translateX(-${getTranslateX(currentIndex)}px)` }}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
@@ -133,7 +133,7 @@ const Feedback = () => {
           ))}
         </div>
       </div>
-      <div className='w-[75vw] hidden lg:flex justify-end mx-auto px-[24px]'>
+      <div className='w-[75vw] hidden xl:flex justify-end mx-auto px-[24px]'>
         <button
           onClick={handlePrevious}
           disabled={!canGoLeft}

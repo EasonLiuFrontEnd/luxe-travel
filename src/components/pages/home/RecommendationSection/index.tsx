@@ -19,14 +19,14 @@ const RecommendationSection = () => {
       <div className='absolute flex justify-center items-end w-full h-full top-0 left-0 bg-figma-neutral-50'>
         <Image
           alt='背景裝飾'
-          className='object-cover lg:block hidden'
+          className='object-cover xl:block hidden'
           src='/home/itinerary/bg.png'
           width={1824}
           height={511}
         />
       </div>
 
-      <div className='grid grid-cols-1 lg:grid-cols-2 justify-center gap-6 xl:gap-[60px] items-center w-full'>
+      <div className='grid grid-cols-1 xl:grid-cols-2 justify-center gap-6 xl:gap-[60px] items-center w-full'>
         <FreeTourRecommendation />
         <GroupTourRecommendation />
       </div>
