@@ -1,6 +1,7 @@
 'use client'
 
 import type { TBaseComponent } from '@/types'
+import { booksApiMock } from '@/api/home/useBooks'
 
 export type TDestinationCard = TBaseComponent & {
   number: string
@@ -37,10 +38,28 @@ const DestinationCard = ({
   ...props
 }: TDestinationCard) => {
   const [isPatternVisible, setIsPatternVisible] = useState(false)
+  const [imageSrc, setImageSrc] = useState(
+    countryPattern || '/home/itinerary/hr-croatia/pattern.svg',
+  )
 
   useEffect(() => {
     setIsPatternVisible(isActive)
   }, [isActive])
+
+  useEffect(() => {
+    setImageSrc(countryPattern || '/home/itinerary/hr-croatia/pattern.svg')
+  }, [countryPattern])
+
+  const handleImageError = () => {
+    if (imageSrc?.startsWith('http')) {
+      const mockBook = booksApiMock.rows.find(
+        (book) => book.title === destination,
+      )
+      if (mockBook?.imageUrl) {
+        setImageSrc(mockBook.imageUrl)
+      }
+    }
+  }
 
   const handleClick = () => {
     onClick?.()
@@ -82,6 +101,20 @@ const DestinationCard = ({
       onMouseLeave={handleMouseLeave}
       {...props}
     >
+      <Image
+        alt={`${destination} pattern`}
+        className={cn(
+          styles.pattern,
+          isPatternVisible ? styles.patternVisible : styles.patternHidden,
+          patternContainerClassName,
+        )}
+        style={imageStyle}
+        src={imageSrc}
+        width={182}
+        height={533}
+        onError={handleImageError}
+      />
+
       <div className='flex flex-col gap-3 items-center text-[var(--color-figma-primary-950)] pt-[16px]'>
         <p className='font-family-noto-serif font-medium text-[16px] lg:text-[20px] lg:leading-[120%] tracking-[0%] lg:tracking-[8%]'>
           {number}
@@ -94,19 +127,6 @@ const DestinationCard = ({
       <p className='absolute bottom-[16px] left-[16px] rotate-[270deg] origin-top-left font-family-luxurious text-[var(--color-figma-primary-950)] text-[24px] lg:text-[48px] tracking-[10%] leading-[100%] text-center whitespace-nowrap'>
         {englishName}
       </p>
-
-      <Image
-        alt={`${destination} pattern`}
-        className={cn(
-          styles.pattern,
-          isPatternVisible ? styles.patternVisible : styles.patternHidden,
-          patternContainerClassName,
-        )}
-        style={imageStyle}
-        src={countryPattern || '/home/itinerary/hr-croatia/pattern.svg'}
-        width={182}
-        height={533}
-      />
     </div>
   )
 }
