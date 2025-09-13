@@ -38,45 +38,53 @@ export const useBookShelfScroll = () => {
     }
   }, [])
 
-  const preventVerticalScroll = useCallback((e: Event) => {
-    if (e.type === 'scroll') {
-      e.preventDefault()
-      e.stopPropagation()
-      return false
-    }
-    if (e.type === 'touchmove' && isFixed) {
-      const touchEvent = e as TouchEvent
-      const touch = touchEvent.touches[0]
-      if (touch) {
-        const startY = (touchEvent.target as any)._startY || touch.clientY
-        const deltaY = touch.clientY - startY
-        
-        const pixelScrollAmount = 30
-        const progressIncrement = maxScrollX.current > 0 ? pixelScrollAmount / maxScrollX.current : 0.03
-        const newProgress = scrollProgress + (deltaY > 0 ? -progressIncrement : progressIncrement)
+  const preventVerticalScroll = useCallback(
+    (e: Event) => {
+      if (e.type === 'scroll') {
+        e.preventDefault()
+        e.stopPropagation()
+        return false
+      }
+      if (e.type === 'touchmove' && isFixed) {
+        const touchEvent = e as TouchEvent
+        const touch = touchEvent.touches[0]
+        if (touch) {
+          const startY = (touchEvent.target as any)._startY || touch.clientY
+          const deltaY = touch.clientY - startY
 
-        if (newProgress <= 0) {
-          setScrollProgress(0)
-          updateBookPosition(0)
-          setIsFixed(false)
-          unlockBodyScroll()
-        } else if (newProgress >= 1) {
-          setScrollProgress(1)
-          updateBookPosition(1)
-          setIsFixed(false)
-          unlockBodyScroll()
-        } else {
-          updateBookPosition(newProgress)
+          const pixelScrollAmount = 30
+          const progressIncrement =
+            maxScrollX.current > 0
+              ? pixelScrollAmount / maxScrollX.current
+              : 0.03
+          const newProgress =
+            scrollProgress +
+            (deltaY > 0 ? -progressIncrement : progressIncrement)
+
+          if (newProgress <= 0) {
+            setScrollProgress(0)
+            updateBookPosition(0)
+            setIsFixed(false)
+            unlockBodyScroll()
+          } else if (newProgress >= 1) {
+            setScrollProgress(1)
+            updateBookPosition(1)
+            setIsFixed(false)
+            unlockBodyScroll()
+          } else {
+            updateBookPosition(newProgress)
+          }
+
+          ;(touchEvent.target as any)._startY = touch.clientY
         }
 
-        ;(touchEvent.target as any)._startY = touch.clientY
+        e.preventDefault()
+        e.stopPropagation()
+        return false
       }
-      
-      e.preventDefault()
-      e.stopPropagation()
-      return false
-    }
-  }, [isFixed, scrollProgress, updateBookPosition])
+    },
+    [isFixed, scrollProgress, updateBookPosition],
+  )
 
   const unlockBodyScroll = useCallback(() => {
     window.removeEventListener('scroll', preventVerticalScroll)
@@ -87,7 +95,9 @@ export const useBookShelfScroll = () => {
   const lockBodyScroll = useCallback(() => {
     window.addEventListener('scroll', preventVerticalScroll, { passive: false })
     window.addEventListener('touchstart', handleTouchStart, { passive: false })
-    window.addEventListener('touchmove', preventVerticalScroll, { passive: false })
+    window.addEventListener('touchmove', preventVerticalScroll, {
+      passive: false,
+    })
   }, [preventVerticalScroll, handleTouchStart])
 
   useEffect(() => {
@@ -95,8 +105,9 @@ export const useBookShelfScroll = () => {
       if (!bookShelfRef.current) return
 
       const rect = bookShelfRef.current.getBoundingClientRect()
-      const isBottomAtViewport = Math.abs(rect.bottom - window.innerHeight) <= 50
-      
+      const isBottomAtViewport =
+        Math.abs(rect.bottom - window.innerHeight) <= 50
+
       if (isBottomAtViewport && !isFixed) {
         setIsFixed(true)
         maxScrollX.current = calculateMaxScroll()
@@ -132,7 +143,8 @@ export const useBookShelfScroll = () => {
 
       const delta = event.deltaY
       const pixelScrollAmount = 30
-      const progressIncrement = maxScrollX.current > 0 ? pixelScrollAmount / maxScrollX.current : 0.03
+      const progressIncrement =
+        maxScrollX.current > 0 ? pixelScrollAmount / maxScrollX.current : 0.03
       const newProgress =
         scrollProgress + (delta > 0 ? progressIncrement : -progressIncrement)
 

@@ -38,7 +38,9 @@ const DestinationCard = ({
   ...props
 }: TDestinationCard) => {
   const [isPatternVisible, setIsPatternVisible] = useState(false)
-  const [imageSrc, setImageSrc] = useState(countryPattern || '/home/itinerary/hr-croatia/pattern.svg')
+  const [imageSrc, setImageSrc] = useState(
+    countryPattern || '/home/itinerary/hr-croatia/pattern.svg',
+  )
 
   useEffect(() => {
     setIsPatternVisible(isActive)
@@ -50,7 +52,9 @@ const DestinationCard = ({
 
   const handleImageError = () => {
     if (imageSrc?.startsWith('http')) {
-      const mockBook = booksApiMock.rows.find(book => book.title === destination)
+      const mockBook = booksApiMock.rows.find(
+        (book) => book.title === destination,
+      )
       if (mockBook?.imageUrl) {
         setImageSrc(mockBook.imageUrl)
       }
@@ -112,15 +116,15 @@ const DestinationCard = ({
       />
 
       <div className='flex flex-col gap-3 items-center text-[var(--color-figma-primary-950)] pt-[16px]'>
-        <p className='font-family-noto-serif font-medium text-[16px] lg:text-[20px] lg:leading-[120%] tracking-[0%] lg:tracking-[8%]'>
+        <p className='font-family-noto-serif font-medium text-[16px] xl:text-[20px] xl:leading-[120%] tracking-[0%] xl:tracking-[8%]'>
           {number}
         </p>
-        <p className='font-family-genseki font-medium text-[16px] lg:text-[24px] lg:leading-[120%] tracking-[0px]'>
+        <p className='font-family-genseki font-medium text-[16px] xl:text-[24px] xl:leading-[120%] tracking-[0px]'>
           {destination}
         </p>
       </div>
-      
-      <p className='absolute bottom-[16px] left-[16px] rotate-[270deg] origin-top-left font-family-luxurious text-[var(--color-figma-primary-950)] text-[24px] lg:text-[48px] tracking-[10%] leading-[100%] text-center whitespace-nowrap'>
+
+      <p className='absolute bottom-[16px] left-[16px] rotate-[270deg] origin-top-left font-family-luxurious text-[var(--color-figma-primary-950)] text-[24px] xl:text-[48px] tracking-[10%] leading-[100%] text-center whitespace-nowrap'>
         {englishName}
       </p>
     </div>

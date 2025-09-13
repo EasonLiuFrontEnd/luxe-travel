@@ -31,41 +31,43 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
         className={cn(
           'banner-dynamic-padding',
           'pt-[168px] px-[12px]',
-          'lg:pt-[152px] lg:px-[48px]',
+          'xl:pt-[152px] xl:px-[48px]',
         )}
-        style={{ 
-          '--dynamic-padding': dynamicPadding
-        } as React.CSSProperties}
+        style={
+          {
+            '--dynamic-padding': dynamicPadding,
+          } as React.CSSProperties
+        }
       >
         <div
           className={cn(
             'z-10 sticky',
             'top-[104px] -mt-[192px]',
-            'lg:top-[123px] lg:-mt-[250px]',
+            'xl:top-[123px] xl:-mt-[250px]',
           )}
         >
           <h1
             className={cn(
               'flex flex-col text-right text-figma-neutral-950',
-              'font-noto-serif-tc font-bold text-[40px] lg:text-[96px] leading-[1.2]',
+              'font-noto-serif-tc font-bold text-[40px] xl:text-[96px] leading-[1.2]',
             )}
           >
             <div
               className={cn(
-                'self-end max-lg:self-start',
-                'bg-figma-neutral-50 max-lg:rounded-ee-xl lg:rounded-es-2xl',
+                'self-end max-xl:self-start',
+                'bg-figma-neutral-50 rounded-tr-xl max-xl:rounded-ee-[12px] xl:rounded-es-2xl',
                 'pt-[12px] pb-[4px] px-[12px]',
-                'lg:pt-[16px] lg:px-[16px]',
+                'xl:pt-[16px] xl:px-[16px]',
               )}
             >
               歐洲自由行
             </div>
             <div
               className={cn(
-                'self-end max-lg:self-start',
-                'bg-figma-neutral-50 lg:rounded-bl-2xl',
+                'self-end max-xl:self-start',
+                'bg-figma-neutral-50 xl:rounded-bl-2xl',
                 'py-[4px] px-[12px]',
-                'lg:pt-[4px] lg:pb-[16px] lg:px-[16px]',
+                'xl:pt-[4px] xl:pb-[16px] xl:px-[16px]',
                 styles['concave-border-1'],
               )}
             >
@@ -75,15 +77,15 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
           <div
             className={cn(
               'flex flex-col text-figma-primary-950',
-              'font-genseki-gothic font-medium lg:text-[24px] text-[16px] lg:leading-[1.2] leading-[1.5]',
+              'font-genseki-gothic font-medium xl:text-[24px] text-[16px] xl:leading-[1.2] leading-[1.5]',
             )}
           >
             <p
               className={cn(
-                'self-end max-lg:self-start text-right',
-                'bg-figma-neutral-50 max-lg:rounded-se-xl',
+                'self-end max-xl:self-start text-right',
+                'bg-figma-neutral-50 max-xl:rounded-se-[12px]',
                 'py-[4px] px-[12px]',
-                'lg:py-[4px] lg:px-[16px]',
+                'xl:py-[4px] xl:px-[16px]',
                 styles['concave-border-2'],
               )}
             >
@@ -91,10 +93,10 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
             </p>
             <p
               className={cn(
-                'self-end max-lg:self-start',
-                'bg-figma-neutral-50 max-lg:rounded-e-xl lg:rounded-s-2xl',
+                'self-end max-xl:self-start',
+                'bg-figma-neutral-50 max-xl:rounded-e-[12px] xl:rounded-s-2xl',
                 'pt-[4px] pb-[12px] px-[12px]',
-                'lg:py-[10px] lg:px-[16px]',
+                'xl:py-[10px] xl:px-[16px]',
                 styles['concave-border-3'],
               )}
             >
@@ -107,12 +109,12 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
           autoPlayInterval={10000}
         />
       </div>
-      <div className='flex justify-end w-full lg:px-[48px] max-xs:px-[12px] sticky top-0'>
-        <AirplaneIcon className='max-lg:hidden'/>
+      <div className='flex justify-end w-full xl:px-[48px] max-xs:px-[12px] sticky top-0'>
+        <AirplaneIcon className='max-xl:hidden' />
         <Image
           src='/home/banners/slogan.svg'
           alt='slogan'
-          className='lg:pl-[24px] max-xs:hidden'
+          className='xl:pl-[24px] max-xs:hidden'
           width={1084}
           height={231}
         />

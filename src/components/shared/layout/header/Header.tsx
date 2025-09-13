@@ -32,7 +32,7 @@ const Header = ({
   const showConsultButton = scrollY > 797
 
   const baseClasses =
-    'z-50 w-full flex items-center justify-between max-lg:p-[12px] lg:pb-[48px] lg:px-[48px]  bg-figma-neutral-50'
+    'z-50 w-full flex items-center justify-between max-xl:p-[12px] xl:pb-[48px] xl:px-[48px]  bg-figma-neutral-50'
   const positionClass =
     headerBehavior === 'fixed'
       ? 'fixed'
@@ -41,7 +41,7 @@ const Header = ({
         : 'relative'
   const backgroundClass =
     hasTransparentHeader && isHomePage && logoProgress < 1
-      ? 'lg:bg-transparent'
+      ? 'xl:bg-transparent'
       : ''
   const borderClass = isMobile
     ? 'border-b border-[var(--color-figma-secondary-500)]'
@@ -52,15 +52,15 @@ const Header = ({
   const opacityClass =
     logoProgress >= 1
       ? 'transition-opacity duration-1200 ease-in-out opacity-100'
-      : 'max-lg:opacity-100 opacity-0 lg:pointer-events-none'
+      : 'max-xl:opacity-100 opacity-0 xl:pointer-events-none'
 
   return (
     <div className={headerClasses}>
-      <div className='max-lg:hidden'>
+      <div className='max-xl:hidden'>
         <Logo scale={logoScale} />
       </div>
       <div
-        className={`flex items-center px-2 max-lg:w-full max-lg:px-0 max-lg:opacity-100 ${opacityClass}`}
+        className={`flex items-center px-2 max-xl:w-full max-xl:px-0 max-xl:opacity-100 ${opacityClass}`}
       >
         <Navigation
           isMenuOpen={isMenuOpen}
@@ -68,7 +68,7 @@ const Header = ({
           logoProgress={logoProgress}
           showConsultButton={showConsultButton}
         />
-        <ConsultButton className='lg:hidden' />
+        <ConsultButton className='xl:hidden' />
       </div>
     </div>
   )

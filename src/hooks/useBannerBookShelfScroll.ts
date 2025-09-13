@@ -23,9 +23,13 @@ export const useBannerBookShelfScroll = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const bookShelfTitleElement = document.querySelector('[data-bookshelf-title]')
-      const bookShelfSection = document.querySelector('[data-bookshelf-section]') as HTMLElement
-      
+      const bookShelfTitleElement = document.querySelector(
+        '[data-bookshelf-title]',
+      )
+      const bookShelfSection = document.querySelector(
+        '[data-bookshelf-section]',
+      ) as HTMLElement
+
       if (!bookShelfTitleElement || !bookShelfSection) return
 
       const currentScrollY = window.scrollY
@@ -39,18 +43,23 @@ export const useBannerBookShelfScroll = () => {
       const bookShelfHeight = bookShelfRect.height
 
       if (titleTop <= windowHeight && titleTop > 0) {
-        const progress = Math.max(0, Math.min(1, (windowHeight - titleTop) / windowHeight))
-        
+        const progress = Math.max(
+          0,
+          Math.min(1, (windowHeight - titleTop) / windowHeight),
+        )
+
         const maxTransformDistance = Math.max(0, bookShelfHeight - windowHeight)
         const targetTransformY = progress * maxTransformDistance
-
 
         if (isScrollingDown) {
           const newTransformY = Math.max(transformY, targetTransformY)
           maxTransformY.current = Math.max(maxTransformY.current, newTransformY)
           setTransformY(newTransformY)
         } else {
-          const newTransformY = Math.min(maxTransformY.current, targetTransformY)
+          const newTransformY = Math.min(
+            maxTransformY.current,
+            targetTransformY,
+          )
           setTransformY(newTransformY)
         }
       } else if (titleTop <= 0) {
@@ -74,6 +83,6 @@ export const useBannerBookShelfScroll = () => {
   }, [headerHeight, transformY])
 
   return {
-    transformY
+    transformY,
   }
 }

@@ -46,7 +46,7 @@ const TravelCard = ({
 
   return (
     <div
-      className={`flex flex-row md:grid md:grid-rows-subgrid md:row-span-4 gap-3 rounded-[16px] lg:rounded-[16px] rounded-[4px] cursor-pointer w-full min-w-0 group ${className}`}
+      className={`flex flex-row md:grid md:grid-rows-subgrid md:row-span-4 gap-3 rounded-[16px] xl:rounded-[16px] rounded-[4px] cursor-pointer w-full min-w-0 group ${className}`}
       onClick={onClick}
     >
       <div className='w-full max-w-[96px] md:max-w-full aspect-square aspect-[120/120] overflow-hidden relative rounded-[4px]'>
@@ -58,7 +58,7 @@ const TravelCard = ({
           height={238}
         />
         <div
-          className={`absolute ${tagColorStyles[tagColor]} box-border flex gap-2.5 items-center justify-center px-1 py-0 left-0 lg:right-0 lg:left-auto top-3 lg:top-3 top-2`}
+          className={`absolute ${tagColorStyles[tagColor]} box-border flex gap-2.5 items-center justify-center px-1 py-0 left-0 xl:right-0 xl:left-auto top-3 xl:top-3 top-2`}
         >
           <div className='font-family-genseki text-[12px] leading-[1.5] text-white whitespace-nowrap px-2'>
             {tagText}

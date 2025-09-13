@@ -86,7 +86,7 @@ const Navigation = ({
 
   return (
     <>
-      <div className='hidden lg:flex items-center space-x-7'>
+      <div className='hidden xl:flex items-center space-x-7'>
         {navItems.map((item) => (
           <div
             key={item.label}
@@ -111,18 +111,18 @@ const Navigation = ({
             />
           </div>
         ))}
-        <button className='pt-[48px] px-[8px] max-lg:hidden'>
+        <button className='pt-[48px] px-[8px] max-xl:hidden'>
           <SearchIcon onClick={openSearch} />
         </button>
       </div>
 
       <ConsultButton
-        className={`max-lg:hidden transition-opacity duration-800 ${
+        className={`max-xl:hidden transition-opacity duration-800 ${
           showConsultButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       />
 
-      <div className='max-lg:z-60 flex lg:hidden w-full justify-between items-center'>
+      <div className='max-xl:z-60 flex xl:hidden w-full justify-between items-center'>
         <Logo isMobile={true} />
         <div className='flex items-center'>
           <button className='p-3'>
@@ -137,7 +137,7 @@ const Navigation = ({
         </div>
       </div>
       {isMenuOpen && (
-        <div className='flex flex-col lg:hidden absolute top-full left-0 right-0 mt-px pt-[48px] space-y-7 bg-figma-neutral-50  h-[calc(100dvh-73px)]'>
+        <div className='flex flex-col xl:hidden absolute top-full left-0 right-0 mt-px pt-[48px] pb-[53px] space-y-7 bg-figma-neutral-50 h-[calc(100dvh-73px)] overflow-y-auto'>
           {navItems.map((item) => {
             const menuItems =
               dropdownMenus[item.label as keyof typeof dropdownMenus] || []
@@ -179,14 +179,17 @@ const Navigation = ({
               </div>
             )
           })}
-          <Image
-            src='/shared/icons/company-name.svg'
-            alt='company-name'
-            className='w-full mt-auto'
-            width={375}
-            height={33}
-          />
         </div>
+      )}
+
+      {isMenuOpen && (
+        <Image
+          src='/shared/icons/company-name.svg'
+          alt='company-name'
+          className='fixed bottom-0 left-0 right-0 w-full xl:hidden bg-figma-neutral-50 z-30'
+          width={375}
+          height={33}
+        />
       )}
 
       <Search isOpen={isSearchOpen} onClose={closeSearch} />

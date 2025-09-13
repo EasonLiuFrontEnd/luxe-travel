@@ -41,8 +41,8 @@ const Search = ({ isOpen, onClose }: TSearch) => {
   if (!isOpen) return null
 
   return (
-    <div className='fixed inset-0 bg-figma-primary-50 w-full h-full overflow-y-auto py-[24px] max-lg:mt-[73px]'>
-      <div className='max-lg:hidden flex justify-end w-full'>
+    <div className='fixed inset-0 bg-figma-primary-50 w-full h-full overflow-y-auto py-[24px] max-xl:mt-[73px]'>
+      <div className='max-xl:hidden flex justify-end w-full'>
         <button
           onClick={onClose}
           className={cn(
@@ -54,12 +54,12 @@ const Search = ({ isOpen, onClose }: TSearch) => {
           Go back
         </button>
       </div>
-      <div className='flex flex-col items-center pt-[120px] lg:pt-[200px]'>
+      <div className='flex flex-col items-center pt-[120px] xl:pt-[200px]'>
         <p className='font-luxurious-deco-regular text-figma-secondary-500 tracking-[4.8px]'>
           Search
         </p>
         <p className='font-noto-serif-h4-medium text-figma-primary-950'>搜尋</p>
-        <div className='w-[319px] lg:w-[1440px] pt-[60px] border-b border-[var(--color-figma-secondary-500)]'>
+        <div className='w-[319px] xl:w-[1440px] pt-[60px] border-b border-[var(--color-figma-secondary-500)]'>
           <div className='flex items-center py-[12px]'>
             <SearchIcon color='#926D3C' size={isMobile ? '19' : '31'} />
             <input
@@ -68,7 +68,7 @@ const Search = ({ isOpen, onClose }: TSearch) => {
               placeholder='請輸入關鍵字搜尋'
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              className='w-full font-genseki-gothic text-[16px] lg:text-[20px] leading-[1.2] lg:leading-[1.5] placeholder:text-figma-primary-300 ml-[24px] outline-none bg-transparent'
+              className='w-full font-genseki-gothic text-[16px] xl:text-[20px] leading-[1.2] xl:leading-[1.5] placeholder:text-figma-primary-300 ml-[24px] outline-none bg-transparent'
               autoFocus
             />
             {searchValue && (

@@ -7,13 +7,13 @@ const Footer = () => {
   }
 
   return (
-    <footer className='relative bg-figma-primary-950 text-white py-[80px] px-[12px] lg:pt-[60px] lg:pb-[200px] lg:px-[60px] space-y-10'>
+    <footer className='relative bg-figma-primary-950 text-white py-[80px] px-[12px] xl:pt-[60px] xl:pb-[200px] xl:px-[60px] space-y-10 bg-[url("/shared/icons/background-books.svg")] bg-repeat'>
       <button
         onClick={scrollToTop}
         className={`
           absolute top-0 right-0 
           flex items-center gap-[16px]
-          py-[8px] px-[12px] lg:py-[12px] lg:px-[24px]
+          py-[8px] px-[12px] xl:py-[12px] xl:px-[24px]
           font-genseki-footer-medium tracking-[0.5px]
           text-figma-neutral-950  bg-figma-secondary-100
           rounded-bl-[16px] border-0
@@ -44,8 +44,8 @@ const Footer = () => {
           />
         </svg>
       </button>
-      <div className='flex justify-between max-lg:flex-col max-lg:gap-[32px] pb-[32px] lg:pb-[48px] mb-[48px] text-center border-b-[1.5px] border-white'>
-        <div className='font-genseki-body-s-regular lg:text-left space-y-3 max-lg:order-2'>
+      <div className='flex justify-between max-xl:flex-col max-xl:gap-[32px] pb-[32px] xl:pb-[48px] mb-[48px] text-center border-b-[1.5px] border-white'>
+        <div className='font-genseki-body-s-regular xl:text-left space-y-3 max-xl:order-2'>
           <p>
             <span className='pr-[16px]'>代表人 / 項國棟</span>
             <span>聯絡人 / 彭宗裕</span>
@@ -58,7 +58,7 @@ const Footer = () => {
             Fax / (02)2506-2678
           </p>
         </div>
-        <div className='flex flex-col justify-between items-center self-stretch max-lg:gap-[20px] max-lg:order-1'>
+        <div className='flex flex-col justify-between items-center self-stretch max-xl:gap-[20px] max-xl:order-1'>
           <Image
             src='/home/footer/footer-logo.svg'
             alt='footer-logo'
@@ -73,7 +73,7 @@ const Footer = () => {
             ))}
           </div>
         </div>
-        <div className='font-genseki-body-s-regular lg:text-right space-y-3 max-lg:order-2'>
+        <div className='font-genseki-body-s-regular xl:text-right space-y-3 max-xl:order-2'>
           <p>典華旅行社股份有限公司｜典藏旅遊</p>
           <p>甲種旅行社｜品保北1795號 | 交觀甲7208號</p>
           <p>凱旋旅行社股份有限公司｜凱旋家族</p>

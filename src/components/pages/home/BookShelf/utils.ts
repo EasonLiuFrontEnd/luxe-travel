@@ -16,7 +16,7 @@ export const transformBooksData = (booksData: TBooks[]): TBook[] => {
       patternTopOffset: '110px',
       margin: { left: '0px', right: '0px' },
     }
-    
+
     // API/Mock 資料 + Config 樣式配置
     return {
       id: book.id,
