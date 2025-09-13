@@ -38,7 +38,9 @@ const DestinationCard = ({
   ...props
 }: TDestinationCard) => {
   const [isPatternVisible, setIsPatternVisible] = useState(false)
-  const [imageSrc, setImageSrc] = useState(countryPattern || '/home/itinerary/hr-croatia/pattern.svg')
+  const [imageSrc, setImageSrc] = useState(
+    countryPattern || '/home/itinerary/hr-croatia/pattern.svg',
+  )
 
   useEffect(() => {
     setIsPatternVisible(isActive)
@@ -50,7 +52,9 @@ const DestinationCard = ({
 
   const handleImageError = () => {
     if (imageSrc?.startsWith('http')) {
-      const mockBook = booksApiMock.rows.find(book => book.title === destination)
+      const mockBook = booksApiMock.rows.find(
+        (book) => book.title === destination,
+      )
       if (mockBook?.imageUrl) {
         setImageSrc(mockBook.imageUrl)
       }
@@ -119,7 +123,7 @@ const DestinationCard = ({
           {destination}
         </p>
       </div>
-      
+
       <p className='absolute bottom-[16px] left-[16px] rotate-[270deg] origin-top-left font-family-luxurious text-[var(--color-figma-primary-950)] text-[24px] lg:text-[48px] tracking-[10%] leading-[100%] text-center whitespace-nowrap'>
         {englishName}
       </p>

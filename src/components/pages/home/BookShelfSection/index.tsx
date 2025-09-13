@@ -15,12 +15,17 @@ const BookShelfSection = () => {
       ref={bookShelfRef}
       data-bookshelf-section
       className='z-10 bg-figma-neutral-50 pt-[60px] lg:pt-[120px] border-t border-[var(--color-figma-secondary-500)] relative transition-transform duration-300 ease-out'
-      style={{
-        '--transform-y': `${transformY}px`,
-        transform: 'translateY(calc(-1 * var(--transform-y)))'
-      } as React.CSSProperties}
+      style={
+        {
+          '--transform-y': `${transformY}px`,
+          transform: 'translateY(calc(-1 * var(--transform-y)))',
+        } as React.CSSProperties
+      }
     >
-      <div data-bookshelf-title className='mb-[32px] lg:mb-[48px] flex flex-col items-center'>
+      <div
+        data-bookshelf-title
+        className='mb-[32px] lg:mb-[48px] flex flex-col items-center'
+      >
         <h2
           className={`inline-block font-family-noto-serif font-bold text-[32px] lg:text-[64px] lg:leading-[120%] text-[var(--color-figma-primary-950)] px-5 py-[6px] lg:py-4 ${styles.gradientTitle}`}
         >
