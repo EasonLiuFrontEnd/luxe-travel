@@ -14,10 +14,10 @@ const BookShelfSection = () => {
     <div
       ref={bookShelfRef}
       data-bookshelf-section
-      className='bg-figma-neutral-50 pt-[60px] lg:pt-[120px] border-t border-[var(--color-figma-secondary-500)] sticky top-[-35px] left-0 lg:relative lg:top-auto lg:left-auto lg:z-10 transition-transform duration-300 ease-out'
+      className='bg-figma-neutral-50 pt-[60px] lg:pt-[120px] border-t border-[var(--color-figma-secondary-500)] sticky top-[-35px] left-0 lg:relative lg:top-auto lg:left-auto transition-transform duration-300 ease-out'
       style={{
         '--transform-y': `${transformY}px`,
-        transform: 'translateY(calc(-1 * var(--transform-y)))'
+        transform: 'translateY(calc(-1 * var(--transform-y) - 0.5px))',
       } as React.CSSProperties}
     >
       <div

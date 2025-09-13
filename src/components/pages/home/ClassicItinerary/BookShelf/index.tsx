@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useMemo, useEffect } from 'react'
-import DestinationCard from '@/components/pages/home/DestinationCard/index'
+import DestinationCard from '../DestinationCard/index'
 import styles from './styles.module.css'
 import { useBooks } from '@/api/home/useBooks'
 import { transformBooksData } from './utils'
@@ -93,7 +93,7 @@ const BookShelf = ({ trackRef }: TBookShelfProps) => {
   }, [trackRef, isVerticalLayout])
 
   return (
-    <div className='w-full flex items-end xl:flex-[0_0_59.5%] xl:max-w-[1142.4px] min-w-0 xl:border-r xl:border-[var(--color-figma-secondary-500)] relative'>
+    <div className='w-full flex items-end xl:flex-[0_0_59.5%] xl:max-w-[1142.4px] min-w-0 lg:border-r lg:border-[var(--color-figma-secondary-500)] relative'>
       {showArrow && (
         <div className='absolute top-[88px] right-[24px] z-10 bg-transparent border border-[var(--color-figma-secondary-950)] rounded-[41px] pt-3 px-4 pb-4 text-[var(--color-figma-primary-950)] transition-opacity duration-300 ease-out'>
           <svg
