@@ -19,7 +19,7 @@ const CollectionRecommendation = ({
 
   return (
     <section
-      className={`pb-[60px] lg:py-[120px] px-[clamp(12px,2.5vw,48px)] bg-[var(--color-figma-secondary-100)] relative xl:sticky xl:top-[-50px] xl:left-0 ${className || ''}`}
+      className={`pb-[60px] lg:py-[120px] px-[clamp(12px,2.5vw,48px)] bg-[var(--color-figma-secondary-100)] relative xl:sticky xl:top-[-40vh] xl:left-0 ${className || ''}`}
     >
       <div className='mx-auto relative'>
         <div className='w-full bg-figma-neutral-50 relative rounded-2xl overflow-hidden'>
