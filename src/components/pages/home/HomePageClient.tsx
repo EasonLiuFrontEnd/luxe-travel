@@ -1,8 +1,9 @@
 'use client'
 
 import Banner from '@/components/pages/home/Banner'
-import BookShelfSection from '@/components/pages/home/BookShelfSection'
-import RecommendationSection from '@/components/pages/home/RecommendationSection'
+import { BookShelfSection, RecommendationSection } from '@/components/pages/home/ClassicItinerary'
+import ServiceProcess from '@/components/pages/home/ServiceProcess'
+import CollectionRecommendation from '@/components/pages/home/CollectionRecommendation'
 import Feedback from '@/components/pages/home/Feedback'
 import Concerns from './Concerns'
 
@@ -17,6 +18,7 @@ const HomePageClient = () => {
       </div>
       <CollectionRecommendation />
       <Feedback />
+      <ServiceProcess />
     </div>
   )
 }

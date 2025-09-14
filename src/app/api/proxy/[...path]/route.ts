@@ -4,7 +4,7 @@ const EXTERNAL_API_BASE = 'https://luxetravel-peach.vercel.app'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { path: string[] } },
+  { params }: { params: Promise<{ path: string[] }> },
 ) {
   try {
     const { path } = await params
@@ -39,15 +39,14 @@ export async function GET(
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
       },
     })
-  } catch (error) {
-    console.error('Proxy 錯誤:', error)
+  } catch {
     return NextResponse.json({ error: 'Proxy 伺服器錯誤' }, { status: 500 })
   }
 }
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { path: string[] } },
+  { params }: { params: Promise<{ path: string[] }> },
 ) {
   try {
     const { path } = await params
@@ -82,15 +81,14 @@ export async function POST(
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
       },
     })
-  } catch (error) {
-    console.error('Proxy 錯誤:', error)
+  } catch {
     return NextResponse.json({ error: 'Proxy 伺服器錯誤' }, { status: 500 })
   }
 }
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { path: string[] } },
+  { params }: { params: Promise<{ path: string[] }> },
 ) {
   try {
     const { path } = await params
@@ -125,15 +123,14 @@ export async function PUT(
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
       },
     })
-  } catch (error) {
-    console.error('Proxy 錯誤:', error)
+  } catch {
     return NextResponse.json({ error: 'Proxy 伺服器錯誤' }, { status: 500 })
   }
 }
 
 export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { path: string[] } },
+  _request: NextRequest,
+  { params }: { params: Promise<{ path: string[] }> },
 ) {
   try {
     const { path } = await params
@@ -166,8 +163,7 @@ export async function DELETE(
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
       },
     })
-  } catch (error) {
-    console.error('Proxy 錯誤:', error)
+  } catch {
     return NextResponse.json({ error: 'Proxy 伺服器錯誤' }, { status: 500 })
   }
 }

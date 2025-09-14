@@ -30,11 +30,17 @@ export const useBookShelfScroll = () => {
     setScrollProgress(clampedProgress)
   }, [])
 
+  const unlockBodyScrollRef = useRef<() => void>(() => {})
+
   const handleTouchStart = useCallback((e: TouchEvent) => {
     const touch = e.touches[0]
-    if (touch) {
-      ;(e.target as any)._startX = touch.clientX
-      ;(e.target as any)._startY = touch.clientY
+    if (touch && e.target) {
+      const target = e.target as HTMLElement & {
+        _startX?: number
+        _startY?: number
+      }
+      target._startX = touch.clientX
+      target._startY = touch.clientY
     }
   }, [])
 
@@ -48,8 +54,9 @@ export const useBookShelfScroll = () => {
       if (e.type === 'touchmove' && isFixed) {
         const touchEvent = e as TouchEvent
         const touch = touchEvent.touches[0]
-        if (touch) {
-          const startY = (touchEvent.target as any)._startY || touch.clientY
+        if (touch && touchEvent.target) {
+          const target = touchEvent.target as HTMLElement & { _startY?: number }
+          const startY = target._startY || touch.clientY
           const deltaY = touch.clientY - startY
 
           const pixelScrollAmount = 30
@@ -65,17 +72,17 @@ export const useBookShelfScroll = () => {
             setScrollProgress(0)
             updateBookPosition(0)
             setIsFixed(false)
-            unlockBodyScroll()
+            unlockBodyScrollRef.current?.()
           } else if (newProgress >= 1) {
             setScrollProgress(1)
             updateBookPosition(1)
             setIsFixed(false)
-            unlockBodyScroll()
+            unlockBodyScrollRef.current?.()
           } else {
             updateBookPosition(newProgress)
           }
 
-          ;(touchEvent.target as any)._startY = touch.clientY
+          target._startY = touch.clientY
         }
 
         e.preventDefault()
@@ -100,20 +107,47 @@ export const useBookShelfScroll = () => {
     })
   }, [preventVerticalScroll, handleTouchStart])
 
+  unlockBodyScrollRef.current = unlockBodyScroll
+
   useEffect(() => {
     const handleScroll = () => {
       if (!bookShelfRef.current) return
 
-      const rect = bookShelfRef.current.getBoundingClientRect()
-      const isBottomAtViewport =
-        Math.abs(rect.bottom - window.innerHeight) <= 50
+      // 找到 RecommendationSection
+      const recommendationSection = document.querySelector(
+        '.recommendation-section',
+      ) as HTMLElement
 
-      if (isBottomAtViewport && !isFixed) {
-        setIsFixed(true)
-        maxScrollX.current = calculateMaxScroll()
-      } else if (!isBottomAtViewport && isFixed && scrollProgress === 0) {
-        setIsFixed(false)
-        unlockBodyScroll()
+      if (recommendationSection) {
+        // 檢查 RecommendationSection 頂部是否碰到視窗底部
+        const recommendationRect = recommendationSection.getBoundingClientRect()
+        const isRecommendationAtBottom =
+          Math.abs(recommendationRect.top - window.innerHeight) <= 50
+
+        if (isRecommendationAtBottom && !isFixed) {
+          setIsFixed(true)
+          maxScrollX.current = calculateMaxScroll()
+        } else if (
+          !isRecommendationAtBottom &&
+          isFixed &&
+          scrollProgress === 0
+        ) {
+          setIsFixed(false)
+          unlockBodyScroll()
+        }
+      } else {
+        // 降級方案：如果找不到 RecommendationSection，使用原本的邏輯
+        const rect = bookShelfRef.current.getBoundingClientRect()
+        const isBottomAtViewport =
+          Math.abs(rect.bottom - window.innerHeight) <= 50
+
+        if (isBottomAtViewport && !isFixed) {
+          setIsFixed(true)
+          maxScrollX.current = calculateMaxScroll()
+        } else if (!isBottomAtViewport && isFixed && scrollProgress === 0) {
+          setIsFixed(false)
+          unlockBodyScroll()
+        }
       }
     }
 
