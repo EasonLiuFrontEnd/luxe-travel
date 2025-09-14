@@ -1,10 +1,16 @@
 import { useQuery } from '@tanstack/react-query'
+import type { AxiosError } from 'axios'
 import apiClient from '../client'
-import { TBooks, TBooksResponse, TUseHomeQueryResult } from '../type'
+import {
+  TBooks,
+  TBooksResponse,
+  TUseHomeQueryResult,
+  TApiResponse,
+} from '../type'
 
 const fetchBooksData = async (): Promise<TBooks[]> => {
   const response = await apiClient.get<TBooksResponse>(
-    '/api/admin/country-showcases',
+    '/admin/country-showcases',
   )
   return response?.data?.rows || []
 }
@@ -15,8 +21,7 @@ export const booksApiMock: TBooksResponse = {
   rows: [
     {
       id: '68b05373564da72a7ab17536',
-      imageUrl:
-        'https://qt0qrczeczbveoxc.public.blob.vercel-storage.com/9lHqGBE-ZpVzDcrfpZi6f2MPd4n0tjgJTrmj3t.jpeg',
+      imageUrl: '/home/itinerary/hr-croatia/pattern.svg',
       title: '克羅埃西亞',
       subtitle: 'Republic Of Croatia',
       description: null,
@@ -28,8 +33,7 @@ export const booksApiMock: TBooksResponse = {
     },
     {
       id: '68b05382564da72a7ab17537',
-      imageUrl:
-        'https://qt0qrczeczbveoxc.public.blob.vercel-storage.com/qoGXAXv-UEbGBnNMqHgn6Ez8kiywQKQvDJIQGc.jpeg',
+      imageUrl: '/home/itinerary/cz-czech/pattern.svg',
       title: '捷克',
       subtitle: 'Czech Republic',
       description: null,
@@ -41,8 +45,7 @@ export const booksApiMock: TBooksResponse = {
     },
     {
       id: '68b05391564da72a7ab17538',
-      imageUrl:
-        'https://qt0qrczeczbveoxc.public.blob.vercel-storage.com/8T8mkWw-QVNRHoB6DdpzMvK9phe7D06mf4tfPX.jpeg',
+      imageUrl: '/home/itinerary/pt-portugal/pattern.svg',
       title: '葡萄牙',
       subtitle: 'Portugal',
       description: null,
@@ -54,8 +57,7 @@ export const booksApiMock: TBooksResponse = {
     },
     {
       id: '68b0539e564da72a7ab17539',
-      imageUrl:
-        'https://qt0qrczeczbveoxc.public.blob.vercel-storage.com/DRZMUiu-exSByiqXltQwu4eWAwPIHjMRPLpNEI.jpeg',
+      imageUrl: '/home/itinerary/ch-switzerland/pattern.svg',
       title: '瑞士',
       subtitle: 'Switzerland',
       description: null,
@@ -67,8 +69,7 @@ export const booksApiMock: TBooksResponse = {
     },
     {
       id: '68b053ad564da72a7ab1753a',
-      imageUrl:
-        'https://qt0qrczeczbveoxc.public.blob.vercel-storage.com/DIzcz2t-TwbpfOpqJSh5L26ZdiOof71AzYdy1Y.jpeg',
+      imageUrl: '/home/itinerary/ie-ireland/pattern.svg',
       title: '愛爾蘭',
       subtitle: 'Ireland',
       description: null,
@@ -80,8 +81,7 @@ export const booksApiMock: TBooksResponse = {
     },
     {
       id: '68b053ba564da72a7ab1753b',
-      imageUrl:
-        'https://qt0qrczeczbveoxc.public.blob.vercel-storage.com/J24aUXY-CdLH6qGFwXlbih2gWQBmiElYv1Dzhf.jpeg',
+      imageUrl: '/home/itinerary/de-germany/pattern.svg',
       title: '德國',
       subtitle: 'Germany',
       description: null,
@@ -93,8 +93,7 @@ export const booksApiMock: TBooksResponse = {
     },
     {
       id: '68b053c6564da72a7ab1753c',
-      imageUrl:
-        'https://qt0qrczeczbveoxc.public.blob.vercel-storage.com/bkxQfNc-fWvP5Yv4uviiAgGB4yX5etwnnuY8U0.jpeg',
+      imageUrl: '/home/itinerary/hu-hungary/pattern.svg',
       title: '匈牙利',
       subtitle: 'Hungary',
       description: null,
@@ -106,8 +105,7 @@ export const booksApiMock: TBooksResponse = {
     },
     {
       id: '68b053d4564da72a7ab1753d',
-      imageUrl:
-        'https://qt0qrczeczbveoxc.public.blob.vercel-storage.com/Wnx712G-J6BWbREg7eT1gd7a5qs3gEKcPERlbT.jpeg',
+      imageUrl: '/home/itinerary/es-spain/pattern.svg',
       title: '西班牙',
       subtitle: 'Spain',
       description: null,
@@ -119,8 +117,7 @@ export const booksApiMock: TBooksResponse = {
     },
     {
       id: '68b053e0564da72a7ab1753e',
-      imageUrl:
-        'https://qt0qrczeczbveoxc.public.blob.vercel-storage.com/hDJ3xji-au84DiUgbbmMEEiuISWIR4tJYvNxiv.jpeg',
+      imageUrl: '/home/itinerary/gr-greece/pattern.svg',
       title: '希臘',
       subtitle: 'Greece',
       description: null,
@@ -132,8 +129,7 @@ export const booksApiMock: TBooksResponse = {
     },
     {
       id: '68b053f0564da72a7ab1753f',
-      imageUrl:
-        'https://qt0qrczeczbveoxc.public.blob.vercel-storage.com/8vu12A5-ApQlAD4BYAukCJfqu3pqHRTw4Hmus1.jpeg',
+      imageUrl: '/home/itinerary/be-belgium/pattern.svg',
       title: '比利時',
       subtitle: 'Belgium',
       description: null,
@@ -153,13 +149,9 @@ export const booksApiMock: TBooksResponse = {
 }
 
 export const useBooks = (): TUseHomeQueryResult<TBooks[], TBooksResponse> => {
-  const query = useQuery({
+  const query = useQuery<TBooks[], AxiosError<TApiResponse<TBooks[]>>>({
     queryKey: ['books'],
     queryFn: fetchBooksData,
-    staleTime: 30 * 60 * 1000,
-    gcTime: 60 * 60 * 1000,
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   })
 
   return { query, mock: booksApiMock }

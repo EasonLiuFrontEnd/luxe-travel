@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Logo from './Logo'
 import Navigation from './Navigation'
-import ConsultButton from '@/components/ui/ConsultButton'
+import ConsultButton from '@/components/shared/layout/header/ConsultButton'
 import type { TBaseComponent } from '@/types'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useScroll } from '@/hooks/useScroll'
@@ -31,7 +31,8 @@ const Header = ({
 
   const showConsultButton = scrollY > 797
 
-  const baseClasses = 'z-50 w-full flex items-center justify-between max-xs:p-[12px] xs:pb-[48px] xs:px-[48px]  bg-figma-neutral-50'
+  const baseClasses =
+    'z-50 w-full flex items-center justify-between max-xl:p-[12px] xl:pb-[48px] xl:px-[48px]  bg-figma-neutral-50'
   const positionClass =
     headerBehavior === 'fixed'
       ? 'fixed'
@@ -40,29 +41,26 @@ const Header = ({
         : 'relative'
   const backgroundClass =
     hasTransparentHeader && isHomePage && logoProgress < 1
-      ? 'xs:bg-transparent'
+      ? 'xl:bg-transparent'
       : ''
-  const borderColor =
-    isMobile
-      ? 'border-[var(--color-figma-secondary-500)]'
-      : logoProgress >= 1
-        ? 'border-[var(--color-figma-secondary-500)]'
-        : 'border-transparent'
-  const borderClass = `border-b ${borderColor} ${!isMobile ? 'transition-all duration-1200 ease-in-out' : ''
-    }`
+  const borderClass = isMobile
+    ? 'border-b border-[var(--color-figma-secondary-500)]'
+    : logoProgress >= 1
+      ? 'border-b border-[var(--color-figma-secondary-500)] transition-all duration-1200 ease-in-out'
+      : 'border-b border-transparent'
   const headerClasses = `${baseClasses} ${positionClass} ${backgroundClass} ${borderClass}`
   const opacityClass =
     logoProgress >= 1
       ? 'transition-opacity duration-1200 ease-in-out opacity-100'
-      : 'max-xs:opacity-100 opacity-0 xs:pointer-events-none'
+      : 'max-xl:opacity-100 opacity-0 xl:pointer-events-none'
 
   return (
     <div className={headerClasses}>
-      <div className='max-xs:hidden'>
+      <div className='max-xl:hidden'>
         <Logo scale={logoScale} />
       </div>
       <div
-        className={`flex items-center px-2 max-xs:w-full max-xs:px-0 max-xs:opacity-100 ${opacityClass}`}
+        className={`flex items-center px-2 max-xl:w-full max-xl:px-0 max-xl:opacity-100 ${opacityClass}`}
       >
         <Navigation
           isMenuOpen={isMenuOpen}
@@ -70,7 +68,7 @@ const Header = ({
           logoProgress={logoProgress}
           showConsultButton={showConsultButton}
         />
-        <ConsultButton className='xs:hidden' />
+        <ConsultButton className='xl:hidden' />
       </div>
     </div>
   )

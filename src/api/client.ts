@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios'
 
-const BASE_URL = 'https://luxetravel-peach.vercel.app'
+const BASE_URL = '/api/proxy'
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: BASE_URL,

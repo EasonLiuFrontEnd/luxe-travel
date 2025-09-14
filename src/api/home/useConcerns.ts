@@ -1,9 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
+import type { AxiosError } from 'axios'
 import apiClient from '../client'
-import { TConcern, TConcernsResponse, TUseHomeQueryResult } from '../type'
+import {
+  TConcern,
+  TConcernsResponse,
+  TUseHomeQueryResult,
+  TApiResponse,
+} from '../type'
 
 const fetchConcerns = async (): Promise<TConcern[]> => {
-  const response = await apiClient.get<TConcernsResponse>('/api/admin/concerns')
+  const response = await apiClient.get<TConcernsResponse>('/admin/concerns')
   return response?.data?.rows || []
 }
 
@@ -69,13 +75,9 @@ export const useConcerns = (): TUseHomeQueryResult<
   TConcern[],
   TConcernsResponse
 > => {
-  const query = useQuery({
+  const query = useQuery<TConcern[], AxiosError<TApiResponse<TConcern[]>>>({
     queryKey: ['concerns'],
     queryFn: fetchConcerns,
-    staleTime: 30 * 60 * 1000,
-    gcTime: 60 * 60 * 1000,
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   })
 
   return { query, mock: concernsApiMock }

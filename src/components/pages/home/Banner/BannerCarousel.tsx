@@ -69,7 +69,7 @@ const BannerCarousel = ({
           <CarouselItem key={index}>
             <div
               className={cn(
-                'h-[460px] xs:h-[662px] relative rounded-2xl overflow-hidden',
+                'h-[460px] xl:h-[662px] relative rounded-2xl overflow-hidden',
                 className,
               )}
             >
@@ -85,15 +85,15 @@ const BannerCarousel = ({
         ))}
       </CarouselContent>
 
-      <div className='absolute bottom-0 max-xs:right-0 xs:left-0'>
+      <div className='absolute bottom-0 max-xl:right-0 xl:left-0'>
         <button
           className={cn(
             'flex items-center cursor-pointer',
             'bg-figma-neutral-50 text-figma-secondary-950',
-            'max-xs:rounded-ss-xl xs:rounded-se-2xl',
-            'font-noto-serif-tc font-bold xs:text-[32px] xs:leading-[1.5] text-[24px] leading-[1.2]',
+            'max-xl:rounded-ss-xl xl:rounded-se-2xl',
+            'font-noto-serif-tc font-bold xl:text-[32px] xl:leading-[1.5] text-[24px] leading-[1.2]',
             'py-[8px] px-[12px]',
-            'xs:py-[11px] xs:px-[32px]',
+            'xl:py-[11px] xl:px-[32px]',
             styles['concave-border-4'],
             styles['concave-border-5'],
           )}
@@ -105,7 +105,7 @@ const BannerCarousel = ({
             height='38'
             viewBox='0 0 76 38'
             fill='none'
-            className={cn(styles['arrow'], 'hidden xs:block')}
+            className={cn(styles['arrow'], 'hidden xl:block')}
           >
             <path
               d='M68.088 25.3333H29.0072V22.1666H56.4279L45.2549 15.6153L46.8568 12.8846L68.088 25.3333Z'
@@ -118,7 +118,7 @@ const BannerCarousel = ({
             height='9'
             viewBox='0 0 25 9'
             fill='none'
-            className={cn(styles['arrow'], 'block xs:hidden m-[4px] ml-[12px]')}
+            className={cn(styles['arrow'], 'block xl:hidden m-[4px] ml-[12px]')}
           >
             <path
               d='M24.6826 8.43115H0V6.43115H17.3184L10.2617 2.29346L11.2734 0.568848L24.6826 8.43115Z'
@@ -132,7 +132,7 @@ const BannerCarousel = ({
         <button
           onClick={() => api?.scrollPrev()}
           className={cn(
-            'max-xs:hidden w-[32px] h-[32px] rounded-full cursor-pointer',
+            'max-xl:hidden w-[32px] h-[32px] rounded-full cursor-pointer',
             'flex items-center justify-center',
             'bg-figma-secondary-300 hover:bg-figma-secondary-500 text-figma-neutral-0',
           )}
@@ -140,14 +140,14 @@ const BannerCarousel = ({
           <ChevronLeft className='w-6 h-6' />
         </button>
 
-        <div className='max-xs:hidden font-genseki-h5-medium text-figma-neutral-0'>
+        <div className='max-xl:hidden font-genseki-h5-medium text-figma-neutral-0'>
           {formatNumber(current + 1)}/{formatNumber(images.length)}
         </div>
 
         <button
           onClick={() => api?.scrollNext()}
           className={cn(
-            'max-xs:hidden w-[32px] h-[32px] rounded-full cursor-pointer',
+            'max-xl:hidden w-[32px] h-[32px] rounded-full cursor-pointer',
             'flex items-center justify-center',
             'bg-figma-secondary-300 hover:bg-figma-secondary-500 text-figma-neutral-0',
           )}

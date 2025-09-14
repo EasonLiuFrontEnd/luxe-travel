@@ -1,4 +1,5 @@
-import { UseQueryResult } from '@tanstack/react-query'
+import type { UseQueryResult, QueryClient } from '@tanstack/react-query'
+import type { AxiosError } from 'axios'
 
 export type TPagination = {
   page: number
@@ -7,7 +8,7 @@ export type TPagination = {
   pageCount: number
 }
 
-export interface TApiResponse<T> {
+export type TApiResponse<T> = {
   status?: boolean
   message?: string
   rows?: T[]
@@ -16,7 +17,7 @@ export interface TApiResponse<T> {
 }
 
 export type TUseHomeQueryResult<TData, TMock> = {
-  query: UseQueryResult<TData, Error>
+  query: UseQueryResult<TData, AxiosError<TApiResponse<TData>>>
   mock: TMock
 }
 
@@ -79,22 +80,75 @@ export type TBooks = {
   updatedAt: string
 }
 
-export interface TAdvantagesResponse extends TApiResponse<TAdvantages> {
+export type TAdvantagesResponse = TApiResponse<TAdvantages> & {
   rows: TAdvantages[]
 }
 
-export interface TConcernsResponse extends TApiResponse<TConcern> {
+export type TConcernsResponse = TApiResponse<TConcern> & {
   rows: TConcern[]
 }
 
-export interface TMenuResponse extends TApiResponse<TMenuItem> {
+export type TMenuResponse = TApiResponse<TMenuItem> & {
   data: TMenuItem[]
 }
 
-export interface TBannersResponse extends TApiResponse<TBanners> {
+export type TBannersResponse = TApiResponse<TBanners> & {
   rows: TBanners[]
 }
 
-export interface TBooksResponse extends TApiResponse<TBooks> {
+export type TBooksResponse = TApiResponse<TBooks> & {
   rows: TBooks[]
+}
+
+export type TIntroduction = {
+  id: string
+  countryId: string
+  countryName: string
+  imageUrl: string
+  description: string
+  order: number
+  createdAt: string
+  updatedAt: string
+}
+
+export type TFreeTour = {
+  id: string
+  countryId: string
+  imageUrl: string
+  tagText: string
+  title: string
+  description: string
+  price: string
+  hoverTitle?: string
+  hoverDescription?: string
+  order: number
+  createdAt: string
+  updatedAt: string
+}
+
+export type TGroupTour = {
+  id: string
+  countryId: string
+  imageUrl: string
+  tagText: string
+  title: string
+  description: string
+  price: string
+  hoverTitle?: string
+  hoverDescription?: string
+  order: number
+  createdAt: string
+  updatedAt: string
+}
+
+export type TIntroductionResponse = TApiResponse<TIntroduction> & {
+  rows: TIntroduction[]
+}
+
+export type TFreeTourResponse = TApiResponse<TFreeTour> & {
+  rows: TFreeTour[]
+}
+
+export type TGroupTourResponse = TApiResponse<TGroupTour> & {
+  rows: TGroupTour[]
 }
