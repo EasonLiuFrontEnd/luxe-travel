@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useConcerns } from '@/api/home/useConcerns'
 import { useScrollDrivenAnimation } from '@/hooks/useScrollDrivenAnimation'
-import StickyNotes from "./StickyNotes"
+import StickyNotes from './StickyNotes'
 
 const Concerns = () => {
   const { isMobile } = useMediaQuery()
@@ -47,7 +47,7 @@ const Concerns = () => {
   return (
     <div
       ref={containerRef}
-      className="flex flex-col justify-center items-center self-stretch gap-y-[32px] lg:gap-y-[120px] lg:pt-[200px] max-lg:py-[60px] max-lg:px-[12px]"
+      className='flex flex-col justify-center items-center self-stretch gap-y-[32px] lg:gap-y-[120px] lg:pt-[200px] max-lg:py-[60px] max-lg:px-[12px]'
       style={gridBackgroundStyle}
     >
       <h2 className='font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px] text-center'>

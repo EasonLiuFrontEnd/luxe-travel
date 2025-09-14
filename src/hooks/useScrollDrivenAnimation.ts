@@ -4,17 +4,28 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 
 const TOTAL_SCROLL_DISTANCE = 1000
 const NOTE_TRAVEL_DISTANCE = 200
-const TRIGGER_BUFFER = 100
+
+type TAnimationState = {
+  isIntersecting: boolean
+  scrollDirection: 'up' | 'down' | null
+  isAnimating: boolean
+  animationProgress: number
+  canScroll: boolean
+}
 
 export const useScrollDrivenAnimation = () => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [isAnimating, setIsAnimating] = useState(false)
-  const [isAnimationCompleted, setIsAnimationCompleted] = useState(false)
-  const [scrollProgress, setScrollProgress] = useState(0)
   const accumulatedScrollRef = useRef(0)
-  const animationFrameRef = useRef<number | null>(null)
-  const containerPositionRef = useRef<{ top: number; bottom: number } | null>(null)
+  const lastScrollYRef = useRef(0)
   
+  const [state, setState] = useState<TAnimationState>({
+    isIntersecting: false,
+    scrollDirection: null,
+    isAnimating: false,
+    animationProgress: 0,
+    canScroll: true
+  })
+
   const calculateNotePosition = useCallback((noteIndex: number, progress: number): number => {
     const stageStart = noteIndex * 0.2
     const stageEnd = (noteIndex + 1) * 0.2
@@ -25,186 +36,108 @@ export const useScrollDrivenAnimation = () => {
     const stageProgress = (progress - stageStart) / 0.2
     return stageProgress * 100
   }, [])
-  
-  const updateNotePositions = useCallback((progress: number) => {
-    const clampedProgress = Math.max(0, Math.min(1, progress))
-    setScrollProgress(clampedProgress)
-  }, [])
-  
+
   const getNotePositions = useCallback((): number[] => {
     return Array.from({ length: 5 }, (_, index) =>
-      calculateNotePosition(index, scrollProgress)
+      calculateNotePosition(index, state.animationProgress)
     )
-  }, [calculateNotePosition, scrollProgress])
-  
-  const isInContainerArea = useCallback(() => {
-    if (!containerPositionRef.current) return false
-    
-    const currentScrollY = window.scrollY
-    const viewportHeight = window.innerHeight
-    const { top, bottom } = containerPositionRef.current
-    
-    const containerTopInViewport = top <= (currentScrollY + viewportHeight)
-    const containerBottomInViewport = bottom >= currentScrollY
-    
-    return containerTopInViewport && containerBottomInViewport
-  }, [])
-  
-  const updateContainerPosition = useCallback(() => {
-    if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect()
-      const scrollTop = window.scrollY
-      containerPositionRef.current = {
-        top: rect.top + scrollTop,
-        bottom: rect.bottom + scrollTop
-      }
+  }, [calculateNotePosition, state.animationProgress])
+
+  const getNoteTransformY = useCallback((position: number): number => {
+    if (state.scrollDirection === 'down') {
+      return NOTE_TRAVEL_DISTANCE * (1 - position / 100)
+    } else {
+      return NOTE_TRAVEL_DISTANCE * ((100 - position) / 100)
     }
+  }, [state.scrollDirection])
+
+  const updateAnimationProgress = useCallback((deltaY: number) => {
+    const currentAccumulated = accumulatedScrollRef.current + deltaY
+    const clampedAccumulated = Math.max(0, Math.min(TOTAL_SCROLL_DISTANCE, currentAccumulated))
+    accumulatedScrollRef.current = clampedAccumulated
+    
+    const newProgress = clampedAccumulated / TOTAL_SCROLL_DISTANCE
+    
+    setState(prev => ({
+      ...prev,
+      animationProgress: newProgress,
+      canScroll: newProgress >= 1 || newProgress <= 0
+    }))
   }, [])
 
-  const checkScrollPosition = useCallback(() => {
-    if (!containerPositionRef.current) return
-    
-    const currentScrollY = window.scrollY
-    const viewportHeight = window.innerHeight
-    const { top, bottom } = containerPositionRef.current
-    
-    const containerBottomInViewport = Math.abs(bottom - (currentScrollY + viewportHeight)) <= TRIGGER_BUFFER
-    const containerTopInViewport = top <= (currentScrollY + viewportHeight * 0.5)
-    
-    if (containerBottomInViewport && !isAnimating && !isAnimationCompleted) {
-      setIsAnimating(true)
-      setScrollProgress(0)
-      accumulatedScrollRef.current = 0
-    } else if (containerTopInViewport && isAnimationCompleted && scrollProgress === 0) {
-      setIsAnimationCompleted(false)
-    }
-  }, [isAnimating, isAnimationCompleted, scrollProgress])
-
-  const handleScroll = useCallback(() => {
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current)
-    }
-    
-    animationFrameRef.current = requestAnimationFrame(() => {
-      checkScrollPosition()
-    })
-  }, [checkScrollPosition])
-  
   const handleWheel = useCallback((event: WheelEvent) => {
-    const scrollDelta = event.deltaY
-    
-    if (isAnimationCompleted && scrollDelta < 0 && isInContainerArea()) {
-      setIsAnimationCompleted(false)
-      setIsAnimating(true)
-      accumulatedScrollRef.current = TOTAL_SCROLL_DISTANCE
-      document.body.style.overflowY = 'scroll'
-    }
-    
-    if (!isAnimating) return
+    if (!state.isIntersecting || state.canScroll) return
     
     event.preventDefault()
     event.stopPropagation()
     
-    const newAccumulated = Math.max(0, Math.min(TOTAL_SCROLL_DISTANCE, accumulatedScrollRef.current + scrollDelta))
-    accumulatedScrollRef.current = newAccumulated
-    
-    const newProgress = newAccumulated / TOTAL_SCROLL_DISTANCE
-    
-    if (newProgress <= 0) {
-      setScrollProgress(0)
-      updateNotePositions(0)
-      setIsAnimating(false)
-      document.body.style.overflowY = 'auto'
-      return
-    }
-    
-    if (newProgress >= 1) {
-      setScrollProgress(1)
-      updateNotePositions(1)
-      setIsAnimationCompleted(true)
-      setIsAnimating(false)
-      document.body.style.overflowY = 'auto'
-      return
-    }
-    
-    updateNotePositions(newProgress)
-  }, [isAnimating, isAnimationCompleted, updateNotePositions, isInContainerArea])
-  
-  useEffect(() => {
-    updateContainerPosition()
-  }, [updateContainerPosition])
+    updateAnimationProgress(event.deltaY)
+  }, [state.isIntersecting, state.canScroll, updateAnimationProgress])
+
+  const detectScrollDirection = useCallback(() => {
+    const currentScrollY = window.scrollY
+    const direction = currentScrollY > lastScrollYRef.current ? 'down' : 'up'
+    lastScrollYRef.current = currentScrollY
+    return direction
+  }, [])
 
   useEffect(() => {
-    if (!isAnimating && !isAnimationCompleted) {
-      window.addEventListener('scroll', handleScroll, { passive: true })
-    }
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current)
+    if (!containerRef.current) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+        const direction = detectScrollDirection()
+        
+        if (entry.isIntersecting && !state.isAnimating) {
+          setState(prev => ({
+            ...prev,
+            isIntersecting: true,
+            scrollDirection: direction,
+            isAnimating: true,
+            animationProgress: direction === 'down' ? 0 : 1,
+            canScroll: false
+          }))
+          
+          accumulatedScrollRef.current = direction === 'down' ? 0 : TOTAL_SCROLL_DISTANCE
+        } else if (!entry.isIntersecting && state.isAnimating) {
+          setState(prev => ({
+            ...prev,
+            isIntersecting: false,
+            isAnimating: false,
+            canScroll: true
+          }))
+        }
+      },
+      {
+        threshold: 0.5,
+        rootMargin: '-20% 0px'
       }
+    )
+
+    observer.observe(containerRef.current)
+
+    return () => {
+      observer.disconnect()
     }
-  }, [isAnimating, isAnimationCompleted, handleScroll])
-  
+  }, [detectScrollDirection, state.isAnimating])
+
   useEffect(() => {
-    if (isAnimating || isAnimationCompleted) {
+    if (state.isAnimating && !state.canScroll) {
       window.addEventListener('wheel', handleWheel, { passive: false })
     }
     
     return () => {
       window.removeEventListener('wheel', handleWheel)
     }
-  }, [isAnimating, isAnimationCompleted, handleWheel])
-  
-  useEffect(() => {
-    const preventScroll = (e: Event) => {
-      e.preventDefault()
-      e.stopPropagation()
-    }
-    
-    if (isAnimating) {
-      document.body.style.overflowY = 'scroll'
-      document.addEventListener('scroll', preventScroll, { passive: false })
-      document.addEventListener('touchmove', preventScroll, { passive: false })
-    } else {
-      document.body.style.overflowY = 'auto'
-      document.removeEventListener('scroll', preventScroll)
-      document.removeEventListener('touchmove', preventScroll)
-    }
-    
-    return () => {
-      document.removeEventListener('scroll', preventScroll)
-      document.removeEventListener('touchmove', preventScroll)
-    }
-  }, [isAnimating])
-  
-  useEffect(() => {
-    const handleResize = () => {
-      updateContainerPosition()
-    }
-    
-    window.addEventListener('resize', handleResize)
-    
-    return () => {
-      window.removeEventListener('resize', handleResize)
-      document.body.style.overflowY = 'auto'
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current)
-      }
-    }
-  }, [updateContainerPosition])
-  
-  const getNoteTransformY = useCallback((position: number): number => {
-    return NOTE_TRAVEL_DISTANCE * (1 - position / 100)
-  }, [])
-  
+  }, [state.isAnimating, state.canScroll, handleWheel])
+
   return {
     containerRef,
     notePositions: getNotePositions(),
-    scrollProgress,
-    isAnimationComplete: scrollProgress >= 1,
-    isScrollLocked: isAnimating,
+    scrollProgress: state.animationProgress,
+    isAnimationComplete: state.animationProgress >= 1,
+    isScrollLocked: !state.canScroll,
     getNoteTransformY
   }
 }

@@ -23,7 +23,7 @@ import DropdownCloseIcon from '../../icons/header/DropdownCloseIcon'
 
 const Navigation = ({
   isMenuOpen = false,
-  onMenuToggle = () => {},
+  onMenuToggle = () => { },
   showConsultButton = false,
 }: TNavigation) => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
@@ -117,9 +117,8 @@ const Navigation = ({
       </div>
 
       <ConsultButton
-        className={`max-xl:hidden transition-opacity duration-800 ${
-          showConsultButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`max-xl:hidden transition-opacity duration-800 ${showConsultButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
       />
 
       <div className='max-xl:z-60 flex xl:hidden w-full justify-between items-center'>
@@ -151,8 +150,8 @@ const Navigation = ({
                   onClick={() =>
                     hasDropdown
                       ? setActiveDropdown(
-                          activeDropdown === item.label ? null : item.label,
-                        )
+                        activeDropdown === item.label ? null : item.label,
+                      )
                       : onMenuToggle()
                   }
                 >
@@ -160,11 +159,10 @@ const Navigation = ({
                   {hasDropdown && (
                     <DropdownCloseIcon
                       className={`transition-transform duration-600 ease-in-out 
-                          ${
-                            activeDropdown === item.label
-                              ? 'rotate-180'
-                              : 'rotate-135'
-                          }`}
+                          ${activeDropdown === item.label
+                          ? 'rotate-180'
+                          : 'rotate-135'
+                        }`}
                     />
                   )}
                 </div>
