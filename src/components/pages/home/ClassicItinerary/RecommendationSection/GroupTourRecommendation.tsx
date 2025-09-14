@@ -7,17 +7,20 @@ import { useGroupTours, useIntroductions } from '@/api/home'
 const GroupTourRecommendation = () => {
   const { selectedCountryId } = useSelectedCountry()
   const { query: groupToursQuery, mock: groupToursMock } = useGroupTours()
-  const { query: introductionsQuery, mock: introductionsMock } = useIntroductions()
+  const { query: introductionsQuery, mock: introductionsMock } =
+    useIntroductions()
 
   const currentCountryName = useMemo(() => {
     const data = introductionsQuery.data || introductionsMock.rows
-    const country = data.find(intro => intro.countryId === selectedCountryId)
+    const country = data.find((intro) => intro.countryId === selectedCountryId)
     return country?.countryName || '義大利'
   }, [introductionsQuery.data, introductionsMock.rows, selectedCountryId])
 
   const currentGroupTours = useMemo(() => {
     const data = groupToursQuery.data || groupToursMock.rows
-    return data.filter(tour => tour.countryId === selectedCountryId).slice(0, 3)
+    return data
+      .filter((tour) => tour.countryId === selectedCountryId)
+      .slice(0, 3)
   }, [groupToursQuery.data, groupToursMock.rows, selectedCountryId])
 
   return (
@@ -47,8 +50,10 @@ const GroupTourRecommendation = () => {
               />
             ))
           ) : (
-            <div className="col-span-3 flex items-center justify-center h-32">
-              <p className="text-gray-500">暫無{currentCountryName}團體行推薦</p>
+            <div className='col-span-3 flex items-center justify-center h-32'>
+              <p className='text-gray-500'>
+                暫無{currentCountryName}團體行推薦
+              </p>
             </div>
           )}
         </div>

@@ -8,12 +8,7 @@ type TStickyNotesProps = {
   offsetY: string
 }
 
-const StickyNotes = ({
-  data,
-  color,
-  rotation,
-  offsetY
-}: TStickyNotesProps) => {
+const StickyNotes = ({ data, color, rotation, offsetY }: TStickyNotesProps) => {
   const [isHovered, setIsHovered] = useState(false)
 
   const parseContent = (content: string): [string, string] => {
@@ -32,9 +27,10 @@ const StickyNotes = ({
 
   const [firstLine, secondLine] = parseContent(data.content)
 
-  const containerClassName = 'w-[250px] h-[260px] pt-[18px] relative shrink-0 transition-transform duration-300 ease-out hover:-translate-y-5'
+  const containerClassName =
+    'w-[250px] h-[260px] pt-[18px] relative shrink-0 transition-transform duration-300 ease-out hover:-translate-y-5'
   const combinedStyle = {
-    transform: `rotate(${rotation}deg) translateY(-${offsetY}px)`
+    transform: `rotate(${rotation}deg) translateY(-${offsetY}px)`,
   }
 
   return (
@@ -80,7 +76,12 @@ const StickyNotes = ({
         />
       </svg>
       <div className='absolute flex flex-col h-[181px] items-center justify-between left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]'>
-        <p className='font-luxurious-deco-l-regular' style={{ color: `${color}` }}>{data.number}</p>
+        <p
+          className='font-luxurious-deco-l-regular'
+          style={{ color: `${color}` }}
+        >
+          {data.number}
+        </p>
         <div className='font-genseki-h5-medium text-figma-neutral-950 text-center text-nowrap'>
           <p>{firstLine}</p>
           {secondLine && <p>{secondLine}</p>}

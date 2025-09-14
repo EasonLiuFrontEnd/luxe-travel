@@ -7,17 +7,20 @@ import { useFreeTours, useIntroductions } from '@/api/home'
 const FreeTourRecommendation = () => {
   const { selectedCountryId } = useSelectedCountry()
   const { query: freeToursQuery, mock: freeToursMock } = useFreeTours()
-  const { query: introductionsQuery, mock: introductionsMock } = useIntroductions()
+  const { query: introductionsQuery, mock: introductionsMock } =
+    useIntroductions()
 
   const currentCountryName = useMemo(() => {
     const data = introductionsQuery.data || introductionsMock.rows
-    const country = data.find(intro => intro.countryId === selectedCountryId)
+    const country = data.find((intro) => intro.countryId === selectedCountryId)
     return country?.countryName || '義大利'
   }, [introductionsQuery.data, introductionsMock.rows, selectedCountryId])
 
   const currentFreeTours = useMemo(() => {
     const data = freeToursQuery.data || freeToursMock.rows
-    return data.filter(tour => tour.countryId === selectedCountryId).slice(0, 3)
+    return data
+      .filter((tour) => tour.countryId === selectedCountryId)
+      .slice(0, 3)
   }, [freeToursQuery.data, freeToursMock.rows, selectedCountryId])
 
   return (
@@ -47,8 +50,10 @@ const FreeTourRecommendation = () => {
               />
             ))
           ) : (
-            <div className="col-span-3 flex items-center justify-center h-[90px] md:h-[300px]">
-              <p className="text-gray-500">暫無{currentCountryName}自由行推薦</p>
+            <div className='col-span-3 flex items-center justify-center h-[90px] md:h-[300px]'>
+              <p className='text-gray-500'>
+                暫無{currentCountryName}自由行推薦
+              </p>
             </div>
           )}
         </div>

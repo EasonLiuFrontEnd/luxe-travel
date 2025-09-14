@@ -1,7 +1,10 @@
 'use client'
 
 import Banner from '@/components/pages/home/Banner'
-import { BookShelfSection, RecommendationSection } from '@/components/pages/home/ClassicItinerary'
+import {
+  BookShelfSection,
+  RecommendationSection,
+} from '@/components/pages/home/ClassicItinerary'
 import ServiceProcess from '@/components/pages/home/ServiceProcess'
 import CollectionRecommendation from '@/components/pages/home/CollectionRecommendation'
 import Feedback from '@/components/pages/home/Feedback'
