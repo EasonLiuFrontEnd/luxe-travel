@@ -124,7 +124,7 @@ const DestinationCard = ({
         </p>
       </div>
 
-      <p className='absolute bottom-[16px] left-[16px] rotate-[270deg] origin-top-left font-family-luxurious text-[var(--color-figma-primary-950)] text-[24px] xl:text-[48px] tracking-[10%] leading-[100%] text-center whitespace-nowrap'>
+      <p className='absolute bottom-[calc((1em*-1)+16px)] left-[16px] rotate-[270deg] origin-top-left font-family-luxurious text-[var(--color-figma-primary-950)] text-[24px] xl:text-[48px] tracking-[0.081em] leading-[100%] text-center whitespace-nowrap'>
         {englishName}
       </p>
     </div>

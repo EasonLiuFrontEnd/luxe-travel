@@ -10,3 +10,13 @@
 .scroll-indicator {
   animation: bounce 2s infinite;
 }
+
+.gradient-title-border {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent calc(100% - 26px),
+    #e5d9bf calc(100% - 26px),
+    #e5d9bf 100%
+  );
+}
