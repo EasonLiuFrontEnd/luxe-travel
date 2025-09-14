@@ -229,7 +229,7 @@ export const DetailRequirementsSection = ({
         <div className='flex justify-end pt-4'>
           <Button
             type='submit'
-            size='lg'
+            size='xl'
             disabled={isLoading}
             className='px-8 py-3 font-genseki-body-m-medium text-[16px] leading-[1.2] bg-figma-secondary-500 hover:bg-figma-secondary-950 text-figma-neutral-0 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed'
           >

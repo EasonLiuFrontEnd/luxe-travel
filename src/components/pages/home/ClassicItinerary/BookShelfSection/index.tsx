@@ -8,7 +8,7 @@ import { useBannerBookShelfScroll } from '@/hooks/useBannerBookShelfScroll'
 import '@/styles/components.css'
 
 const BookShelfSection = () => {
-  const { bookShelfRef, trackRef, isFixed } = useBookShelfScroll()
+  const { bookShelfRef, trackRef } = useBookShelfScroll()
   const { transformY } = useBannerBookShelfScroll()
 
   return (
@@ -16,10 +16,12 @@ const BookShelfSection = () => {
       ref={bookShelfRef}
       data-bookshelf-section
       className='bg-figma-neutral-50 pt-[60px] lg:pt-[120px] border-t border-[var(--color-figma-secondary-500)] sticky top-[-35px] left-0 lg:relative lg:top-auto lg:left-auto transition-transform duration-300 ease-out'
-      style={{
-        '--transform-y': `${transformY}px`,
-        transform: 'translateY(calc(-1 * var(--transform-y) - 0.5px))',
-      } as React.CSSProperties}
+      style={
+        {
+          '--transform-y': `${transformY}px`,
+          transform: 'translateY(calc(-1 * var(--transform-y) - 0.5px))',
+        } as React.CSSProperties
+      }
     >
       <div
         data-bookshelf-title
