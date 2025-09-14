@@ -1,0 +1,50 @@
+.track {
+  display: flex;
+  align-items: start;
+  gap: 60px;
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.trackMobile {
+  display: flex;
+  align-items: start;
+  gap: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.trackMobile::-webkit-scrollbar {
+  display: none;
+}
+
+.cardContainer {
+  scroll-snap-align: start;
+}
+
+.backgroundMap {
+  background-image: url('/home/advantage/europe-map.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.blurredBackground {
+  filter: blur(4px) brightness(0.5);
+}
+
+.gradientMask {
+  mask: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0.5) 65%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0.5) 65%, rgba(0, 0, 0, 0) 100%);
+}
+
+@media (min-width: 1024px) {
+  .titleBackground {
+    background-image: url('/home/advantages/Europe.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto;
+  }
+}
