@@ -10,11 +10,7 @@ type TEuropeMapProps = TBaseComponent & {
   ) => void
 }
 
-const EuropeMap = ({
-  selectedRegion,
-  onRegionClick,
-  className,
-}: TEuropeMapProps) => {
+const EuropeMap = ({ selectedRegion, onRegionClick }: TEuropeMapProps) => {
   const handleRegionClick = (
     regionId: string,
     event: React.MouseEvent<SVGPathElement>,
