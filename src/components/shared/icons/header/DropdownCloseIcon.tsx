@@ -7,7 +7,6 @@ export type TDropdownCloseIcon = {
 const DropdownCloseIcon = ({
   isMobile = false,
   className,
-  onClick,
 }: TDropdownCloseIcon) => {
   return isMobile ? (
     <svg

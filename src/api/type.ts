@@ -1,4 +1,4 @@
-import type { UseQueryResult, QueryClient } from '@tanstack/react-query'
+import type { UseQueryResult } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
 
 export type TPagination = {
