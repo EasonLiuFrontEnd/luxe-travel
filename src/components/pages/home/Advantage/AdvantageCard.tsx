@@ -11,7 +11,9 @@ type TAdvantageCardProps = TBaseComponent & {
 
 const AdvantageCard = ({ card, className }: TAdvantageCardProps) => {
   return (
-    <div className={`content-stretch flex flex-col h-[480px] items-start justify-between overflow-hidden relative rounded-xl shrink-0 ${className || ''}`}>
+    <div
+      className={`content-stretch flex flex-col h-[480px] items-start justify-between overflow-hidden relative rounded-xl shrink-0 ${className || ''}`}
+    >
       {/* 背景圖層 - 模糊效果 */}
       <div
         className={`absolute -inset-3 bg-center bg-cover bg-no-repeat ${styles.blurredBackground}`}

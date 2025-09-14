@@ -64,7 +64,11 @@ const FeedbackCard = ({ type }: TFeedbackCardProps) => {
         </p>
         <button
           onClick={handleToggle}
-          className='py-[4px] px-[12px] font-genseki-body-s-regular text-figma-secondary-500 rounded-[18px] border border-figma-secondary-500 cursor-pointer hover:bg-figma-secondary-500 hover:text-figma-neutral-0'
+          className='
+            py-[4px] px-[12px] font-genseki-body-s-regular text-figma-secondary-500
+            rounded-[18px] border border-figma-secondary-500 cursor-pointer transition-colors duration-300
+            hover:text-figma-secondary-950 hover:border-figma-secondary-950
+          '
         >
           {isExpanded ? 'Show less' : 'Show more'}
         </button>
@@ -94,7 +98,11 @@ const FeedbackCard = ({ type }: TFeedbackCardProps) => {
         </p>
         <button
           onClick={handleNavigation}
-          className='block mx-auto py-[4px] px-[12px] font-genseki-body-s-regular text-figma-accent-blue-normal rounded-[18px] cursor-pointer border border-figma-accent-blue-normal hover:bg-figma-accent-blue-normal hover:text-figma-accent-blue-light'
+          className='
+            block mx-auto py-[4px] px-[12px] font-genseki-body-s-regular text-figma-accent-blue-normal
+            rounded-[18px] cursor-pointer border border-figma-accent-blue-normal transition-colors duration-300
+            hover:text-figma-secondary-950 hover:border-figma-secondary-950
+          '
         >
           Show more
         </button>
@@ -123,7 +131,11 @@ const FeedbackCard = ({ type }: TFeedbackCardProps) => {
       </p>
       <button
         onClick={handleNavigation}
-        className='block mx-auto py-[4px] px-[12px] font-genseki-body-s-regular text-figma-accent-blue-normal rounded-[18px] cursor-pointer border border-figma-accent-blue-normal hover:bg-figma-accent-blue-normal hover:text-figma-accent-blue-light'
+        className='
+          block mx-auto py-[4px] px-[12px] font-genseki-body-s-regular text-figma-accent-blue-normal
+          rounded-[18px] border border-figma-accent-blue-normal cursor-pointer transition-colors duration-300
+          hover:text-figma-secondary-950 hover:border-figma-secondary-950
+        '
       >
         Show more
       </button>

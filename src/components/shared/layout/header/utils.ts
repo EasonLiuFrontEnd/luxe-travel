@@ -38,10 +38,28 @@ export const transformMenuData = (
       const activeChildren = item.children.filter((child) => child.isActive)
       activeChildren.sort((a, b) => a.order - b.order)
 
-      dropdownMenus[item.title] = activeChildren.map((child) => ({
-        label: child.title,
-        href: child.linkUrl,
-      }))
+      dropdownMenus[item.title] = activeChildren.map((child) => {
+        const hasThirdLayer = child.children?.length > 0
+        let submenuItems = undefined
+
+        if (hasThirdLayer) {
+          const activeGrandChildren = child.children.filter(
+            (grandChild) => grandChild.isActive,
+          )
+          activeGrandChildren.sort((a, b) => a.order - b.order)
+          submenuItems = activeGrandChildren.map((grandChild) => ({
+            label: grandChild.title,
+            href: grandChild.linkUrl,
+          }))
+        }
+
+        return {
+          label: child.title,
+          href: child.linkUrl,
+          hasSubmenu: hasThirdLayer,
+          submenuItems,
+        }
+      })
     }
   }
 

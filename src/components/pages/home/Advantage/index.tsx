@@ -49,12 +49,15 @@ const Advantage = ({ className }: TAdvantageProps) => {
     }
   }, [])
 
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    if (!isMobile || !trackRef?.current) return
-    setIsDragging(true)
-    setStartX(e.pageX - trackRef.current.offsetLeft)
-    setScrollLeft(trackRef.current.scrollLeft)
-  }, [isMobile])
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      if (!isMobile || !trackRef?.current) return
+      setIsDragging(true)
+      setStartX(e.pageX - trackRef.current.offsetLeft)
+      setScrollLeft(trackRef.current.scrollLeft)
+    },
+    [isMobile],
+  )
 
   const handleMouseLeave = useCallback(() => {
     if (isMobile) setIsDragging(false)
@@ -64,12 +67,15 @@ const Advantage = ({ className }: TAdvantageProps) => {
     if (isMobile) setIsDragging(false)
   }, [isMobile])
 
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!isDragging || !isMobile || !trackRef?.current) return
-    const x = e.pageX - trackRef.current.offsetLeft
-    const walk = (x - startX) * 2
-    trackRef.current.scrollLeft = scrollLeft - walk
-  }, [isDragging, isMobile, startX, scrollLeft])
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent) => {
+      if (!isDragging || !isMobile || !trackRef?.current) return
+      const x = e.pageX - trackRef.current.offsetLeft
+      const walk = (x - startX) * 2
+      trackRef.current.scrollLeft = scrollLeft - walk
+    },
+    [isDragging, isMobile, startX, scrollLeft],
+  )
 
   return (
     <section className={`bg-figma-secondary-100 relative ${className || ''}`}>
@@ -82,10 +88,10 @@ const Advantage = ({ className }: TAdvantageProps) => {
 
       <div className='relative z-10'>
         {/* 標題區域 */}
-        <div className={`px-0 py-[60px] lg:pt-[200px] lg:pb-[120px] flex flex-col gap-[20px] lg:gap-[120px] items-center xl:aspect-[1920/692] xl:h-full xl:max-h-[692px] xl:sticky xl:top-0 xl:left-0 ${styles.titleBackground}`}>
-          <h2
-            className='inline-block font-family-noto-serif font-bold text-[32px] xl:text-[64px] xl:leading-[120%] text-[var(--color-figma-primary-950)] px-5 py-[6px] gradient-title-border'
-          >
+        <div
+          className={`px-0 py-[60px] lg:pt-[200px] lg:pb-[120px] flex flex-col gap-[20px] lg:gap-[120px] items-center xl:aspect-[1920/692] xl:h-full xl:max-h-[692px] xl:sticky xl:top-0 xl:left-0 ${styles.titleBackground}`}
+        >
+          <h2 className='inline-block font-family-noto-serif font-bold text-[32px] xl:text-[64px] xl:leading-[120%] text-[var(--color-figma-primary-950)] px-5 py-[6px] gradient-title-border'>
             典藏優勢
           </h2>
 
@@ -102,16 +108,27 @@ const Advantage = ({ className }: TAdvantageProps) => {
         {/* 卡片區域 */}
         <div className='pb-[60px] lg:pb-[120px] px-3 lg:px-0'>
           <div className='lg:max-w-[1440px] lg:mx-auto'>
-            <div className={`relative w-full ${isMobile ? 'overflow-x-auto' : 'overflow-hidden'}`}>
+            <div
+              className={`relative w-full ${isMobile ? 'overflow-x-auto' : 'overflow-hidden'}`}
+            >
               <div
                 ref={trackRef}
-                className={`${isMobile ? styles.trackMobile : styles.track} ${isDragging && isMobile ? 'cursor-grabbing' : isMobile ? 'cursor-grab' : ''
-                  } ${isMobile ? 'justify-start' : 'justify-center'}`}
-                style={isMobile ? {
-                  scrollSnapType: 'x mandatory',
-                  WebkitOverflowScrolling: 'touch',
-                  userSelect: 'none',
-                } : undefined}
+                className={`${isMobile ? styles.trackMobile : styles.track} ${
+                  isDragging && isMobile
+                    ? 'cursor-grabbing'
+                    : isMobile
+                      ? 'cursor-grab'
+                      : ''
+                } ${isMobile ? 'justify-start' : 'justify-center'}`}
+                style={
+                  isMobile
+                    ? {
+                        scrollSnapType: 'x mandatory',
+                        WebkitOverflowScrolling: 'touch',
+                        userSelect: 'none',
+                      }
+                    : undefined
+                }
                 onMouseDown={handleMouseDown}
                 onMouseLeave={handleMouseLeave}
                 onMouseUp={handleMouseUp}
@@ -120,10 +137,11 @@ const Advantage = ({ className }: TAdvantageProps) => {
                 {displayData.map((card) => (
                   <div
                     key={card.id}
-                    className={`${styles.cardContainer} ${isMobile
+                    className={`${styles.cardContainer} ${
+                      isMobile
                         ? 'w-[318px] flex-shrink-0'
                         : 'w-[522px] flex-shrink-0'
-                      }`}
+                    }`}
                   >
                     <AdvantageCard card={card} />
                   </div>

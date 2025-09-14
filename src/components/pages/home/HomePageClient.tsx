@@ -9,6 +9,7 @@ import ServiceProcess from '@/components/pages/home/ServiceProcess'
 import CollectionRecommendation from '@/components/pages/home/CollectionRecommendation'
 import Advantage from '@/components/pages/home/Advantage'
 import Feedback from '@/components/pages/home/Feedback'
+import Concerns from './Concerns'
 
 const HomePageClient = () => {
   return (
@@ -17,6 +18,7 @@ const HomePageClient = () => {
       <div className='relative bg-figma-neutral-50'>
         <BookShelfSection />
         <RecommendationSection />
+        <Concerns />
       </div>
       <Advantage />
       <CollectionRecommendation />

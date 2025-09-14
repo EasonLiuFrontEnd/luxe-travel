@@ -3,6 +3,7 @@
 import { useMemo } from 'react'
 import { useScrollContext } from '@/context/ScrollContext'
 import { APP_CONFIG } from '@/lib/config'
+import { useBanners } from '@/api/home/useBanners'
 import type { TBaseComponent } from '@/types'
 
 export type TBanner = TBaseComponent & {
@@ -19,11 +20,32 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
 
   const logoProgress = propLogoProgress ?? contextLogoProgress
 
+  const { query: bannersQuery, mock } = useBanners()
+  const {
+    data: bannersData,
+    isLoading: isBannersLoading,
+    error: bannersError,
+  } = bannersQuery
+
+  const effectiveData = useMemo(() => {
+    if (bannersError || !bannersData) {
+      return mock.rows
+    }
+
+    if (isBannersLoading) {
+      return mock.rows
+    }
+
+    return bannersData
+  }, [bannersError, bannersData, isBannersLoading, mock.rows])
+
   const dynamicPadding = useMemo(
     () =>
       `${APP_CONFIG.SCROLL.BANNER_HEIGHT * 0.1 + (1 - logoProgress) * APP_CONFIG.SCROLL.LOGO_TRANSITION_END * 0.2}px`,
     [logoProgress],
   )
+
+  const firstBanner = effectiveData[0] || mock.rows[0]
 
   return (
     <>
@@ -60,7 +82,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
                 'xl:pt-[16px] xl:px-[16px]',
               )}
             >
-              歐洲自由行
+              {firstBanner?.title?.split('精緻首選')[0] || '歐洲自由行'}
             </div>
             <div
               className={cn(
@@ -89,7 +111,8 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
                 styles['concave-border-2'],
               )}
             >
-              典藏旅遊30年經驗團隊服務
+              {firstBanner?.subtitle?.split('為您')[0] ||
+                '典藏旅遊30年經驗團隊服務'}
             </p>
             <p
               className={cn(
@@ -100,12 +123,14 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
                 styles['concave-border-3'],
               )}
             >
-              為您客製化旅程，典藏經典回憶
+              {firstBanner?.subtitle?.includes('為您')
+                ? '為您' + firstBanner.subtitle.split('為您')[1]
+                : '為您客製化旅程，典藏經典回憶'}
             </p>
           </div>
         </div>
         <BannerCarousel
-          images={['/home/banners/banner.jpg', '/home/banners/banner2.jpg']}
+          images={effectiveData.map((banner) => banner.imageUrl)}
           autoPlayInterval={10000}
         />
       </div>

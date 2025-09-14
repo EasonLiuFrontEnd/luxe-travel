@@ -6,9 +6,18 @@ type TStickyNotesProps = {
   color: string
   rotation: number
   offsetY: string
+  position: number
+  transformY: number
 }
 
-const StickyNotes = ({ data, color, rotation, offsetY }: TStickyNotesProps) => {
+const StickyNotes = ({
+  data,
+  color,
+  rotation,
+  offsetY,
+  position,
+  transformY,
+}: TStickyNotesProps) => {
   const [isHovered, setIsHovered] = useState(false)
 
   const parseContent = (content: string): [string, string] => {
@@ -30,7 +39,8 @@ const StickyNotes = ({ data, color, rotation, offsetY }: TStickyNotesProps) => {
   const containerClassName =
     'w-[250px] h-[260px] pt-[18px] relative shrink-0 transition-transform duration-300 ease-out hover:-translate-y-5'
   const combinedStyle = {
-    transform: `rotate(${rotation}deg) translateY(-${offsetY}px)`,
+    transform: `rotate(${rotation}deg) translateY(calc(-${offsetY}px + ${transformY}px))`,
+    opacity: position > 0 ? 1 : 0,
   }
 
   return (
