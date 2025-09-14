@@ -3,11 +3,13 @@
 import { useMemo } from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useConcerns } from '@/api/home/useConcerns'
+import { useScrollDrivenAnimation } from '@/hooks/useScrollDrivenAnimation'
 import StickyNotes from "./StickyNotes"
 
 const Concerns = () => {
   const { isMobile } = useMediaQuery()
   const { query: concernsQuery, mock } = useConcerns()
+  const { containerRef, notePositions, getNoteTransformY } = useScrollDrivenAnimation()
   const {
     data: concernsData,
     isLoading: isConcernsLoading,
@@ -43,6 +45,7 @@ const Concerns = () => {
 
   return (
     <div
+      ref={containerRef}
       className="flex flex-col justify-center items-center self-stretch gap-y-[32px] lg:gap-y-[120px] lg:pt-[200px] max-lg:py-[60px] max-lg:px-[12px]"
       style={gridBackgroundStyle}
     >
@@ -72,6 +75,8 @@ const Concerns = () => {
               rotation={rotations[index]}
               color={colors[index]}
               offsetY={isMobile ? '0' : offsetYs[index]}
+              position={notePositions[index]}
+              transformY={getNoteTransformY(notePositions[index])}
             />
           )
         })}

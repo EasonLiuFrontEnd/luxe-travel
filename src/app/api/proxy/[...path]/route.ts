@@ -7,7 +7,7 @@ export async function GET(
   { params }: { params: { path: string[] } },
 ) {
   try {
-    const { path } = params
+    const { path } = await params
     const searchParams = request.nextUrl.searchParams
 
     const apiPath = path.join('/')
@@ -50,7 +50,7 @@ export async function POST(
   { params }: { params: { path: string[] } },
 ) {
   try {
-    const { path } = params
+    const { path } = await params
     const body = await request.text()
 
     const apiPath = path.join('/')
@@ -93,7 +93,7 @@ export async function PUT(
   { params }: { params: { path: string[] } },
 ) {
   try {
-    const { path } = params
+    const { path } = await params
     const body = await request.text()
 
     const apiPath = path.join('/')
@@ -136,7 +136,7 @@ export async function DELETE(
   { params }: { params: { path: string[] } },
 ) {
   try {
-    const { path } = params
+    const { path } = await params
 
     const apiPath = path.join('/')
     const fullUrl = `${EXTERNAL_API_BASE}/api/${apiPath}`

@@ -137,22 +137,21 @@ const Feedback = () => {
         <button
           onClick={handlePrevious}
           disabled={!canGoLeft}
-          className={`group pt-[14px] pb-[18px] px-[20px] mr-[24px] rounded-[41px] border ${
-            canGoLeft
-              ? 'border-figma-secondary-950 cursor-pointer hover:bg-figma-secondary-950'
-              : 'border-figma-secondary-300 cursor-not-allowed'
-          }`}
+          className={`group pt-[14px] pb-[18px] px-[20px] mr-[24px] rounded-[41px] border ${canGoLeft
+            ? 'border-figma-secondary-950 cursor-pointer'
+            : 'border-figma-secondary-300 cursor-not-allowed'
+            }`}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
-            width='56'
+            width='48'
             height='12'
-            viewBox='0 0 56 12'
+            viewBox='0 0 48 12'
             fill='none'
+            className={`transition-transform duration-300 origin-right ${canGoLeft ? 'group-hover:scale-x-[1.167]' : ''}`}
           >
             <path
-              d='M55 9.6665H56V11.6665H55V10.6665V9.6665ZM4 10.6665V11.6665H0.221157L3.50538 9.7974L4 10.6665ZM55 10.6665V11.6665H4V10.6665V9.6665H55V10.6665ZM4 10.6665L3.50538 9.7974L19.3193 0.797397L19.814 1.6665L20.3086 2.53561L4.49463 11.5356L4 10.6665Z'
-              className={canGoLeft ? 'group-hover:fill-figma-neutral-50' : ''}
+              d='M47 9.6665H48V11.6665H47V10.6665V9.6665ZM4 10.6665V11.6665H0.221157L3.50538 9.7974L4 10.6665ZM47 10.6665V11.6665H4V10.6665V9.6665H47V10.6665ZM4 10.6665L3.50538 9.7974L16.8739 0.797397L17.3686 1.6665L17.8632 2.53561L4.49463 11.5356L4 10.6665Z'
               fill={canGoLeft ? '#926D3C' : '#E5D9BF'}
             />
           </svg>
@@ -160,22 +159,21 @@ const Feedback = () => {
         <button
           onClick={handleNext}
           disabled={!canGoRight}
-          className={`group pt-[14px] pb-[18px] px-[20px] rounded-[41px] border ${
-            canGoRight
-              ? 'border-figma-secondary-950 cursor-pointer hover:bg-figma-secondary-950'
-              : 'border-figma-secondary-300 cursor-not-allowed'
-          }`}
+          className={`group pt-[14px] pb-[18px] px-[20px] rounded-[41px] border ${canGoRight
+            ? 'border-figma-secondary-950 cursor-pointer'
+            : 'border-figma-secondary-300 cursor-not-allowed'
+            }`}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
-            width='56'
+            width='48'
             height='12'
-            viewBox='0 0 56 12'
+            viewBox='0 0 48 12'
             fill='none'
+            className={`transition-transform duration-300 origin-left ${canGoRight ? 'group-hover:scale-x-[1.167]' : ''}`}
           >
             <path
-              d='M1 9.6665H0V11.6665H1V10.6665V9.6665ZM52 10.6665V11.6665H55.2689L52.5595 9.83766L52 10.6665ZM1 10.6665V11.6665H52V10.6665V9.6665H1V10.6665ZM52 10.6665L52.5595 9.83766L39.2261 0.837655L38.6667 1.6665L38.1072 2.49535L51.4405 11.4954L52 10.6665Z'
-              className={canGoRight ? 'group-hover:fill-figma-neutral-50' : ''}
+              d='M1 9.6665H0V11.6665H1V10.6665V9.6665ZM44 10.6665V11.6665H47.2689L44.5595 9.83766L44 10.6665ZM1 10.6665V11.6665H44V10.6665V9.6665H1V10.6665ZM44 10.6665L44.5595 9.83766L31.2261 0.837655L30.6667 1.6665L30.1072 2.49535L43.4405 11.4954L44 10.6665Z'
               fill={canGoRight ? '#926D3C' : '#E5D9BF'}
             />
           </svg>

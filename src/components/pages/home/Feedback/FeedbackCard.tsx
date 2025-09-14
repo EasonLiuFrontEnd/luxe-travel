@@ -48,7 +48,11 @@ const FeedbackCard = ({ type }: TFeedbackCardProps) => {
         </p>
         <button
           onClick={handleToggle}
-          className='py-[4px] px-[12px] font-genseki-body-s-regular text-figma-secondary-500 rounded-[18px] border border-figma-secondary-500 cursor-pointer hover:bg-figma-secondary-500 hover:text-figma-neutral-0'
+          className='
+            py-[4px] px-[12px] font-genseki-body-s-regular text-figma-secondary-500
+            rounded-[18px] border border-figma-secondary-500 cursor-pointer transition-colors duration-300
+            hover:text-figma-secondary-950 hover:border-figma-secondary-950
+          '
         >
           {isExpanded ? 'Show less' : 'Show more'}
         </button>
@@ -67,7 +71,11 @@ const FeedbackCard = ({ type }: TFeedbackCardProps) => {
         <p className="w-[272px] font-noto-serif-h4-medium mb-[20px]">我想只有「典藏」等級才能無後顧之憂的旅遊！</p>
         <button
           onClick={handleNavigation}
-          className='block mx-auto py-[4px] px-[12px] font-genseki-body-s-regular text-figma-accent-blue-normal rounded-[18px] cursor-pointer border border-figma-accent-blue-normal hover:bg-figma-accent-blue-normal hover:text-figma-accent-blue-light'
+          className='
+            block mx-auto py-[4px] px-[12px] font-genseki-body-s-regular text-figma-accent-blue-normal
+            rounded-[18px] cursor-pointer border border-figma-accent-blue-normal transition-colors duration-300
+            hover:text-figma-secondary-950 hover:border-figma-secondary-950
+          '
         >
           Show more
         </button>
@@ -85,7 +93,11 @@ const FeedbackCard = ({ type }: TFeedbackCardProps) => {
       <p className="w-[272px] h-[266px] font-noto-serif-h4-medium mb-[20px]">推薦給想嘗試自助旅行又懶得作功課的朋友們！</p>
       <button
         onClick={handleNavigation}
-        className='block mx-auto py-[4px] px-[12px] font-genseki-body-s-regular text-figma-accent-blue-normal rounded-[18px] cursor-pointer border border-figma-accent-blue-normal hover:bg-figma-accent-blue-normal hover:text-figma-accent-blue-light'
+        className='
+          block mx-auto py-[4px] px-[12px] font-genseki-body-s-regular text-figma-accent-blue-normal
+          rounded-[18px] border border-figma-accent-blue-normal cursor-pointer transition-colors duration-300
+          hover:text-figma-secondary-950 hover:border-figma-secondary-950
+        '
       >
         Show more
       </button>
