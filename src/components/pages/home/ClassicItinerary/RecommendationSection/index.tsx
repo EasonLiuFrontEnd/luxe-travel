@@ -3,18 +3,11 @@
 import Image from 'next/image'
 import FreeTourRecommendation from './FreeTourRecommendation'
 import GroupTourRecommendation from './GroupTourRecommendation'
-import { useBannerBookShelfScroll } from '@/hooks/useBannerBookShelfScroll'
 
 const RecommendationSection = () => {
-  const { transformY } = useBannerBookShelfScroll()
-
   return (
-    <div 
+    <div
       className="recommendation-section bg-[var(--color-figma-primary-50)] relative box-border flex justify-center pt-[32px] pb-[60px] xl:py-20 px-[clamp(12px,2.5vw,48px)] border-y border-[var(--color-figma-secondary-500)]"
-      style={{
-        marginTop: `-${transformY}px`,
-        transition: 'margin-top 300ms ease-out',
-      }}
     >
       <div className='absolute flex justify-center items-end w-full h-full top-0 left-0'>
         <Image
