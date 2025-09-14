@@ -6,11 +6,23 @@
   will-change: transform;
 }
 
+.trackMobile {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.trackMobile::-webkit-scrollbar {
+  display: none;
+}
+
 .bookContainer {
-  width: var(--w);
-  height: var(--h);
   margin-left: var(--book-margin-left);
   margin-right: var(--book-margin-right);
   display: flex;
-  align-items: end;
+  scroll-snap-align: start;
 }
