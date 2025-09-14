@@ -1,12 +1,3 @@
-.gradientTitle {
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    transparent calc(100% - 26px),
-    #e5d9bf calc(100% - 26px),
-    #e5d9bf 100%
-  );
-}
 
 .decoBar {
   position: relative;

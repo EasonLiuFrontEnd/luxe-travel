@@ -1,0 +1,16 @@
+.goldGradientBackground {
+  background-image: linear-gradient(219.25deg, rgba(189, 160, 94, 0.6) 0%, #BDA05E 66.69%), url('/shared/icons/background-plus.svg');
+  background-repeat: repeat;
+  background-color: #bda05e;
+}
+
+.serviceProcessBackgroundColor {
+  background: linear-gradient(180deg,#F5F5F5 6%, #F7F4EC 10%,rgba(189, 160, 94, 0.4) 60%, #F7F4EC 100%);
+  background-color: #F7F4EC;
+}
+
+.serviceProcessBackgroundImage {
+  background-image: url('/shared/icons/background-books.svg');
+  background-repeat: repeat;
+}
+

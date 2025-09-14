@@ -5,6 +5,7 @@ import Introduction from '../Introduction'
 import styles from './styles.module.css'
 import { useBookShelfScroll } from '@/hooks/useBookShelfScroll'
 import { useBannerBookShelfScroll } from '@/hooks/useBannerBookShelfScroll'
+import '@/styles/components.css'
 
 const BookShelfSection = () => {
   const { bookShelfRef, trackRef, isFixed } = useBookShelfScroll()
@@ -25,7 +26,7 @@ const BookShelfSection = () => {
         className='mb-[32px] xl:mb-[48px] flex flex-col items-center'
       >
         <h2
-          className={`inline-block font-family-noto-serif font-bold text-[32px] xl:text-[64px] xl:leading-[120%] text-[var(--color-figma-primary-950)] px-5 py-[6px] xl:py-4 ${styles.gradientTitle}`}
+          className='inline-block font-family-noto-serif font-bold text-[32px] xl:text-[64px] xl:leading-[120%] text-[var(--color-figma-primary-950)] px-5 py-[6px] gradient-title-border'
         >
           查看經典行程
         </h2>

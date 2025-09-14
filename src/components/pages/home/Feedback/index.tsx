@@ -4,6 +4,7 @@ import FeedbackCard from './FeedbackCard'
 import { useState, useRef } from 'react'
 import type { TFeedbackType } from './FeedbackCard'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import '@/styles/components.css'
 
 const Feedback = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -11,10 +12,6 @@ const Feedback = () => {
   const touchEndX = useRef(0)
   const containerRef = useRef<HTMLDivElement>(null)
   const { isMobile } = useMediaQuery()
-  const gradientStyle = {
-    background:
-      'linear-gradient(to bottom, transparent 0%, transparent calc(100% - 26px), #e5d9bf calc(100% - 26px), #e5d9bf 100%)',
-  }
 
   const cardData: { type: TFeedbackType }[] = [
     { type: 'detailed' },
@@ -114,8 +111,7 @@ const Feedback = () => {
   return (
     <div className='relative flex flex-col items-center py-[60px] px-[12px] xl:py-[120px] xl:px-[48px] bg-neutral-50'>
       <h2
-        className='font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px]'
-        style={gradientStyle}
+        className='font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px] gradient-title-border'
       >
         真實旅客回饋
       </h2>
