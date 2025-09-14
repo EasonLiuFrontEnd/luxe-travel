@@ -28,13 +28,16 @@ const RecommendationList = ({ className }: TRecommendationListProps) => {
     setIsDragging(false)
   }, [])
 
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!isDragging || !scrollRef.current) return
-    e.preventDefault()
-    const x = e.pageX - scrollRef.current.offsetLeft
-    const walk = (x - startX) * 2
-    scrollRef.current.scrollLeft = scrollLeft - walk
-  }, [isDragging, startX, scrollLeft])
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent) => {
+      if (!isDragging || !scrollRef.current) return
+      e.preventDefault()
+      const x = e.pageX - scrollRef.current.offsetLeft
+      const walk = (x - startX) * 2
+      scrollRef.current.scrollLeft = scrollLeft - walk
+    },
+    [isDragging, startX, scrollLeft],
+  )
 
   return (
     <div className={`mx-auto mt-7 ${className || ''}`}>

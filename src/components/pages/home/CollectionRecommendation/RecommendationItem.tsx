@@ -16,8 +16,8 @@ const RecommendationItem = ({
   style,
 }: TRecommendationItemProps) => {
   return (
-    <div 
-      className={`group cursor-pointer ${className}`} 
+    <div
+      className={`group cursor-pointer ${className}`}
       onClick={onClick}
       style={style}
     >
@@ -31,10 +31,14 @@ const RecommendationItem = ({
 
       <div className='flex flex-col justify-center h-full flex-1'>
         <div className='flex flex-col gap-[6px]'>
-          <p className='font-genseki-body-s-regular text-figma-primary-950'>{item.title}</p>
-          
+          <p className='font-genseki-body-s-regular text-figma-primary-950'>
+            {item.title}
+          </p>
+
           <div className='flex items-center justify-between w-full'>
-            <p className='font-genseki-h6-bold text-figma-primary-950'>{item.country}</p>
+            <p className='font-genseki-h6-bold text-figma-primary-950'>
+              {item.country}
+            </p>
             <div className='w-[48px] h-[24px] flex-shrink-0 flex items-center justify-end text-figma-secondary-950'>
               <IconCta />
             </div>

@@ -11,7 +11,8 @@ export const serviceSteps: TServiceStep[] = [
     number: '01',
     title: '瞭解需求',
     englishTitle: 'Needs Discovery',
-    description: '點擊需求單填寫並提交或透過LINE@詢問，旅遊規劃師將與您聯繫，詳細了解您的需求與偏好。',
+    description:
+      '點擊需求單填寫並提交或透過LINE@詢問，旅遊規劃師將與您聯繫，詳細了解您的需求與偏好。',
     backgroundClass: 'goldGradientBackground',
   },
   {
@@ -45,4 +46,3 @@ export const getStepStyles = (number: string) => {
       return 'bg-white text-[#333333]'
   }
 }
-

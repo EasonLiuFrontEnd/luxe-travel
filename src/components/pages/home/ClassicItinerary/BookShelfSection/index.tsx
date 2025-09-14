@@ -19,9 +19,7 @@ const BookShelfSection = () => {
         data-bookshelf-title
         className='mb-[32px] xl:mb-[48px] flex flex-col items-center'
       >
-        <h2
-          className='inline-block font-family-noto-serif font-bold text-[32px] xl:text-[64px] xl:leading-[120%] text-[var(--color-figma-primary-950)] px-5 py-[6px] gradient-title-border'
-        >
+        <h2 className='inline-block font-family-noto-serif font-bold text-[32px] xl:text-[64px] xl:leading-[120%] text-[var(--color-figma-primary-950)] px-5 py-[6px] gradient-title-border'>
           查看經典行程
         </h2>
 

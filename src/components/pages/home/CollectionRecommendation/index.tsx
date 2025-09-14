@@ -35,7 +35,7 @@ const CollectionRecommendation = ({
           <div className='relative z-10'>
             <h2
               className='text-center font-family-noto-serif text-[32px] leading-[1.5] font-bold text-[#383841] bg-[var(--color-figma-secondary-100)] px-4 py-3 rounded-bl-2xl rounded-br-2xl mx-auto w-fit
-                           lg:text-[64px] lg:leading-[1.2] lg:px-7 lg:py-4'
+                           xl:text-[64px] xl:leading-[1.2] lg:px-7 lg:py-4'
             >
               典藏推薦
             </h2>

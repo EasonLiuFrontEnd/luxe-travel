@@ -8,8 +8,10 @@ import {
   TApiResponse,
 } from '../type'
 
-const fetchGroupToursData = async (countryId?: string): Promise<TGroupTour[]> => {
-  const endpoint = countryId 
+const fetchGroupToursData = async (
+  countryId?: string,
+): Promise<TGroupTour[]> => {
+  const endpoint = countryId
     ? `/admin/group-tours?countryId=${countryId}`
     : '/admin/group-tours'
   const response = await apiClient.get<TGroupTourResponse>(endpoint)
@@ -23,7 +25,8 @@ export const groupToursApiMock: TGroupTourResponse = {
     {
       id: 'group-68b05373564da72a7ab17536-1',
       countryId: '68b05373564da72a7ab17536',
-      imageUrl: '/home/itinerary/hr-croatia/group-1.jpg',
+      imageUrl:
+        'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       tagText: '巴爾幹探索',
       title: '亞得里亞海珍珠',
       description: '克羅埃西亞深度12日',
@@ -37,7 +40,8 @@ export const groupToursApiMock: TGroupTourResponse = {
     {
       id: 'group-68b05382564da72a7ab17537-1',
       countryId: '68b05382564da72a7ab17537',
-      imageUrl: '/home/itinerary/cz-czech/group-1.jpg',
+      imageUrl:
+        'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       tagText: '中歐經典',
       title: '波西米亞風情',
       description: '捷克奧地利雙國10日',
@@ -51,7 +55,8 @@ export const groupToursApiMock: TGroupTourResponse = {
     {
       id: 'group-68b05391564da72a7ab17538-1',
       countryId: '68b05391564da72a7ab17538',
-      imageUrl: '/home/itinerary/pt-portugal/group-1.jpg',
+      imageUrl:
+        'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       tagText: '大航海時代',
       title: '葡萄牙黃金海岸',
       description: '伊比利亞半島14日深度之旅',
@@ -65,7 +70,8 @@ export const groupToursApiMock: TGroupTourResponse = {
     {
       id: 'group-68b0539e564da72a7ab17539-1',
       countryId: '68b0539e564da72a7ab17539',
-      imageUrl: '/home/itinerary/ch-switzerland/group-1.jpg',
+      imageUrl:
+        'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       tagText: '阿爾卑斯體驗',
       title: '瑞士精品高級遊',
       description: '雪山湖泊12天',
@@ -79,7 +85,8 @@ export const groupToursApiMock: TGroupTourResponse = {
     {
       id: 'group-68b053ad564da72a7ab1753a-1',
       countryId: '68b053ad564da72a7ab1753a',
-      imageUrl: '/home/itinerary/ie-ireland/group-1.jpg',
+      imageUrl:
+        'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       tagText: '翡翠島情',
       title: '愛爾蘭田園風光',
       description: '凱爾特文化探索8日',
@@ -93,7 +100,8 @@ export const groupToursApiMock: TGroupTourResponse = {
     {
       id: 'group-68b053ba564da72a7ab1753b-1',
       countryId: '68b053ba564da72a7ab1753b',
-      imageUrl: '/home/itinerary/de-germany/group-1.jpg',
+      imageUrl:
+        'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       tagText: '浪漫大道',
       title: '德國古堡與啤酒',
       description: '巴伐利亞與菊茵河之旅15日',
@@ -107,7 +115,8 @@ export const groupToursApiMock: TGroupTourResponse = {
     {
       id: 'group-68b053c6564da72a7ab1753c-1',
       countryId: '68b053c6564da72a7ab1753c',
-      imageUrl: '/home/itinerary/hu-hungary/group-1.jpg',
+      imageUrl:
+        'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       tagText: '溫泉之都',
       title: '匈牙利多瑙河明珠',
       description: '布達佩斯與温泉奇蹟7日',
@@ -121,7 +130,8 @@ export const groupToursApiMock: TGroupTourResponse = {
     {
       id: 'group-68b053d4564da72a7ab1753d-1',
       countryId: '68b053d4564da72a7ab1753d',
-      imageUrl: '/home/itinerary/es-spain/group-1.jpg',
+      imageUrl:
+        'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       tagText: '伊比利亞風情',
       title: '西班牙藝術之旅',
       description: '高第建築與佛朗明哥12日',
@@ -135,7 +145,8 @@ export const groupToursApiMock: TGroupTourResponse = {
     {
       id: 'group-68b053e0564da72a7ab1753e-1',
       countryId: '68b053e0564da72a7ab1753e',
-      imageUrl: '/home/itinerary/gr-greece/group-1.jpg',
+      imageUrl:
+        'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       tagText: '古希臘神話',
       title: '希臘愛琴海島嶼',
       description: '雅典聖托里尼10日',
@@ -149,7 +160,8 @@ export const groupToursApiMock: TGroupTourResponse = {
     {
       id: 'group-68b053f0564da72a7ab1753f-1',
       countryId: '68b053f0564da72a7ab1753f',
-      imageUrl: '/home/itinerary/be-belgium/group-1.jpg',
+      imageUrl:
+        'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       tagText: '歐盟首都',
       title: '比利時美食與藝術',
       description: '布魯塞尔布魯日雙心5日',
@@ -169,7 +181,9 @@ export const groupToursApiMock: TGroupTourResponse = {
   },
 }
 
-export const useGroupTours = (countryId?: string): TUseHomeQueryResult<TGroupTour[], TGroupTourResponse> => {
+export const useGroupTours = (
+  countryId?: string,
+): TUseHomeQueryResult<TGroupTour[], TGroupTourResponse> => {
   const query = useQuery<TGroupTour[], AxiosError<TApiResponse<TGroupTour[]>>>({
     queryKey: ['group-tours', countryId],
     queryFn: () => fetchGroupToursData(countryId),

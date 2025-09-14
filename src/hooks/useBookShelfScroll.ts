@@ -58,7 +58,11 @@ export const useBookShelfScroll = () => {
         if (isRecommendationAtBottom && !isFixed) {
           setIsFixed(true)
           maxScrollX.current = calculateMaxScroll()
-        } else if (!isRecommendationAtBottom && isFixed && scrollProgress === 0) {
+        } else if (
+          !isRecommendationAtBottom &&
+          isFixed &&
+          scrollProgress === 0
+        ) {
           setIsFixed(false)
         }
       } else {

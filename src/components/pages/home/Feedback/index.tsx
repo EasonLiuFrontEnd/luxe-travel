@@ -110,9 +110,7 @@ const Feedback = () => {
 
   return (
     <div className='relative flex flex-col items-center py-[60px] px-[12px] xl:py-[120px] xl:px-[48px] bg-neutral-50'>
-      <h2
-        className='font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px] gradient-title-border'
-      >
+      <h2 className='font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px] gradient-title-border'>
         真實旅客回饋
       </h2>
       <div className='flex self-stretch min-h-[587px] mb-[60px] overflow-hidden'>
@@ -133,10 +131,11 @@ const Feedback = () => {
         <button
           onClick={handlePrevious}
           disabled={!canGoLeft}
-          className={`group pt-[14px] pb-[18px] px-[20px] mr-[24px] rounded-[41px] border ${canGoLeft
-            ? 'border-figma-secondary-950 cursor-pointer'
-            : 'border-figma-secondary-300 cursor-not-allowed'
-            }`}
+          className={`group pt-[14px] pb-[18px] px-[20px] mr-[24px] rounded-[41px] border ${
+            canGoLeft
+              ? 'border-figma-secondary-950 cursor-pointer'
+              : 'border-figma-secondary-300 cursor-not-allowed'
+          }`}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -155,10 +154,11 @@ const Feedback = () => {
         <button
           onClick={handleNext}
           disabled={!canGoRight}
-          className={`group pt-[14px] pb-[18px] px-[20px] rounded-[41px] border ${canGoRight
-            ? 'border-figma-secondary-950 cursor-pointer'
-            : 'border-figma-secondary-300 cursor-not-allowed'
-            }`}
+          className={`group pt-[14px] pb-[18px] px-[20px] rounded-[41px] border ${
+            canGoRight
+              ? 'border-figma-secondary-950 cursor-pointer'
+              : 'border-figma-secondary-300 cursor-not-allowed'
+          }`}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
