@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo, useEffect, useCallback } from 'react'
 import DestinationCard from '../DestinationCard/index'
 import styles from './styles.module.css'
 import { useBooks } from '@/api/home/useBooks'
@@ -13,12 +13,16 @@ type TStyle = React.CSSProperties & {
 
 type TBookShelfProps = {
   trackRef?: React.RefObject<HTMLDivElement>
+  isMobile?: boolean
 }
 
-const BookShelf = ({ trackRef }: TBookShelfProps) => {
+const BookShelf = ({ trackRef, isMobile = false }: TBookShelfProps) => {
   const [activeCardId, setActiveCardId] = useState<string | null>(null)
   const [showArrow, setShowArrow] = useState(false)
   const [isVerticalLayout, setIsVerticalLayout] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
+  const [startX, setStartX] = useState(0)
+  const [scrollLeft, setScrollLeft] = useState(0)
 
   const { query: booksQuery, mock } = useBooks()
   const {
@@ -44,6 +48,28 @@ const BookShelf = ({ trackRef }: TBookShelfProps) => {
     setActiveCardId(cardId)
     setSelectedCountryId(cardId)
   }
+
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    if (!isMobile || !trackRef?.current) return
+    setIsDragging(true)
+    setStartX(e.pageX - trackRef.current.offsetLeft)
+    setScrollLeft(trackRef.current.scrollLeft)
+  }, [isMobile, trackRef])
+
+  const handleMouseLeave = useCallback(() => {
+    if (isMobile) setIsDragging(false)
+  }, [isMobile])
+
+  const handleMouseUp = useCallback(() => {
+    if (isMobile) setIsDragging(false)
+  }, [isMobile])
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!isDragging || !isMobile || !trackRef?.current) return
+    const x = e.pageX - trackRef.current.offsetLeft
+    const walk = (x - startX) * 2
+    trackRef.current.scrollLeft = scrollLeft - walk
+  }, [isDragging, isMobile, startX, scrollLeft, trackRef])
 
   useEffect(() => {
     const checkLayout = () => {
@@ -113,8 +139,22 @@ const BookShelf = ({ trackRef }: TBookShelfProps) => {
           </svg>
         </div>
       )}
-      <div className='relative overflow-hidden w-full bottom-[1px]'>
-        <div ref={trackRef} className={styles.track}>
+      <div className={`relative w-full ${isMobile ? 'overflow-x-auto' : 'overflow-hidden'}`}>
+        <div
+          ref={trackRef}
+          className={`${isMobile ? styles.trackMobile : styles.track} ${
+            isDragging && isMobile ? 'cursor-grabbing' : isMobile ? 'cursor-grab' : ''
+          }`}
+          style={isMobile ? {
+            scrollSnapType: 'x mandatory',
+            WebkitOverflowScrolling: 'touch',
+            userSelect: 'none',
+          } : undefined}
+          onMouseDown={handleMouseDown}
+          onMouseLeave={handleMouseLeave}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+        >
           {displayData.map((card) => {
             const {
               id,

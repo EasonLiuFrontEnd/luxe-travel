@@ -4,24 +4,16 @@ import BookShelf from '../BookShelf'
 import Introduction from '../Introduction'
 import styles from './styles.module.css'
 import { useBookShelfScroll } from '@/hooks/useBookShelfScroll'
-import { useBannerBookShelfScroll } from '@/hooks/useBannerBookShelfScroll'
 import '@/styles/components.css'
 
 const BookShelfSection = () => {
-  const { bookShelfRef, trackRef } = useBookShelfScroll()
-  const { transformY } = useBannerBookShelfScroll()
+  const { bookShelfRef, trackRef, isMobile } = useBookShelfScroll()
 
   return (
     <div
       ref={bookShelfRef}
       data-bookshelf-section
-      className='bg-figma-neutral-50 pt-[60px] lg:pt-[120px] border-t border-[var(--color-figma-secondary-500)] sticky top-[-35px] left-0 lg:relative lg:top-auto lg:left-auto transition-transform duration-300 ease-out'
-      style={
-        {
-          '--transform-y': `${transformY}px`,
-          transform: 'translateY(calc(-1 * var(--transform-y) - 0.5px))',
-        } as React.CSSProperties
-      }
+      className='bg-figma-neutral-50 pt-[60px] lg:pt-[120px] border-t border-[var(--color-figma-secondary-500)] sticky top-[-50vh] left-0 lg:relative lg:top-auto lg:left-auto'
     >
       <div
         data-bookshelf-title
@@ -42,7 +34,7 @@ const BookShelfSection = () => {
       </div>
 
       <div className='flex flex-col-reverse lg:flex-row'>
-        <BookShelf trackRef={trackRef} />
+        <BookShelf trackRef={trackRef} isMobile={isMobile} />
 
         <Introduction />
       </div>
