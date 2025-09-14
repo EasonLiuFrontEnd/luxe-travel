@@ -43,7 +43,9 @@ export const transformMenuData = (
         let submenuItems = undefined
 
         if (hasThirdLayer) {
-          const activeGrandChildren = child.children.filter((grandChild) => grandChild.isActive)
+          const activeGrandChildren = child.children.filter(
+            (grandChild) => grandChild.isActive,
+          )
           activeGrandChildren.sort((a, b) => a.order - b.order)
           submenuItems = activeGrandChildren.map((grandChild) => ({
             label: grandChild.title,

@@ -111,7 +111,8 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
                 styles['concave-border-2'],
               )}
             >
-              {firstBanner?.subtitle?.split('為您')[0] || '典藏旅遊30年經驗團隊服務'}
+              {firstBanner?.subtitle?.split('為您')[0] ||
+                '典藏旅遊30年經驗團隊服務'}
             </p>
             <p
               className={cn(
@@ -122,12 +123,14 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
                 styles['concave-border-3'],
               )}
             >
-              {firstBanner?.subtitle?.includes('為您') ? '為您' + firstBanner.subtitle.split('為您')[1] : '為您客製化旅程，典藏經典回憶'}
+              {firstBanner?.subtitle?.includes('為您')
+                ? '為您' + firstBanner.subtitle.split('為您')[1]
+                : '為您客製化旅程，典藏經典回憶'}
             </p>
           </div>
         </div>
         <BannerCarousel
-          images={effectiveData.map(banner => banner.imageUrl)}
+          images={effectiveData.map((banner) => banner.imageUrl)}
           autoPlayInterval={10000}
         />
       </div>

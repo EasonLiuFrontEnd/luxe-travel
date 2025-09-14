@@ -9,7 +9,8 @@ import StickyNotes from './StickyNotes'
 const Concerns = () => {
   const { isMobile } = useMediaQuery()
   const { query: concernsQuery, mock } = useConcerns()
-  const { containerRef, notePositions, getNoteTransformY } = useScrollDrivenAnimation()
+  const { containerRef, notePositions, getNoteTransformY } =
+    useScrollDrivenAnimation()
   const {
     data: concernsData,
     isLoading: isConcernsLoading,
