@@ -73,7 +73,10 @@ const Feedback = () => {
   const handleNext = () => carouselApi?.scrollNext()
 
   return (
-    <div className='relative flex flex-col items-center py-[60px] px-[12px] xl:py-[120px] xl:px-[48px] bg-neutral-50'>
+    <div
+      className='relative flex flex-col items-center py-[60px] px-[12px] xl:py-[120px] xl:px-[48px] border-t border-figma-secondary-500'
+      style={{ background: 'linear-gradient(to bottom, #F7F4EC, rgba(247, 244, 236, 0.00)), #F5F5F5' }}
+    >
       <h2 className='font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px] gradient-title-border'>
         真實旅客回饋
       </h2>
