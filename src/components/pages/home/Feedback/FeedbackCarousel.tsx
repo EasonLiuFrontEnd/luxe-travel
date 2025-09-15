@@ -12,7 +12,14 @@ import {
 } from '@/components/ui/Carousel'
 
 type TFeedbackCardProps = {
-  cardData: { mode: TFeedbackMode }[]
+  cardData: {
+    id: string
+    mode: TFeedbackMode
+    nickname?: string
+    content: string
+    linkUrl?: string
+    order: number
+  }[]
   autoPlayInterval?: number
   onApiChange?: (api: CarouselApi | undefined) => void
 }
@@ -68,9 +75,16 @@ const FeedbackCard = ({
       className='flex self-stretch w-full min-h-[587px] mb-[60px]'
     >
       <CarouselContent className='gap-x-[24px] mt-[60px] xl:mt-[120px]'>
-        {cardData.map((card, index) => (
-          <CarouselItem key={index} className='basis-auto'>
-            <FeedbackCardItem mode={card.mode} />
+        {cardData.map((card) => (
+          <CarouselItem key={card.id} className='basis-auto'>
+            <FeedbackCardItem
+              id={card.id}
+              mode={card.mode}
+              nickname={card.nickname}
+              content={card.content}
+              linkUrl={card.linkUrl}
+              order={card.order}
+            />
           </CarouselItem>
         ))}
       </CarouselContent>

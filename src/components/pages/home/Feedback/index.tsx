@@ -33,9 +33,21 @@ const Feedback = () => {
     return feedbacksData
   }, [feedbacksError, feedbacksData, isFeedbacksLoading, mock.data])
 
-  const cardData: { mode: TFeedbackMode }[] = useMemo(() => {
-    return effectiveData.map(feedback => ({
-      mode: feedback.mode
+  const cardData: {
+    id: string
+    mode: TFeedbackMode
+    nickname?: string
+    content: string
+    linkUrl?: string
+    order: number
+  }[] = useMemo(() => {
+    return (effectiveData || []).map(feedback => ({
+      id: feedback.id,
+      mode: feedback.mode,
+      nickname: feedback.mode === 'REAL' ? feedback.nickname : undefined,
+      content: feedback.content,
+      linkUrl: feedback.mode !== 'REAL' ? (feedback.linkUrl || undefined) : undefined,
+      order: feedback.order
     }))
   }, [effectiveData])
 
@@ -51,10 +63,10 @@ const Feedback = () => {
     carouselApi.on('select', updateButtonStates)
 
     return () => {
-    if (carouselApi) {
-      carouselApi.off('select', updateButtonStates)
+      if (carouselApi) {
+        carouselApi.off('select', updateButtonStates)
+      }
     }
-  }
   }, [carouselApi])
 
   const handlePrevious = () => carouselApi?.scrollPrev()
@@ -74,11 +86,10 @@ const Feedback = () => {
         <button
           onClick={handlePrevious}
           disabled={!canGoLeft}
-          className={`group pt-[14px] pb-[18px] px-[20px] mr-[24px] rounded-[41px] border ${
-            canGoLeft
-              ? 'border-figma-secondary-950 cursor-pointer'
-              : 'border-figma-secondary-300 cursor-not-allowed'
-          }`}
+          className={`group pt-[14px] pb-[18px] px-[20px] mr-[24px] rounded-[41px] border ${canGoLeft
+            ? 'border-figma-secondary-950 cursor-pointer'
+            : 'border-figma-secondary-300 cursor-not-allowed'
+            }`}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -97,11 +108,10 @@ const Feedback = () => {
         <button
           onClick={handleNext}
           disabled={!canGoRight}
-          className={`group pt-[14px] pb-[18px] px-[20px] rounded-[41px] border ${
-            canGoRight
-              ? 'border-figma-secondary-950 cursor-pointer'
-              : 'border-figma-secondary-300 cursor-not-allowed'
-          }`}
+          className={`group pt-[14px] pb-[18px] px-[20px] rounded-[41px] border ${canGoRight
+            ? 'border-figma-secondary-950 cursor-pointer'
+            : 'border-figma-secondary-300 cursor-not-allowed'
+            }`}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
