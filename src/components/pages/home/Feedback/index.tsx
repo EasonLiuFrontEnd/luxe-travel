@@ -1,112 +1,76 @@
 'use client'
 
-import FeedbackCard from './FeedbackCard'
-import { useState, useRef } from 'react'
-import type { TFeedbackType } from './FeedbackCard'
-import { useMediaQuery } from '@/hooks/useMediaQuery'
+import FeedbackCarousel from './FeedbackCarousel'
+import { useState, useEffect, useMemo } from 'react'
+import type { TFeedbackMode } from './FeedbackCardItem'
+import type { CarouselApi } from '@/components/ui/Carousel'
+import { useFeedBack } from '@/api/home/useFeedBack'
 import '@/styles/components.css'
 
 const Feedback = () => {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const touchStartX = useRef(0)
-  const touchEndX = useRef(0)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { isMobile } = useMediaQuery()
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>()
+  const [canGoLeft, setCanGoLeft] = useState(false)
+  const [canGoRight, setCanGoRight] = useState(false)
 
-  const cardData: { type: TFeedbackType }[] = [
-    { type: 'detailed' },
-    { type: 'quote-short' },
-    { type: 'quote-long' },
-    { type: 'detailed' },
-    { type: 'quote-short' },
-    { type: 'quote-long' },
-  ]
+  const {
+    query: {
+      data: feedbacksData,
+      isLoading: isFeedbacksLoading,
+      error: feedbacksError,
+    },
+    mock,
+  } = useFeedBack()
 
-  const totalCards = cardData.length
-  const gap = 24
-  const rightMargin = 50
-
-  const getCardWidth = (type: TFeedbackType, isMobile: boolean): number => {
-    if (type === 'detailed') {
-      return isMobile ? 320 : 523
-    }
-    return 320
-  }
-
-  const getTranslateX = (index: number) => {
-    let translateX = 0
-    for (let i = 0; i < index; i++) {
-      const cardWidth = getCardWidth(cardData[i].type, isMobile)
-      translateX += cardWidth + gap
-    }
-    return translateX
-  }
-
-  const getMaxIndex = () => {
-    let containerWidth: number
-
-    if (isMobile) {
-      const screenWidth =
-        typeof window !== 'undefined' ? window.innerWidth : 375
-      containerWidth = screenWidth - 24 - 120
-    } else {
-      containerWidth = 1440
+  const effectiveData = useMemo(() => {
+    if (feedbacksError || !feedbacksData) {
+      return mock.data
     }
 
-    const safetyMargin = isMobile ? rightMargin + 150 : rightMargin
-
-    let totalWidth = 0
-    for (let i = 0; i < totalCards; i++) {
-      const cardWidth = getCardWidth(cardData[i].type, isMobile)
-      totalWidth += cardWidth
-      if (i < totalCards - 1) totalWidth += gap
+    if (isFeedbacksLoading) {
+      return mock.data
     }
 
-    const maxTranslateX = totalWidth - containerWidth + safetyMargin
+    return feedbacksData
+  }, [feedbacksError, feedbacksData, isFeedbacksLoading, mock.data])
 
-    for (let i = totalCards - 1; i >= 0; i--) {
-      if (getTranslateX(i) <= maxTranslateX) {
-        return i
+  const cardData: {
+    id: string
+    mode: TFeedbackMode
+    nickname?: string
+    content: string
+    linkUrl?: string
+    order: number
+  }[] = useMemo(() => {
+    return (effectiveData || []).map(feedback => ({
+      id: feedback.id,
+      mode: feedback.mode,
+      nickname: feedback.mode === 'REAL' ? feedback.nickname : undefined,
+      content: feedback.content,
+      linkUrl: feedback.mode !== 'REAL' ? (feedback.linkUrl || undefined) : undefined,
+      order: feedback.order
+    }))
+  }, [effectiveData])
+
+  useEffect(() => {
+    if (!carouselApi) return
+
+    const updateButtonStates = () => {
+      setCanGoLeft(carouselApi.canScrollPrev())
+      setCanGoRight(carouselApi.canScrollNext())
+    }
+
+    updateButtonStates()
+    carouselApi.on('select', updateButtonStates)
+
+    return () => {
+      if (carouselApi) {
+        carouselApi.off('select', updateButtonStates)
       }
     }
-    return 0
-  }
+  }, [carouselApi])
 
-  const canGoLeft = currentIndex > 0
-  const canGoRight = currentIndex < getMaxIndex()
-
-  const handlePrevious = () => {
-    if (canGoLeft) {
-      setCurrentIndex((prev) => prev - 1)
-    }
-  }
-
-  const handleNext = () => {
-    if (canGoRight) {
-      setCurrentIndex((prev) => prev + 1)
-    }
-  }
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.touches[0].clientX
-  }
-
-  const handleTouchEnd = () => {
-    const swipeDistance = touchStartX.current - touchEndX.current
-    const minSwipeDistance = 30
-
-    if (Math.abs(swipeDistance) > minSwipeDistance) {
-      if (swipeDistance > 0) {
-        handleNext()
-      } else {
-        handlePrevious()
-      }
-    }
-  }
+  const handlePrevious = () => carouselApi?.scrollPrev()
+  const handleNext = () => carouselApi?.scrollNext()
 
   return (
     <div
@@ -116,20 +80,11 @@ const Feedback = () => {
       <h2 className='font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px] gradient-title-border'>
         真實旅客回饋
       </h2>
-      <div className='flex self-stretch min-h-[587px] mb-[60px] overflow-hidden'>
-        <div
-          ref={containerRef}
-          className='flex gap-x-[24px] mt-[60px] xl:mt-[120px] transition-transform duration-300'
-          style={{ transform: `translateX(-${getTranslateX(currentIndex)}px)` }}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          {cardData.map((card, index) => (
-            <FeedbackCard key={index} type={card.type} />
-          ))}
-        </div>
-      </div>
+      <FeedbackCarousel
+        cardData={cardData}
+        autoPlayInterval={10000}
+        onApiChange={setCarouselApi}
+      />
       <div className='w-[75vw] hidden xl:flex justify-end mx-auto px-[24px]'>
         <button
           onClick={handlePrevious}
