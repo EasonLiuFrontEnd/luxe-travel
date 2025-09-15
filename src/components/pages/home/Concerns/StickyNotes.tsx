@@ -38,22 +38,22 @@ const StickyNotes = ({
 
   const [firstLine, secondLine] = parseContent(data.content)
 
-  const containerClassName = `w-[250px] h-[260px] pt-[18px] relative shrink-0 transition-transform duration-300 ease-out ${isMobile ? '' : 'hover:-translate-y-5'}`
+  const containerClassName = `w-[250px] h-[260px] pt-[18px] mb-[8px] relative shrink-0 z-20 transition-transform duration-300 ease-out ${isMobile ? '' : 'hover:-translate-y-5'}`
   const combinedStyle = isMobile
     ? {
-        transform: `rotate(${rotation}deg)`,
-        opacity: 1,
-      }
+      transform: `rotate(${rotation}deg)`,
+      opacity: 1,
+    }
     : {
-        transform: `rotate(${rotation}deg) translateY(calc(-${offsetY}px + ${transformY}px))`,
-        opacity: position > 0 ? 1 : 0,
-      }
+      transform: `rotate(${rotation}deg) translateY(calc(-${offsetY}px + ${transformY}px))`,
+      opacity: position > 0 ? 1 : 0,
+    }
 
   return (
     <div
       className={containerClassName}
       style={combinedStyle}
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={() => { setIsHovered(true); console.log(777) }}
       onMouseLeave={() => setIsHovered(false)}
     >
       <svg
