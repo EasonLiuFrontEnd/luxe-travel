@@ -1,21 +1,21 @@
 'use client'
 
 import { useMemo } from 'react'
+import Image from 'next/image'
 import { useScrollContext } from '@/context/ScrollContext'
-import { APP_CONFIG } from '@/lib/config'
 import { useBanners } from '@/api/home/useBanners'
-import type { TBaseComponent } from '@/types'
-
-export type TBanner = TBaseComponent & {
-  logoProgress?: number
-}
 import { cn } from '@/lib/utils'
+import { APP_CONFIG } from '@/lib/config'
+import type { TBaseComponent } from '@/types'
+import AirplaneIcon from '@/components/shared/icons/banner/AirplaneIcon'
 import BannerCarousel from './BannerCarousel'
 import styles from './styles.module.css'
-import AirplaneIcon from '@/components/shared/icons/banner/AirplaneIcon'
-import Image from 'next/image'
 
-const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
+export type TBannerComponent = TBaseComponent & {
+  logoProgress?: number
+}
+
+const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
   const { logoProgress: contextLogoProgress } = useScrollContext()
 
   const logoProgress = propLogoProgress ?? contextLogoProgress
@@ -74,27 +74,31 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
               'font-noto-serif-tc font-bold text-[40px] xl:text-[96px] leading-[1.2]',
             )}
           >
-            <div
-              className={cn(
-                'self-end max-xl:self-start',
-                'bg-figma-neutral-50 rounded-tr-xl max-xl:rounded-ee-[12px] xl:rounded-es-2xl',
-                'pt-[12px] pb-[4px] px-[12px]',
-                'xl:pt-[16px] xl:px-[16px]',
-              )}
-            >
-              {firstBanner?.title?.split('精緻首選')[0] || '歐洲自由行'}
-            </div>
-            <div
-              className={cn(
-                'self-end max-xl:self-start',
-                'bg-figma-neutral-50 xl:rounded-bl-2xl',
-                'py-[4px] px-[12px]',
-                'xl:pt-[4px] xl:pb-[16px] xl:px-[16px]',
-                styles['concave-border-1'],
-              )}
-            >
-              精緻首選
-            </div>
+            {firstBanner?.titleLine1 && (
+              <div
+                className={cn(
+                  'self-end max-xl:self-start',
+                  'bg-figma-neutral-50 rounded-tr-xl max-xl:rounded-ee-[12px] xl:rounded-es-2xl',
+                  'pt-[12px] pb-[4px] px-[12px]',
+                  'xl:pt-[16px] xl:px-[16px]',
+                )}
+              >
+                {firstBanner.titleLine1}
+              </div>
+            )}
+            {firstBanner?.titleLine2 && (
+              <div
+                className={cn(
+                  'self-end max-xl:self-start',
+                  'bg-figma-neutral-50 xl:rounded-bl-2xl',
+                  'py-[4px] px-[12px]',
+                  'xl:pt-[4px] xl:pb-[16px] xl:px-[16px]',
+                  styles['concave-border-1'],
+                )}
+              >
+                {firstBanner.titleLine2}
+              </div>
+            )}
           </h1>
           <div
             className={cn(
@@ -102,31 +106,32 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
               'font-genseki-gothic font-medium xl:text-[24px] text-[16px] xl:leading-[1.2] leading-[1.5]',
             )}
           >
-            <p
-              className={cn(
-                'self-end max-xl:self-start text-right',
-                'bg-figma-neutral-50 max-xl:rounded-se-[12px]',
-                'py-[4px] px-[12px]',
-                'xl:py-[4px] xl:px-[16px]',
-                styles['concave-border-2'],
-              )}
-            >
-              {firstBanner?.subtitle?.split('為您')[0] ||
-                '典藏旅遊30年經驗團隊服務'}
-            </p>
-            <p
-              className={cn(
-                'self-end max-xl:self-start',
-                'bg-figma-neutral-50 max-xl:rounded-e-[12px] xl:rounded-s-2xl',
-                'pt-[4px] pb-[12px] px-[12px]',
-                'xl:py-[10px] xl:px-[16px]',
-                styles['concave-border-3'],
-              )}
-            >
-              {firstBanner?.subtitle?.includes('為您')
-                ? '為您' + firstBanner.subtitle.split('為您')[1]
-                : '為您客製化旅程，典藏經典回憶'}
-            </p>
+            {firstBanner?.subtitleLine1 && (
+              <p
+                className={cn(
+                  'self-end max-xl:self-start text-right',
+                  'bg-figma-neutral-50 max-xl:rounded-se-[12px]',
+                  'py-[4px] px-[12px]',
+                  'xl:py-[4px] xl:px-[16px]',
+                  styles['concave-border-2'],
+                )}
+              >
+                {firstBanner.subtitleLine1}
+              </p>
+            )}
+            {firstBanner?.subtitleLine2 && (
+              <p
+                className={cn(
+                  'self-end max-xl:self-start',
+                  'bg-figma-neutral-50 max-xl:rounded-e-[12px] xl:rounded-s-2xl',
+                  'pt-[4px] pb-[12px] px-[12px]',
+                  'xl:py-[10px] xl:px-[16px]',
+                  styles['concave-border-3'],
+                )}
+              >
+                {firstBanner.subtitleLine2}
+              </p>
+            )}
           </div>
         </div>
         <BannerCarousel
