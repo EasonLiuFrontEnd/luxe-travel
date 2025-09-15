@@ -329,27 +329,27 @@ export const TravelInquiryForm = ({
 
   return (
     <div
-      className={`min-h-screen bg-[var(--Secondary-100,#F7F4EC)] ${className}`}
+      className={`min-h-screen p-0 bg-[var(--Secondary-100,#F7F4EC)] ${className}`}
     >
       <div className='w-full max-w-[1440px] mx-auto'>
         <HeroSection />
 
-        <div className='relative -mt-20 pt-20'>
-          <div className='mx-auto px-4 md:px-8 py-8'>
-            <div className='mx-auto rounded-lg shadow-[0_24px_48px_rgba(0,0,0,0.12)] border border-[var(--color-figma-secondary-150)] bg-[var(--Secondary-100,#F7F4EC)] p-12'>
+        <div className='relative'>
+          <div className='mx-auto py-8'>
+            <div className='mx-auto rounded-lg bg-[var(--Secondary-100,#F7F4EC)]'>
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(handleSubmit)}
                   className='content-stretch flex flex-col items-start justify-start overflow-clip relative rounded-[16px] size-full'
                   noValidate
                 >
-                  <div className='bg-white box-border content-stretch flex flex-col gap-4 items-start justify-start p-[32px] relative rounded-tl-[16px] rounded-tr-[16px] shrink-0 w-full'>
-                    <div className='box-border content-stretch flex flex-col gap-4 items-start justify-start pb-6 pt-0 px-0 relative shrink-0 w-full'>
+                  <div className='bg-white box-border content-stretch flex flex-col gap-4 items-start justify-start pt-8 px-4 xl:px-8 relative rounded-tl-[16px] rounded-tr-[16px] shrink-0 w-full'>
+                    <div className='box-border content-stretch flex flex-col gap-4 items-start justify-start pb-7 relative shrink-0 w-full'>
                       <div
                         aria-hidden='true'
                         className='absolute border-[#383841] border-[0px_0px_1px] border-solid inset-0 pointer-events-none'
                       />
-                      <div className="font-['Noto_Serif_TC:Bold',_sans-serif] font-bold leading-[0] relative shrink-0 text-[#383841] text-[24px] w-full">
+                      <div className="font-['Noto_Serif_TC',_sans-serif] leading-[0] relative shrink-0 text-[#383841] text-[24px] w-full">
                         <p className='leading-[1.2]'>旅遊諮詢需求單</p>
                       </div>
                       <div className="flex flex-col font-['GenSekiGothic2_JP:M',_sans-serif] justify-center leading-[1.5] not-italic relative shrink-0 text-[#383841] text-[16px] w-full">
@@ -361,7 +361,7 @@ export const TravelInquiryForm = ({
                     </div>
                   </div>
 
-                  <div className='bg-white box-border content-stretch flex flex-col gap-4 items-start justify-start pb-8 pt-0 px-8 relative rounded-bl-[16px] rounded-br-[16px] shrink-0 w-full'>
+                  <div className='box-border content-stretch flex flex-col gap-4 items-start justify-start pb-8 pt-0 relative rounded-bl-[16px] rounded-br-[16px] shrink-0 w-full'>
                     <BasicInfoSection control={form.control} />
 
                     <BudgetDestinationSection control={form.control} />

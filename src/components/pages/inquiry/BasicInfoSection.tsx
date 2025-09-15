@@ -28,7 +28,7 @@ export type TBasicInfoSectionProps = {
 }
 export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
   return (
-    <FormSection title='基本聯絡資訊'>
+    <FormSection title='' className='rounded-t-none'>
       <div className='flex flex-col gap-6 w-full'>
         <FormField
           control={control}
@@ -53,7 +53,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
         <div className='w-full'>
           <div className='flex flex-wrap gap-0.5 items-center justify-start mb-1'>
             <div className='flex gap-1 items-center justify-start'>
-              <div className='font-noto-serif-bold text-[18px] leading-[1.5] text-figma-primary-950'>
+              <div className="font-['Noto_Serif_TC',_sans-serif] font-light text-[18px] leading-[1.5] text-figma-primary-950">
                 聯絡人
               </div>
               <div className='font-noto-sans text-[18px] leading-[1.5] text-figma-function-alert'>
@@ -99,7 +99,6 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
                             <RadioGroupItem
                               value={gender.value}
                               id={`gender-${gender.value}`}
-                              className='size-4'
                             />
                             {gender.label}
                           </Label>
@@ -113,13 +112,13 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
             </div>
           </div>
         </div>
-        <div className='grid grid-cols-2 gap-4 w-full'>
+        <div className='flex flex-col xl:flex-row xl:gap-4 w-full'>
           <FormField
             control={control}
             name='basicInfo.phoneNumber'
             render={({ field }) => (
-              <FormItem className='w-full'>
-                <FormLabel className='font-noto-serif-bold text-[18px] leading-[1.5] text-figma-primary-950'>
+              <FormItem className='w-full mb-6 xl:mb-0'>
+                <FormLabel className="font-['Noto_Serif_TC',_sans-serif] font-light text-[18px] leading-[1.5] text-figma-primary-950">
                   手機號碼 <span className='text-figma-function-alert'>*</span>
                 </FormLabel>
                 <FormControl>
@@ -141,7 +140,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
             render={({ field }) => (
               <FormItem className='w-full'>
                 <div className='flex flex-wrap gap-0.5 items-center justify-start'>
-                  <FormLabel className='font-noto-serif-bold text-[18px] leading-[1.5] text-figma-primary-950'>
+                  <FormLabel className="font-['Noto_Serif_TC',_sans-serif] font-light text-[18px] leading-[1.5] text-figma-primary-950">
                     LINE ID
                   </FormLabel>
                   <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950'>
@@ -165,8 +164,8 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
           name='basicInfo.contactMethod'
           render={({ field }) => (
             <FormItem className='w-full'>
-              <FormLabel className='font-noto-serif-bold text-[18px] leading-[1.5] text-figma-primary-950'>
-                偏好聯絡方式{' '}
+              <FormLabel className="font-['Noto_Serif_TC',_sans-serif] font-light text-[18px] leading-[1.5] text-figma-primary-950 pb-4">
+                請選擇偏好的聯絡方式
                 <span className='text-figma-function-alert'>*</span>
               </FormLabel>
               <FormControl>
@@ -201,7 +200,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
             <FormItem className='w-full'>
               <div className='flex flex-wrap gap-0.5 items-center justify-start'>
                 <div className='flex gap-1 items-center justify-start'>
-                  <div className='font-noto-serif-bold text-[18px] leading-[1.5] text-figma-primary-950'>
+                  <div className="font-['Noto_Serif_TC',_sans-serif] font-light text-[18px] leading-[1.5] text-figma-primary-950">
                     聯絡時間
                   </div>
                   <div className='font-noto-sans text-[18px] leading-[1.5] text-figma-function-alert'>
@@ -213,7 +212,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
                 </div>
               </div>
               <FormControl>
-                <div className='relative w-full md:w-[180px]'>
+                <div className='relative w-full xl:w-[180px]'>
                   <input
                     placeholder='請填入您方便的聯繫時段'
                     className='font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950 bg-transparent border-none outline-none placeholder:text-figma-primary-300 py-3 w-full'
@@ -231,7 +230,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
           name='basicInfo.contactSource'
           render={({ field }) => (
             <FormItem className='w-full'>
-              <FormLabel className='font-noto-serif-bold text-[18px] leading-[1.5] text-figma-primary-950'>
+              <FormLabel className="font-['Noto_Serif_TC',_sans-serif] font-light text-[18px] leading-[1.5] text-figma-primary-950">
                 您是從何管道得知典藏旅遊？
               </FormLabel>
               <FormControl>
@@ -260,26 +259,25 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
                           />
                           {source.value === 'other' ? '其他：' : source.label}
                         </Label>
-                        {source.value === 'other' &&
-                          field.value === 'other' && (
-                            <FormField
-                              control={control}
-                              name='basicInfo.otherSource'
-                              render={({ field: otherField }) => (
-                                <FormItem>
-                                  <FormControl>
-                                    <div className='h-full w-[120px] relative'>
-                                      <input
-                                        placeholder='請說明其他管道'
-                                        className='w-full bg-transparent border-none outline-none text-figma-primary-950 text-[16px] leading-[1.2] border-b border-[rgba(56,56,65,0.7)] pb-1'
-                                        {...otherField}
-                                      />
-                                    </div>
-                                  </FormControl>
-                                </FormItem>
-                              )}
-                            />
-                          )}
+                        {source.value === 'other' && (
+                          <FormField
+                            control={control}
+                            name='basicInfo.otherSource'
+                            render={({ field: otherField }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <div className='h-full w-[120px] relative'>
+                                    <input
+                                      className='w-full bg-transparent border-none outline-none text-figma-primary-950 text-[16px] leading-[1.2] py-1'
+                                      {...otherField}
+                                    />
+                                    <div className='absolute border-[0px_0px_1px] border-[rgba(56,56,65,0.7)] border-solid inset-0 pointer-events-none' />
+                                  </div>
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+                        )}
                       </div>
                     ))}
                   </RadioGroup>

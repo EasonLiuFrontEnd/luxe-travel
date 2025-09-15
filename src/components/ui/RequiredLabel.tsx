@@ -5,6 +5,7 @@ type TRequiredLabelProps = {
   required?: boolean
   className?: string
   subText?: string
+  requiredText?: string
 }
 
 export const RequiredLabel = ({
@@ -12,13 +13,14 @@ export const RequiredLabel = ({
   required = false,
   className,
   subText,
+  requiredText,
 }: TRequiredLabelProps) => {
   return (
     <div className='flex flex-wrap gap-0.5 items-center justify-start'>
       <div className='flex gap-1 items-center justify-start'>
         <div
           className={cn(
-            'font-noto-serif-bold text-[18px] leading-[1.5] text-figma-primary-950',
+            "font-['Noto_Serif_TC',_sans-serif] font-light text-[18px] leading-[1.5] text-figma-primary-950",
             className,
           )}
         >
@@ -33,6 +35,11 @@ export const RequiredLabel = ({
       {subText && (
         <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950'>
           {subText}
+        </span>
+      )}
+      {requiredText && (
+        <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-function-alert'>
+          {requiredText}
         </span>
       )}
     </div>

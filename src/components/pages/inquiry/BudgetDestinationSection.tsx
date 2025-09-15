@@ -36,6 +36,7 @@ export const BudgetDestinationSection = ({
               <RequiredLabel
                 required
                 subText='（不含午晚餐及部分自理當地城市內交通費用）'
+                requiredText='此為必填資訊'
               >
                 每人預算
               </RequiredLabel>
@@ -45,7 +46,7 @@ export const BudgetDestinationSection = ({
                   value={field.value}
                   onValueChange={field.onChange}
                   name='budget'
-                  className='grid grid-cols-2 md:grid-cols-4 gap-4'
+                  className='grid grid-cols-1 xl:grid-cols-4 gap-4'
                   labelClassName='flex items-center gap-2 font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950 cursor-pointer'
                 />
               </FormControl>
@@ -62,7 +63,7 @@ export const BudgetDestinationSection = ({
                 想去的國家組合
               </RequiredLabel>
               <FormControl>
-                <div className='flex gap-6 items-start justify-start w-full'>
+                <div className='flex flex-col xl:flex-row gap-6 items-start justify-start w-full'>
                   {Object.entries(EUROPEAN_REGIONS).map(
                     ([regionKey, region], index) => (
                       <div
@@ -70,9 +71,9 @@ export const BudgetDestinationSection = ({
                         className='flex-1 flex flex-col gap-1 relative'
                       >
                         {index > 0 && (
-                          <div className='absolute left-[-12px] top-0 bottom-0 w-px bg-figma-primary-300'></div>
+                          <div className='hidden xl:block absolute left-[-12px] top-0 bottom-0 w-px bg-figma-primary-300'></div>
                         )}
-                        <div className='font-genseki-body-s-bold text-[16px] leading-[1.5] text-figma-secondary-500 tracking-[0.96px] mb-1'>
+                        <div className='font-genseki-body-s-bold text-[16px] leading-[1.5] text-figma-secondary-500 mb-1'>
                           {region.label}
                         </div>
                         <div className='flex flex-wrap gap-4 items-center justify-start py-3'>

@@ -33,10 +33,28 @@ export const CounterInput = ({
     }
   }
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = e.target.value
+
+    // 允許空值
+    if (rawValue === '') {
+      onChange(0)
+      return
+    }
+
+    // 轉換為數字並限制在範圍內
+    const inputValue = parseInt(rawValue, 10)
+    if (!isNaN(inputValue)) {
+      // 限制在 min 和 max 範圍內
+      const clampedValue = Math.max(min, Math.min(max, inputValue))
+      onChange(clampedValue)
+    }
+  }
+
   return (
     <div
       className={cn(
-        'flex gap-2.5 items-center justify-start px-0 py-3 border-b border-figma-primary-950-70',
+        'flex items-center justify-start px-0 py-3 border-b border-figma-primary-950-70',
         className,
       )}
     >
@@ -44,36 +62,82 @@ export const CounterInput = ({
         {label}
       </div>
 
-      <button
-        type='button'
-        className='backdrop-blur-sm rounded-[25px] border border-figma-primary-300 p-[2px] shrink-0 cursor-pointer hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed'
-        onClick={handleDecrement}
-        disabled={disabled || value <= min}
-      >
-        <div className='size-4 flex items-center justify-center'>
-          <span className='text-figma-primary-300 text-xs'>-</span>
-        </div>
-      </button>
+      <div className='flex items-center gap-[10px]'>
+        <button
+          type='button'
+          className={cn(
+            'backdrop-blur-sm rounded-[25px] border p-[2px] shrink-0 cursor-pointer hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed',
+            disabled || value <= min
+              ? 'border-figma-primary-300'
+              : 'border-figma-primary-950',
+          )}
+          onClick={handleDecrement}
+          disabled={disabled || value <= min}
+        >
+          <div className='size-4 flex items-center justify-center'>
+            <svg
+              width='16'
+              height='16'
+              viewBox='0 0 16 16'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                d='M4 8H12'
+                stroke={disabled || value <= min ? '#b7b8c2' : '#383841'}
+                strokeWidth='1.5'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              />
+            </svg>
+          </div>
+        </button>
 
-      <div className='flex gap-[3px] items-center justify-start'>
-        <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950'>
-          {value}
-        </span>
-        <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950'>
-          {unit}
-        </span>
+        <div className='flex gap-[3px] items-center justify-start'>
+          <input
+            type='text'
+            inputMode='numeric'
+            pattern='[0-9]*'
+            value={value}
+            onChange={handleInputChange}
+            disabled={disabled}
+            className='w-8 h-6 text-center bg-transparent border-none outline-none font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950 cursor-text focus:outline-none'
+          />
+          <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950'>
+            {unit}
+          </span>
+        </div>
+
+        <button
+          type='button'
+          className={cn(
+            'backdrop-blur-sm rounded-[25px] border p-[2px] shrink-0 cursor-pointer hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed',
+            disabled || value >= max
+              ? 'border-figma-primary-300'
+              : 'border-figma-primary-950',
+          )}
+          onClick={handleIncrement}
+          disabled={disabled || value >= max}
+        >
+          <div className='size-4 flex items-center justify-center'>
+            <svg
+              width='16'
+              height='16'
+              viewBox='0 0 16 16'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                d='M8 4V12M4 8H12'
+                stroke={disabled || value >= max ? '#b7b8c2' : '#383841'}
+                strokeWidth='1.5'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              />
+            </svg>
+          </div>
+        </button>
       </div>
-
-      <button
-        type='button'
-        className='backdrop-blur-sm rounded-[25px] border border-figma-primary-950 p-[2px] shrink-0 cursor-pointer hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed'
-        onClick={handleIncrement}
-        disabled={disabled || value >= max}
-      >
-        <div className='size-4 flex items-center justify-center'>
-          <span className='text-figma-primary-950 text-xs'>+</span>
-        </div>
-      </button>
     </div>
   )
 }
