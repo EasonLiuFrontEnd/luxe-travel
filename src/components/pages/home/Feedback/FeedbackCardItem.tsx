@@ -3,13 +3,13 @@
 import Image from 'next/image'
 import { useState } from 'react'
 
-export type TFeedbackType = 'detailed' | 'quote-short' | 'quote-long'
+export type TFeedbackMode = 'REAL' | 'VIRTUAL'
 
-type TFeedbackCardProps = {
-  type: TFeedbackType
+type TFeedbackCardItemProps = {
+  mode: TFeedbackMode
 }
 
-const FeedbackCard = ({ type }: TFeedbackCardProps) => {
+const FeedbackCardItem = ({ mode }: TFeedbackCardItemProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
 
   const handleToggle = () => {
@@ -20,7 +20,7 @@ const FeedbackCard = ({ type }: TFeedbackCardProps) => {
     console.log('Navigate to feedback page')
   }
 
-  if (type === 'detailed') {
+  if (mode === 'REAL') {
     return (
       <div
         className={`relative flex flex-col items-center w-[320px] xl:w-[523px] pt-[103px] pb-[24px] px-[24px] bg-figma-neutral-0 rounded-[16px] ${isExpanded ? 'max-h-[714px]' : 'max-h-[374px]'}`}
@@ -76,7 +76,7 @@ const FeedbackCard = ({ type }: TFeedbackCardProps) => {
     )
   }
 
-  if (type === 'quote-short') {
+  if (mode === 'VIRTUAL') {
     return (
       <div className='w-[320px] h-[323px] p-[24px] rounded-[16px] text-figma-accent-blue-normal bg-figma-accent-blue-light'>
         <div className='inline-block p-[20px] mb-[24px] rounded-[64px] border border-figma-accent-blue-normal'>
@@ -111,7 +111,7 @@ const FeedbackCard = ({ type }: TFeedbackCardProps) => {
   }
 
   return (
-    <div className="w-[320px] h-[475px] p-[24px] rounded-[16px] text-figma-primary-0 bg-[url('/home/feedback/scenery.jpg')] bg-cover bg-center">
+    <div className='w-[320px] h-[475px] p-[24px] rounded-[16px] text-figma-primary-0 bg-figma-primary-950'>
       <div className='inline-block p-[20px] mb-[24px] rounded-[64px] border border-figma-primary-0'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -143,4 +143,4 @@ const FeedbackCard = ({ type }: TFeedbackCardProps) => {
   )
 }
 
-export default FeedbackCard
+export default FeedbackCardItem
