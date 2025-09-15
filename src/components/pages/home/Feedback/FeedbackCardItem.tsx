@@ -1,28 +1,48 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
-export type TFeedbackType = 'detailed' | 'quote-short' | 'quote-long'
+export type TFeedbackMode = 'REAL' | 'VIRTUAL'
 
-type TFeedbackCardProps = {
-  type: TFeedbackType
+type TFeedbackCardItemProps = {
+  id: string
+  mode: TFeedbackMode
+  nickname?: string
+  content: string
+  linkUrl?: string
+  order: number
 }
 
-const FeedbackCard = ({ type }: TFeedbackCardProps) => {
+const FeedbackCardItem = ({
+  id,
+  mode,
+  nickname,
+  content,
+  linkUrl,
+  order,
+}: TFeedbackCardItemProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
+  const [showButton, setShowButton] = useState(true)
+  const textRef = useRef<HTMLParagraphElement>(null)
 
   const handleToggle = () => {
     setIsExpanded(!isExpanded)
   }
 
-  const handleNavigation = () => {
-    console.log('Navigate to feedback page')
-  }
+  useEffect(() => {
+    if (mode === 'REAL' && textRef.current) {
+      const element = textRef.current
+      const isOverflowing = element.scrollHeight > element.clientHeight
+      setShowButton(isOverflowing)
+    }
+  }, [mode, content])
 
-  if (type === 'detailed') {
+
+  if (mode === 'REAL') {
     return (
       <div
+        id={id}
         className={`relative flex flex-col items-center w-[320px] xl:w-[523px] pt-[103px] pb-[24px] px-[24px] bg-figma-neutral-0 rounded-[16px] ${isExpanded ? 'max-h-[714px]' : 'max-h-[374px]'}`}
       >
         <div className='absolute top-[-28px] flex flex-col items-center'>
@@ -41,7 +61,7 @@ const FeedbackCard = ({ type }: TFeedbackCardProps) => {
             className='mb-[4px]'
           />
           <p className='font-genseki-body-s-bold text-figma-primary-950'>
-            Yuting Pan
+            {nickname}
           </p>
         </div>
         <svg
@@ -58,27 +78,34 @@ const FeedbackCard = ({ type }: TFeedbackCardProps) => {
           />
         </svg>
         <p
+          ref={textRef}
           className={`mb-[20px] font-genseki-body-m-regular ${isExpanded ? '' : 'line-clamp-6'} overflow-hidden`}
         >
-          在選擇蜜月旅行時，看了好多旅行團的行程總是覺得差強人意，更無法接受繳了高額的費用卻可能無法保證期待的景觀列車可以搭乘，但也不希望完全都是自己處理行程的一切，畢竟是第一次要去歐洲，擔心自己缺乏經驗安排的不夠完善等等。在兩方的拉扯中意外發現還有一種「半自助」的方式，因而找上典藏來幫我們客製行程、安排、準備行前的一切事項，包含住宿機票交通等，真的讓忙錄於工作的我們放心不少。旅遊期間有問題詢問也都能隨時獲得答覆，真的非常非常感謝Johnny與Annie這個期間的協助，讓我們可以順利完成旅程。
+          {content}
         </p>
-        <button
-          onClick={handleToggle}
-          className='
-            py-[4px] px-[12px] font-genseki-body-s-regular text-figma-secondary-500
-            rounded-[18px] border border-figma-secondary-500 cursor-pointer transition-colors duration-300
-            hover:text-figma-secondary-950 hover:border-figma-secondary-950
-          '
-        >
-          {isExpanded ? 'Show less' : 'Show more'}
-        </button>
+        {showButton && (
+          <button
+            onClick={handleToggle}
+            className='
+              py-[4px] px-[12px] font-genseki-body-s-regular text-figma-secondary-500
+              rounded-[18px] border border-figma-secondary-500 cursor-pointer transition-colors duration-300
+              hover:text-figma-secondary-950 hover:border-figma-secondary-950
+            '
+          >
+            {isExpanded ? 'Show less' : 'Show more'}
+          </button>
+        )}
       </div>
     )
   }
 
-  if (type === 'quote-short') {
+  if (mode === 'VIRTUAL') {
     return (
-      <div className='w-[320px] h-[323px] p-[24px] rounded-[16px] text-figma-accent-blue-normal bg-figma-accent-blue-light'>
+      <div
+        id={id}
+        data-order={order}
+        className='w-[320px] h-[323px] p-[24px] rounded-[16px] text-figma-accent-blue-normal bg-figma-accent-blue-light'
+      >
         <div className='inline-block p-[20px] mb-[24px] rounded-[64px] border border-figma-accent-blue-normal'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -94,24 +121,30 @@ const FeedbackCard = ({ type }: TFeedbackCardProps) => {
           </svg>
         </div>
         <p className='w-[272px] font-noto-serif-h4-medium mb-[20px]'>
-          我想只有「典藏」等級才能無後顧之憂的旅遊！
+          {content}
         </p>
-        <button
-          onClick={handleNavigation}
-          className='
-            block mx-auto py-[4px] px-[12px] font-genseki-body-s-regular text-figma-accent-blue-normal
-            rounded-[18px] cursor-pointer border border-figma-accent-blue-normal transition-colors duration-300
-            hover:text-figma-secondary-950 hover:border-figma-secondary-950
-          '
-        >
-          Show more
-        </button>
+        {linkUrl && (
+          <a
+            href={linkUrl}
+            className='
+              block mx-auto py-[4px] px-[12px] font-genseki-body-s-regular text-figma-accent-blue-normal
+              rounded-[18px] cursor-pointer border border-figma-accent-blue-normal transition-colors duration-300
+              hover:text-figma-secondary-950 hover:border-figma-secondary-950 text-center
+            '
+          >
+            Show more
+          </a>
+        )}
       </div>
     )
   }
 
   return (
-    <div className="w-[320px] h-[475px] p-[24px] rounded-[16px] text-figma-primary-0 bg-[url('/home/feedback/scenery.jpg')] bg-cover bg-center">
+    <div
+      id={id}
+      data-order={order}
+      className='w-[320px] h-[475px] p-[24px] rounded-[16px] text-figma-primary-0 bg-figma-primary-950'
+    >
       <div className='inline-block p-[20px] mb-[24px] rounded-[64px] border border-figma-primary-0'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -127,20 +160,22 @@ const FeedbackCard = ({ type }: TFeedbackCardProps) => {
         </svg>
       </div>
       <p className='w-[272px] h-[266px] font-noto-serif-h4-medium mb-[20px]'>
-        推薦給想嘗試自助旅行又懶得作功課的朋友們！
+        {content}
       </p>
-      <button
-        onClick={handleNavigation}
-        className='
-          block mx-auto py-[4px] px-[12px] font-genseki-body-s-regular text-figma-accent-blue-normal
-          rounded-[18px] border border-figma-accent-blue-normal cursor-pointer transition-colors duration-300
-          hover:text-figma-secondary-950 hover:border-figma-secondary-950
-        '
-      >
-        Show more
-      </button>
+      {linkUrl && (
+        <a
+          href={linkUrl}
+          className='
+            block mx-auto py-[4px] px-[12px] font-genseki-body-s-regular text-figma-accent-blue-normal
+            rounded-[18px] border border-figma-accent-blue-normal cursor-pointer transition-colors duration-300
+            hover:text-figma-secondary-950 hover:border-figma-secondary-950 text-center
+          '
+        >
+          Show more
+        </a>
+      )}
     </div>
   )
 }
 
-export default FeedbackCard
+export default FeedbackCardItem

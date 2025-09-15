@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { TConcern } from '@/api/type'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 type TStickyNotesProps = {
   data: TConcern
@@ -19,6 +20,7 @@ const StickyNotes = ({
   transformY,
 }: TStickyNotesProps) => {
   const [isHovered, setIsHovered] = useState(false)
+  const { isMobile } = useMediaQuery()
 
   const parseContent = (content: string): [string, string] => {
     const trimmed = content.trim()
@@ -36,12 +38,16 @@ const StickyNotes = ({
 
   const [firstLine, secondLine] = parseContent(data.content)
 
-  const containerClassName =
-    'w-[250px] h-[260px] pt-[18px] relative shrink-0 transition-transform duration-300 ease-out hover:-translate-y-5'
-  const combinedStyle = {
-    transform: `rotate(${rotation}deg) translateY(calc(-${offsetY}px + ${transformY}px))`,
-    opacity: position > 0 ? 1 : 0,
-  }
+  const containerClassName = `w-[250px] h-[260px] pt-[18px] relative shrink-0 transition-transform duration-300 ease-out ${isMobile ? '' : 'hover:-translate-y-5'}`
+  const combinedStyle = isMobile
+    ? {
+        transform: `rotate(${rotation}deg)`,
+        opacity: 1,
+      }
+    : {
+        transform: `rotate(${rotation}deg) translateY(calc(-${offsetY}px + ${transformY}px))`,
+        opacity: position > 0 ? 1 : 0,
+      }
 
   return (
     <div
