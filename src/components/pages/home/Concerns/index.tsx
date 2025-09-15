@@ -48,7 +48,7 @@ const Concerns = () => {
   return (
     <div
       ref={containerRef}
-      className='flex flex-col justify-center items-center self-stretch gap-y-[32px] lg:gap-y-[120px] lg:pt-[200px] max-lg:py-[60px] max-lg:px-[12px]'
+      className='flex flex-col justify-center items-center self-stretch gap-y-[32px] lg:gap-y-[120px] lg:pt-[200px] max-lg:py-[60px] max-lg:px-[12px] max-lg:relative max-lg:z-20'
       style={gridBackgroundStyle}
     >
       <h2 className='font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px] text-center'>
@@ -75,8 +75,8 @@ const Concerns = () => {
               rotation={rotations[index]}
               color={colors[index]}
               offsetY={isMobile ? '0' : offsetYs[index]}
-              position={notePositions[index]}
-              transformY={getNoteTransformY(notePositions[index])}
+              position={isMobile ? 100 : notePositions[index]}
+              transformY={isMobile ? 0 : getNoteTransformY(notePositions[index])}
             />
           )
         })}
