@@ -25,7 +25,7 @@ export type TTravelType =
 
 export type TGender = 'ms' | 'mr'
 
-export type TContactMethod = 'any' | 'phone' | 'line' | 'email'
+export type TContactMethod = 'any' | 'phone' | 'line'
 
 export type TContactSource =
   | 'triumph-member'
@@ -102,7 +102,7 @@ const genderSchema = z.enum(['ms', 'mr'], {
   error: '請選擇稱謂',
 })
 
-const contactMethodSchema = z.enum(['any', 'phone', 'line', 'email'], {
+const contactMethodSchema = z.enum(['any', 'phone', 'line'], {
   error: '請選擇偏好聯絡方式',
 })
 
@@ -230,7 +230,6 @@ export const CONTACT_METHOD_OPTIONS = [
   { value: 'any', label: '都可以' },
   { value: 'phone', label: '手機' },
   { value: 'line', label: 'LINE' },
-  { value: 'email', label: 'Email' },
 ]
 
 export const CONTACT_SOURCE_OPTIONS = [
@@ -322,10 +321,9 @@ export const TravelInquiryForm = ({
 
   const handleSubmit = async (data: TTravelInquiryFormData) => {
     try {
-      console.log('旅遊諮詢表單提交:', data)
       await onSubmit?.(data)
     } catch (error) {
-      console.error('表單提交錯誤:', error)
+      throw error
     }
   }
 
@@ -333,37 +331,49 @@ export const TravelInquiryForm = ({
     <div
       className={`min-h-screen bg-[var(--Secondary-100,#F7F4EC)] ${className}`}
     >
-      <HeroSection />
+      <div className='w-full max-w-[1440px] mx-auto'>
+        <HeroSection />
 
-      <div className='relative -mt-20 pt-20'>
-        <div className='mx-auto px-4 md:px-8 py-8 max-w-[1440px]'>
-          <div className='mx-auto rounded-lg shadow-[0_24px_48px_rgba(0,0,0,0.12)] border border-[var(--color-figma-secondary-150)] bg-[var(--Secondary-100,#F7F4EC)] p-12'>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(handleSubmit)}
-                className='flex flex-col gap-8'
-                noValidate
-              >
-                <div className='text-center flex flex-col gap-3'>
-                  <h2 className='font-noto-serif-h4-bold text-[24px] text-figma-primary-950'>
-                    旅遊諮詢需求單
-                  </h2>
-                  <p className='font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-500'>
-                    誠摯感謝您蒞臨典藏旅遊。如需進一步諮詢行程內容或服務細節，請填寫表單，我們將由專人儘速與您聯繫。
-                  </p>
-                  <hr className='w-full border-t border-figma-primary-300 mt-4' />
-                </div>
+        <div className='relative -mt-20 pt-20'>
+          <div className='mx-auto px-4 md:px-8 py-8'>
+            <div className='mx-auto rounded-lg shadow-[0_24px_48px_rgba(0,0,0,0.12)] border border-[var(--color-figma-secondary-150)] bg-[var(--Secondary-100,#F7F4EC)] p-12'>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(handleSubmit)}
+                  className='content-stretch flex flex-col items-start justify-start overflow-clip relative rounded-[16px] size-full'
+                  noValidate
+                >
+                  <div className='bg-white box-border content-stretch flex flex-col gap-4 items-start justify-start p-[32px] relative rounded-tl-[16px] rounded-tr-[16px] shrink-0 w-full'>
+                    <div className='box-border content-stretch flex flex-col gap-4 items-start justify-start pb-6 pt-0 px-0 relative shrink-0 w-full'>
+                      <div
+                        aria-hidden='true'
+                        className='absolute border-[#383841] border-[0px_0px_1px] border-solid inset-0 pointer-events-none'
+                      />
+                      <div className="font-['Noto_Serif_TC:Bold',_sans-serif] font-bold leading-[0] relative shrink-0 text-[#383841] text-[24px] w-full">
+                        <p className='leading-[1.2]'>旅遊諮詢需求單</p>
+                      </div>
+                      <div className="flex flex-col font-['GenSekiGothic2_JP:M',_sans-serif] justify-center leading-[1.5] not-italic relative shrink-0 text-[#383841] text-[16px] w-full">
+                        <p className='mb-0'>誠摯感謝您蒞臨典藏旅遊。</p>
+                        <p className=''>
+                          如需進一步諮詢行程內容或服務細節，請填寫表單，我們將由專人儘速與您聯繫。
+                        </p>
+                      </div>
+                    </div>
+                  </div>
 
-                <BasicInfoSection control={form.control} />
+                  <div className='bg-white box-border content-stretch flex flex-col gap-4 items-start justify-start pb-8 pt-0 px-8 relative rounded-bl-[16px] rounded-br-[16px] shrink-0 w-full'>
+                    <BasicInfoSection control={form.control} />
 
-                <BudgetDestinationSection control={form.control} />
+                    <BudgetDestinationSection control={form.control} />
 
-                <DetailRequirementsSection
-                  control={form.control}
-                  isLoading={isLoading}
-                />
-              </form>
-            </Form>
+                    <DetailRequirementsSection
+                      control={form.control}
+                      isLoading={isLoading}
+                    />
+                  </div>
+                </form>
+              </Form>
+            </div>
           </div>
         </div>
       </div>

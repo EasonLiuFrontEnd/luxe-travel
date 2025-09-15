@@ -200,16 +200,27 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
           render={({ field }) => (
             <FormItem className='w-full'>
               <div className='flex flex-wrap gap-0.5 items-center justify-start'>
-                <FormLabel className='font-noto-serif-bold text-[18px] leading-[1.5] text-figma-primary-950'>
-                  聯絡時間 <span className='text-figma-function-alert'>*</span>
-                </FormLabel>
+                <div className='flex gap-1 items-center justify-start'>
+                  <div className='font-noto-serif-bold text-[18px] leading-[1.5] text-figma-primary-950'>
+                    聯絡時間
+                  </div>
+                  <div className='font-noto-sans text-[18px] leading-[1.5] text-figma-function-alert'>
+                    *
+                  </div>
+                </div>
+                <div className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-function-alert'>
+                  此為必填資訊
+                </div>
               </div>
               <FormControl>
-                <Input
-                  placeholder='請填入您方便的聯繫時段'
-                  className='w-full'
-                  {...field}
-                />
+                <div className='relative w-full md:w-[180px]'>
+                  <input
+                    placeholder='請填入您方便的聯繫時段'
+                    className='font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950 bg-transparent border-none outline-none placeholder:text-figma-primary-300 py-3 w-full'
+                    {...field}
+                  />
+                  <div className='absolute border-[#d6111a] border-[0px_0px_1px] border-solid left-0 right-0 bottom-0 pointer-events-none' />
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -26,7 +26,7 @@ export const BudgetDestinationSection = ({
   control,
 }: TBudgetDestinationSectionProps) => {
   return (
-    <FormSection title='預算與目的地' hasBorder>
+    <FormSection title='' hasBorder>
       <div className='space-y-8'>
         <FormField
           control={control}
