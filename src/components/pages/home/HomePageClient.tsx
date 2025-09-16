@@ -10,6 +10,7 @@ import CollectionRecommendation from '@/components/pages/home/CollectionRecommen
 import Advantage from '@/components/pages/home/Advantage'
 import Feedback from '@/components/pages/home/Feedback'
 import Concerns from './Concerns'
+import TravelInquiryForm from '../inquiry'
 
 const HomePageClient = () => {
   return (
@@ -24,6 +25,7 @@ const HomePageClient = () => {
       <CollectionRecommendation />
       <Feedback />
       <ServiceProcess />
+      <TravelInquiryForm className='relative py-10 px-9 z-10'/>
     </div>
   )
 }
