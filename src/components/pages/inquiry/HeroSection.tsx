@@ -9,7 +9,7 @@ export type THeroSectionProps = {
 export const HeroSection = ({ className = '' }: THeroSectionProps) => {
   return (
     <div
-      className={`content-stretch flex flex-col gap-2.5 items-start justify-start relative size-full border-none ${className}`}
+      className={`content-stretch flex flex-col gap-2.5 items-start justify-start relative size-full border-none sticky top-[-92px] ${className}`}
     >
       <div className='h-[530px] overflow-clip rounded-tr-[16px] rounded-bl-[16px] border-none shrink-0 sticky top-0 w-full'>
         <div

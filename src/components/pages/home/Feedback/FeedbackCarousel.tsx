@@ -63,6 +63,7 @@ const FeedbackCard = ({
   const carouselOpts = {
     align: 'start' as const,
     loop: false,
+    containScroll: 'trimSnaps' as const,
     ...(isMobile && { dragFree: true }),
   }
 
@@ -72,9 +73,12 @@ const FeedbackCard = ({
       opts={carouselOpts}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      overflowXHidden
+      contentClassName='w-full'
+      disableDefaultOverflow
       className='flex self-stretch w-full min-h-[587px] mb-[60px]'
     >
-      <CarouselContent className='gap-x-[24px] mt-[60px] xl:mt-[120px]'>
+      <CarouselContent className='gap-x-[24px] mt-[60px] xl:mt-[120px] pl-4'>
         {cardData.map((card) => (
           <CarouselItem key={card.id} className='basis-auto'>
             <FeedbackCardItem

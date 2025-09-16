@@ -38,7 +38,7 @@ const StickyNotes = ({
 
   const [firstLine, secondLine] = parseContent(data.content)
 
-  const containerClassName = `w-[250px] h-[260px] pt-[18px] mb-[8px] relative shrink-0 z-20 transition-transform duration-300 ease-out ${isMobile ? '' : 'hover:-translate-y-5'}`
+  const containerClassName = `relative z-20 transition-transform duration-300 ease-out ${isMobile ? '' : 'hover:-translate-y-5'}`
   const combinedStyle = isMobile
     ? {
       transform: `rotate(${rotation}deg)`,
@@ -50,9 +50,10 @@ const StickyNotes = ({
     }
 
   return (
+    <div className={containerClassName} style={combinedStyle}>
     <div
-      className={containerClassName}
-      style={combinedStyle}
+      className='flex w-[250px] xl:w-full xl:max-w-[226px] h-auto xl:max-h-[260px] aspect-[250/260]'
+      
       onMouseEnter={() => { setIsHovered(true); console.log(777) }}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -62,7 +63,7 @@ const StickyNotes = ({
         height='260'
         viewBox='0 0 250 260'
         fill='none'
-        className={`absolute top-[6px] left-[6px] transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
+        className={`relative top-[4px] left-[4px] flex w-full h-full transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
       >
         <path
           d='M16 0 H234 C242.837 0 250 7.163 250 16 V244 C250 252.837 242.837 260 234 260 H16 C7.163 260 0 252.837 0 244 V75.5 L65 0 Z'
@@ -80,7 +81,7 @@ const StickyNotes = ({
         height='260'
         viewBox='0 0 250 260'
         fill='none'
-        className='absolute top-0 left-0'
+        className='flex w-full h-full absolute top-0 left-0'
       >
         <path
           d='M16 0 H234 C242.837 0 250 7.163 250 16 V244 C250 252.837 242.837 260 234 260 H16 C7.163 260 0 252.837 0 244 V75.5 L65 0 Z'
@@ -91,6 +92,7 @@ const StickyNotes = ({
           fill={color}
         />
       </svg>
+
       <div className='absolute flex flex-col h-[181px] items-center justify-between left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]'>
         <p
           className='font-luxurious-deco-l-regular'
@@ -103,6 +105,7 @@ const StickyNotes = ({
           {secondLine && <p>{secondLine}</p>}
         </div>
       </div>
+    </div>
     </div>
   )
 }

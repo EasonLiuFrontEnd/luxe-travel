@@ -238,7 +238,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
                   <RadioGroup
                     onValueChange={field.onChange}
                     value={field.value}
-                    className='flex gap-4 items-center'
+                    className='flex gap-4 items-center flex-wrap'
                   >
                     {CONTACT_SOURCE_OPTIONS.map((source) => (
                       <div

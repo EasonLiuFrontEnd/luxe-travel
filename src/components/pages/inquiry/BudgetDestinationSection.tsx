@@ -46,7 +46,7 @@ export const BudgetDestinationSection = ({
                   value={field.value}
                   onValueChange={field.onChange}
                   name='budget'
-                  className='grid grid-cols-1 xl:grid-cols-4 gap-4'
+                  className='flex flex-wrap xl:grid xl:grid-cols-4 gap-4'
                   labelClassName='flex items-center gap-2 font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950 cursor-pointer'
                 />
               </FormControl>

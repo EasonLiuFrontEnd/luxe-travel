@@ -25,6 +25,9 @@ type CarouselProps = {
   plugins?: CarouselPlugin
   orientation?: 'horizontal' | 'vertical'
   setApi?: (api: CarouselApi) => void
+  overflowXHidden?: boolean
+  contentClassName?: string
+  disableDefaultOverflow?: boolean
 }
 
 type CarouselContextProps = {
@@ -53,6 +56,9 @@ const Carousel = ({
   opts,
   setApi,
   plugins,
+  overflowXHidden = false,
+  contentClassName,
+  disableDefaultOverflow = false,
   className,
   children,
   ...props
@@ -122,11 +128,18 @@ const Carousel = ({
         scrollNext,
         canScrollPrev,
         canScrollNext,
+        overflowXHidden,
+        contentClassName,
+        disableDefaultOverflow,
       }}
     >
       <div
         onKeyDownCapture={handleKeyDown}
-        className={cn('relative', className)}
+        className={cn(
+          'relative',
+          overflowXHidden && 'overflow-x-hidden',
+          className
+        )}
         role='region'
         aria-roledescription='carousel'
         data-slot='carousel'
@@ -142,18 +155,23 @@ const CarouselContent = ({
   className,
   ...props
 }: React.ComponentProps<'div'>) => {
-  const { carouselRef, orientation } = useCarousel()
+  const { carouselRef, orientation, contentClassName, disableDefaultOverflow } = useCarousel()
 
   return (
     <div
       ref={carouselRef}
-      className='overflow-hidden'
+      className={cn(
+        !disableDefaultOverflow && 'overflow-hidden',
+        contentClassName
+      )}
       data-slot='carousel-content'
     >
       <div
         className={cn(
           'flex',
-          orientation === 'horizontal' ? '-ml-4' : '-mt-4 flex-col',
+          orientation === 'horizontal' && !disableDefaultOverflow ? '-ml-4' : '',
+          orientation === 'vertical' ? '-mt-4 flex-col' : '',
+          orientation === 'horizontal' && disableDefaultOverflow ? '' : '',
           className,
         )}
         {...props}

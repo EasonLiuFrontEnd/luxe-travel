@@ -23,7 +23,7 @@ export const DetailRequirementsSection = ({
     <div className='bg-white box-border content-stretch flex flex-col gap-8 items-start justify-start pb-[60px] pt-8 px-4 xl:px-8 relative rounded-2xl rounded-br-0 w-full'>
       <div className='box-border content-stretch flex flex-col gap-6 items-start justify-start pb-6 pt-0 px-0 relative shrink-0 w-full'>
         <div className='flex flex-col xl:flex-row gap-6 xl:items-end items-start justify-start w-full'>
-          <div className='flex flex-col gap-1 items-start justify-start shrink-0'>
+          <div className='flex flex-col gap-1 items-start justify-start shrink-0 w-full xl:w-auto'>
             <div className='flex flex-wrap gap-0.5 items-center justify-start'>
               <div className='flex gap-1 items-center justify-start'>
                 <div className="font-['Noto_Serif_TC',_sans-serif] font-light text-[18px] leading-[1.5] text-figma-primary-950">
@@ -34,7 +34,7 @@ export const DetailRequirementsSection = ({
                 </div>
               </div>
             </div>
-            <div className='flex flex-col xl:flex-row gap-6 xl:gap-[31px] items-start justify-start'>
+            <div className='flex flex-col xl:flex-row gap-6 xl:gap-[31px] items-start justify-start w-full xl:w-auto'>
               <FormField
                 control={control}
                 name='detailedRequirements.adultCount'
@@ -69,7 +69,7 @@ export const DetailRequirementsSection = ({
               />
             </div>
           </div>
-          <div className='flex-1 flex flex-col gap-1 items-start justify-start min-w-0'>
+          <div className='flex-1 flex flex-col gap-1 items-start justify-start min-w-0 w-full xl:w-auto'>
             <div className='flex flex-wrap gap-0.5 items-center justify-start'>
               <div className='flex gap-1 items-center justify-start'>
                 <div className="font-['Noto_Serif_TC',_sans-serif] font-light text-[18px] leading-[1.5] text-figma-primary-950">
@@ -98,7 +98,7 @@ export const DetailRequirementsSection = ({
               )}
             />
           </div>
-          <div className='flex-1 flex flex-col gap-1 items-start justify-start min-w-0'>
+          <div className='flex-1 flex flex-col gap-1 items-start justify-start min-w-0 w-full xl:w-auto'>
             <div className='flex flex-wrap gap-0.5 items-center justify-start'>
               <div className='flex gap-1 items-center justify-start'>
                 <div className="font-['Noto_Serif_TC',_sans-serif] font-light text-[18px] leading-[1.5] text-figma-primary-950">
@@ -115,7 +115,7 @@ export const DetailRequirementsSection = ({
               render={({ field }) => (
                 <FormItem className='w-full'>
                   <div
-                    className='relative cursor-pointer'
+                    className='relative'
                     onClick={() => {
                       const input = document.getElementById(
                         'departure-date-input',
@@ -238,7 +238,7 @@ export const DetailRequirementsSection = ({
         <button
           type='submit'
           disabled={isLoading}
-          className='flex items-center gap-4 font-genseki-body-m-medium text-[20px] leading-[1.2] text-figma-secondary-950 tracking-[0.5px] disabled:opacity-50 disabled:cursor-not-allowed'
+          className='flex items-center gap-4 font-genseki-body-m-medium text-[20px] leading-[1.2] text-figma-secondary-950 tracking-[0.5px] disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed'
         >
           <span>送出諮詢</span>
           <div className='h-1.5 w-5 relative shrink-0'>

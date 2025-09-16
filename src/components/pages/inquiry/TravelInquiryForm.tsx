@@ -329,13 +329,13 @@ export const TravelInquiryForm = ({
 
   return (
     <div
-      className={`min-h-screen p-0 bg-[var(--Secondary-100,#F7F4EC)] ${className}`}
+      className={`min-h-screen px-[clamp(12px,2.5vw,48px)] bg-[var(--Secondary-100,#F7F4EC)] ${className}`}
     >
       <div className='w-full max-w-[1440px] mx-auto'>
         <HeroSection />
 
         <div className='relative'>
-          <div className='mx-auto py-8'>
+          <div className='mx-auto py-8 relative bg-figma-secondary-100'>
             <div className='mx-auto rounded-lg bg-[var(--Secondary-100,#F7F4EC)]'>
               <Form {...form}>
                 <form
