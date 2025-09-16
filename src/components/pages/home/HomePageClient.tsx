@@ -25,7 +25,7 @@ const HomePageClient = () => {
       <CollectionRecommendation />
       <Feedback />
       <ServiceProcess />
-      <TravelInquiryForm className='relative py-10 px-9 z-10'/>
+      <TravelInquiryForm className='relative pt-10 pb-[80px] px-4 xl:py-10 xl:px-9 z-10'/>
     </div>
   )
 }

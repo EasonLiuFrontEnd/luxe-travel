@@ -47,8 +47,8 @@ export const BudgetDestinationSection = ({
                   value={field.value}
                   onValueChange={field.onChange}
                   name='budget'
-                  className='gap-5'
-                  labelClassName='flex items-center gap-2 font-genseki-body-m-regular text-figma-primary-950 cursor-pointer'
+                  className='flex flex-wrap gap-5 p-4'
+                  labelClassName='gap-2 font-genseki-body-m-regular text-figma-primary-950 cursor-pointer'
                 />
               </FormControl>
               <FormMessage />
@@ -64,7 +64,7 @@ export const BudgetDestinationSection = ({
                 想去的國家組合
               </RequiredLabel>
               <FormControl>
-                <div className='grid grid-cols-1 xl:grid-cols-4 gap-y-6 xl:gap-y-0 xl:gap-x-7 xl:divide-x xl:divide-figma-primary-300 w-full'>
+                <div className='grid grid-cols-1 xl:grid-cols-4 gap-y-4 xl:gap-x-7 max-xl:divide-y xl:divide-x divide-figma-primary-300 w-full'>
                   {Object.entries(EUROPEAN_REGIONS).map(
                     ([regionKey, region]) => (
                       <div

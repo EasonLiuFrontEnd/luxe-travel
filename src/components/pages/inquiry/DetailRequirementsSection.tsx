@@ -20,9 +20,9 @@ export const DetailRequirementsSection = ({
   isLoading = false,
 }: TDetailRequirementsSectionProps) => {
   return (
-    <div className='bg-white flex flex-col gap-8 pb-[60px] pt-8 px-4 xl:px-8 relative rounded-2xl rounded-br-0 w-full'>
-      <div className='flex flex-col gap-7 pb-7 w-full'>
-        <div className='flex flex-col xl:flex-row gap-6 xl:items-end items-start justify-start w-full'>
+    <div className='bg-white flex flex-col gap-8 pb-[60px] pt-5 xl:pt-8 px-4 xl:px-8 relative rounded-2xl rounded-br-0 w-full'>
+      <div className='flex flex-col gap-7 xl:pb-7 w-full'>
+        <div className='flex flex-col xl:flex-row gap-6 xl:items-end w-full'>
           <div className='flex flex-col gap-1'>
             <div className='flex gap-1 items-center mb-2'>
               <div className="font-noto-serif-body-l-semibold text-figma-primary-950">
@@ -67,7 +67,7 @@ export const DetailRequirementsSection = ({
               />
             </div>
           </div>
-          <div className='flex-1 flex flex-col gap-1 min-w-0'>
+          <div className='w-full xl:flex-1 flex flex-col gap-1 xl:min-w-0'>
             <div className='flex gap-1 items-center mb-2'>
               <div className="font-noto-serif-body-l-semibold text-figma-primary-950">
                 預計旅遊天數
@@ -94,7 +94,7 @@ export const DetailRequirementsSection = ({
               )}
             />
           </div>
-          <div className='flex-1 flex flex-col gap-1 min-w-0'>
+          <div className='w-full xl:flex-1 flex flex-col gap-1 xl:min-w-0'>
             <div className='flex gap-1 items-center mb-2'>
               <div className="font-noto-serif-body-l-semibold text-figma-primary-950">
                 預計出發日
@@ -220,11 +220,15 @@ export const DetailRequirementsSection = ({
         您有權提出要求使用、更正、補充、刪除或封鎖這些個人資料，請將任何這類需求寄至
         info@luxetravel.com.tw
       </p>
-      <div className='absolute bg-figma-secondary-100 flex gap-4 items-center justify-center px-7 py-4 right-0 rounded-tl-[16px] rounded-br-[16px] bottom-0'>
+      <div className='absolute bg-figma-secondary-100 flex gap-4 items-center justify-center px-4 py-3 xl:px-7 xl:py-4 right-0 rounded-tl-[16px] rounded-br-[16px] bottom-0'>
         <button
           type='submit'
           disabled={isLoading}
-          className='flex items-center gap-4 font-genseki-footer-medium text-figma-secondary-950 tracking-[0.5px] disabled:opacity-50 disabled:cursor-not-allowed'
+          className='
+            flex items-center gap-5 text-figma-secondary-950 tracking-[0.5px]
+            font-family-noto-serif xl:font-family-genseki text-[24px] xl:text-[20px] font-bold xl:font-medium leading-[1.2]
+            disabled:opacity-50 disabled:cursor-not-allowed
+          '
         >
           <span>送出諮詢</span>
           <div className='h-1.5 w-5 shrink-0'>

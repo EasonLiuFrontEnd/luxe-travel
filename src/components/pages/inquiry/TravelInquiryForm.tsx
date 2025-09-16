@@ -334,29 +334,27 @@ export const TravelInquiryForm = ({
       <div className='w-full max-w-[1440px] mx-auto'>
         <HeroSection />
 
-        <div className='relative'>
-          <div className='mx-auto pt-[24px]'>
-            <div className='mx-auto rounded-lg bg-figma-secondary-100'>
+        <div className='pt-[24px]'>
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(handleSubmit)}
-                  className='content-stretch flex flex-col items-start justify-start overflow-clip relative rounded-[16px] size-full'
+                  className='flex flex-col relative rounded-[16px] w-full'
                   noValidate
                 >
-                  <div className='bg-figma-primary-0 box-border content-stretch flex flex-col gap-4 items-start justify-start p-[32px] relative rounded-t-[16px] shrink-0 w-full'>
-                    <div className='flex flex-col gap-y-[16px] pb-[24px] relative shrink-0 w-full box-border'>
+                  <div className='bg-figma-primary-0 flex flex-col gap-4 p-[16px] xl:p-[32px] rounded-t-[16px] w-full'>
+                    <div className='flex flex-col gap-y-[16px] pb-[16px] xl:pb-[24px] relative w-full'>
                       <div aria-hidden='true' className='absolute inset-0 border-b border-figma-primary-950' />
-                      <h5 className="font-noto-serif-h5-bold relative shrink-0 text-figma-primary-950">
+                      <div className="font-family-noto-serif text-[18px] xl:text-[24px] font-semibold xl:font-bold leading-[1.5] xl:leading-[1.2] relative text-figma-primary-950">
                         旅遊諮詢需求單
-                      </h5>
-                      <div className="flex flex-col font-genseki-body-m-medium text-figma-primary-950">
+                      </div>
+                      <div className="flex flex-col font-family-genseki text-[16px] xl:font-medium leading-[1.5] text-figma-primary-950">
                         <p>誠摯感謝您蒞臨典藏旅遊。</p>
                         <p>如需進一步諮詢行程內容或服務細節，請填寫表單，我們將由專人儘速與您聯繫。</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className='box-border content-stretch flex flex-col gap-4 items-start justify-start pb-8 pt-0 relative rounded-b-[16px] shrink-0 w-full'>
+                  <div className='flex flex-col gap-4 pb-8 rounded-b-[16px] w-full'>
                     <BasicInfoSection control={form.control} />
 
                     <BudgetDestinationSection control={form.control} />
@@ -368,8 +366,6 @@ export const TravelInquiryForm = ({
                   </div>
                 </form>
               </Form>
-            </div>
-          </div>
         </div>
       </div>
     </div>
