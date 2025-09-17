@@ -3,11 +3,14 @@
 import { useMemo } from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useConcerns } from '@/api/home/useConcerns'
+import { useScrollDrivenAnimation } from '@/hooks/useScrollDrivenAnimation'
 import StickyNotes from './StickyNotes'
 
 const Concerns = () => {
   const { isMobile } = useMediaQuery()
   const { query: concernsQuery, mock } = useConcerns()
+  const { containerRef, notePositions, getNoteTransformY } =
+    useScrollDrivenAnimation()
   const {
     data: concernsData,
     isLoading: isConcernsLoading,
@@ -44,10 +47,13 @@ const Concerns = () => {
 
   return (
     <div
-      className='flex flex-col justify-center items-center self-stretch gap-y-[32px] xl:gap-y-[120px] xl:pt-[200px] max-xl:py-[60px] max-xl:px-[12px]'
+      className='flex flex-col justify-center items-center self-stretch gap-y-[32px] xl:gap-y-[120px] xl:pt-[200px] py-[60px] px-[12px] relative z-20'
       style={gridBackgroundStyle}
     >
-      <h2 className='font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px] text-center'>
+      <h2
+        ref={containerRef}
+        className='font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px] text-center'
+      >
         {isMobile ? (
           <>
             <span style={gradientStyle}>歐洲自由行</span>
@@ -58,7 +64,7 @@ const Concerns = () => {
           <span style={gradientStyle}>歐洲自由行規劃煩惱多？</span>
         )}
       </h2>
-      <div className='flex flex-wrap max-xl:flex-col justify-center items-start gap-8'>
+      <div className='flex flex-col items-center gap-8 xl:gap-7 xl:flex-row xl:justify-center w-full'>
         {effectiveData.map((concern, index) => {
           const rotations = [-2.23, 1.82, 3.73, -3.15, 2.23]
           const colors = ['#BDA05E', '#8BC3DE', '#5B5B6E', '#FFD900', '#BDA05E']
@@ -71,6 +77,8 @@ const Concerns = () => {
               rotation={rotations[index]}
               color={colors[index]}
               offsetY={isMobile ? '0' : offsetYs[index]}
+              position={isMobile ? 100 : notePositions[index]}
+              transformY={isMobile ? 0 : getNoteTransformY(notePositions[index])}
             />
           )
         })}

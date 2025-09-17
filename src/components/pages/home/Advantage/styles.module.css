@@ -1,0 +1,176 @@
+.track {
+  display: flex;
+  align-items: start;
+  position: relative;
+  gap: 60px;
+}
+
+.trackHidden {
+  transform: translateX(100vw);
+}
+
+.trackHiddenLeft {
+  transform: translateX(calc(-100vw - 100%));
+}
+
+.trackSlideIn {
+  animation-name: slideRightToLeft;
+  animation-duration: 6s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+.trackSlideInPaused {
+  animation-name: slideRightToLeft;
+  animation-duration: 6s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  animation-play-state: paused;
+}
+
+.trackSlideInReverse {
+  animation-name: slideLeftToRightForward;
+  animation-duration: 6s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+.trackSlideInReversePaused {
+  animation-name: slideLeftToRightForward;
+  animation-duration: 6s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  animation-play-state: paused;
+}
+
+.trackSlideBackToRight {
+  animation-name: slideBackToRight;
+  animation-duration: 3s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+.trackSlideBackToRightPaused {
+  animation-name: slideBackToRight;
+  animation-duration: 3s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  animation-play-state: paused;
+}
+
+.trackSlideBackToLeft {
+  animation-name: slideBackToLeft;
+  animation-duration: 3s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+.trackSlideBackToLeftPaused {
+  animation-name: slideBackToLeft;
+  animation-duration: 3s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  animation-play-state: paused;
+}
+
+@keyframes slideRightToLeft {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(calc(-100vw - 100%));
+  }
+}
+
+@keyframes slideLeftToRight {
+  0% {
+    transform: translateX(calc(-100vw - 100%));
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes slideLeftToRightForward {
+  0% {
+    transform: translateX(calc(-100vw - 100%));
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes slideBackToRight {
+  to {
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes slideBackToLeft {
+  to {
+    transform: translateX(calc(-100vw - 100%));
+  }
+}
+
+.containerOverflow {
+  overflow: hidden;
+  height: 100vh;
+}
+
+.scrollContainer {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  user-select: none;
+}
+
+.trackMobile {
+  display: flex;
+  align-items: start;
+  gap: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.trackMobile::-webkit-scrollbar {
+  display: none;
+}
+
+.cardContainer {
+  scroll-snap-align: start;
+}
+
+.blurredBackground {
+  filter: blur(4px) brightness(0.5);
+}
+
+.gradientMask {
+  mask: linear-gradient(to bottom,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0.5) 65%,
+      rgba(0, 0, 0, 0) 100%);
+  -webkit-mask: linear-gradient(to bottom,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0.5) 65%,
+      rgba(0, 0, 0, 0) 100%);
+}
+
+@media (min-width: 1280px) {
+  .backgroundMap {
+    background-image: url('/home/advantages/Europe.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto;
+  }
+}

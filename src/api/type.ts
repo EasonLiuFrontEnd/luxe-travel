@@ -65,6 +65,10 @@ export type TBanners = {
   order: number
   createdAt: string
   updatedAt: string
+  titleLine1: string
+  titleLine2: string
+  subtitleLine1: string
+  subtitleLine2: string
 }
 
 export type TBooks = {

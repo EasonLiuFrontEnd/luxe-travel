@@ -12,7 +12,7 @@ const Checkbox = ({
     <CheckboxPrimitive.Root
       data-slot='checkbox'
       className={cn(
-        'peer shrink-0 border-2 transition-colors outline-none rounded-none cursor-pointer w-5 h-5 aspect-square',
+        'peer shrink-0 border transition-colors outline-none rounded-none cursor-pointer w-5 h-5 aspect-square',
         'border-figma-secondary-500 bg-white',
         'data-[state=checked]:border-figma-secondary-500 data-[state=checked]:bg-figma-secondary-500',
         'focus-visible:ring-2 focus-visible:ring-figma-secondary-500 focus-visible:ring-opacity-50',

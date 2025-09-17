@@ -27,7 +27,7 @@ const TravelInquiryPage = () => {
   }
 
   return (
-    <main className='min-h-screen'>
+    <main className='min-h-screen pt-10 bg-[var(--Secondary-100,#F7F4EC)]'>
       <TravelInquiryForm onSubmit={handleFormSubmit} isLoading={isLoading} />
     </main>
   )

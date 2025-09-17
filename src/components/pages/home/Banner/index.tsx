@@ -1,23 +1,81 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useEffect, useRef } from 'react'
+import Image from 'next/image'
 import { useScrollContext } from '@/context/ScrollContext'
+import { useBanners } from '@/api/home/useBanners'
+import { cn } from '@/lib/utils'
 import { APP_CONFIG } from '@/lib/config'
 import type { TBaseComponent } from '@/types'
-
-export type TBanner = TBaseComponent & {
-  logoProgress?: number
-}
-import { cn } from '@/lib/utils'
+import AirplaneIcon from '@/components/shared/icons/banner/AirplaneIcon'
 import BannerCarousel from './BannerCarousel'
 import styles from './styles.module.css'
-import AirplaneIcon from '@/components/shared/icons/banner/AirplaneIcon'
-import Image from 'next/image'
 
-const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
+export type TBannerComponent = TBaseComponent & {
+  logoProgress?: number
+}
+
+const GooeyFilters = () => (
+  <svg
+    style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: 0,
+      height: 0,
+      zIndex: -1,
+    }}
+  >
+    <defs>
+      <filter id='gooey-desktop'>
+        <feGaussianBlur in='SourceGraphic' stdDeviation='10' result='blur' />
+        <feColorMatrix
+          in='blur'
+          mode='matrix'
+          values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 32 -18'
+          result='goo'
+        />
+        <feBlend in='SourceGraphic' in2='goo' />
+      </filter>
+      <filter id='gooey-mobile'>
+        <feGaussianBlur in='SourceGraphic' stdDeviation='4' result='blur' />
+        <feColorMatrix
+          in='blur'
+          mode='matrix'
+          values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 32 -18'
+          result='goo'
+        />
+        <feBlend in='SourceGraphic' in2='goo' />
+      </filter>
+    </defs>
+  </svg>
+)
+
+const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
   const { logoProgress: contextLogoProgress } = useScrollContext()
+  const gooAreaRef = useRef<HTMLDivElement>(null)
+  const fallbackRef = useRef<HTMLDivElement>(null)
 
   const logoProgress = propLogoProgress ?? contextLogoProgress
+
+  const { query: bannersQuery, mock } = useBanners()
+  const {
+    data: bannersData,
+    isLoading: isBannersLoading,
+    error: bannersError,
+  } = bannersQuery
+
+  const effectiveData = useMemo(() => {
+    if (bannersError || !bannersData) {
+      return mock.rows
+    }
+
+    if (isBannersLoading) {
+      return mock.rows
+    }
+
+    return bannersData
+  }, [bannersError, bannersData, isBannersLoading, mock.rows])
 
   const dynamicPadding = useMemo(
     () =>
@@ -25,8 +83,82 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
     [logoProgress],
   )
 
+  const firstBanner = effectiveData[0] || mock.rows[0]
+
+  const supportsSvgGoo = () => {
+    if (!gooAreaRef.current) return true
+    const cs = getComputedStyle(gooAreaRef.current)
+    return (
+      (cs.filter && cs.filter.includes('url')) ||
+      (cs.webkitFilter && cs.webkitFilter.includes('url'))
+    )
+  }
+
+  const buildCssGoo = () => {
+    if (!gooAreaRef.current || !fallbackRef.current) return
+
+    document.body.classList.add('use-css-goo')
+    fallbackRef.current.innerHTML = ''
+
+    const rows = gooAreaRef.current.querySelectorAll('.goo-text-row')
+    rows.forEach((row) => {
+      const clone = row.cloneNode(true) as HTMLElement
+      clone.style.color = 'transparent'
+      clone.style.position = 'absolute'
+
+      const r = row.getBoundingClientRect()
+      const host = gooAreaRef.current!.getBoundingClientRect()
+      const top = r.top - host.top
+
+      const isDesktop = window.innerWidth >= 1280
+      if (isDesktop) {
+        const right = host.right - r.right
+        clone.style.right = `${right}px`
+      } else {
+        const left = r.left - host.left
+        clone.style.left = `${left}px`
+      }
+
+      clone.style.top = `${top}px`
+      fallbackRef.current!.appendChild(clone)
+    })
+  }
+
+  useEffect(() => {
+    const setGooeyFilter = () => {
+      if (gooAreaRef.current) {
+        const isDesktop = window.innerWidth >= 1280
+        const filterId = isDesktop ? 'gooey-desktop' : 'gooey-mobile'
+        gooAreaRef.current.style.filter = `url(#${filterId})`
+        gooAreaRef.current.style.webkitFilter = `url(#${filterId})`
+      }
+    }
+
+    const timer = setTimeout(() => {
+      setGooeyFilter()
+      if (!supportsSvgGoo()) {
+        buildCssGoo()
+      }
+    }, 100)
+
+    const handleResize = () => {
+      setGooeyFilter()
+      if (document.body.classList.contains('use-css-goo')) {
+        buildCssGoo()
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [firstBanner])
+
   return (
     <>
+      <GooeyFilters />
       <div
         className={cn(
           'banner-dynamic-padding',
@@ -46,69 +178,109 @@ const Banner = ({ logoProgress: propLogoProgress }: TBanner) => {
             'xl:top-[123px] xl:-mt-[250px]',
           )}
         >
-          <h1
-            className={cn(
-              'flex flex-col text-right text-figma-neutral-950',
-              'font-noto-serif-tc font-bold text-[40px] xl:text-[96px] leading-[1.2]',
-            )}
-          >
+          <div className='gooey-text-container relative'>
             <div
+              ref={gooAreaRef}
               className={cn(
-                'self-end max-xl:self-start',
-                'bg-figma-neutral-50 rounded-tr-xl max-xl:rounded-ee-[12px] xl:rounded-es-2xl',
-                'pt-[12px] pb-[4px] px-[12px]',
-                'xl:pt-[16px] xl:px-[16px]',
+                'goo-area relative',
+                'xl:text-right max-xl:text-left',
               )}
             >
-              歐洲自由行
+              <h1
+                className={cn(
+                  'flex flex-col',
+                  'font-noto-serif-tc font-bold text-[40px] xl:text-[96px]',
+                  'xl:text-right max-xl:text-left',
+                )}
+              >
+                {firstBanner?.titleLine1 && (
+                  <div
+                    className={cn(
+                      'goo-text-row relative inline-block',
+                      'xl:self-end max-xl:self-start',
+                      'text-figma-neutral-950 px-[14px] xl:mb-[0.05em] xl:mt-[0.1em] max-xl:mb-[0.05em] max-xl:mt-[0.05em]',
+                      "before:content-[''] before:absolute before:z-[-1]",
+                      'before:left-[0] before:right-[-8px] before:top-1/2',
+                      'before:h-[1.8em] before:translate-y-[-50%]',
+                      'before:bg-figma-neutral-50',
+                      'xl:before:rounded-bl-[50px] max-xl:before:rounded-r-[50px]',
+                    )}
+                  >
+                    {firstBanner.titleLine1}
+                  </div>
+                )}
+                {firstBanner?.titleLine2 && (
+                  <div
+                    className={cn(
+                      'goo-text-row relative inline-block',
+                      'xl:self-end max-xl:self-start',
+                      'text-figma-neutral-950 px-[14px] xl:mt-[-8px] xl:mb-2 max-xl:mt-[0.02em] max-xl:mb-[0.05em]',
+                      "before:content-[''] before:absolute before:z-[-1]",
+                      'before:left-[-8px] before:right-[-8px] before:top-1/2',
+                      'before:h-[1.8em] before:translate-y-[-50%]',
+                      'before:bg-figma-neutral-50',
+                      'xl:before:rounded-l-[50px] max-xl:before:rounded-r-[50px]',
+                    )}
+                  >
+                    {firstBanner.titleLine2}
+                  </div>
+                )}
+              </h1>
+              <div
+                className={cn(
+                  'flex flex-col',
+                  'font-genseki-gothic font-medium xl:text-[24px] text-[16px]',
+                )}
+              >
+                {firstBanner?.subtitleLine1 && (
+                  <p
+                    className={cn(
+                      'goo-text-row relative inline-block',
+                      'xl:self-end max-xl:self-start text-right',
+                      'text-figma-primary-950 px-[14px] my-0',
+                      "before:content-[''] before:absolute before:z-[-1]",
+                      'before:left-0 before:right-0 before:top-1/2',
+                      'before:h-[2em] before:translate-y-[-50%]',
+                      'before:bg-figma-neutral-50',
+                      'xl:before:rounded-l-[50px] max-xl:before:rounded-r-[50px]',
+                    )}
+                  >
+                    {firstBanner.subtitleLine1}
+                  </p>
+                )}
+                {firstBanner?.subtitleLine2 && (
+                  <p
+                    className={cn(
+                      'goo-text-row relative inline-block',
+                      'xl:self-end max-xl:self-start',
+                      'text-figma-primary-950 px-[14px] mt-[0.1em] mb-[0.1em]',
+                      "before:content-[''] before:absolute before:z-[-1]",
+                      'before:left-0 before:right-0 before:top-1/2',
+                      'before:h-[2em] before:translate-y-[-50%]',
+                      'before:bg-figma-neutral-50',
+                      'xl:before:rounded-l-[50px] max-xl:before:rounded-r-[50px]',
+                    )}
+                  >
+                    {firstBanner.subtitleLine2}
+                  </p>
+                )}
+              </div>
             </div>
+
             <div
-              className={cn(
-                'self-end max-xl:self-start',
-                'bg-figma-neutral-50 xl:rounded-bl-2xl',
-                'py-[4px] px-[12px]',
-                'xl:pt-[4px] xl:pb-[16px] xl:px-[16px]',
-                styles['concave-border-1'],
-              )}
-            >
-              精緻首選
-            </div>
-          </h1>
-          <div
-            className={cn(
-              'flex flex-col text-figma-primary-950',
-              'font-genseki-gothic font-medium xl:text-[24px] text-[16px] xl:leading-[1.2] leading-[1.5]',
-            )}
-          >
-            <p
-              className={cn(
-                'self-end max-xl:self-start text-right',
-                'bg-figma-neutral-50 max-xl:rounded-se-[12px]',
-                'py-[4px] px-[12px]',
-                'xl:py-[4px] xl:px-[16px]',
-                styles['concave-border-2'],
-              )}
-            >
-              典藏旅遊30年經驗團隊服務
-            </p>
-            <p
-              className={cn(
-                'self-end max-xl:self-start',
-                'bg-figma-neutral-50 max-xl:rounded-e-[12px] xl:rounded-s-2xl',
-                'pt-[4px] pb-[12px] px-[12px]',
-                'xl:py-[10px] xl:px-[16px]',
-                styles['concave-border-3'],
-              )}
-            >
-              為您客製化旅程，典藏經典回憶
-            </p>
+              ref={fallbackRef}
+              className='goo-fallback absolute inset-0 pointer-events-none z-[-1] [filter:blur(10px)_contrast(30)_brightness(0.7)]'
+              aria-hidden='true'
+            />
           </div>
         </div>
+
         <BannerCarousel
-          images={['/home/banners/banner.jpg', '/home/banners/banner2.jpg']}
+          images={effectiveData.map((banner) => banner.imageUrl)}
           autoPlayInterval={10000}
         />
       </div>
+
       <div className='flex justify-end w-full xl:px-[48px] max-xs:px-[12px] sticky top-0'>
         <AirplaneIcon className='max-xl:hidden' />
         <Image

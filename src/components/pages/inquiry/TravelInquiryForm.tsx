@@ -25,7 +25,7 @@ export type TTravelType =
 
 export type TGender = 'ms' | 'mr'
 
-export type TContactMethod = 'any' | 'phone' | 'line' | 'email'
+export type TContactMethod = 'any' | 'phone' | 'line'
 
 export type TContactSource =
   | 'triumph-member'
@@ -102,7 +102,7 @@ const genderSchema = z.enum(['ms', 'mr'], {
   error: '請選擇稱謂',
 })
 
-const contactMethodSchema = z.enum(['any', 'phone', 'line', 'email'], {
+const contactMethodSchema = z.enum(['any', 'phone', 'line'], {
   error: '請選擇偏好聯絡方式',
 })
 
@@ -230,7 +230,6 @@ export const CONTACT_METHOD_OPTIONS = [
   { value: 'any', label: '都可以' },
   { value: 'phone', label: '手機' },
   { value: 'line', label: 'LINE' },
-  { value: 'email', label: 'Email' },
 ]
 
 export const CONTACT_SOURCE_OPTIONS = [
@@ -307,12 +306,14 @@ export type TTravelInquiryFormProps = {
   onSubmit?: (data: TTravelInquiryFormData) => void | Promise<void>
   className?: string
   isLoading?: boolean
+  heroTopPosition?: string
 }
 
 export const TravelInquiryForm = ({
   onSubmit,
   className = '',
   isLoading = false,
+  heroTopPosition,
 }: TTravelInquiryFormProps) => {
   const form = useForm<TTravelInquiryFormData>({
     resolver: zodResolver(travelInquiryFormSchema),
@@ -322,49 +323,51 @@ export const TravelInquiryForm = ({
 
   const handleSubmit = async (data: TTravelInquiryFormData) => {
     try {
-      console.log('旅遊諮詢表單提交:', data)
       await onSubmit?.(data)
     } catch (error) {
-      console.error('表單提交錯誤:', error)
+      throw error
     }
   }
 
   return (
     <div
-      className={`min-h-screen bg-[var(--Secondary-100,#F7F4EC)] ${className}`}
+      className={`min-h-screen px-[clamp(12px,2.5vw,48px)] bg-figma-secondary-100 ${className}`}
     >
-      <HeroSection />
+      <div className='w-full max-w-[1440px] mx-auto'>
+        <HeroSection topPosition={heroTopPosition} />
 
-      <div className='relative -mt-20 pt-20'>
-        <div className='mx-auto px-4 md:px-8 py-8 max-w-[1440px]'>
-          <div className='mx-auto rounded-lg shadow-[0_24px_48px_rgba(0,0,0,0.12)] border border-[var(--color-figma-secondary-150)] bg-[var(--Secondary-100,#F7F4EC)] p-12'>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(handleSubmit)}
-                className='flex flex-col gap-8'
-                noValidate
-              >
-                <div className='text-center flex flex-col gap-3'>
-                  <h2 className='font-noto-serif-h4-bold text-[24px] text-figma-primary-950'>
-                    旅遊諮詢需求單
-                  </h2>
-                  <p className='font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-500'>
-                    誠摯感謝您蒞臨典藏旅遊。如需進一步諮詢行程內容或服務細節，請填寫表單，我們將由專人儘速與您聯繫。
-                  </p>
-                  <hr className='w-full border-t border-figma-primary-300 mt-4' />
-                </div>
+        <div className='relative bg-figma-secondary-100'>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(handleSubmit)}
+                  className='flex flex-col relative rounded-[16px] w-full'
+                  noValidate
+                >
+                  <div className='bg-figma-primary-0 flex flex-col gap-4 p-[16px] xl:p-[32px] rounded-t-[16px] w-full'>
+                    <div className='flex flex-col gap-y-[16px] pb-[16px] xl:pb-[24px] relative w-full'>
+                      <div aria-hidden='true' className='absolute inset-0 border-b border-figma-primary-950' />
+                      <div className="font-family-noto-serif text-[18px] xl:text-[24px] font-semibold xl:font-bold leading-[1.5] xl:leading-[1.2] relative text-figma-primary-950">
+                        旅遊諮詢需求單
+                      </div>
+                      <div className="flex flex-col font-family-genseki text-[16px] xl:font-medium leading-[1.5] text-figma-primary-950">
+                        <p>誠摯感謝您蒞臨典藏旅遊。</p>
+                        <p>如需進一步諮詢行程內容或服務細節，請填寫表單，我們將由專人儘速與您聯繫。</p>
+                      </div>
+                    </div>
+                  </div>
 
-                <BasicInfoSection control={form.control} />
+                  <div className='flex flex-col gap-4 pb-8 rounded-b-[16px] w-full'>
+                    <BasicInfoSection control={form.control} />
 
-                <BudgetDestinationSection control={form.control} />
+                    <BudgetDestinationSection control={form.control} />
 
-                <DetailRequirementsSection
-                  control={form.control}
-                  isLoading={isLoading}
-                />
-              </form>
-            </Form>
-          </div>
+                    <DetailRequirementsSection
+                      control={form.control}
+                      isLoading={isLoading}
+                    />
+                  </div>
+                </form>
+              </Form>
         </div>
       </div>
     </div>

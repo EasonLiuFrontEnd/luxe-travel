@@ -18,7 +18,7 @@ export const FormSection = ({
   return (
     <div
       className={cn(
-        'flex flex-col self-stretch bg-white rounded-2xl w-full p-8 gap-4',
+        'flex flex-col self-stretch bg-white rounded-2xl w-full p-4 max-xl:pb-5 xl:p-8 gap-4',
         hasBorder && `border ${borderColor}`,
         className,
       )}

@@ -26,7 +26,7 @@ export const BudgetDestinationSection = ({
   control,
 }: TBudgetDestinationSectionProps) => {
   return (
-    <FormSection title='預算與目的地' hasBorder>
+    <FormSection title='' hasBorder>
       <div className='space-y-8'>
         <FormField
           control={control}
@@ -36,6 +36,8 @@ export const BudgetDestinationSection = ({
               <RequiredLabel
                 required
                 subText='（不含午晚餐及部分自理當地城市內交通費用）'
+                requiredText='此為必填資訊'
+                className='font-noto-serif-body-l-semibold mb-2'
               >
                 每人預算
               </RequiredLabel>
@@ -45,8 +47,8 @@ export const BudgetDestinationSection = ({
                   value={field.value}
                   onValueChange={field.onChange}
                   name='budget'
-                  className='grid grid-cols-2 md:grid-cols-4 gap-4'
-                  labelClassName='flex items-center gap-2 font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950 cursor-pointer'
+                  className='flex flex-wrap gap-5 p-4'
+                  labelClassName='gap-2 font-genseki-body-m-regular text-figma-primary-950 cursor-pointer'
                 />
               </FormControl>
               <FormMessage />
@@ -58,29 +60,26 @@ export const BudgetDestinationSection = ({
           name='budgetDestination.countries'
           render={({ field }) => (
             <FormItem>
-              <RequiredLabel required subText='可複選'>
+              <RequiredLabel required subText='可複選' className='font-noto-serif-body-l-semibold mb-2'>
                 想去的國家組合
               </RequiredLabel>
               <FormControl>
-                <div className='flex gap-6 items-start justify-start w-full'>
+                <div className='grid grid-cols-1 xl:grid-cols-4 gap-y-4 xl:gap-x-7 max-xl:divide-y xl:divide-x divide-figma-primary-300 w-full'>
                   {Object.entries(EUROPEAN_REGIONS).map(
-                    ([regionKey, region], index) => (
+                    ([regionKey, region]) => (
                       <div
                         key={regionKey}
-                        className='flex-1 flex flex-col gap-1 relative'
+                        className='flex flex-col gap-1 xl:px-6 first:xl:pl-0 last:xl:pr-0'
                       >
-                        {index > 0 && (
-                          <div className='absolute left-[-12px] top-0 bottom-0 w-px bg-figma-primary-300'></div>
-                        )}
-                        <div className='font-genseki-body-s-bold text-[16px] leading-[1.5] text-figma-secondary-500 tracking-[0.96px] mb-1'>
+                        <div className='font-family-genseki font-bold text-[16px] leading-[1.5] text-figma-secondary-500 mb-2'>
                           {region.label}
                         </div>
-                        <div className='flex flex-wrap gap-4 items-center justify-start py-3'>
+                        <div className='flex flex-wrap gap-5 items-center py-4'>
                           {region.countries.map((country) => (
                             <Label
                               key={country.value}
                               htmlFor={`country-${country.value}`}
-                              className='flex items-center gap-1 font-genseki-body-s-regular text-[16px] leading-[1.2] text-figma-primary-950 cursor-pointer'
+                              className='flex items-center gap-1 font-genseki-body-m-regular text-figma-primary-950 cursor-pointer'
                             >
                               <Checkbox
                                 id={`country-${country.value}`}

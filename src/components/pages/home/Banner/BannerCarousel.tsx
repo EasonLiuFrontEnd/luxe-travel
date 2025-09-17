@@ -88,7 +88,7 @@ const BannerCarousel = ({
       <div className='absolute bottom-0 max-xl:right-0 xl:left-0'>
         <button
           className={cn(
-            'flex items-center cursor-pointer',
+            'group flex items-center cursor-pointer',
             'bg-figma-neutral-50 text-figma-secondary-950',
             'max-xl:rounded-ss-xl xl:rounded-se-2xl',
             'font-noto-serif-tc font-bold xl:text-[32px] xl:leading-[1.5] text-[24px] leading-[1.2]',
@@ -100,17 +100,14 @@ const BannerCarousel = ({
         >
           即刻預約 · 輕鬆啟程
           <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='76'
-            height='38'
-            viewBox='0 0 76 38'
-            fill='none'
-            className={cn(styles['arrow'], 'hidden xl:block')}
+            xmlns="http://www.w3.org/2000/svg"
+            width="40"
+            height="14"
+            viewBox="0 0 40 14"
+            fill="none"
+            className='hidden xl:block transition-transform duration-300 origin-right group-hover:scale-x-[1.3] ml-[29px]'
           >
-            <path
-              d='M68.088 25.3333H29.0072V22.1666H56.4279L45.2549 15.6153L46.8568 12.8846L68.088 25.3333Z'
-              fill='#926D3C'
-            />
+            <path d="M39.088 13.3333H0.00714111V10.1666H27.4279L16.2549 3.61528L17.8568 0.884644L39.088 13.3333Z" fill="#926D3C" />
           </svg>
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -118,7 +115,7 @@ const BannerCarousel = ({
             height='9'
             viewBox='0 0 25 9'
             fill='none'
-            className={cn(styles['arrow'], 'block xl:hidden m-[4px] ml-[12px]')}
+            className='block xl:hidden m-[4px] ml-[12px]'
           >
             <path
               d='M24.6826 8.43115H0V6.43115H17.3184L10.2617 2.29346L11.2734 0.568848L24.6826 8.43115Z'
