@@ -14,7 +14,7 @@ import Concerns from './Concerns'
 import TravelInquiryForm from '../inquiry'
 
 const HomePageClient = () => {
-  const collectionRef = useRef<HTMLDivElement>(null)
+  const collectionRef = useRef<HTMLDivElement>(null!)
   return (
     <div className='min-h-screen bg-figma-neutral-50'>
       <Banner />
