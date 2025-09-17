@@ -11,6 +11,7 @@ import CollectionRecommendation from '@/components/pages/home/CollectionRecommen
 import Advantage from '@/components/pages/home/Advantage'
 import Feedback from '@/components/pages/home/Feedback'
 import Concerns from './Concerns'
+import TravelInquiryForm from '../inquiry'
 
 const HomePageClient = () => {
   const collectionRef = useRef<HTMLDivElement>(null)
@@ -26,6 +27,7 @@ const HomePageClient = () => {
       <CollectionRecommendation collectionRef={collectionRef} />
       <Feedback />
       <ServiceProcess />
+      <TravelInquiryForm className='relative pt-10 pb-[80px] px-4 xl:py-10 xl:px-9 z-10'/>
     </div>
   )
 }
