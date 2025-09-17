@@ -9,7 +9,6 @@ import { APP_CONFIG } from '@/lib/config'
 import type { TBaseComponent } from '@/types'
 import AirplaneIcon from '@/components/shared/icons/banner/AirplaneIcon'
 import BannerCarousel from './BannerCarousel'
-import styles from './styles.module.css'
 
 export type TBannerComponent = TBaseComponent & {
   logoProgress?: number
