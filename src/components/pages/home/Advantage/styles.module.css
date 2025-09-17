@@ -1,6 +1,7 @@
 .track {
   display: flex;
   position: absolute;
+  z-index: 20;
   bottom: 7px;
   gap: 60px;
 }

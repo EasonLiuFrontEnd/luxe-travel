@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useCallback, useMemo } from 'react'
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import AdvantageCard from './AdvantageCard'
 import styles from './styles.module.css'
 import { transformAdvantageData } from './config'
@@ -12,10 +12,16 @@ type TAdvantageProps = TBaseComponent & {
   collectionRef?: React.RefObject<HTMLDivElement>
 }
 
-const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
-  const trackRef = React.useRef<HTMLDivElement>(null)
-  const backgroundRef = React.useRef<HTMLDivElement>(null)
+const Advantage = ({ className }: TAdvantageProps) => {
+  const trackRef = useRef<HTMLDivElement>(null)
+  const backgroundRef = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)
+  const [isInDetectionZone, setIsInDetectionZone] = useState(false)
+  const [scrollDirection, setScrollDirection] = useState<'down' | 'up' | null>(null)
+  const [translateX, setTranslateX] = useState(0)
+  const [isScrollLocked, setIsScrollLocked] = useState(false)
+  const lastScrollY = useRef(0)
+  const entryDirection = useRef<'from-top' | 'from-bottom' | null>(null)
 
 
   const { query: advantagesQuery, mock } = useAdvantages()
@@ -37,14 +43,9 @@ const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
     return transformAdvantageData(advantagesData)
   }, [advantagesError, advantagesData, isAdvantagesLoading, mock.rows])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const checkMobileLayout = () => {
       const newIsMobile = window.innerWidth < 1280
-      console.log('📱 響應式檢查:', {
-        windowWidth: window.innerWidth,
-        isMobile: newIsMobile,
-        breakpoint: 1280
-      })
       setIsMobile(newIsMobile)
     }
 
@@ -55,6 +56,104 @@ const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
       window.removeEventListener('resize', checkMobileLayout)
     }
   }, [])
+
+  const handleDesktopScroll = useCallback((event: WheelEvent) => {
+    if (isMobile || !isInDetectionZone) return
+
+    event.preventDefault()
+
+    const delta = event.deltaY
+    const currentDirection = delta > 0 ? 'down' : 'up'
+
+    if (scrollDirection !== currentDirection) {
+      setScrollDirection(currentDirection)
+    }
+
+    const moveAmount = delta * 2
+    setTranslateX(prev => {
+      const newX = prev + moveAmount
+      const maxLeft = -(window.innerWidth + (trackRef.current?.scrollWidth || 0))
+      const maxRight = window.innerWidth
+
+      return Math.max(maxLeft, Math.min(maxRight, newX))
+    })
+  }, [isMobile, isInDetectionZone, scrollDirection])
+
+  const checkDetectionZone = useCallback(() => {
+    if (isMobile || !backgroundRef.current) return
+
+    const rect = backgroundRef.current.getBoundingClientRect()
+    const currentScrollY = window.scrollY
+    const wasInZone = isInDetectionZone
+
+    const inZone = rect.top <= 0 && rect.bottom > 0
+
+    if (inZone && !wasInZone) {
+      const direction = currentScrollY > lastScrollY.current ? 'from-top' : 'from-bottom'
+      entryDirection.current = direction
+
+      setIsInDetectionZone(true)
+      setIsScrollLocked(true)
+
+      if (direction === 'from-top') {
+        setTranslateX(window.innerWidth)
+        setScrollDirection('down')
+      } else {
+        const trackWidth = trackRef.current?.scrollWidth || 0
+        setTranslateX(-(window.innerWidth + trackWidth))
+        setScrollDirection('up')
+      }
+    } else if (!inZone && wasInZone) {
+      setIsInDetectionZone(false)
+      setIsScrollLocked(false)
+      setScrollDirection(null)
+      entryDirection.current = null
+    }
+
+    if (inZone && scrollDirection) {
+      const newDirection = currentScrollY > lastScrollY.current ? 'down' : 'up'
+
+      if (newDirection !== scrollDirection && entryDirection.current) {
+        if (entryDirection.current === 'from-top' && newDirection === 'up') {
+          setTranslateX(window.innerWidth)
+        } else if (entryDirection.current === 'from-bottom' && newDirection === 'down') {
+          const trackWidth = trackRef.current?.scrollWidth || 0
+          setTranslateX(-(window.innerWidth + trackWidth))
+        }
+        setScrollDirection(newDirection)
+      }
+    }
+
+    lastScrollY.current = currentScrollY
+  }, [isMobile, isInDetectionZone, scrollDirection])
+
+  useEffect(() => {
+    if (isMobile) return
+
+    const handleScroll = () => {
+      checkDetectionZone()
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: false })
+    window.addEventListener('wheel', handleDesktopScroll, { passive: false })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('wheel', handleDesktopScroll)
+    }
+  }, [isMobile, handleDesktopScroll, checkDetectionZone])
+
+  useEffect(() => {
+    if (isScrollLocked) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isScrollLocked])
 
 
   return (
@@ -83,12 +182,16 @@ const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
       {/* 卡片區域 */}
 
       <div
-        className={`px-3 xl:px-0 xl:w-full pb-[60px] xl:pb-0 w-full xl:fixed xl:z-20 xl:top-0 xl:left-0 xl:right-0 xl:bottom-0`}
+        className={`px-3 xl:px-0 pb-[60px] xl:pb-0`}
       >
         <div
           ref={trackRef}
           data-track="advantage-track"
           className={`${isMobile ? styles.trackMobile : styles.track}`}
+          style={!isMobile ? {
+            transform: `translateX(${translateX}px)`,
+            transition: isInDetectionZone ? 'none' : 'transform 0.3s ease-out'
+          } : {}}
         >
           {displayData.map((card, index) => (
             <div
