@@ -35,6 +35,24 @@ export const useAdvantageScroll = ({ collectionRef }: TUseAdvantageScrollParams 
     // 檢查 collection 是否進入視窗（從下往上滑的觸發條件）
     const isCollectionEntering = collectionRect && collectionRect.top < window.innerHeight
 
+    console.log('👁️ 可見性檢查:', {
+      windowHeight: window.innerHeight,
+      advantageRect: {
+        top: rect.top,
+        bottom: rect.bottom,
+        height: rect.height
+      },
+      collectionRect: collectionRect ? {
+        top: collectionRect.top,
+        bottom: collectionRect.bottom,
+        height: collectionRect.height
+      } : null,
+      isAdvantageInViewport,
+      isCollectionEntering,
+      scrollDirection,
+      hasTriggeredReverse: hasTriggeredReverseRef.current
+    })
+
     // 如果完全離開偵測區，重置反向動畫記憶
     if (!isAdvantageInViewport) {
       hasTriggeredReverseRef.current = false
@@ -43,11 +61,19 @@ export const useAdvantageScroll = ({ collectionRef }: TUseAdvantageScrollParams 
     // 如果 collection 進入視窗且是從下往上滑動，記錄反向動畫被觸發
     if (isAdvantageInViewport && isCollectionEntering && scrollDirection === 'up' && !hasTriggeredReverseRef.current) {
       hasTriggeredReverseRef.current = true
+      console.log('🔄 觸發反向動畫記憶')
     }
 
     // 決定動畫方向
     const shouldUseReverseAnimation = isAdvantageInViewport && hasTriggeredReverseRef.current
 
+    console.log('🎭 動畫方向決定:', {
+      isAdvantageInViewport,
+      hasTriggeredReverse: hasTriggeredReverseRef.current,
+      shouldUseReverseAnimation,
+      finalTrackVisible: isAdvantageInViewport,
+      finalReverseAnimation: isAdvantageInViewport ? shouldUseReverseAnimation : false
+    })
 
     if (isAdvantageInViewport) {
       setIsTrackVisible(true)
@@ -60,13 +86,41 @@ export const useAdvantageScroll = ({ collectionRef }: TUseAdvantageScrollParams 
 
   const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY
+    const scrollDiff = currentScrollY - lastScrollY.current
 
     // 檢測滾動方向
+    let newScrollDirection = scrollDirection
+    let directionChanged = false
+
     if (currentScrollY > lastScrollY.current) {
+      newScrollDirection = 'down'
+      directionChanged = scrollDirection !== 'down'
       setScrollDirection('down')
     } else if (currentScrollY < lastScrollY.current) {
+      newScrollDirection = 'up'
+      directionChanged = scrollDirection !== 'up'
       setScrollDirection('up')
     }
+
+    console.log('🌊 滾動事件詳細分析:', {
+      currentScrollY,
+      lastScrollY: lastScrollY.current,
+      scrollDiff,
+      oldDirection: scrollDirection,
+      newDirection: newScrollDirection,
+      directionChanged,
+      isScrolling: true,
+      時間戳: Date.now()
+    })
+
+    if (directionChanged) {
+      console.log('🔄 Hook 檢測到方向變化!', {
+        從: scrollDirection,
+        到: newScrollDirection,
+        在滾動位置: currentScrollY
+      })
+    }
+
     lastScrollY.current = currentScrollY
 
     setIsScrolling(true)
@@ -77,9 +131,10 @@ export const useAdvantageScroll = ({ collectionRef }: TUseAdvantageScrollParams 
     }
 
     scrollTimeoutRef.current = setTimeout(() => {
+      console.log('⏰ 滾動停止 timeout 觸發')
       setIsScrolling(false)
     }, 150)
-  }, [checkVisibility])
+  }, [checkVisibility, scrollDirection])
 
   useEffect(() => {
     if (!backgroundRef.current) return

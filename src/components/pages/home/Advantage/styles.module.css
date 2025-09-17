@@ -81,12 +81,70 @@
   animation-play-state: paused;
 }
 
+/* 動態起始位置的動畫類別 */
+.trackSlideFromCurrentToRight {
+  animation-name: slideFromCurrentToRight;
+  animation-duration: 6s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: none;
+  animation-iteration-count: 1;
+  transform: translateX(var(--start-position, 0px));
+}
+
+.trackSlideFromCurrentToRightPaused {
+  animation-name: slideFromCurrentToRight;
+  animation-duration: 6s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: none;
+  animation-iteration-count: 1;
+  animation-play-state: paused;
+  transform: translateX(var(--start-position, 0px));
+}
+
+.trackSlideFromCurrentToLeft {
+  animation-name: slideFromCurrentToLeft;
+  animation-duration: 6s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: none;
+  animation-iteration-count: 1;
+  transform: translateX(var(--start-position, 0px));
+}
+
+.trackSlideFromCurrentToLeftPaused {
+  animation-name: slideFromCurrentToLeft;
+  animation-duration: 6s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: none;
+  animation-iteration-count: 1;
+  animation-play-state: paused;
+  transform: translateX(var(--start-position, 0px));
+}
+
+.trackSlideFromCurrentToCenter {
+  animation-name: slideFromCurrentToCenter;
+  animation-duration: 6s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: none;
+  animation-iteration-count: 1;
+  transform: translateX(var(--start-position, 0px));
+}
+
+.trackSlideFromCurrentToCenterPaused {
+  animation-name: slideFromCurrentToCenter;
+  animation-duration: 6s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: none;
+  animation-iteration-count: 1;
+  animation-play-state: paused;
+  transform: translateX(var(--start-position, 0px));
+}
+
 @keyframes slideRightToLeft {
   0% {
     transform: translateX(100vw);
   }
   100% {
-    transform: translateX(calc(-100vw - 100%));
+    transform: translateX(0);
   }
 }
 
@@ -117,6 +175,34 @@
 @keyframes slideBackToLeft {
   to {
     transform: translateX(calc(-100vw - 100%));
+  }
+}
+
+/* 動態起始位置的新動畫 */
+@keyframes slideFromCurrentToRight {
+  0% {
+    transform: translateX(var(--start-position, 0px));
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes slideFromCurrentToLeft {
+  0% {
+    transform: translateX(var(--start-position, 0px));
+  }
+  100% {
+    transform: translateX(calc(-100vw - 100%));
+  }
+}
+
+@keyframes slideFromCurrentToCenter {
+  0% {
+    transform: translateX(var(--start-position, 0px));
+  }
+  100% {
+    transform: translateX(0);
   }
 }
 
