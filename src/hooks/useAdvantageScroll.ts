@@ -1,75 +1,125 @@
 'use client'
 
-import { useState, useCallback, useEffect, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 
-// 可配置的動畫邏輯參數
-const ANIMATION_CONFIG = {
-  ARC_HEIGHT: 200,
-  SCROLL_SENSITIVITY: 1,
-  BASE_OFFSET_MULTIPLIER: 3000,
-  TRIGGER_ZONE: 200
-} as const
+type TUseAdvantageScrollReturn = {
+  backgroundRef: React.RefObject<HTMLDivElement>
+  isTrackVisible: boolean
+  isScrolling: boolean
+  isReverseAnimation: boolean
+  scrollDirection: 'down' | 'up' | null
+}
 
-export const useAdvantageScroll = () => {
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const containerRef = useRef<HTMLElement>(null)
+type TUseAdvantageScrollParams = {
+  collectionRef?: React.RefObject<HTMLDivElement>
+}
 
-  const calculateCardPosition = useCallback((index: number, progress: number, cardCount: number) => {
-    // 基礎移動：所有卡片一起從右側 → 中間 → 左側
-    const baseXOffset = (1 - progress) * ANIMATION_CONFIG.BASE_OFFSET_MULTIPLIER - progress * ANIMATION_CONFIG.BASE_OFFSET_MULTIPLIER
+export const useAdvantageScroll = ({ collectionRef }: TUseAdvantageScrollParams = {}): TUseAdvantageScrollReturn => {
+  const backgroundRef = useRef<HTMLDivElement | null>(null)
+  const [isTrackVisible, setIsTrackVisible] = useState(false)
+  const [isScrolling, setIsScrolling] = useState(false)
+  const [isReverseAnimation, setIsReverseAnimation] = useState(false)
+  const [scrollDirection, setScrollDirection] = useState<'down' | 'up' | null>(null)
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const hasTriggeredReverseRef = useRef(false)
+  const lastScrollY = useRef(0)
 
-    // 固定卡片間距，避免動態計算問題
-    const cardSpacing = 600 // 522px卡片 + 78px間距
-    const centerOffset = (cardCount - 1) / 2 // 動態計算中心偏移
-    const cardXOffset = (index - centerOffset) * cardSpacing
+  const checkVisibility = useCallback(() => {
+    if (!backgroundRef.current) return
 
-    const finalXOffset = baseXOffset + cardXOffset
+    const rect = backgroundRef.current.getBoundingClientRect()
+    const collectionRect = collectionRef?.current?.getBoundingClientRect()
 
-    // 弧形軌跡：最高點為 0，向下彎曲到最低點
-    const yOffset = ANIMATION_CONFIG.ARC_HEIGHT - (Math.sin(progress * Math.PI) * ANIMATION_CONFIG.ARC_HEIGHT)
+    // 檢查 advantage 區域是否在視窗內（任何部分可見）
+    const isAdvantageInViewport = rect.top < window.innerHeight && rect.bottom > 0
+    // 檢查 collection 是否進入視窗（從下往上滑的觸發條件）
+    const isCollectionEntering = collectionRect && collectionRect.top < window.innerHeight
 
-    return {
-      transform: `translate3d(${finalXOffset}px, ${yOffset}px, 0)`,
-      opacity: 1,
-      zIndex: 1
+    // 如果完全離開偵測區，重置反向動畫記憶
+    if (!isAdvantageInViewport) {
+      hasTriggeredReverseRef.current = false
     }
-  }, [])
 
-  // 簡化的滾動處理，只用於計算動畫進度，不鎖定滾動
+    // 如果 collection 進入視窗且是從下往上滑動，記錄反向動畫被觸發
+    if (isAdvantageInViewport && isCollectionEntering && scrollDirection === 'up' && !hasTriggeredReverseRef.current) {
+      hasTriggeredReverseRef.current = true
+    }
+
+    // 決定動畫方向
+    const shouldUseReverseAnimation = isAdvantageInViewport && hasTriggeredReverseRef.current
+
+
+    if (isAdvantageInViewport) {
+      setIsTrackVisible(true)
+      setIsReverseAnimation(shouldUseReverseAnimation)
+    } else {
+      setIsTrackVisible(false)
+      setIsReverseAnimation(false)
+    }
+  }, [collectionRef, scrollDirection])
+
   const handleScroll = useCallback(() => {
-    if (!containerRef.current) return
+    const currentScrollY = window.scrollY
 
-    const container = containerRef.current
-    const rect = container.getBoundingClientRect()
-    const windowHeight = window.innerHeight
+    // 檢測滾動方向
+    if (currentScrollY > lastScrollY.current) {
+      setScrollDirection('down')
+    } else if (currentScrollY < lastScrollY.current) {
+      setScrollDirection('up')
+    }
+    lastScrollY.current = currentScrollY
 
-    // 計算滾動進度
-    const containerTop = rect.top
-    const containerHeight = rect.height
-    const triggerStart = windowHeight * 0.8
-    const triggerEnd = -containerHeight + windowHeight * 0.2
+    setIsScrolling(true)
+    checkVisibility()
 
-    const scrollRange = triggerStart - triggerEnd
-    const currentScroll = triggerStart - containerTop
-    const progress = Math.max(0, Math.min(1, currentScroll / scrollRange))
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current)
+    }
 
-    setScrollProgress(progress)
-  }, [])
+    scrollTimeoutRef.current = setTimeout(() => {
+      setIsScrolling(false)
+    }, 150)
+  }, [checkVisibility])
 
   useEffect(() => {
-    const handleScrollEvent = () => handleScroll()
+    if (!backgroundRef.current) return
 
-    window.addEventListener('scroll', handleScrollEvent, { passive: true })
-    handleScroll() // 初始檢查
+    const currentElement = backgroundRef.current
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            checkVisibility()
+          }
+        })
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: [0, 0.1, 0.5, 1]
+      }
+    )
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    observer.observe(currentElement)
+
+    checkVisibility()
 
     return () => {
-      window.removeEventListener('scroll', handleScrollEvent)
+      window.removeEventListener('scroll', handleScroll)
+      observer.disconnect()
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
+      }
     }
-  }, [handleScroll])
+  }, [handleScroll, checkVisibility])
 
   return {
-    containerRef,
-    scrollProgress,
-    calculateCardPosition
+    backgroundRef: backgroundRef as React.RefObject<HTMLDivElement>,
+    isTrackVisible,
+    isScrolling,
+    isReverseAnimation,
+    scrollDirection
   }
 }

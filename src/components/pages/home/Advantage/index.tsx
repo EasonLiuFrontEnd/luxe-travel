@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useCallback, useMemo, useEffect } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import AdvantageCard from './AdvantageCard'
 import styles from './styles.module.css'
 import { transformAdvantageData } from './config'
@@ -9,18 +9,20 @@ import { useAdvantageScroll } from '@/hooks/useAdvantageScroll'
 import type { TBaseComponent } from '@/types'
 import '@/styles/components.css'
 
-type TAdvantageProps = TBaseComponent
+type TAdvantageProps = TBaseComponent & {
+  collectionRef?: React.RefObject<HTMLDivElement>
+}
 
-const Advantage = ({ className }: TAdvantageProps) => {
+const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
   const trackRef = React.useRef<HTMLDivElement>(null)
+  const { backgroundRef, isTrackVisible, isScrolling, isReverseAnimation, scrollDirection } = useAdvantageScroll({ collectionRef })
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
-  const [headerHeight, setHeaderHeight] = useState(124)
+
 
   const { query: advantagesQuery, mock } = useAdvantages()
-  const { containerRef, calculateCardPosition, scrollProgress } = useAdvantageScroll()
   const {
     data: advantagesData,
     isLoading: isAdvantagesLoading,
@@ -52,27 +54,6 @@ const Advantage = ({ className }: TAdvantageProps) => {
     }
   }, [])
 
-  // 動態獲取 header 高度
-  useEffect(() => {
-    const getHeaderHeight = () => {
-      const header = document.querySelector('header') ||
-        document.querySelector('.header') ||
-        document.querySelector('nav') ||
-        document.querySelector('[data-header]')
-
-      if (header) {
-        const height = header.getBoundingClientRect().height
-        setHeaderHeight(height)
-      }
-    }
-
-    getHeaderHeight()
-    window.addEventListener('resize', getHeaderHeight)
-
-    return () => {
-      window.removeEventListener('resize', getHeaderHeight)
-    }
-  }, [])
 
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {
@@ -104,20 +85,12 @@ const Advantage = ({ className }: TAdvantageProps) => {
 
   return (
     <section
-      ref={containerRef}
-      className={`${styles.backgroundMap} bg-figma-secondary-100 relative ${className || ''}`}
-      style={isMobile ? {} : { height: `calc(100vh - ${headerHeight}px)` }}
+      className={`bg-figma-secondary-100 relative ${className || ''}`}
     >
-      {/* 桌機版背景地圖 */}
-      {/* <div className='hidden xl:block absolute inset-0'>
-        <div className='absolute h-[1010px] top-[-151px] left-1/2 transform -translate-x-1/2 w-[866px]'>
-          <div className={styles.backgroundMap + ' w-full h-full opacity-10'} />
-        </div>
-      </div> */}
-
       {/* 標題區域 */}
       <div
-        className={`relative xl:sticky xl:top-0 xl:left-0 px-0 py-[60px] xl:pt-[200px] xl:pb-[120px] flex flex-col gap-[20px] xl:gap-[120px] items-center`}
+        ref={backgroundRef}
+        className={`${styles.backgroundMap} relative xl:sticky xl:-top-[60px] pt-[60px] xl:pt-[200px] xl:left-0 px-0 pb-[60px] xl:pb-0 flex flex-col gap-[20px] xl:gap-[120px] items-center xl:h-[100vh]`}
       >
         <h2 className='inline-block font-family-noto-serif font-bold text-[32px] xl:text-[64px] xl:leading-[120%] text-[var(--color-figma-primary-950)] px-5 py-[6px] gradient-title-border'>
           典藏優勢
@@ -136,36 +109,62 @@ const Advantage = ({ className }: TAdvantageProps) => {
       {/* 卡片區域 */}
 
       <div
-        className={`px-3 xl:px-0 xl:w-full pb-[60px] xl:pb-0 relative w-full ${isMobile ? 'overflow-x-auto' : styles.containerOverflow}`}
+        className={`px-3 xl:px-0 xl:w-full pb-[60px] xl:pb-0 w-full relative ${!isMobile ? styles.containerOverflow : ''}`}
       >
         <div
           ref={trackRef}
           className={`${isMobile ? `${styles.trackMobile} ${styles.scrollContainer}` : styles.track} ${isDragging && isMobile
-              ? 'cursor-grabbing'
-              : isMobile
-                ? 'cursor-grab'
-                : ''
-            }`}
+            ? 'cursor-grabbing'
+            : isMobile
+              ? 'cursor-grab'
+              : ''
+            } ${(() => {
+              if (isMobile) return ''
+
+              if (!isTrackVisible) {
+                return isReverseAnimation ? styles.trackHiddenLeft : styles.trackHidden
+              }
+
+              // 根據動畫類型和滾動方向決定動畫類別
+              let animationClass = ''
+
+              if (isReverseAnimation) {
+                // 從下往上進入的反向動畫
+                if (scrollDirection === 'down') {
+                  // 向下滾動時倒退到左邊
+                  animationClass = isScrolling ? styles.trackSlideBackToLeft : styles.trackSlideBackToLeftPaused
+                } else {
+                  // 向上滾動時正常的左到右動畫
+                  animationClass = isScrolling ? styles.trackSlideInReverse : styles.trackSlideInReversePaused
+                }
+              } else {
+                // 從上往下進入的正向動畫
+                if (scrollDirection === 'up') {
+                  // 向上滾動時倒退到右邊
+                  animationClass = isScrolling ? styles.trackSlideBackToRight : styles.trackSlideBackToRightPaused
+                } else {
+                  // 向下滾動時正常的右到左動畫
+                  animationClass = isScrolling ? styles.trackSlideIn : styles.trackSlideInPaused
+                }
+              }
+
+
+              return animationClass
+            })()}`}
           onMouseDown={handleMouseDown}
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
         >
           {displayData.map((card, index) => {
-            const cardStyle = !isMobile ? calculateCardPosition(index, scrollProgress, displayData.length) : {}
-
             return (
               <div
                 key={card.id}
                 data-card-index={index}
-                className={`${styles.cardContainer} ${isMobile
-                    ? 'w-[318px] flex-shrink-0'
-                    : 'w-[522px] flex-shrink-0 absolute top-0 left-1/2'
+                className={`${styles.cardContainer} flex-shrink-0 ${isMobile
+                  ? 'w-[318px] max-w-none'
+                  : 'w-[30vw] max-w-[522px]'
                   }`}
-                style={!isMobile ? {
-                  ...cardStyle,
-                  marginLeft: '-50%'
-                } : undefined}
               >
                 <AdvantageCard card={card} />
               </div>
