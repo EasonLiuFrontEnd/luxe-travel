@@ -76,7 +76,7 @@ const FeedbackCard = ({
       overflowXHidden
       contentClassName='w-full'
       disableDefaultOverflow
-      className='flex self-stretch w-full min-h-[587px] mb-[60px]'
+      className='flex self-stretch w-full xl:mb-[60px]'
     >
       <CarouselContent className='gap-x-[24px] mt-[60px] xl:mt-[120px] pl-4'>
         {cardData.map((card) => (

@@ -20,21 +20,19 @@ export const DetailRequirementsSection = ({
   isLoading = false,
 }: TDetailRequirementsSectionProps) => {
   return (
-    <div className='bg-white box-border content-stretch flex flex-col gap-8 items-start justify-start pb-[60px] pt-8 px-4 xl:px-8 relative rounded-2xl rounded-br-0 w-full'>
-      <div className='box-border content-stretch flex flex-col gap-6 items-start justify-start pb-6 pt-0 px-0 relative shrink-0 w-full'>
-        <div className='flex flex-col xl:flex-row gap-6 xl:items-end items-start justify-start w-full'>
-          <div className='flex flex-col gap-1 items-start justify-start shrink-0 w-full xl:w-auto'>
-            <div className='flex flex-wrap gap-0.5 items-center justify-start'>
-              <div className='flex gap-1 items-center justify-start'>
-                <div className="font-['Noto_Serif_TC',_sans-serif] font-light text-[18px] leading-[1.5] text-figma-primary-950">
-                  預計人數
-                </div>
-                <div className='font-noto-sans text-[18px] leading-[1.5] text-figma-function-alert'>
-                  *
-                </div>
+    <div className='bg-white flex flex-col gap-8 pb-[60px] pt-5 xl:pt-8 px-4 xl:px-8 relative rounded-2xl rounded-br-0 w-full'>
+      <div className='flex flex-col gap-7 xl:pb-7 w-full'>
+        <div className='flex flex-col xl:flex-row gap-6 xl:items-end w-full'>
+          <div className='flex flex-col gap-1'>
+            <div className='flex gap-1 items-center mb-2'>
+              <div className="font-noto-serif-body-l-semibold text-figma-primary-950">
+                預計人數
+              </div>
+              <div className='font-genseki-body-l-regular text-figma-function-alert'>
+                *
               </div>
             </div>
-            <div className='flex flex-col xl:flex-row gap-6 xl:gap-[31px] items-start justify-start w-full xl:w-auto'>
+            <div className='flex flex-col xl:flex-row gap-6 xl:gap-7'>
               <FormField
                 control={control}
                 name='detailedRequirements.adultCount'
@@ -69,15 +67,13 @@ export const DetailRequirementsSection = ({
               />
             </div>
           </div>
-          <div className='flex-1 flex flex-col gap-1 items-start justify-start min-w-0 w-full xl:w-auto'>
-            <div className='flex flex-wrap gap-0.5 items-center justify-start'>
-              <div className='flex gap-1 items-center justify-start'>
-                <div className="font-['Noto_Serif_TC',_sans-serif] font-light text-[18px] leading-[1.5] text-figma-primary-950">
-                  預計旅遊天數
-                </div>
-                <div className='font-noto-sans text-[18px] leading-[1.5] text-figma-function-alert'>
-                  *
-                </div>
+          <div className='w-full xl:flex-1 flex flex-col gap-1 xl:min-w-0'>
+            <div className='flex gap-1 items-center mb-2'>
+              <div className="font-noto-serif-body-l-semibold text-figma-primary-950">
+                預計旅遊天數
+              </div>
+              <div className='font-genseki-body-l-regular text-figma-function-alert'>
+                *
               </div>
             </div>
             <FormField
@@ -98,15 +94,13 @@ export const DetailRequirementsSection = ({
               )}
             />
           </div>
-          <div className='flex-1 flex flex-col gap-1 items-start justify-start min-w-0 w-full xl:w-auto'>
-            <div className='flex flex-wrap gap-0.5 items-center justify-start'>
-              <div className='flex gap-1 items-center justify-start'>
-                <div className="font-['Noto_Serif_TC',_sans-serif] font-light text-[18px] leading-[1.5] text-figma-primary-950">
-                  預計出發日
-                </div>
-                <div className='font-noto-sans text-[18px] leading-[1.5] text-figma-function-alert'>
-                  *
-                </div>
+          <div className='w-full xl:flex-1 flex flex-col gap-1 xl:min-w-0'>
+            <div className='flex gap-1 items-center mb-2'>
+              <div className="font-noto-serif-body-l-semibold text-figma-primary-950">
+                預計出發日
+              </div>
+              <div className='font-genseki-body-l-regular text-figma-function-alert'>
+                *
               </div>
             </div>
             <FormField
@@ -160,29 +154,27 @@ export const DetailRequirementsSection = ({
           name='detailedRequirements.wishlist'
           render={({ field }) => (
             <FormItem className='w-full'>
-              <div className='flex flex-wrap gap-0.5 items-center justify-start'>
-                <FormLabel className="font-['Noto_Serif_TC',_sans-serif] font-light text-[18px] leading-[1.5] text-figma-primary-950">
+              <div className='flex gap-0.5 items-center mb-2'>
+                <FormLabel className="font-noto-serif-body-l-semibold text-figma-primary-950">
                   心願清單
                 </FormLabel>
-                <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950'>
+                <span className='font-genseki-body-s-regular text-figma-primary-950'>
                   （希望必造訪的景點、城市等）
                 </span>
               </div>
               <FormControl>
-                <div className='w-full relative'>
-                  <div className='flex flex-wrap gap-2.5 items-center justify-start px-0 py-3 w-full border-b border-[rgba(56,56,65,0.7)]'>
+                <div className='flex gap-2.5 items-center px-0 py-3 w-full border-b border-[rgba(56,56,65,0.7)]'>
                     <input
                       placeholder='歡迎將需求告訴我們，典藏將竭誠為您服務'
                       className='flex-1 bg-transparent border-none outline-none font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950 placeholder:text-figma-primary-300'
                       maxLength={100}
                       {...field}
                     />
-                    <div className='flex gap-1.5 items-center justify-start shrink-0'>
+                    <div className='flex gap-1.5 items-center shrink-0'>
                       <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-300'>
                         {field.value?.length || 0}/100
                       </span>
                     </div>
-                  </div>
                 </div>
               </FormControl>
               <FormMessage />
@@ -194,29 +186,27 @@ export const DetailRequirementsSection = ({
           name='detailedRequirements.specialRequirements'
           render={({ field }) => (
             <FormItem className='w-full'>
-              <div className='flex flex-wrap gap-0.5 items-center justify-start'>
-                <FormLabel className="font-['Noto_Serif_TC',_sans-serif] font-light text-[18px] leading-[1.5] text-figma-primary-950">
+              <div className='flex gap-0.5 items-center mb-2'>
+                <FormLabel className="font-noto-serif-body-l-semibold text-figma-primary-950">
                   其他特別需求
                 </FormLabel>
-                <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-950'>
+                <span className='font-genseki-body-s-regular text-figma-primary-950'>
                   （如交通、接送、特別活動等）
                 </span>
               </div>
               <FormControl>
-                <div className='w-full relative'>
-                  <div className='flex flex-wrap gap-2.5 items-center justify-start px-0 py-3 w-full border-b border-[rgba(56,56,65,0.7)]'>
+                <div className='flex gap-2.5 items-center px-0 py-3 w-full border-b border-[rgba(56,56,65,0.7)]'>
                     <input
                       placeholder='歡迎將需求告訴我們，典藏將竭誠為您服務'
                       className='flex-1 bg-transparent border-none outline-none font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950 placeholder:text-figma-primary-300'
                       maxLength={100}
                       {...field}
                     />
-                    <div className='flex gap-1.5 items-center justify-start shrink-0'>
+                    <div className='flex gap-1.5 items-center shrink-0'>
                       <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-300'>
                         {field.value?.length || 0}/100
                       </span>
                     </div>
-                  </div>
                 </div>
               </FormControl>
               <FormMessage />
@@ -224,34 +214,26 @@ export const DetailRequirementsSection = ({
           )}
         />
       </div>
-      <div className='content-stretch flex items-center justify-between relative shrink-0 w-full'>
-        <div className='basis-0 flex flex-col font-genseki-body-s-regular leading-[1.5] grow justify-center min-h-px min-w-px not-italic relative shrink-0 text-figma-primary-950 text-[14px]'>
-          <p>
-            典藏旅遊遵循「個人資料保護法」以妥善處理、利用本表所載之個人資料，並採取資料保護措施。
-            <br />
-            您有權提出要求使用、更正、補充、刪除或封鎖這些個人資料，請將任何這類需求寄至
-            info@luxetravel.com.tw
-          </p>
-        </div>
-      </div>
-      <div className='absolute bg-[var(--color-figma-secondary-100)] box-border content-stretch flex gap-4 items-center justify-center px-6 py-3 right-0 rounded-tl-[16px] rounded-br-[16px] bottom-0'>
+      <p className='flex items-center w-full font-genseki-body-s-regular text-figma-primary-950'>
+        典藏旅遊遵循「個人資料保護法」以妥善處理、利用本表所載之個人資料，並採取資料保護措施。
+        <br />
+        您有權提出要求使用、更正、補充、刪除或封鎖這些個人資料，請將任何這類需求寄至
+        info@luxetravel.com.tw
+      </p>
+      <div className='absolute bg-figma-secondary-100 flex gap-4 items-center justify-center px-4 py-3 xl:px-7 xl:py-4 right-0 rounded-tl-[16px] rounded-br-[16px] bottom-0'>
         <button
           type='submit'
           disabled={isLoading}
-          className='flex items-center gap-4 font-genseki-body-m-medium text-[20px] leading-[1.2] text-figma-secondary-950 tracking-[0.5px] disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed'
+          className='
+            flex items-center gap-5 text-figma-secondary-950 tracking-[0.5px]
+            font-family-noto-serif xl:font-family-genseki text-[24px] xl:text-[20px] font-bold xl:font-medium leading-[1.2]
+            cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed
+          '
         >
           <span>送出諮詢</span>
-          <div className='h-1.5 w-5 relative shrink-0'>
-            <svg
-              className='size-full'
-              viewBox='0 0 20 6'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <path
-                d='M19.707 3.707a1 1 0 0 0 0-1.414L16.828.414a1 1 0 1 0-1.414 1.414L17.586 4l-2.172 2.172a1 1 0 0 0 1.414 1.414l2.879-2.879zM0 4h19V2H0v2z'
-                fill='#926d3c'
-              />
+          <div className='h-1.5 w-5 shrink-0'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="9" viewBox="0 0 25 9" fill="none">
+              <path d="M1 6.33105H0V8.33105H1V7.33105V6.33105ZM21 7.33105V8.33105H24.6824L21.5058 6.46842L21 7.33105ZM1 7.33105V8.33105H21V7.33105V6.33105H1V7.33105ZM21 7.33105L21.5058 6.46842L11.2733 0.468416L10.7674 1.33105L10.2616 2.19369L20.4942 8.19369L21 7.33105Z" fill="#926D3C"/>
             </svg>
           </div>
         </button>
