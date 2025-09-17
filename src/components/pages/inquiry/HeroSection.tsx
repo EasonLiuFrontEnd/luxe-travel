@@ -4,19 +4,19 @@ import styles from './styles.module.css'
 
 export type THeroSectionProps = {
   className?: string
+  topPosition?: string
 }
 
-export const HeroSection = ({ className = '' }: THeroSectionProps) => {
+export const HeroSection = ({ className = '', topPosition = 'top-[-64px] xl:top-[-101px]' }: THeroSectionProps) => {
   return (
-    <div className={`content-stretch flex flex-col gap-2.5 items-start justify-start relative size-full border-none ${className}`}>
-      <div className='h-[530px] overflow-clip rounded-[16px] shrink-0 sticky top-0 w-full'>
+    <div className={`h-[530px] overflow-clip rounded-[16px] content-stretch flex flex-col gap-2.5 items-start justify-start relative size-full border-none sticky ${topPosition} mb-7 ${className}`}>
         <div
           className={cn(
             'absolute bg-no-repeat h-[530px] left-0 top-0 w-full border-none',
             styles['hero-bg'],
           )}
         />
-      </div>
+
       <h2 className='
           absolute left-0 translate-[-1px] px-4 py-3 xl:px-7 xl:py-4
           font-family-noto-serif text-[32px] xl:text-[64px] font-bold leading-[1.5] xl:leading-[1.2]

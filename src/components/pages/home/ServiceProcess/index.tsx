@@ -50,7 +50,7 @@ const ServiceProcess = ({ className, ...props }: TServiceProcessProps) => {
     >
       <div
         className={cn(
-          'px-0 py-[60px] lg:py-[120px] flex flex-col gap-[60px] lg:gap-[120px] items-center',
+          'px-0 py-[60px] lg:py-[120px] flex flex-col gap-[60px] lg:gap-[120px] items-center border-b border-figma-secondary-500 xl:border-none',
           styles.serviceProcessBackgroundImage,
         )}
       >
@@ -58,7 +58,7 @@ const ServiceProcess = ({ className, ...props }: TServiceProcessProps) => {
           典藏服務流程
         </h2>
 
-        <div className='w-full px-[clamp(12px,2.5vw,48px)] border-b border-[var(--color-figma-secondary-500)]'>
+        <div className='w-full px-[clamp(12px,2.5vw,48px)] xl:border-b xl:border-[var(--color-figma-secondary-500)]'>
           <div className='w-full max-w-[1440px] mx-auto flex flex-col lg:flex-row lg:items-end gap-4 lg:gap-[6px]'>
             {serviceSteps.map((step) => (
               <ServiceStep key={step.number} step={step} />

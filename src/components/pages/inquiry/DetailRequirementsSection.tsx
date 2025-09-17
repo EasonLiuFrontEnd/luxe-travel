@@ -109,7 +109,7 @@ export const DetailRequirementsSection = ({
               render={({ field }) => (
                 <FormItem className='w-full'>
                   <div
-                    className='relative cursor-pointer'
+                    className='relative'
                     onClick={() => {
                       const input = document.getElementById(
                         'departure-date-input',
@@ -227,7 +227,7 @@ export const DetailRequirementsSection = ({
           className='
             flex items-center gap-5 text-figma-secondary-950 tracking-[0.5px]
             font-family-noto-serif xl:font-family-genseki text-[24px] xl:text-[20px] font-bold xl:font-medium leading-[1.2]
-            disabled:opacity-50 disabled:cursor-not-allowed
+            cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed
           '
         >
           <span>送出諮詢</span>

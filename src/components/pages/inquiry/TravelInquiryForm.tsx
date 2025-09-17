@@ -306,12 +306,14 @@ export type TTravelInquiryFormProps = {
   onSubmit?: (data: TTravelInquiryFormData) => void | Promise<void>
   className?: string
   isLoading?: boolean
+  heroTopPosition?: string
 }
 
 export const TravelInquiryForm = ({
   onSubmit,
   className = '',
   isLoading = false,
+  heroTopPosition,
 }: TTravelInquiryFormProps) => {
   const form = useForm<TTravelInquiryFormData>({
     resolver: zodResolver(travelInquiryFormSchema),
@@ -329,12 +331,12 @@ export const TravelInquiryForm = ({
 
   return (
     <div
-      className={`min-h-screen p-0 bg-figma-secondary-100 ${className}`}
+      className={`min-h-screen px-[clamp(12px,2.5vw,48px)] bg-figma-secondary-100 ${className}`}
     >
       <div className='w-full max-w-[1440px] mx-auto'>
-        <HeroSection />
+        <HeroSection topPosition={heroTopPosition} />
 
-        <div className='pt-[24px]'>
+        <div className='relative bg-figma-secondary-100'>
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(handleSubmit)}
