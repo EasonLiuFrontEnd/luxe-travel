@@ -5,7 +5,7 @@ import Introduction from '../Introduction'
 import styles from './styles.module.css'
 import { useBookShelfScroll } from '@/hooks/useBookShelfScroll'
 import '@/styles/components.css'
-
+import { RefObject } from 'react'
 const BookShelfSection = () => {
   const { bookShelfRef, trackRef, isMobile } = useBookShelfScroll()
 
@@ -13,7 +13,7 @@ const BookShelfSection = () => {
     <div
       ref={bookShelfRef}
       data-bookshelf-section
-      className='bg-figma-neutral-50 pt-[60px] lg:pt-[120px] border-t border-[var(--color-figma-secondary-500)] sticky top-[-50vh] left-0 lg:relative lg:top-auto lg:left-auto'
+      className='bg-figma-neutral-50 pt-[60px] lg:pt-[120px] border-t border-[var(--color-figma-secondary-500)] sticky top-[-100vh] left-0 lg:relative lg:top-auto lg:left-auto'
     >
       <div
         data-bookshelf-title
@@ -32,7 +32,7 @@ const BookShelfSection = () => {
       </div>
 
       <div className='flex flex-col-reverse lg:flex-row'>
-        <BookShelf trackRef={trackRef} isMobile={isMobile} />
+        <BookShelf trackRef={trackRef as RefObject<HTMLDivElement>} isMobile={isMobile} />
 
         <Introduction />
       </div>

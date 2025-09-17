@@ -47,7 +47,7 @@ const Concerns = () => {
 
   return (
     <div
-      className='flex flex-col justify-center items-center self-stretch gap-y-[32px] lg:gap-y-[120px] lg:pt-[200px] max-lg:py-[60px] max-lg:px-[12px] max-lg:relative max-lg:z-20'
+      className='flex flex-col justify-center items-center self-stretch gap-y-[32px] xl:gap-y-[120px] xl:pt-[200px] py-[60px] px-[12px] relative z-20'
       style={gridBackgroundStyle}
     >
       <h2
@@ -64,7 +64,7 @@ const Concerns = () => {
           <span style={gradientStyle}>歐洲自由行規劃煩惱多？</span>
         )}
       </h2>
-      <div className='flex flex-wrap max-xl:flex-col justify-center items-start gap-8'>
+      <div className='flex flex-col items-center gap-8 xl:gap-7 xl:flex-row xl:justify-center w-full'>
         {effectiveData.map((concern, index) => {
           const rotations = [-2.23, 1.82, 3.73, -3.15, 2.23]
           const colors = ['#BDA05E', '#8BC3DE', '#5B5B6E', '#FFD900', '#BDA05E']
