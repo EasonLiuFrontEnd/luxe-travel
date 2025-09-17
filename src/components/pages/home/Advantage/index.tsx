@@ -1,11 +1,10 @@
 'use client'
 
-import React, { useState, useCallback, useMemo } from 'react'
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import AdvantageCard from './AdvantageCard'
 import styles from './styles.module.css'
 import { transformAdvantageData } from './config'
 import { useAdvantages } from '@/api/home/useAdvantages'
-import { useAdvantageScroll } from '@/hooks/useAdvantageScroll'
 import type { TBaseComponent } from '@/types'
 import '@/styles/components.css'
 
@@ -13,13 +12,16 @@ type TAdvantageProps = TBaseComponent & {
   collectionRef?: React.RefObject<HTMLDivElement>
 }
 
-const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
-  const trackRef = React.useRef<HTMLDivElement>(null)
-  const { backgroundRef, isTrackVisible, isScrolling, isReverseAnimation, scrollDirection } = useAdvantageScroll({ collectionRef })
-  const [isDragging, setIsDragging] = useState(false)
-  const [startX, setStartX] = useState(0)
-  const [scrollLeft, setScrollLeft] = useState(0)
+const Advantage = ({ className }: TAdvantageProps) => {
+  const trackRef = useRef<HTMLDivElement>(null)
+  const backgroundRef = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)
+  const [isInDetectionZone, setIsInDetectionZone] = useState(false)
+  const [scrollDirection, setScrollDirection] = useState<'down' | 'up' | null>(null)
+  const [translateX, setTranslateX] = useState(0)
+  const [isScrollLocked, setIsScrollLocked] = useState(false)
+  const lastScrollY = useRef(0)
+  const entryDirection = useRef<'from-top' | 'from-bottom' | null>(null)
 
 
   const { query: advantagesQuery, mock } = useAdvantages()
@@ -41,9 +43,10 @@ const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
     return transformAdvantageData(advantagesData)
   }, [advantagesError, advantagesData, isAdvantagesLoading, mock.rows])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const checkMobileLayout = () => {
-      setIsMobile(window.innerWidth < 1280)
+      const newIsMobile = window.innerWidth < 1280
+      setIsMobile(newIsMobile)
     }
 
     checkMobileLayout()
@@ -54,34 +57,104 @@ const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
     }
   }, [])
 
+  const handleDesktopScroll = useCallback((event: WheelEvent) => {
+    if (isMobile || !isInDetectionZone) return
 
-  const handleMouseDown = useCallback(
-    (e: React.MouseEvent) => {
-      if (!isMobile || !trackRef?.current) return
-      setIsDragging(true)
-      setStartX(e.pageX - trackRef.current.offsetLeft)
-      setScrollLeft(trackRef.current.scrollLeft)
-    },
-    [isMobile],
-  )
+    event.preventDefault()
 
-  const handleMouseLeave = useCallback(() => {
-    if (isMobile) setIsDragging(false)
-  }, [isMobile])
+    const delta = event.deltaY
+    const currentDirection = delta > 0 ? 'down' : 'up'
 
-  const handleMouseUp = useCallback(() => {
-    if (isMobile) setIsDragging(false)
-  }, [isMobile])
+    if (scrollDirection !== currentDirection) {
+      setScrollDirection(currentDirection)
+    }
 
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent) => {
-      if (!isDragging || !isMobile || !trackRef?.current) return
-      const x = e.pageX - trackRef.current.offsetLeft
-      const walk = (x - startX) * 2
-      trackRef.current.scrollLeft = scrollLeft - walk
-    },
-    [isDragging, isMobile, startX, scrollLeft],
-  )
+    const moveAmount = delta * 2
+    setTranslateX(prev => {
+      const newX = prev + moveAmount
+      const maxLeft = -(window.innerWidth + (trackRef.current?.scrollWidth || 0))
+      const maxRight = window.innerWidth
+
+      return Math.max(maxLeft, Math.min(maxRight, newX))
+    })
+  }, [isMobile, isInDetectionZone, scrollDirection])
+
+  const checkDetectionZone = useCallback(() => {
+    if (isMobile || !backgroundRef.current) return
+
+    const rect = backgroundRef.current.getBoundingClientRect()
+    const currentScrollY = window.scrollY
+    const wasInZone = isInDetectionZone
+
+    const inZone = rect.top <= 0 && rect.bottom > 0
+
+    if (inZone && !wasInZone) {
+      const direction = currentScrollY > lastScrollY.current ? 'from-top' : 'from-bottom'
+      entryDirection.current = direction
+
+      setIsInDetectionZone(true)
+      setIsScrollLocked(true)
+
+      if (direction === 'from-top') {
+        setTranslateX(window.innerWidth)
+        setScrollDirection('down')
+      } else {
+        const trackWidth = trackRef.current?.scrollWidth || 0
+        setTranslateX(-(window.innerWidth + trackWidth))
+        setScrollDirection('up')
+      }
+    } else if (!inZone && wasInZone) {
+      setIsInDetectionZone(false)
+      setIsScrollLocked(false)
+      setScrollDirection(null)
+      entryDirection.current = null
+    }
+
+    if (inZone && scrollDirection) {
+      const newDirection = currentScrollY > lastScrollY.current ? 'down' : 'up'
+
+      if (newDirection !== scrollDirection && entryDirection.current) {
+        if (entryDirection.current === 'from-top' && newDirection === 'up') {
+          setTranslateX(window.innerWidth)
+        } else if (entryDirection.current === 'from-bottom' && newDirection === 'down') {
+          const trackWidth = trackRef.current?.scrollWidth || 0
+          setTranslateX(-(window.innerWidth + trackWidth))
+        }
+        setScrollDirection(newDirection)
+      }
+    }
+
+    lastScrollY.current = currentScrollY
+  }, [isMobile, isInDetectionZone, scrollDirection])
+
+  useEffect(() => {
+    if (isMobile) return
+
+    const handleScroll = () => {
+      checkDetectionZone()
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: false })
+    window.addEventListener('wheel', handleDesktopScroll, { passive: false })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('wheel', handleDesktopScroll)
+    }
+  }, [isMobile, handleDesktopScroll, checkDetectionZone])
+
+  useEffect(() => {
+    if (isScrollLocked) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isScrollLocked])
+
 
   return (
     <section
@@ -90,7 +163,7 @@ const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
       {/* 標題區域 */}
       <div
         ref={backgroundRef}
-        className={`${styles.backgroundMap} relative xl:sticky xl:-top-[60px] pt-[60px] xl:pt-[200px] xl:left-0 px-0 pb-[60px] xl:pb-0 flex flex-col gap-[20px] xl:gap-[120px] items-center xl:h-[100vh]`}
+        className={`${styles.backgroundMap} relative pt-[60px] xl:pt-[200px] xl:left-0 px-0 pb-[60px] xl:pb-0 flex flex-col gap-[20px] xl:gap-[120px] items-center xl:h-[100vh]`}
       >
         <h2 className='inline-block font-family-noto-serif font-bold text-[32px] xl:text-[64px] xl:leading-[120%] text-[var(--color-figma-primary-950)] px-5 py-[6px] gradient-title-border'>
           典藏優勢
@@ -109,67 +182,29 @@ const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
       {/* 卡片區域 */}
 
       <div
-        className={`px-3 xl:px-0 xl:w-full pb-[60px] xl:pb-0 w-full relative ${!isMobile ? styles.containerOverflow : ''}`}
+        className={`px-3 xl:px-0 pb-[60px] xl:pb-0`}
       >
         <div
           ref={trackRef}
-          className={`${isMobile ? `${styles.trackMobile} ${styles.scrollContainer}` : styles.track} ${isDragging && isMobile
-            ? 'cursor-grabbing'
-            : isMobile
-              ? 'cursor-grab'
-              : ''
-            } ${(() => {
-              if (isMobile) return ''
-
-              if (!isTrackVisible) {
-                return isReverseAnimation ? styles.trackHiddenLeft : styles.trackHidden
-              }
-
-              // 根據動畫類型和滾動方向決定動畫類別
-              let animationClass = ''
-
-              if (isReverseAnimation) {
-                // 從下往上進入的反向動畫
-                if (scrollDirection === 'down') {
-                  // 向下滾動時倒退到左邊
-                  animationClass = isScrolling ? styles.trackSlideBackToLeft : styles.trackSlideBackToLeftPaused
-                } else {
-                  // 向上滾動時正常的左到右動畫
-                  animationClass = isScrolling ? styles.trackSlideInReverse : styles.trackSlideInReversePaused
-                }
-              } else {
-                // 從上往下進入的正向動畫
-                if (scrollDirection === 'up') {
-                  // 向上滾動時倒退到右邊
-                  animationClass = isScrolling ? styles.trackSlideBackToRight : styles.trackSlideBackToRightPaused
-                } else {
-                  // 向下滾動時正常的右到左動畫
-                  animationClass = isScrolling ? styles.trackSlideIn : styles.trackSlideInPaused
-                }
-              }
-
-
-              return animationClass
-            })()}`}
-          onMouseDown={handleMouseDown}
-          onMouseLeave={handleMouseLeave}
-          onMouseUp={handleMouseUp}
-          onMouseMove={handleMouseMove}
+          data-track="advantage-track"
+          className={`${isMobile ? styles.trackMobile : styles.track}`}
+          style={!isMobile ? {
+            transform: `translateX(${translateX}px)`,
+            transition: isInDetectionZone ? 'none' : 'transform 0.3s ease-out'
+          } : {}}
         >
-          {displayData.map((card, index) => {
-            return (
-              <div
-                key={card.id}
-                data-card-index={index}
-                className={`${styles.cardContainer} flex-shrink-0 ${isMobile
-                  ? 'w-[318px] max-w-none'
-                  : 'w-[30vw] max-w-[522px]'
-                  }`}
-              >
-                <AdvantageCard card={card} />
-              </div>
-            )
-          })}
+          {displayData.map((card, index) => (
+            <div
+              key={card.id}
+              data-card-index={index}
+              className={`${styles.cardContainer} flex-shrink-0 ${isMobile
+                ? 'w-[318px] max-w-none'
+                : 'w-[30vw] max-w-[522px]'
+                }`}
+            >
+              <AdvantageCard card={card} />
+            </div>
+          ))}
         </div>
       </div>
 
