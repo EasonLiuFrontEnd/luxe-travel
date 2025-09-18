@@ -22,6 +22,7 @@ const Advantage = ({ className }: TAdvantageProps) => {
   const [isScrollLocked, setIsScrollLocked] = useState(false)
   const lastScrollY = useRef(0)
   const entryDirection = useRef<'from-top' | 'from-bottom' | null>(null)
+  const hasCompletedHorizontalScroll = useRef(false)
 
 
   const { query: advantagesQuery, mock } = useAdvantages()
@@ -105,7 +106,10 @@ const Advantage = ({ className }: TAdvantageProps) => {
         (entryDirection.current === 'from-bottom' && clampedX === maxRight && currentDirection === 'up')
 
       if (shouldRelease) {
-        // 釋放垂直滾動並允許這次滾動事件傳遞
+        // 設定完成標記，防止重複觸發
+        hasCompletedHorizontalScroll.current = true
+
+        // 釋放垂直滾動
         setIsScrollLocked(false)
         setIsInDetectionZone(false)
         setScrollDirection(null)
@@ -127,9 +131,13 @@ const Advantage = ({ className }: TAdvantageProps) => {
     const currentScrollY = window.scrollY
     const wasInZone = isInDetectionZone
 
-    const inZone = rect.top <= 0 && rect.bottom > 0
+    // 根據滾動方向使用不同的觸發條件
+    const fromTop = currentScrollY > lastScrollY.current
+    const inZone = fromTop
+      ? rect.top <= 0 && rect.bottom > 0    // 從上方進入：頂部碰到視窗頂部
+      : rect.bottom >= window.innerHeight && rect.top < window.innerHeight  // 從下方進入：底部碰到視窗底部
 
-    if (inZone && !wasInZone) {
+    if (inZone && !wasInZone && !hasCompletedHorizontalScroll.current) {
       const direction = currentScrollY > lastScrollY.current ? 'from-top' : 'from-bottom'
       entryDirection.current = direction
 
@@ -146,11 +154,15 @@ const Advantage = ({ className }: TAdvantageProps) => {
         const trackWidth = trackRef.current?.scrollWidth || 0
         setTranslateX(-(window.innerWidth + trackWidth))
       }
-    } else if (!inZone && wasInZone) {
-      setIsInDetectionZone(false)
-      setIsScrollLocked(false)
-      setScrollDirection(null)
-      entryDirection.current = null
+    } else if (!inZone) {
+      // 當真正離開檢測區域時，重置所有狀態
+      if (hasCompletedHorizontalScroll.current || wasInZone) {
+        setIsInDetectionZone(false)
+        setIsScrollLocked(false)
+        setScrollDirection(null)
+        entryDirection.current = null
+        hasCompletedHorizontalScroll.current = false
+      }
     }
 
     if (inZone && scrollDirection) {
