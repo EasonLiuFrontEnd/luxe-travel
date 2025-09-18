@@ -4,6 +4,21 @@
   z-index: 20;
   bottom: 7px;
   gap: 60px;
+  transition: transform 0.3s ease-out;
+}
+
+.trackNoTransition {
+  transition: none;
+}
+
+.cardDesktop {
+  width: 30vw;
+  max-width: 522px;
+}
+
+.cardMobile {
+  width: 318px;
+  max-width: none;
 }
 
 .scrollContainer {

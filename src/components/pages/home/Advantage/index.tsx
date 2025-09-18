@@ -22,6 +22,7 @@ const Advantage = ({ className }: TAdvantageProps) => {
   const [isScrollLocked, setIsScrollLocked] = useState(false)
   const lastScrollY = useRef(0)
   const entryDirection = useRef<'from-top' | 'from-bottom' | null>(null)
+  const hasCompletedHorizontalScroll = useRef(false)
 
 
   const { query: advantagesQuery, mock } = useAdvantages()
@@ -49,7 +50,28 @@ const Advantage = ({ className }: TAdvantageProps) => {
       setIsMobile(newIsMobile)
     }
 
+    const setInitialPosition = () => {
+      if (!backgroundRef.current) return
+
+      const rect = backgroundRef.current.getBoundingClientRect()
+      // 如果檢測區域在視窗上方，預設卡片在右側（準備從上方進入）
+      // 如果檢測區域在視窗下方，預設卡片在左側（準備從下方進入）
+      if (rect.bottom <= 0) {
+        // 檢測區域在視窗上方，會從上方進入
+        setTranslateX(window.innerWidth)
+      } else if (rect.top >= window.innerHeight) {
+        // 檢測區域在視窗下方，會從下方進入
+        const trackWidth = trackRef.current?.scrollWidth || 0
+        setTranslateX(-(window.innerWidth + trackWidth))
+      } else {
+        // 已經在檢測區域內，保持當前位置
+        setTranslateX(window.innerWidth)
+      }
+    }
+
     checkMobileLayout()
+    setInitialPosition()
+
     window.addEventListener('resize', checkMobileLayout)
 
     return () => {
@@ -60,6 +82,7 @@ const Advantage = ({ className }: TAdvantageProps) => {
   const handleDesktopScroll = useCallback((event: WheelEvent) => {
     if (isMobile || !isInDetectionZone) return
 
+    // 先阻止預設滾動行為
     event.preventDefault()
 
     const delta = event.deltaY
@@ -70,12 +93,38 @@ const Advantage = ({ className }: TAdvantageProps) => {
     }
 
     const moveAmount = delta * 2
-    setTranslateX(prev => {
-      const newX = prev + moveAmount
-      const maxLeft = -(window.innerWidth + (trackRef.current?.scrollWidth || 0))
-      const maxRight = window.innerWidth
+    const maxLeft = -(window.innerWidth + (trackRef.current?.scrollWidth || 0))
+    const maxRight = window.innerWidth
 
-      return Math.max(maxLeft, Math.min(maxRight, newX))
+    setTranslateX(prev => {
+      const newX = prev - moveAmount
+      const clampedX = Math.max(maxLeft, Math.min(maxRight, newX))
+
+      // 檢查是否到達邊界且繼續朝同方向滾動
+      const shouldRelease =
+        // 原始方向滾動到底的情況
+        (entryDirection.current === 'from-top' && clampedX === maxLeft && currentDirection === 'down') ||
+        (entryDirection.current === 'from-bottom' && clampedX === maxRight && currentDirection === 'up') ||
+        // 改變方向後退回起始位置的情況
+        (entryDirection.current === 'from-top' && clampedX === maxRight && currentDirection === 'up') ||
+        (entryDirection.current === 'from-bottom' && clampedX === maxLeft && currentDirection === 'down')
+
+      if (shouldRelease) {
+        // 設定完成標記，防止重複觸發
+        hasCompletedHorizontalScroll.current = true
+
+        // 釋放垂直滾動
+        setIsScrollLocked(false)
+        setIsInDetectionZone(false)
+        setScrollDirection(null)
+        entryDirection.current = null
+
+        // 手動觸發一次頁面滾動
+        window.scrollBy(0, delta)
+        return prev
+      }
+
+      return clampedX
     })
   }, [isMobile, isInDetectionZone, scrollDirection])
 
@@ -86,40 +135,44 @@ const Advantage = ({ className }: TAdvantageProps) => {
     const currentScrollY = window.scrollY
     const wasInZone = isInDetectionZone
 
-    const inZone = rect.top <= 0 && rect.bottom > 0
+    // 根據滾動方向使用不同的觸發條件
+    const fromTop = currentScrollY > lastScrollY.current
+    const inZone = fromTop
+      ? rect.top <= 0 && rect.bottom > 0    // 從上方進入：頂部碰到視窗頂部
+      : rect.bottom >= window.innerHeight && rect.top < window.innerHeight  // 從下方進入：底部碰到視窗底部
 
-    if (inZone && !wasInZone) {
+    if (inZone && !wasInZone && !hasCompletedHorizontalScroll.current) {
       const direction = currentScrollY > lastScrollY.current ? 'from-top' : 'from-bottom'
       entryDirection.current = direction
 
       setIsInDetectionZone(true)
       setIsScrollLocked(true)
+      setScrollDirection(direction === 'from-top' ? 'down' : 'up')
 
+      // 根據進入方向設定正確的初始位置
       if (direction === 'from-top') {
+        // 從上方進入，卡片應該從右側開始
         setTranslateX(window.innerWidth)
-        setScrollDirection('down')
       } else {
+        // 從下方進入，卡片應該從左側開始
         const trackWidth = trackRef.current?.scrollWidth || 0
         setTranslateX(-(window.innerWidth + trackWidth))
-        setScrollDirection('up')
       }
-    } else if (!inZone && wasInZone) {
-      setIsInDetectionZone(false)
-      setIsScrollLocked(false)
-      setScrollDirection(null)
-      entryDirection.current = null
+    } else if (!inZone) {
+      // 當真正離開檢測區域時，重置所有狀態
+      if (hasCompletedHorizontalScroll.current || wasInZone) {
+        setIsInDetectionZone(false)
+        setIsScrollLocked(false)
+        setScrollDirection(null)
+        entryDirection.current = null
+        hasCompletedHorizontalScroll.current = false
+      }
     }
 
     if (inZone && scrollDirection) {
       const newDirection = currentScrollY > lastScrollY.current ? 'down' : 'up'
 
       if (newDirection !== scrollDirection && entryDirection.current) {
-        if (entryDirection.current === 'from-top' && newDirection === 'up') {
-          setTranslateX(window.innerWidth)
-        } else if (entryDirection.current === 'from-bottom' && newDirection === 'down') {
-          const trackWidth = trackRef.current?.scrollWidth || 0
-          setTranslateX(-(window.innerWidth + trackWidth))
-        }
         setScrollDirection(newDirection)
       }
     }
@@ -158,7 +211,7 @@ const Advantage = ({ className }: TAdvantageProps) => {
 
   return (
     <section
-      className={`bg-figma-secondary-100 relative ${className || ''}`}
+      className={`bg-figma-secondary-100 relative overflow-x-hidden ${className || ''}`}
     >
       {/* 標題區域 */}
       <div
@@ -187,10 +240,12 @@ const Advantage = ({ className }: TAdvantageProps) => {
         <div
           ref={trackRef}
           data-track="advantage-track"
-          className={`${isMobile ? styles.trackMobile : styles.track}`}
+          className={`${isMobile
+            ? styles.trackMobile
+            : `${styles.track} ${isInDetectionZone ? styles.trackNoTransition : ''}`
+          }`}
           style={!isMobile ? {
-            transform: `translateX(${translateX}px)`,
-            transition: isInDetectionZone ? 'none' : 'transform 0.3s ease-out'
+            transform: `translateX(${translateX}px)`
           } : {}}
         >
           {displayData.map((card, index) => (
@@ -198,8 +253,8 @@ const Advantage = ({ className }: TAdvantageProps) => {
               key={card.id}
               data-card-index={index}
               className={`${styles.cardContainer} flex-shrink-0 ${isMobile
-                ? 'w-[318px] max-w-none'
-                : 'w-[30vw] max-w-[522px]'
+                ? styles.cardMobile
+                : styles.cardDesktop
                 }`}
             >
               <AdvantageCard card={card} />
