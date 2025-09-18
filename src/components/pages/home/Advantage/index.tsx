@@ -49,7 +49,28 @@ const Advantage = ({ className }: TAdvantageProps) => {
       setIsMobile(newIsMobile)
     }
 
+    const setInitialPosition = () => {
+      if (!backgroundRef.current) return
+
+      const rect = backgroundRef.current.getBoundingClientRect()
+      // 如果檢測區域在視窗上方，預設卡片在右側（準備從上方進入）
+      // 如果檢測區域在視窗下方，預設卡片在左側（準備從下方進入）
+      if (rect.bottom <= 0) {
+        // 檢測區域在視窗上方，會從上方進入
+        setTranslateX(window.innerWidth)
+      } else if (rect.top >= window.innerHeight) {
+        // 檢測區域在視窗下方，會從下方進入
+        const trackWidth = trackRef.current?.scrollWidth || 0
+        setTranslateX(-(window.innerWidth + trackWidth))
+      } else {
+        // 已經在檢測區域內，保持當前位置
+        setTranslateX(window.innerWidth)
+      }
+    }
+
     checkMobileLayout()
+    setInitialPosition()
+
     window.addEventListener('resize', checkMobileLayout)
 
     return () => {
@@ -60,6 +81,7 @@ const Advantage = ({ className }: TAdvantageProps) => {
   const handleDesktopScroll = useCallback((event: WheelEvent) => {
     if (isMobile || !isInDetectionZone) return
 
+    // 先阻止預設滾動行為
     event.preventDefault()
 
     const delta = event.deltaY
@@ -70,12 +92,31 @@ const Advantage = ({ className }: TAdvantageProps) => {
     }
 
     const moveAmount = delta * 2
-    setTranslateX(prev => {
-      const newX = prev + moveAmount
-      const maxLeft = -(window.innerWidth + (trackRef.current?.scrollWidth || 0))
-      const maxRight = window.innerWidth
+    const maxLeft = -(window.innerWidth + (trackRef.current?.scrollWidth || 0))
+    const maxRight = window.innerWidth
 
-      return Math.max(maxLeft, Math.min(maxRight, newX))
+    setTranslateX(prev => {
+      const newX = prev - moveAmount
+      const clampedX = Math.max(maxLeft, Math.min(maxRight, newX))
+
+      // 檢查是否到達邊界且繼續朝同方向滾動
+      const shouldRelease =
+        (entryDirection.current === 'from-top' && clampedX === maxLeft && currentDirection === 'down') ||
+        (entryDirection.current === 'from-bottom' && clampedX === maxRight && currentDirection === 'up')
+
+      if (shouldRelease) {
+        // 釋放垂直滾動並允許這次滾動事件傳遞
+        setIsScrollLocked(false)
+        setIsInDetectionZone(false)
+        setScrollDirection(null)
+        entryDirection.current = null
+
+        // 手動觸發一次頁面滾動
+        window.scrollBy(0, delta)
+        return prev
+      }
+
+      return clampedX
     })
   }, [isMobile, isInDetectionZone, scrollDirection])
 
@@ -94,14 +135,16 @@ const Advantage = ({ className }: TAdvantageProps) => {
 
       setIsInDetectionZone(true)
       setIsScrollLocked(true)
+      setScrollDirection(direction === 'from-top' ? 'down' : 'up')
 
+      // 根據進入方向設定正確的初始位置
       if (direction === 'from-top') {
+        // 從上方進入，卡片應該從右側開始
         setTranslateX(window.innerWidth)
-        setScrollDirection('down')
       } else {
+        // 從下方進入，卡片應該從左側開始
         const trackWidth = trackRef.current?.scrollWidth || 0
         setTranslateX(-(window.innerWidth + trackWidth))
-        setScrollDirection('up')
       }
     } else if (!inZone && wasInZone) {
       setIsInDetectionZone(false)
@@ -114,12 +157,6 @@ const Advantage = ({ className }: TAdvantageProps) => {
       const newDirection = currentScrollY > lastScrollY.current ? 'down' : 'up'
 
       if (newDirection !== scrollDirection && entryDirection.current) {
-        if (entryDirection.current === 'from-top' && newDirection === 'up') {
-          setTranslateX(window.innerWidth)
-        } else if (entryDirection.current === 'from-bottom' && newDirection === 'down') {
-          const trackWidth = trackRef.current?.scrollWidth || 0
-          setTranslateX(-(window.innerWidth + trackWidth))
-        }
         setScrollDirection(newDirection)
       }
     }
