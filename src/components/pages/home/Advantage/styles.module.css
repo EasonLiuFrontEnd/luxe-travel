@@ -1,8 +1,8 @@
 .track {
   display: flex;
-  position: absolute;
+  position: relative;
   z-index: 20;
-  bottom: 7px;
+  bottom: 50vh;
   gap: 60px;
   transition: transform 0.3s ease-out;
 }
@@ -35,6 +35,8 @@
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
+  user-select: none;
+  bottom: unset;
 }
 
 .trackMobile::-webkit-scrollbar {

@@ -21,6 +21,9 @@ const Advantage = ({ className }: TAdvantageProps) => {
   const lastScrollY = useRef(0)
   const entryDirection = useRef<'from-top' | 'from-bottom' | null>(null)
   const hasCompletedHorizontalScroll = useRef(false)
+  const isDragging = useRef(false)
+  const dragStartX = useRef(0)
+  const dragStartTranslateX = useRef(0)
 
 
   const { query: advantagesQuery, mock } = useAdvantages()
@@ -164,6 +167,45 @@ const Advantage = ({ className }: TAdvantageProps) => {
     lastScrollY.current = currentScrollY
   }, [isMobile, isInDetectionZone, scrollDirection])
 
+  const handleMouseDown = useCallback((event: React.MouseEvent) => {
+    if (!isMobile || !trackRef.current) return
+
+    isDragging.current = true
+    dragStartX.current = event.clientX
+    dragStartTranslateX.current = trackRef.current.scrollLeft
+    event.preventDefault()
+  }, [isMobile])
+
+  const handleMouseMove = useCallback((event: MouseEvent) => {
+    if (!isMobile || !isDragging.current || !trackRef.current) return
+
+    const deltaX = event.clientX - dragStartX.current
+    const newScrollLeft = dragStartTranslateX.current - deltaX
+
+    trackRef.current.scrollLeft = Math.max(0, Math.min(
+      trackRef.current.scrollWidth - trackRef.current.offsetWidth,
+      newScrollLeft
+    ))
+  }, [isMobile])
+
+  const handleMouseUp = useCallback(() => {
+    if (!isMobile) return
+    isDragging.current = false
+  }, [isMobile])
+
+
+  useEffect(() => {
+    if (!isMobile) return
+
+    document.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mouseup', handleMouseUp)
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [isMobile, handleMouseMove, handleMouseUp])
+
   useEffect(() => {
     if (isMobile) return
 
@@ -199,7 +241,7 @@ const Advantage = ({ className }: TAdvantageProps) => {
 
   return (
     <section
-      className={`bg-figma-secondary-100 relative overflow-x-hidden ${className || ''}`}
+      className={`bg-figma-secondary-100 relative xl:overflow-x-hidden ${className || ''}`}
     >
       <div
         ref={backgroundRef}
@@ -231,20 +273,46 @@ const Advantage = ({ className }: TAdvantageProps) => {
           }`}
           style={!isMobile ? {
             transform: `translateX(${translateX}px)`
-          } : {}}
+          } : {
+            cursor: isDragging.current ? 'grabbing' : 'grab'
+          }}
+          onMouseDown={isMobile ? handleMouseDown : undefined}
         >
-          {displayData.map((card, index) => (
-            <div
-              key={card.id}
-              data-card-index={index}
-              className={`${styles.cardContainer} flex-shrink-0 ${isMobile
-                ? styles.cardMobile
-                : styles.cardDesktop
-                }`}
-            >
-              <AdvantageCard card={card} />
-            </div>
-          ))}
+          {displayData.map((card, index) => {
+            const getCardVerticalOffset = () => {
+              if (isMobile || !isInDetectionZone) return 0
+
+              const cardWidth = Math.min(window.innerWidth * 0.3, 522)
+              const cardSpacing = 60
+              const cardPositionX = index * (cardWidth + cardSpacing) + translateX
+              const viewportCenter = window.innerWidth / 2
+              const cardCenter = cardPositionX + cardWidth / 2
+
+              // 計算相對於視窗中心的距離（標準化為-1到1之間）
+              const normalizedPosition = (cardCenter - viewportCenter) / (window.innerWidth / 2)
+              const clampedPosition = Math.max(-1, Math.min(1, normalizedPosition))
+
+              // 弧形軌跡：正拋物線（中間最低，兩邊最高）
+              const maxVerticalOffset = 80
+              return Math.pow(clampedPosition, 2) * maxVerticalOffset
+            }
+
+            return (
+              <div
+                key={card.id}
+                data-card-index={index}
+                className={`${styles.cardContainer} flex-shrink-0 ${isMobile
+                  ? styles.cardMobile
+                  : styles.cardDesktop
+                  }`}
+                style={!isMobile ? {
+                  transform: `translateY(${getCardVerticalOffset()}px)`
+                } : {}}
+              >
+                <AdvantageCard card={card} />
+              </div>
+            )
+          })}
         </div>
       </div>
 
