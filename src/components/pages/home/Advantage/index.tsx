@@ -211,7 +211,7 @@ const Advantage = ({ className }: TAdvantageProps) => {
 
   return (
     <section
-      className={`bg-figma-secondary-100 relative ${className || ''}`}
+      className={`bg-figma-secondary-100 relative overflow-x-hidden ${className || ''}`}
     >
       {/* 標題區域 */}
       <div
@@ -240,10 +240,12 @@ const Advantage = ({ className }: TAdvantageProps) => {
         <div
           ref={trackRef}
           data-track="advantage-track"
-          className={`${isMobile ? styles.trackMobile : styles.track}`}
+          className={`${isMobile
+            ? styles.trackMobile
+            : `${styles.track} ${isInDetectionZone ? styles.trackNoTransition : ''}`
+          }`}
           style={!isMobile ? {
-            transform: `translateX(${translateX}px)`,
-            transition: isInDetectionZone ? 'none' : 'transform 0.3s ease-out'
+            transform: `translateX(${translateX}px)`
           } : {}}
         >
           {displayData.map((card, index) => (
@@ -251,8 +253,8 @@ const Advantage = ({ className }: TAdvantageProps) => {
               key={card.id}
               data-card-index={index}
               className={`${styles.cardContainer} flex-shrink-0 ${isMobile
-                ? 'w-[318px] max-w-none'
-                : 'w-[30vw] max-w-[522px]'
+                ? styles.cardMobile
+                : styles.cardDesktop
                 }`}
             >
               <AdvantageCard card={card} />
