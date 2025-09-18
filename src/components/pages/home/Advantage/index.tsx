@@ -18,12 +18,13 @@ const Advantage = ({ className }: TAdvantageProps) => {
   const [scrollDirection, setScrollDirection] = useState<'down' | 'up' | null>(null)
   const [translateX, setTranslateX] = useState(0)
   const [isScrollLocked, setIsScrollLocked] = useState(false)
+  const [isDragState, setIsDragState] = useState(false)
   const lastScrollY = useRef(0)
   const entryDirection = useRef<'from-top' | 'from-bottom' | null>(null)
   const hasCompletedHorizontalScroll = useRef(false)
   const isDragging = useRef(false)
   const dragStartX = useRef(0)
-  const dragStartTranslateX = useRef(0)
+  const dragStartScrollLeft = useRef(0)
 
 
   const { query: advantagesQuery, mock } = useAdvantages()
@@ -171,16 +172,17 @@ const Advantage = ({ className }: TAdvantageProps) => {
     if (!isMobile || !trackRef.current) return
 
     isDragging.current = true
+    setIsDragState(true)
     dragStartX.current = event.clientX
-    dragStartTranslateX.current = trackRef.current.scrollLeft
+    dragStartScrollLeft.current = trackRef.current.scrollLeft
     event.preventDefault()
   }, [isMobile])
 
   const handleMouseMove = useCallback((event: MouseEvent) => {
-    if (!isMobile || !isDragging.current || !trackRef.current) return
+    if (typeof window === 'undefined' || !isMobile || !isDragging.current || !trackRef.current) return
 
     const deltaX = event.clientX - dragStartX.current
-    const newScrollLeft = dragStartTranslateX.current - deltaX
+    const newScrollLeft = dragStartScrollLeft.current - deltaX
 
     trackRef.current.scrollLeft = Math.max(0, Math.min(
       trackRef.current.scrollWidth - trackRef.current.offsetWidth,
@@ -191,18 +193,21 @@ const Advantage = ({ className }: TAdvantageProps) => {
   const handleMouseUp = useCallback(() => {
     if (!isMobile) return
     isDragging.current = false
+    setIsDragState(false)
   }, [isMobile])
 
 
   useEffect(() => {
-    if (!isMobile) return
+    if (typeof document === 'undefined' || !isMobile) return
 
     document.addEventListener('mousemove', handleMouseMove)
     document.addEventListener('mouseup', handleMouseUp)
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove)
-      document.removeEventListener('mouseup', handleMouseUp)
+      if (typeof document !== 'undefined') {
+        document.removeEventListener('mousemove', handleMouseMove)
+        document.removeEventListener('mouseup', handleMouseUp)
+      }
     }
   }, [isMobile, handleMouseMove, handleMouseUp])
 
@@ -274,7 +279,7 @@ const Advantage = ({ className }: TAdvantageProps) => {
           style={!isMobile ? {
             transform: `translateX(${translateX}px)`
           } : {
-            cursor: isDragging.current ? 'grabbing' : 'grab'
+            cursor: isDragState ? 'grabbing' : 'grab'
           }}
           onMouseDown={isMobile ? handleMouseDown : undefined}
         >

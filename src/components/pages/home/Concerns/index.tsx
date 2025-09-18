@@ -41,7 +41,6 @@ const Concerns = () => {
 
   const gridBackgroundStyle = {
     backgroundSize: '48px 48px',
-    backgroundPosition: 'center center',
     backgroundImage: `
       linear-gradient(to right, #E5D9BF 1px, transparent 1px),
       linear-gradient(to bottom, #E5D9BF 1px, transparent 1px)
