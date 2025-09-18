@@ -102,8 +102,12 @@ const Advantage = ({ className }: TAdvantageProps) => {
 
       // 檢查是否到達邊界且繼續朝同方向滾動
       const shouldRelease =
+        // 原始方向滾動到底的情況
         (entryDirection.current === 'from-top' && clampedX === maxLeft && currentDirection === 'down') ||
-        (entryDirection.current === 'from-bottom' && clampedX === maxRight && currentDirection === 'up')
+        (entryDirection.current === 'from-bottom' && clampedX === maxRight && currentDirection === 'up') ||
+        // 改變方向後退回起始位置的情況
+        (entryDirection.current === 'from-top' && clampedX === maxRight && currentDirection === 'up') ||
+        (entryDirection.current === 'from-bottom' && clampedX === maxLeft && currentDirection === 'down')
 
       if (shouldRelease) {
         // 設定完成標記，防止重複觸發
