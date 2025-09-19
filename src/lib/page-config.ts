@@ -5,6 +5,7 @@ export type TPageType =
   | 'about'
   | 'destinations'
   | 'contact'
+  | 'group-tours'
   | 'default'
 
 export type TPageConfig = {
@@ -48,6 +49,14 @@ export const PAGE_CONFIGS: Record<string, TPageConfig> = {
     showConsultButton: false,
     headerBehavior: 'sticky',
     footerStyle: 'minimal',
+  },
+  '/group-tours': {
+    type: 'group-tours',
+    hasScrollAnimation: false,
+    hasTransparentHeader: false,
+    showConsultButton: true,
+    headerBehavior: 'sticky',
+    footerStyle: 'default',
   },
 }
 
