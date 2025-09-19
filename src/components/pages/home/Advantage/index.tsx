@@ -268,8 +268,8 @@ const Advantage = ({ className }: TAdvantageProps) => {
           onMouseDown={isMobile ? handleMouseDown : undefined}
         >
           {displayData.map((card, index) => {
-            const getCardVerticalOffset = () => {
-              if (isMobile || !isInDetectionZone) return 0
+            const getCardTransform = () => {
+              if (isMobile || !isInDetectionZone) return ''
 
               const cardWidth = Math.min(window.innerWidth * 0.3, 522)
               const cardSpacing = 60
@@ -281,9 +281,48 @@ const Advantage = ({ className }: TAdvantageProps) => {
               const normalizedPosition = (cardCenter - viewportCenter) / (window.innerWidth / 2)
               const clampedPosition = Math.max(-1, Math.min(1, normalizedPosition))
 
-              // 弧形軌跡：正拋物線（中間最低，兩邊最高）
-              const maxVerticalOffset = 80
-              return Math.pow(clampedPosition, 2) * maxVerticalOffset
+              // 基礎 perspective (降低數值讓透視更明顯)
+              const perspective = 1600
+
+              // 根據位置插值計算各種變換值
+              let translateY, translateZ, rotateZ, rotateY
+
+              if (Math.abs(clampedPosition) > 1) {
+                // 視窗外
+                translateY = 80
+                translateZ = -150
+                rotateZ = clampedPosition > 0 ? 1.5 : -1.5
+                rotateY = clampedPosition > 0 ? 15 : -15
+              } else if (Math.abs(clampedPosition) < 0.1) {
+                // 中間位置
+                translateY = 0
+                translateZ = 80
+                rotateZ = 0
+                rotateY = 0
+              } else {
+                // 中間過渡位置
+                const absPos = Math.abs(clampedPosition)
+                const sign = clampedPosition > 0 ? 1 : -1
+
+                if (absPos > 0.5) {
+                  // 右到中間 或 中間到左邊 (遠離中心)
+                  const factor = (absPos - 0.1) / 0.4 // 0.5-1 映射到 0-1
+                  translateY = 30 + (80 - 30) * factor
+                  translateZ = 80 + (-150 - 80) * factor
+                  rotateZ = (0.5 + (1.5 - 0.5) * factor) * sign
+                  rotateY = (5 + (15 - 5) * factor) * sign
+                } else {
+                  // 中間到兩側 (接近中心)
+                  const factor = absPos / 0.5 // 0-0.5 映射到 0-1
+                  translateY = 15 * factor
+                  translateZ = 80 * (1 - factor)
+                  rotateZ = -0.25 * factor * sign
+                  rotateY = -2.5 * factor * sign
+                }
+              }
+
+              // 組合變換
+              return `perspective(${perspective}px) translate3d(0px, ${translateY}px, ${translateZ}px) rotate(${rotateZ}deg) rotateY(${rotateY}deg)`
             }
 
             return (
@@ -295,7 +334,7 @@ const Advantage = ({ className }: TAdvantageProps) => {
                   : styles.cardDesktop
                   }`}
                 style={!isMobile ? {
-                  transform: `translateY(${getCardVerticalOffset()}px)`
+                  transform: getCardTransform()
                 } : {}}
               >
                 <AdvantageCard card={card} />
