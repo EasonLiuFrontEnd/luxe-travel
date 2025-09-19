@@ -17,7 +17,6 @@ const Advantage = ({ className }: TAdvantageProps) => {
   const [isInDetectionZone, setIsInDetectionZone] = useState(false)
   const [scrollDirection, setScrollDirection] = useState<'down' | 'up' | null>(null)
   const [translateX, setTranslateX] = useState(0)
-  const [isScrollLocked, setIsScrollLocked] = useState(false)
   const [isDragState, setIsDragState] = useState(false)
   const lastScrollY = useRef(0)
   const entryDirection = useRef<'from-top' | 'from-bottom' | null>(null)
@@ -82,7 +81,9 @@ const Advantage = ({ className }: TAdvantageProps) => {
   const handleDesktopScroll = useCallback((event: WheelEvent) => {
     if (isMobile || !isInDetectionZone) return
 
+    // 先阻止事件，然後檢查是否需要釋放
     event.preventDefault()
+    event.stopPropagation()
 
     const delta = event.deltaY
     const currentDirection = delta > 0 ? 'down' : 'up'
@@ -108,10 +109,10 @@ const Advantage = ({ className }: TAdvantageProps) => {
 
       if (shouldRelease) {
         hasCompletedHorizontalScroll.current = true
-        setIsScrollLocked(false)
         setIsInDetectionZone(false)
         setScrollDirection(null)
         entryDirection.current = null
+        // 手動觸發一次頁面滾動來彌補被阻止的滾動
         window.scrollBy(0, delta)
         return prev
       }
@@ -138,7 +139,6 @@ const Advantage = ({ className }: TAdvantageProps) => {
       entryDirection.current = direction
 
       setIsInDetectionZone(true)
-      setIsScrollLocked(true)
       setScrollDirection(direction === 'from-top' ? 'down' : 'up')
 
       if (direction === 'from-top') {
@@ -150,7 +150,6 @@ const Advantage = ({ className }: TAdvantageProps) => {
     } else if (!inZone) {
       if (hasCompletedHorizontalScroll.current || wasInZone) {
         setIsInDetectionZone(false)
-        setIsScrollLocked(false)
         setScrollDirection(null)
         entryDirection.current = null
         hasCompletedHorizontalScroll.current = false
@@ -227,21 +226,6 @@ const Advantage = ({ className }: TAdvantageProps) => {
     }
   }, [isMobile, handleDesktopScroll, checkDetectionZone])
 
-  useEffect(() => {
-    if (typeof document === 'undefined') return
-
-    if (isScrollLocked) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-
-    return () => {
-      if (typeof document !== 'undefined') {
-        document.body.style.overflow = ''
-      }
-    }
-  }, [isScrollLocked])
 
 
   return (
