@@ -4,6 +4,7 @@ import { useState } from 'react'
 import GroupToursBanner from '@/components/pages/group-tours/Banner'
 import DestinationFilter from '@/components/pages/group-tours/DestinationFilter'
 import SearchResults from '@/components/pages/group-tours/SearchResults'
+import GroupTourResults from '@/components/pages/group-tours/GroupTourResults'
 import { convertCountriesToFilters } from '@/components/pages/group-tours/config'
 import type { TBaseComponent } from '@/types'
 
@@ -43,7 +44,11 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
         />
       )}
 
-      <div className='flex flex-col items-center justify-center min-h-[50vh] px-4'>
+      <div className='px-[clamp(12px,2.5vw,48px)] py-8 xl:py-12'>
+        <GroupTourResults />
+      </div>
+
+      <div className='flex flex-col items-center justify-center min-h-[30vh] px-4'>
         <p className='font-family-genseki text-figma-secondary-500 text-[18px] xl:text-[20px] text-center max-w-2xl'>
           專為追求品質的旅客設計，小團精緻路線，專業領隊陪同，深度體驗歐洲文化
         </p>
