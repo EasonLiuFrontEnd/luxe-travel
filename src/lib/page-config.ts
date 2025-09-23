@@ -15,6 +15,7 @@ export type TPageConfig = {
   showConsultButton: boolean
   headerBehavior: 'fixed' | 'sticky' | 'static'
   footerStyle: 'default' | 'minimal'
+  scrollToTopBg: string
 }
 
 export const PAGE_CONFIGS: Record<string, TPageConfig> = {
@@ -25,6 +26,7 @@ export const PAGE_CONFIGS: Record<string, TPageConfig> = {
     showConsultButton: true,
     headerBehavior: 'fixed',
     footerStyle: 'default',
+    scrollToTopBg: 'bg-figma-secondary-100',
   },
   '/about': {
     type: 'about',
@@ -33,6 +35,7 @@ export const PAGE_CONFIGS: Record<string, TPageConfig> = {
     showConsultButton: false,
     headerBehavior: 'sticky',
     footerStyle: 'default',
+    scrollToTopBg: 'bg-figma-secondary-100',
   },
   '/destinations': {
     type: 'destinations',
@@ -41,6 +44,7 @@ export const PAGE_CONFIGS: Record<string, TPageConfig> = {
     showConsultButton: true,
     headerBehavior: 'sticky',
     footerStyle: 'default',
+    scrollToTopBg: 'bg-figma-secondary-100',
   },
   '/contact': {
     type: 'contact',
@@ -49,6 +53,7 @@ export const PAGE_CONFIGS: Record<string, TPageConfig> = {
     showConsultButton: false,
     headerBehavior: 'sticky',
     footerStyle: 'minimal',
+    scrollToTopBg: 'bg-figma-secondary-100',
   },
   '/group-tours': {
     type: 'group-tours',
@@ -57,6 +62,7 @@ export const PAGE_CONFIGS: Record<string, TPageConfig> = {
     showConsultButton: true,
     headerBehavior: 'sticky',
     footerStyle: 'default',
+    scrollToTopBg: 'bg-figma-neutral-50',
   },
 }
 
@@ -67,6 +73,7 @@ export const DEFAULT_PAGE_CONFIG: TPageConfig = {
   showConsultButton: false,
   headerBehavior: 'sticky',
   footerStyle: 'default',
+  scrollToTopBg: 'bg-figma-secondary-100',
 }
 
 export const getPageConfig = (pathname: string): TPageConfig => {

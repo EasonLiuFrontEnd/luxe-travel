@@ -315,6 +315,9 @@
   .text-figma-neutral-50 {
     color: var(--color-figma-neutral-50);
   }
+  .text-figma-neutral-300 {
+    color: var(--color-figma-neutral-300);
+  }
   .text-figma-neutral-950 {
     color: var(--color-figma-neutral-950);
   }
@@ -378,6 +381,9 @@
   }
   .bg-figma-neutral-50 {
     background-color: var(--color-figma-neutral-50);
+  }
+  .bg-figma-neutral-300 {
+    background-color: var(--color-figma-neutral-300);
   }
   .bg-figma-neutral-950 {
     background-color: var(--color-figma-neutral-950);
