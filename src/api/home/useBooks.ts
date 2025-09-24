@@ -10,7 +10,7 @@ import {
 
 const fetchBooksData = async (): Promise<TBooks[]> => {
   const response = await apiClient.get<TBooksResponse>(
-    '/admin/country-showcases',
+    '/api/admin/country-showcases',
   )
   return response?.data?.rows || []
 }

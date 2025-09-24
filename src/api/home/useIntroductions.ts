@@ -12,8 +12,8 @@ const fetchIntroductionsData = async (
   countryId?: string,
 ): Promise<TIntroduction[]> => {
   const endpoint = countryId
-    ? `/admin/country-introductions?countryId=${countryId}`
-    : '/admin/country-introductions'
+    ? `/api/admin/country-introductions?countryId=${countryId}`
+    : '/api/admin/country-introductions'
   const response = await apiClient.get<TIntroductionResponse>(endpoint)
   return response?.data?.rows || []
 }

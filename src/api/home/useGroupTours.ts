@@ -12,8 +12,8 @@ const fetchGroupToursData = async (
   countryId?: string,
 ): Promise<TGroupTour[]> => {
   const endpoint = countryId
-    ? `/admin/group-tours?countryId=${countryId}`
-    : '/admin/group-tours'
+    ? `/api/admin/group-tours?countryId=${countryId}`
+    : '/api/admin/group-tours'
   const response = await apiClient.get<TGroupTourResponse>(endpoint)
   return response?.data?.rows || []
 }

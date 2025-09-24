@@ -9,7 +9,7 @@ import {
 } from '../type'
 
 const fetchConcerns = async (): Promise<TConcern[]> => {
-  const response = await apiClient.get<TConcernsResponse>('/admin/concerns')
+  const response = await apiClient.get<TConcernsResponse>('/api/admin/concerns')
   return response?.data?.rows || []
 }
 
