@@ -1,7 +1,11 @@
 import Image from 'next/image'
 import { SOCIAL_MEDIAS } from '@/lib/constants'
 
-const Footer = () => {
+type TFooterProps = {
+  scrollToTopBg?: string
+}
+
+const Footer = ({ scrollToTopBg = 'bg-figma-secondary-100' }: TFooterProps) => {
   const scrollToTop = () => {
     window.scrollTo(0, 0)
   }
@@ -11,11 +15,11 @@ const Footer = () => {
       <button
         onClick={scrollToTop}
         className={`
-          absolute top-0 right-0 
+          absolute top-0 right-0
           flex items-center gap-[16px]
           py-[8px] px-[12px] xl:py-[12px] xl:px-[24px]
           font-genseki-footer-medium tracking-[0.5px]
-          text-figma-neutral-950  bg-figma-secondary-100
+          text-figma-neutral-950 ${scrollToTopBg}
           rounded-bl-[16px] border-0
           cursor-pointer
         `}
