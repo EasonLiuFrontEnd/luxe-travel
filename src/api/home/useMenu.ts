@@ -9,7 +9,7 @@ import {
 } from '../type'
 
 const fetchMenu = async (): Promise<TMenuItem[]> => {
-  const response = await apiClient.get<TMenuResponse>('/admin/menu')
+  const response = await apiClient.get<TMenuResponse>('/api/admin/menu')
   return response?.data?.data || []
 }
 

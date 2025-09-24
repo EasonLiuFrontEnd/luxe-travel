@@ -9,7 +9,7 @@ import {
 } from '../type'
 
 const fetchBanners = async (): Promise<TBanners[]> => {
-  const response = await apiClient.get<TBannersResponse>('/admin/banners')
+  const response = await apiClient.get<TBannersResponse>('/api/admin/banners')
   return response?.data?.rows || []
 }
 

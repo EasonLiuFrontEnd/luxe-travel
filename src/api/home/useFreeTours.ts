@@ -10,8 +10,8 @@ import {
 
 const fetchFreeToursData = async (countryId?: string): Promise<TFreeTour[]> => {
   const endpoint = countryId
-    ? `/admin/free-tours?countryId=${countryId}`
-    : '/admin/free-tours'
+    ? `/api/admin/free-tours?countryId=${countryId}`
+    : '/api/admin/free-tours'
   const response = await apiClient.get<TFreeTourResponse>(endpoint)
   return response?.data?.rows || []
 }

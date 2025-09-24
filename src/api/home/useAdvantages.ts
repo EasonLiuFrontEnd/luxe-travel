@@ -9,7 +9,9 @@ import {
 } from '../type'
 
 const fetchAdvantages = async (): Promise<TAdvantages[]> => {
-  const response = await apiClient.get<TAdvantagesResponse>('/admin/advantages')
+  const response = await apiClient.get<TAdvantagesResponse>(
+    '/api/admin/advantages',
+  )
   return response?.data?.rows || []
 }
 
