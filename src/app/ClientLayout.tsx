@@ -43,7 +43,7 @@ const ClientLayout = ({ children }: TBaseComponent) => {
           hasTransparentHeader={pageConfig.hasTransparentHeader}
         />
         <main>{children}</main>
-        <Footer />
+        <Footer scrollToTopBg={pageConfig.scrollToTopBg} />
       </ScrollProvider>
     </ClientProvider>
   )

@@ -35,24 +35,35 @@ const Concerns = () => {
       'linear-gradient(to bottom, transparent 0%, transparent calc(100% - 26px), #e5d9bf calc(100% - 26px), #e5d9bf 100%)',
   }
 
+  const backgroundStyle = {
+    background: 'linear-gradient(to bottom, #F2F2F2 0%, #F7F4EC 100%)',
+  }
+
   const gridBackgroundStyle = {
-    backgroundColor: '#F2F2F2',
+    backgroundSize: '48px 48px',
     backgroundImage: `
-        linear-gradient(90deg, #ECE7DB 1px, transparent 1px),
-        linear-gradient(#ECE7DB 1px, transparent 1px),
-        linear-gradient(180deg, #F2F2F2 0%, #ECE7DB 100%)
+      linear-gradient(to right, #E5D9BF 1px, transparent 1px),
+      linear-gradient(to bottom, #E5D9BF 1px, transparent 1px)
     `,
-    backgroundSize: '46.8px 46.8px, 46.8px 46.8px, 100% 100%',
+    WebkitMaskImage: `
+      linear-gradient(to bottom, #fff 0%, transparent 100%)
+    `,
+    maskImage: `
+      linear-gradient(to bottom, #fff 0%, transparent 100%)
+    `,
+    maskComposite: 'intersect',
+    WebkitMaskComposite: 'source-in, xor'
   }
 
   return (
+    <div className='flex flex-col justify-center items-center self-stretch gap-y-[32px] xl:gap-y-[120px] xl:pt-[200px] py-[60px] px-[12px] relative z-20' style={backgroundStyle}>
     <div
-      className='flex flex-col justify-center items-center self-stretch gap-y-[32px] xl:gap-y-[120px] xl:pt-[200px] py-[60px] px-[12px] relative z-20'
+      className='absolute inset-0 w-full h-full'
       style={gridBackgroundStyle}
-    >
+    ></div>
       <h2
         ref={containerRef}
-        className='font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px] text-center'
+        className='relative font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px] text-center'
       >
         {isMobile ? (
           <>
@@ -83,6 +94,7 @@ const Concerns = () => {
           )
         })}
       </div>
+    
     </div>
   )
 }

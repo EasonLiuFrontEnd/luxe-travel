@@ -1,0 +1,17 @@
+.backgroundLayer1 {
+  background-image: url(/group-tours/background.svg);
+  background-position: 150px 150%;
+  background-repeat: repeat-x;
+}
+
+.backgroundLayer2 {
+  background-image: url(/group-tours/background.svg);
+  background-position: 500px 20%;
+  background-repeat: repeat-x;
+}
+
+.backgroundLayer3 {
+  background-image: url(/group-tours/background.svg);
+  background-position: 150px -75%;
+  background-repeat: repeat-x;
+}
