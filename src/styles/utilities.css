@@ -152,6 +152,15 @@
     line-height: 1.2;
   }
 
+  @media (min-width: 1280px) {
+    .xl\:font-noto-serif-h5-bold.xl\:font-noto-serif-h5-bold {
+      font-family: var(--font-noto-serif-tc);
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+  }
+
   .font-noto-serif-title-medium {
     font-family: var(--font-noto-serif-tc);
     font-size: 20px;

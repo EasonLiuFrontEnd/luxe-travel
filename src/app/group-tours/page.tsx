@@ -44,14 +44,8 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
         />
       )}
 
-      <div className='px-[clamp(12px,2.5vw,48px)] py-8 xl:py-12'>
+      <div className='px-[clamp(12px,2.5vw,48px)] pb-[80px] mt-9 xl:mt-[79px]'>
         <GroupTourResults />
-      </div>
-
-      <div className='flex flex-col items-center justify-center min-h-[30vh] px-4'>
-        <p className='font-family-genseki text-figma-secondary-500 text-[18px] xl:text-[20px] text-center max-w-2xl'>
-          專為追求品質的旅客設計，小團精緻路線，專業領隊陪同，深度體驗歐洲文化
-        </p>
       </div>
     </main>
   )
