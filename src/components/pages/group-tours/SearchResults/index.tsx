@@ -61,7 +61,7 @@ const SearchResults = ({
   }
 
   return (
-    <section className={cn('py-4 px-[clamp(12px,2.5vw,48px)] xl:py-6', className)}>
+    <section className={cn('pt-8 mb-9 px-[clamp(12px,2.5vw,48px)] xl:pt-[60px] xl:mb-[79px]', className)}>
       <div className='max-w-[1824px] mx-auto'>
         <div className='flex flex-col xl:flex-row xl:justify-between gap-[10px]'>
           {/* 搜尋結果數量 */}

@@ -111,7 +111,7 @@ const GroupTourResults = ({ tours = [], className }: TGroupTourResultsProps) => 
 
   return (
     <div className={`w-full max-w-[1920px] mx-auto ${className || ''}`}>
-      <div className='grid grid-cols-1 xl:grid-cols-2 gap-6 xl:gap-8'>
+      <div className='grid grid-cols-1 xl:grid-cols-2 gap-7 xl:gap-y-[79px] xl:gap-x-8'>
         {toursToDisplay.map((tour) => (
           <GroupTourCard
             key={tour.id}
