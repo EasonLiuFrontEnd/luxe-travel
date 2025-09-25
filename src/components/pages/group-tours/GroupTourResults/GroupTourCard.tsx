@@ -5,11 +5,7 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import type { TBaseComponent } from '@/types'
 import styles from './style.module.css'
-
-type TTourDate = {
-  date: string
-  status: '已成團' | '熱銷中' | '已滿團'
-}
+import type { TTourDate } from '../config'
 
 type TGroupTourCardProps = TBaseComponent & {
   title: string

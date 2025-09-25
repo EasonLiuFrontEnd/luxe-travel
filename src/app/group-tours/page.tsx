@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import GroupToursBanner from '@/components/pages/group-tours/Banner'
 import DestinationFilter from '@/components/pages/group-tours/DestinationFilter'
-import SearchResults from '@/components/pages/group-tours/SearchResults'
+import ResultsSort from '@/components/pages/group-tours/ResultsSort'
 import GroupTourResults from '@/components/pages/group-tours/GroupTourResults'
 import { convertCountriesToFilters } from '@/components/pages/group-tours/config'
 import type { TBaseComponent } from '@/types'
@@ -16,12 +16,12 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
     label: string
     type: 'country' | 'price' | 'other'
   }>>([])
-  const [showSearchResults, setShowSearchResults] = useState(false)
+  const [showResultsSort, setShowResultsSort] = useState(false)
 
   const handleSearch = (selectedCountries: string[]) => {
     const countryFilters = convertCountriesToFilters(selectedCountries)
     setSearchedCountries(countryFilters)
-    setShowSearchResults(true)
+    setShowResultsSort(true)
   }
 
   const handleRemoveFilter = (filterId: string) => {
@@ -37,8 +37,8 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
       </div>
       <GroupToursBanner />
       <DestinationFilter onSearch={handleSearch} />
-      {showSearchResults && (
-        <SearchResults
+      {showResultsSort && (
+        <ResultsSort
           selectedFilters={searchedCountries}
           onRemoveFilter={handleRemoveFilter}
         />
