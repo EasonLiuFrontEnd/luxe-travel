@@ -6,6 +6,7 @@ export type TPageType =
   | 'destinations'
   | 'contact'
   | 'group-tours'
+  | 'tour-content'
   | 'default'
 
 export type TPageConfig = {
@@ -63,6 +64,15 @@ export const PAGE_CONFIGS: Record<string, TPageConfig> = {
     headerBehavior: 'sticky',
     footerStyle: 'default',
     scrollToTopBg: 'bg-figma-neutral-50',
+  },
+  '/tour-content': {
+    type: 'tour-content',
+    hasScrollAnimation: false,
+    hasTransparentHeader: false,
+    showConsultButton: true,
+    headerBehavior: 'sticky',
+    footerStyle: 'default',
+    scrollToTopBg: 'bg-figma-secondary-100',
   },
 }
 
