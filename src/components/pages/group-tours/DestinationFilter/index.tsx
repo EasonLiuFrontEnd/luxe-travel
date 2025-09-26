@@ -79,7 +79,7 @@ const DestinationFilter = ({
 
   return (
     <section
-      className={`relative border-y border-figma-secondary-500 py-4 px-[clamp(12px,2.5vw,48px)] xl:py-9 ${className || ''}`}
+      className={`relative xl:sticky xl:top-0 xl:left-0 xl:z-10 xl:bg-figma-neutral-50 border-y border-figma-secondary-500 py-4 px-[clamp(12px,2.5vw,48px)] xl:py-9 ${className || ''}`}
     >
       {/* 交錯背景圖層 - 上排和下排 */}
       <div
