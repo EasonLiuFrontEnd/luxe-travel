@@ -159,7 +159,7 @@ const GroupTourCard = ({
     >
       <div className='flex items-end relative isolate w-full'>
         {/* 電腦版書本 - 翻頁書 */}
-        <div className='hidden xl:block relative shrink-0 z-[1] transition-transform duration-300 group-hover:scale-[1.2] origin-bottom-left cursor-pointer' onClick={onDetailsClick}>
+        <div className='hidden xl:block xl:w-[204px] xl:h-[272px] relative shrink-0 z-[1] transition-transform duration-300 group-hover:scale-[1.2] origin-bottom-left cursor-pointer' onClick={onDetailsClick}>
           <RightOnlyFlipBook
             pages={flipBookPages}
             width={204}
