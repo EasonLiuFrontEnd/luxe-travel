@@ -23,10 +23,10 @@ const SearchResults = ({
   resultCount = 10,
   selectedFilters = [
     { id: '1', label: '義大利', type: 'country' },
-    { id: '2', label: '希臘', type: 'country' }
+    { id: '2', label: '希臘', type: 'country' },
   ],
   onRemoveFilter,
-  onSort
+  onSort,
 }: TSearchResultsProps) => {
   const [sortOption, setSortOption] = useState('價格（低到高）')
   const [showSortDropdown, setShowSortDropdown] = useState(false)
@@ -34,7 +34,10 @@ const SearchResults = ({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (sortDropdownRef.current && !sortDropdownRef.current.contains(event.target as Node)) {
+      if (
+        sortDropdownRef.current &&
+        !sortDropdownRef.current.contains(event.target as Node)
+      ) {
         setShowSortDropdown(false)
       }
     }
@@ -42,7 +45,6 @@ const SearchResults = ({
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
-
 
   const handleSort = (option: string) => {
     setSortOption(option)
@@ -61,7 +63,12 @@ const SearchResults = ({
   }
 
   return (
-    <section className={cn('pt-8 mb-9 px-[clamp(12px,2.5vw,48px)] xl:pt-[60px] xl:mb-[79px]', className)}>
+    <section
+      className={cn(
+        'pt-8 mb-9 px-[clamp(12px,2.5vw,48px)] xl:pt-[60px] xl:mb-[79px]',
+        className,
+      )}
+    >
       <div className='max-w-[1824px] mx-auto'>
         <div className='flex flex-col xl:flex-row xl:justify-between gap-[10px]'>
           {/* 搜尋結果數量 */}
@@ -121,7 +128,7 @@ const SearchResults = ({
                           ? 'text-figma-secondary-950 bg-figma-secondary-100'
                           : 'text-figma-primary-500',
                         index === 0 && 'rounded-t',
-                        index === SORT_OPTIONS.length - 1 && 'rounded-b'
+                        index === SORT_OPTIONS.length - 1 && 'rounded-b',
                       )}
                     >
                       {option}

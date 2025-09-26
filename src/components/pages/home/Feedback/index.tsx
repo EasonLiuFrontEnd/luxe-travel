@@ -41,13 +41,14 @@ const Feedback = () => {
     linkUrl?: string
     order: number
   }[] = useMemo(() => {
-    return (effectiveData || []).map(feedback => ({
+    return (effectiveData || []).map((feedback) => ({
       id: feedback.id,
       mode: feedback.mode,
       nickname: feedback.mode === 'REAL' ? feedback.nickname : undefined,
       content: feedback.content,
-      linkUrl: feedback.mode !== 'REAL' ? (feedback.linkUrl || undefined) : undefined,
-      order: feedback.order
+      linkUrl:
+        feedback.mode !== 'REAL' ? feedback.linkUrl || undefined : undefined,
+      order: feedback.order,
     }))
   }, [effectiveData])
 
@@ -75,7 +76,10 @@ const Feedback = () => {
   return (
     <div
       className='relative flex flex-col items-center py-[60px] px-[12px] xl:py-[120px] xl:px-[48px] border-t border-figma-secondary-500'
-      style={{ background: 'linear-gradient(to bottom, #F7F4EC, rgba(247, 244, 236, 0.00)), #F5F5F5' }}
+      style={{
+        background:
+          'linear-gradient(to bottom, #F7F4EC, rgba(247, 244, 236, 0.00)), #F5F5F5',
+      }}
     >
       <h2 className='font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px] gradient-title-border'>
         真實旅客回饋
@@ -89,10 +93,11 @@ const Feedback = () => {
         <button
           onClick={handlePrevious}
           disabled={!canGoLeft}
-          className={`group pt-[14px] pb-[18px] px-[20px] mr-[24px] rounded-[41px] border ${canGoLeft
-            ? 'border-figma-secondary-950 cursor-pointer'
-            : 'border-figma-secondary-300 cursor-not-allowed'
-            }`}
+          className={`group pt-[14px] pb-[18px] px-[20px] mr-[24px] rounded-[41px] border ${
+            canGoLeft
+              ? 'border-figma-secondary-950 cursor-pointer'
+              : 'border-figma-secondary-300 cursor-not-allowed'
+          }`}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -111,10 +116,11 @@ const Feedback = () => {
         <button
           onClick={handleNext}
           disabled={!canGoRight}
-          className={`group pt-[14px] pb-[18px] px-[20px] rounded-[41px] border ${canGoRight
-            ? 'border-figma-secondary-950 cursor-pointer'
-            : 'border-figma-secondary-300 cursor-not-allowed'
-            }`}
+          className={`group pt-[14px] pb-[18px] px-[20px] rounded-[41px] border ${
+            canGoRight
+              ? 'border-figma-secondary-950 cursor-pointer'
+              : 'border-figma-secondary-300 cursor-not-allowed'
+          }`}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'

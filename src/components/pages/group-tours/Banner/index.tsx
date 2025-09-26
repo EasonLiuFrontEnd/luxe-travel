@@ -17,17 +17,27 @@ const GroupToursBanner = ({ className }: TGroupToursBannerProps) => {
   const currentContent = SLIDE_CONTENT[currentSlide - 1]
 
   const handlePrevSlide = () => {
-    setCurrentSlide(prev => prev > 1 ? prev - 1 : totalSlides)
+    setCurrentSlide((prev) => (prev > 1 ? prev - 1 : totalSlides))
   }
 
   const handleNextSlide = () => {
-    setCurrentSlide(prev => prev < totalSlides ? prev + 1 : 1)
+    setCurrentSlide((prev) => (prev < totalSlides ? prev + 1 : 1))
   }
 
   return (
-    <section className={cn('relative mt-5 xl:mt-8 mb-8 xl:mb-[60px] px-[clamp(12px,2.5vw,48px)]', className)}>
+    <section
+      className={cn(
+        'relative mt-5 xl:mt-8 mb-8 xl:mb-[60px] px-[clamp(12px,2.5vw,48px)]',
+        className,
+      )}
+    >
       <div className='absolute z-10 bg-figma-neutral-50 rounded-br-2xl'>
-        <div className={cn('flex gap-2 xl:gap-[20px] xl:items-center flex-col xl:flex-row px-4 py-2 xl:px-7 xl:py-[26.5px]', styles.titleContainer)}>
+        <div
+          className={cn(
+            'flex gap-2 xl:gap-[20px] xl:items-center flex-col xl:flex-row px-4 py-2 xl:px-7 xl:py-[26.5px]',
+            styles.titleContainer,
+          )}
+        >
           <h2 className='font-noto-serif-tc font-bold text-[32px] xl:text-[64px] leading-[1.2] text-figma-secondary-500 whitespace-nowrap transition-all duration-500'>
             {currentContent.title}
           </h2>
@@ -50,7 +60,12 @@ const GroupToursBanner = ({ className }: TGroupToursBannerProps) => {
           />
 
           <div className={styles.controls}>
-            <div className={cn('pr-[5px] pl-[10px] pb-[9px] pt-[13px] xl:px-0 xl:py-0 flex items-center gap-[6px]', styles.controlsContainer)}>
+            <div
+              className={cn(
+                'pr-[5px] pl-[10px] pb-[9px] pt-[13px] xl:px-0 xl:py-0 flex items-center gap-[6px]',
+                styles.controlsContainer,
+              )}
+            >
               <button
                 onClick={handlePrevSlide}
                 className={cn(
@@ -85,7 +100,12 @@ const GroupToursBanner = ({ className }: TGroupToursBannerProps) => {
         </div>
 
         <div className='xl:absolute xl:bottom-0 xl:right-0 xl:rounded-tl-2xl xl:bg-figma-neutral-50'>
-          <div className={cn(' xl:px-7 pt-5 xl:py-4 xl:max-w-[40vw]', styles.descriptionContainer)}>
+          <div
+            className={cn(
+              ' xl:px-7 pt-5 xl:py-4 xl:max-w-[40vw]',
+              styles.descriptionContainer,
+            )}
+          >
             <p className='font-genseki-gothic text-figma-primary-500 text-sm xl:text-base leading-[1.5] transition-all duration-500'>
               {currentContent.description}
             </p>

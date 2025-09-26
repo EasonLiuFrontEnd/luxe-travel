@@ -27,7 +27,7 @@ type TFeedbackCardProps = {
 const FeedbackCard = ({
   cardData,
   autoPlayInterval = 5000,
-  onApiChange
+  onApiChange,
 }: TFeedbackCardProps) => {
   const [api, setApi] = useState<CarouselApi>()
   const { isMobile } = useMediaQuery()

@@ -337,37 +337,42 @@ export const TravelInquiryForm = ({
         <HeroSection topPosition={heroTopPosition} />
 
         <div className='relative bg-figma-secondary-100'>
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(handleSubmit)}
-                  className='flex flex-col relative rounded-[16px] w-full'
-                  noValidate
-                >
-                  <div className='bg-figma-primary-0 flex flex-col gap-4 p-[16px] xl:p-[32px] rounded-t-[16px] w-full'>
-                    <div className='flex flex-col gap-y-[16px] pb-[16px] xl:pb-[24px] relative w-full'>
-                      <div aria-hidden='true' className='absolute inset-0 border-b border-figma-primary-950' />
-                      <div className="font-family-noto-serif text-[18px] xl:text-[24px] font-semibold xl:font-bold leading-[1.5] xl:leading-[1.2] relative text-figma-primary-950">
-                        旅遊諮詢需求單
-                      </div>
-                      <div className="flex flex-col font-family-genseki text-[16px] xl:font-medium leading-[1.5] text-figma-primary-950">
-                        <p>誠摯感謝您蒞臨典藏旅遊。</p>
-                        <p>如需進一步諮詢行程內容或服務細節，請填寫表單，我們將由專人儘速與您聯繫。</p>
-                      </div>
-                    </div>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleSubmit)}
+              className='flex flex-col relative rounded-[16px] w-full'
+              noValidate
+            >
+              <div className='bg-figma-primary-0 flex flex-col gap-4 p-[16px] xl:p-[32px] rounded-t-[16px] w-full'>
+                <div className='flex flex-col gap-y-[16px] pb-[16px] xl:pb-[24px] relative w-full'>
+                  <div
+                    aria-hidden='true'
+                    className='absolute inset-0 border-b border-figma-primary-950'
+                  />
+                  <div className='font-family-noto-serif text-[18px] xl:text-[24px] font-semibold xl:font-bold leading-[1.5] xl:leading-[1.2] relative text-figma-primary-950'>
+                    旅遊諮詢需求單
                   </div>
-
-                  <div className='flex flex-col gap-4 pb-8 rounded-b-[16px] w-full'>
-                    <BasicInfoSection control={form.control} />
-
-                    <BudgetDestinationSection control={form.control} />
-
-                    <DetailRequirementsSection
-                      control={form.control}
-                      isLoading={isLoading}
-                    />
+                  <div className='flex flex-col font-family-genseki text-[16px] xl:font-medium leading-[1.5] text-figma-primary-950'>
+                    <p>誠摯感謝您蒞臨典藏旅遊。</p>
+                    <p>
+                      如需進一步諮詢行程內容或服務細節，請填寫表單，我們將由專人儘速與您聯繫。
+                    </p>
                   </div>
-                </form>
-              </Form>
+                </div>
+              </div>
+
+              <div className='flex flex-col gap-4 pb-8 rounded-b-[16px] w-full'>
+                <BasicInfoSection control={form.control} />
+
+                <BudgetDestinationSection control={form.control} />
+
+                <DetailRequirementsSection
+                  control={form.control}
+                  isLoading={isLoading}
+                />
+              </div>
+            </form>
+          </Form>
         </div>
       </div>
     </div>

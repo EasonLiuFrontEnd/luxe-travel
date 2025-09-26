@@ -15,7 +15,9 @@ const Advantage = ({ className }: TAdvantageProps) => {
   const backgroundRef = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)
   const [isInDetectionZone, setIsInDetectionZone] = useState(false)
-  const [scrollDirection, setScrollDirection] = useState<'down' | 'up' | null>(null)
+  const [scrollDirection, setScrollDirection] = useState<'down' | 'up' | null>(
+    null,
+  )
   const [translateX, setTranslateX] = useState(0)
   const [isDragState, setIsDragState] = useState(false)
   const lastScrollY = useRef(0)
@@ -24,7 +26,6 @@ const Advantage = ({ className }: TAdvantageProps) => {
   const isDragging = useRef(false)
   const dragStartX = useRef(0)
   const dragStartScrollLeft = useRef(0)
-
 
   const { query: advantagesQuery, mock } = useAdvantages()
   const {
@@ -78,48 +79,69 @@ const Advantage = ({ className }: TAdvantageProps) => {
     }
   }, [])
 
-  const handleDesktopScroll = useCallback((event: WheelEvent) => {
-    if (isMobile || !isInDetectionZone) return
+  const handleDesktopScroll = useCallback(
+    (event: WheelEvent) => {
+      if (isMobile || !isInDetectionZone) return
 
-    // 先阻止事件，然後檢查是否需要釋放
-    event.preventDefault()
-    event.stopPropagation()
+      // 先阻止事件，然後檢查是否需要釋放
+      event.preventDefault()
+      event.stopPropagation()
 
-    const delta = event.deltaY
-    const currentDirection = delta > 0 ? 'down' : 'up'
+      const delta = event.deltaY
+      const currentDirection = delta > 0 ? 'down' : 'up'
 
-    if (scrollDirection !== currentDirection) {
-      setScrollDirection(currentDirection)
-    }
-
-    const moveAmount = delta * 2
-    const maxLeft = -(window.innerWidth + (trackRef.current?.scrollWidth || 0))
-    const maxRight = window.innerWidth
-
-    setTranslateX(prev => {
-      const newX = prev - moveAmount
-      const clampedX = Math.max(maxLeft, Math.min(maxRight, newX))
-
-      const hasReachedEndFromTop = entryDirection.current === 'from-top' && clampedX === maxLeft && currentDirection === 'down'
-      const hasReachedEndFromBottom = entryDirection.current === 'from-bottom' && clampedX === maxRight && currentDirection === 'up'
-      const hasReturnedToStartFromTop = entryDirection.current === 'from-top' && clampedX === maxRight && currentDirection === 'up'
-      const hasReturnedToStartFromBottom = entryDirection.current === 'from-bottom' && clampedX === maxLeft && currentDirection === 'down'
-
-      const shouldRelease = hasReachedEndFromTop || hasReachedEndFromBottom || hasReturnedToStartFromTop || hasReturnedToStartFromBottom
-
-      if (shouldRelease) {
-        hasCompletedHorizontalScroll.current = true
-        setIsInDetectionZone(false)
-        setScrollDirection(null)
-        entryDirection.current = null
-        // 手動觸發一次頁面滾動來彌補被阻止的滾動
-        window.scrollBy(0, delta)
-        return prev
+      if (scrollDirection !== currentDirection) {
+        setScrollDirection(currentDirection)
       }
 
-      return clampedX
-    })
-  }, [isMobile, isInDetectionZone, scrollDirection])
+      const moveAmount = delta * 2
+      const maxLeft = -(
+        window.innerWidth + (trackRef.current?.scrollWidth || 0)
+      )
+      const maxRight = window.innerWidth
+
+      setTranslateX((prev) => {
+        const newX = prev - moveAmount
+        const clampedX = Math.max(maxLeft, Math.min(maxRight, newX))
+
+        const hasReachedEndFromTop =
+          entryDirection.current === 'from-top' &&
+          clampedX === maxLeft &&
+          currentDirection === 'down'
+        const hasReachedEndFromBottom =
+          entryDirection.current === 'from-bottom' &&
+          clampedX === maxRight &&
+          currentDirection === 'up'
+        const hasReturnedToStartFromTop =
+          entryDirection.current === 'from-top' &&
+          clampedX === maxRight &&
+          currentDirection === 'up'
+        const hasReturnedToStartFromBottom =
+          entryDirection.current === 'from-bottom' &&
+          clampedX === maxLeft &&
+          currentDirection === 'down'
+
+        const shouldRelease =
+          hasReachedEndFromTop ||
+          hasReachedEndFromBottom ||
+          hasReturnedToStartFromTop ||
+          hasReturnedToStartFromBottom
+
+        if (shouldRelease) {
+          hasCompletedHorizontalScroll.current = true
+          setIsInDetectionZone(false)
+          setScrollDirection(null)
+          entryDirection.current = null
+          // 手動觸發一次頁面滾動來彌補被阻止的滾動
+          window.scrollBy(0, delta)
+          return prev
+        }
+
+        return clampedX
+      })
+    },
+    [isMobile, isInDetectionZone, scrollDirection],
+  )
 
   const checkDetectionZone = useCallback(() => {
     if (isMobile || !backgroundRef.current) return
@@ -130,12 +152,14 @@ const Advantage = ({ className }: TAdvantageProps) => {
 
     const isScrollingDown = currentScrollY > lastScrollY.current
     const isEnteringFromTop = rect.top <= 0 && rect.bottom > 0
-    const isEnteringFromBottom = rect.bottom >= window.innerHeight * 0.7 && rect.top < window.innerHeight
+    const isEnteringFromBottom =
+      rect.bottom >= window.innerHeight * 0.7 && rect.top < window.innerHeight
 
     const inZone = isScrollingDown ? isEnteringFromTop : isEnteringFromBottom
 
     if (inZone && !wasInZone && !hasCompletedHorizontalScroll.current) {
-      const direction = currentScrollY > lastScrollY.current ? 'from-top' : 'from-bottom'
+      const direction =
+        currentScrollY > lastScrollY.current ? 'from-top' : 'from-bottom'
       entryDirection.current = direction
 
       setIsInDetectionZone(true)
@@ -167,34 +191,48 @@ const Advantage = ({ className }: TAdvantageProps) => {
     lastScrollY.current = currentScrollY
   }, [isMobile, isInDetectionZone, scrollDirection])
 
-  const handleMouseDown = useCallback((event: React.MouseEvent) => {
-    if (!isMobile || !trackRef.current) return
+  const handleMouseDown = useCallback(
+    (event: React.MouseEvent) => {
+      if (!isMobile || !trackRef.current) return
 
-    isDragging.current = true
-    setIsDragState(true)
-    dragStartX.current = event.clientX
-    dragStartScrollLeft.current = trackRef.current.scrollLeft
-    event.preventDefault()
-  }, [isMobile])
+      isDragging.current = true
+      setIsDragState(true)
+      dragStartX.current = event.clientX
+      dragStartScrollLeft.current = trackRef.current.scrollLeft
+      event.preventDefault()
+    },
+    [isMobile],
+  )
 
-  const handleMouseMove = useCallback((event: MouseEvent) => {
-    if (typeof window === 'undefined' || !isMobile || !isDragging.current || !trackRef.current) return
+  const handleMouseMove = useCallback(
+    (event: MouseEvent) => {
+      if (
+        typeof window === 'undefined' ||
+        !isMobile ||
+        !isDragging.current ||
+        !trackRef.current
+      )
+        return
 
-    const deltaX = event.clientX - dragStartX.current
-    const newScrollLeft = dragStartScrollLeft.current - deltaX
+      const deltaX = event.clientX - dragStartX.current
+      const newScrollLeft = dragStartScrollLeft.current - deltaX
 
-    trackRef.current.scrollLeft = Math.max(0, Math.min(
-      trackRef.current.scrollWidth - trackRef.current.offsetWidth,
-      newScrollLeft
-    ))
-  }, [isMobile])
+      trackRef.current.scrollLeft = Math.max(
+        0,
+        Math.min(
+          trackRef.current.scrollWidth - trackRef.current.offsetWidth,
+          newScrollLeft,
+        ),
+      )
+    },
+    [isMobile],
+  )
 
   const handleMouseUp = useCallback(() => {
     if (!isMobile) return
     isDragging.current = false
     setIsDragState(false)
   }, [isMobile])
-
 
   useEffect(() => {
     if (typeof document === 'undefined' || !isMobile) return
@@ -226,8 +264,6 @@ const Advantage = ({ className }: TAdvantageProps) => {
     }
   }, [isMobile, handleDesktopScroll, checkDetectionZone])
 
-
-
   return (
     <section
       className={`bg-figma-secondary-100 relative xl:overflow-x-hidden ${className || ''}`}
@@ -250,21 +286,24 @@ const Advantage = ({ className }: TAdvantageProps) => {
         </div>
       </div>
 
-      <div
-        className={`px-3 xl:px-0 pb-[60px] xl:pb-0`}
-      >
+      <div className={`px-3 xl:px-0 pb-[60px] xl:pb-0`}>
         <div
           ref={trackRef}
-          data-track="advantage-track"
-          className={`${isMobile
-            ? styles.trackMobile
-            : `${styles.track} ${isInDetectionZone ? styles.trackNoTransition : ''}`
+          data-track='advantage-track'
+          className={`${
+            isMobile
+              ? styles.trackMobile
+              : `${styles.track} ${isInDetectionZone ? styles.trackNoTransition : ''}`
           }`}
-          style={!isMobile ? {
-            transform: `translateX(${translateX}px)`
-          } : {
-            cursor: isDragState ? 'grabbing' : 'grab'
-          }}
+          style={
+            !isMobile
+              ? {
+                  transform: `translateX(${translateX}px)`,
+                }
+              : {
+                  cursor: isDragState ? 'grabbing' : 'grab',
+                }
+          }
           onMouseDown={isMobile ? handleMouseDown : undefined}
         >
           {displayData.map((card, index) => {
@@ -273,13 +312,18 @@ const Advantage = ({ className }: TAdvantageProps) => {
 
               const cardWidth = Math.min(window.innerWidth * 0.3, 522)
               const cardSpacing = 60
-              const cardPositionX = index * (cardWidth + cardSpacing) + translateX
+              const cardPositionX =
+                index * (cardWidth + cardSpacing) + translateX
               const viewportCenter = window.innerWidth / 2
               const cardCenter = cardPositionX + cardWidth / 2
 
               // 計算相對於視窗中心的距離（標準化為-1到1之間）
-              const normalizedPosition = (cardCenter - viewportCenter) / (window.innerWidth / 2)
-              const clampedPosition = Math.max(-1, Math.min(1, normalizedPosition))
+              const normalizedPosition =
+                (cardCenter - viewportCenter) / (window.innerWidth / 2)
+              const clampedPosition = Math.max(
+                -1,
+                Math.min(1, normalizedPosition),
+              )
 
               // 基礎 perspective (降低數值讓透視更明顯)
               const perspective = 1600
@@ -329,13 +373,16 @@ const Advantage = ({ className }: TAdvantageProps) => {
               <div
                 key={card.id}
                 data-card-index={index}
-                className={`${styles.cardContainer} flex-shrink-0 ${isMobile
-                  ? styles.cardMobile
-                  : styles.cardDesktop
-                  }`}
-                style={!isMobile ? {
-                  transform: getCardTransform()
-                } : {}}
+                className={`${styles.cardContainer} flex-shrink-0 ${
+                  isMobile ? styles.cardMobile : styles.cardDesktop
+                }`}
+                style={
+                  !isMobile
+                    ? {
+                        transform: getCardTransform(),
+                      }
+                    : {}
+                }
               >
                 <AdvantageCard card={card} />
               </div>
@@ -343,7 +390,6 @@ const Advantage = ({ className }: TAdvantageProps) => {
           })}
         </div>
       </div>
-
     </section>
   )
 }

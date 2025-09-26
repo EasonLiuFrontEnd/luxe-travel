@@ -32,7 +32,10 @@ const BookShelfSection = () => {
       </div>
 
       <div className='flex flex-col-reverse lg:flex-row'>
-        <BookShelf trackRef={trackRef as RefObject<HTMLDivElement>} isMobile={isMobile} />
+        <BookShelf
+          trackRef={trackRef as RefObject<HTMLDivElement>}
+          isMobile={isMobile}
+        />
 
         <Introduction />
       </div>
