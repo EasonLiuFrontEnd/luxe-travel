@@ -49,6 +49,11 @@ export type TFlipBookState = 'user_fold' | 'fold_corner' | 'flipping' | 'read'
 export type TFlipBookCorner = 'top' | 'bottom'
 
 export type TFlipBookProps = TBaseComponent & {
+  style?: React.CSSProperties
+  startPage?: number
+  clickEventForward?: boolean
+  useMouseEvents?: boolean
+  renderOnlyPageLengthChange?: boolean
   width: number
   height: number
   size?: TFlipBookSize
@@ -67,6 +72,9 @@ export type TFlipBookProps = TBaseComponent & {
   onFlip?: (data: number) => void
   onChangeOrientation?: (orientation: TFlipBookOrientation) => void
   onChangeState?: (state: TFlipBookState) => void
+  swipeDistance?: number
+  showPageCorners?: boolean
+  disableFlipByClick?: boolean
 }
 
 export type TPageFlipRef = {

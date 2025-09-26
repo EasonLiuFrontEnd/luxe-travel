@@ -37,14 +37,19 @@ const PageFlip = forwardRef<TPageFlipRef, TFlipBookProps>(
   (
     {
       children,
-      className,
+      className = '',
+      style,
+      startPage = 0,
+      clickEventForward = true,
+      useMouseEvents = true,
+      renderOnlyPageLengthChange = false,
       width,
       height,
       size = 'fixed',
-      minWidth,
-      maxWidth,
-      minHeight,
-      maxHeight,
+      minWidth = 0,
+      maxWidth = 0,
+      minHeight = 0,
+      maxHeight = 0,
       drawShadow = true,
       flippingTime = 1000,
       usePortrait = true,
@@ -56,6 +61,9 @@ const PageFlip = forwardRef<TPageFlipRef, TFlipBookProps>(
       onFlip,
       onChangeOrientation,
       onChangeState,
+      swipeDistance = 30,
+      showPageCorners = true,
+      disableFlipByClick = false,
       ...props
     },
     ref,
@@ -118,13 +126,19 @@ const PageFlip = forwardRef<TPageFlipRef, TFlipBookProps>(
       <div className={cn('select-none', className)} {...props}>
         <HTMLFlipBook
           ref={flipBookRef}
+          className={className}
+          style={style || {}}
+          startPage={startPage}
+          clickEventForward={clickEventForward}
+          useMouseEvents={useMouseEvents}
+          renderOnlyPageLengthChange={renderOnlyPageLengthChange}
           width={width}
           height={height}
           size={size}
-          minWidth={minWidth}
-          maxWidth={maxWidth}
-          minHeight={minHeight}
-          maxHeight={maxHeight}
+          minWidth={minWidth || 0}
+          maxWidth={maxWidth || 0}
+          minHeight={minHeight || 0}
+          maxHeight={maxHeight || 0}
           drawShadow={drawShadow}
           flippingTime={flippingTime}
           usePortrait={usePortrait}
@@ -136,6 +150,9 @@ const PageFlip = forwardRef<TPageFlipRef, TFlipBookProps>(
           onFlip={handleFlip}
           onChangeOrientation={handleChangeOrientation}
           onChangeState={handleChangeState}
+          swipeDistance={swipeDistance}
+          showPageCorners={showPageCorners}
+          disableFlipByClick={disableFlipByClick}
         >
           {children}
         </HTMLFlipBook>
