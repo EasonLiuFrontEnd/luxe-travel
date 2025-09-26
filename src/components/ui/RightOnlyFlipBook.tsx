@@ -11,6 +11,7 @@ export type TFlipBookPage = {
   id: string
   pageNumber?: string
   background?: string
+  pageContentClassName?: string
   content: React.ReactNode
 }
 
@@ -60,6 +61,7 @@ export const RightOnlyFlipBook = ({
                 key={page.id}
                 pageNumber={page.pageNumber}
                 background={page.background}
+                pageContentClassName={page.pageContentClassName}
               >
                 {page.content}
               </Page>

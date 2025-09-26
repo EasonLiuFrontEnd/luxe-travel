@@ -90,5 +90,6 @@ export type TFlipBookPage = {
   pageNumber?: string
   background?: string
   content: React.ReactNode
+  pageContentClassName?: string
 }
 

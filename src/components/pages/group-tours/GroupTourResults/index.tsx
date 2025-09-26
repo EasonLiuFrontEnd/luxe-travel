@@ -4,6 +4,7 @@ import GroupTourCard from './GroupTourCard'
 import type { TBaseComponent } from '@/types'
 import type { TTourData } from '../config'
 import { mockTours } from '../config'
+import { useRouter } from 'next/navigation'
 
 type TGroupTourResultsProps = TBaseComponent & {
   tours?: TTourData[]
@@ -15,8 +16,11 @@ const GroupTourResults = ({
 }: TGroupTourResultsProps) => {
   const toursToDisplay = tours.length > 0 ? tours : mockTours
 
+  const router = useRouter()
   const handleDetailsClick = (tourId: string) => {
-    console.log('Tour details clicked:', tourId)
+    setTimeout(() => {
+      router.push(`/group-tours/${tourId}`)
+    }, 250)
   }
 
   return (

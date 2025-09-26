@@ -3,7 +3,8 @@
 import { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
-import type { TBaseComponent } from '@/types'
+import { RightOnlyFlipBook } from '@/components/ui/RightOnlyFlipBook'
+import type { TBaseComponent, TFlipBookPage } from '@/types'
 import styles from './style.module.css'
 import type { TTourDate } from '../config'
 
@@ -52,6 +53,46 @@ const GroupTourCard = ({
 
   const imageUrl = `/group-tours/${imageIndex}.jpg`
   const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  // 創建翻頁書頁面
+  const flipBookPages: TFlipBookPage[] = [
+    {
+      id: 'cover',
+      pageNumber: '',
+      pageContentClassName: 'h-full w-full',
+      content: (
+        <div className='relative h-full w-full'>
+          <div
+            className='h-full w-full bg-center bg-cover bg-no-repeat flex items-center relative'
+            style={{ backgroundImage: `url(${imageUrl})` }}
+          >
+            <div className='bg-gradient-to-l from-[rgba(87,87,87,0.4)] to-[rgba(217,217,217,0.4)] via-[57.692%] via-[rgba(189,189,189,0.4)] h-full w-[10px] relative shrink-0'>
+              <div className='absolute inset-0 border-l border-[rgba(146,109,60,0.2)]' />
+            </div>
+            <div className='flex-1 h-full bg-gradient-to-l from-[rgba(255,255,255,0.15)] to-[rgba(113,112,112,0.3)]' />
+
+            <div className='absolute h-[17px] w-[64px] top-[10px] xl:top-[13px] left-1/2 transform -translate-x-1/2'>
+              <Image
+                src='/group-tours/logo.png'
+                alt='Logo'
+                width={64}
+                height={17}
+                className='object-contain'
+              />
+            </div>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 'content',
+      pageNumber: '',
+      pageContentClassName: 'h-full w-full',
+      content: (
+        <div />
+      )
+    }
+  ]
   const [isScrollAtEnd, setIsScrollAtEnd] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
@@ -112,34 +153,22 @@ const GroupTourCard = ({
   return (
     <div
       className={cn(
-        'group relative w-full max-w-[680px] xl:max-w-[900px]',
-        className,
+        'group relative w-full max-w-[680px] xl:max-w-[900px] mx-auto',
+        styles.foldedCornerHolder, className,
       )}
     >
       <div className='flex items-end relative isolate w-full'>
-        {/* 電腦版書本 */}
-        <div
-          className={cn(
-            'hidden xl:flex bg-center bg-cover bg-no-repeat items-center relative shrink-0 z-[1] h-[272px] w-[204px] min-w-[204px] transition-transform duration-300 group-hover:scale-[1.2] origin-bottom-left',
-          )}
-          style={{ backgroundImage: `url(${imageUrl})` }}
-        >
-          <div className='bg-gradient-to-l from-[rgba(87,87,87,0.4)] to-[rgba(217,217,217,0.4)] via-[57.692%] via-[rgba(189,189,189,0.4)] h-full w-[10px] relative shrink-0'>
-            <div className='absolute inset-0 border-l border-[rgba(146,109,60,0.2)]' />
-          </div>
-          <div className='flex-1 h-full bg-gradient-to-l from-[rgba(255,255,255,0.15)] to-[rgba(113,112,112,0.3)]' />
-
-          <div className='absolute h-[17px] w-[64px] top-[10px] xl:top-[13px] left-1/2 transform -translate-x-1/2'>
-            <Image
-              src='/group-tours/logo.png'
-              alt='Logo'
-              width={64}
-              height={17}
-              className='object-contain'
-            />
-          </div>
+        {/* 電腦版書本 - 翻頁書 */}
+        <div className='hidden xl:block relative shrink-0 z-[1] transition-transform duration-300 group-hover:scale-[1.2] origin-bottom-left cursor-pointer' onClick={onDetailsClick}>
+          <RightOnlyFlipBook
+            pages={flipBookPages}
+            width={204}
+            height={272}
+            showCover={false}
+            enableBackwardFlip={false}
+          />
         </div>
-        {/* 電腦版書本 */}
+        {/* 電腦版書本 - 翻頁書 */}
 
         <div className='relative flex flex-1 min-w-0'>
           <div className='hidden xl:block absolute bg-figma-secondary-500 bottom-0 right-0 transition-all duration-300 group-hover:-translate-x-[40px] group-hover:-translate-y-[36px] h-full w-full' />
@@ -148,7 +177,7 @@ const GroupTourCard = ({
             <div className='flex flex-col xl:gap-3 w-full'>
               <div className='flex items-end xl:items-start xl:justify-between w-full'>
                 {/* 手機版書本 */}
-                <div className={cn('xl:hidden relative')}>
+                <div className={cn('xl:hidden relative cursor-pointer', styles.foldedCornerMobile)} onClick={onDetailsClick}>
                   <div
                     className='bg-center bg-cover bg-no-repeat flex items-center relative shrink-0 h-[193px] w-[145px] min-w-[145px]'
                     style={{ backgroundImage: `url(${imageUrl})` }}
@@ -257,13 +286,12 @@ const GroupTourCard = ({
                 })}
 
                 {!isScrollAtEnd && (
-                  <div className='absolute right-0 top-0 w-[150px] h-full bg-gradient-to-r from-transparent to-white pointer-events-none transition-opacity duration-300' />
+                  <div className='absolute right-[50px] xl:right-[38px] top-0 w-[150px] h-full bg-gradient-to-r from-transparent to-white pointer-events-none transition-opacity duration-300' />
                 )}
               </div>
 
               {!isScrollAtEnd && (
                 <button
-                  onClick={onDetailsClick}
                   className='border border-figma-secondary-950 rounded-full px-3 pt-2 pb-3 flex items-center justify-center shrink-0'
                 >
                   <div className='w-[20px] h-[6px] relative'>

@@ -9,15 +9,16 @@ import type { TBaseComponent } from '@/types'
 export type TPageProps = TBaseComponent & {
   pageNumber?: number | string
   background?: string
+  pageContentClassName?: string
 }
 
 const Page = forwardRef<HTMLDivElement, TPageProps>(
-  ({ children, className, pageNumber, background, ...props }, ref) => {
+  ({ children, pageContentClassName, className, pageNumber, background, ...props }, ref) => {
     return (
       <div
         ref={ref}
         className={cn(
-          'relative flex flex-col overflow-hidden p-4',
+          'relative flex flex-col overflow-hidden',
           background || 'bg-white',
           className,
         )}
@@ -28,7 +29,7 @@ const Page = forwardRef<HTMLDivElement, TPageProps>(
             {pageNumber}
           </div>
         )}
-        <div className='flex-1'>{children}</div>
+        <div className={cn('flex-1', pageContentClassName)}>{children}</div>
       </div>
     )
   },
