@@ -21,9 +21,9 @@ const DropdownArrowIcon = ({
       <path
         d='M5 8L10 13L15 8'
         stroke={color}
-        stroke-width='1.66667'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='1.66667'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   )
