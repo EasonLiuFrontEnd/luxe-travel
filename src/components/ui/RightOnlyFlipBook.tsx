@@ -21,7 +21,7 @@ export type TRightOnlyFlipBookProps = TBaseComponent & {
   height?: number
   showCover?: boolean
   enableBackwardFlip?: boolean
-  onFlip?: (pageIndex: number) => void
+  onFlip?: (() => void) | ((pageIndex: number) => void)
 }
 
 export const RightOnlyFlipBook = ({
@@ -37,8 +37,13 @@ export const RightOnlyFlipBook = ({
   const flipBookRef = useRef<TPageFlipRef>(null)
 
   const handleFlip = (data: number) => {
-    console.log('Current page:', data)
-    onFlip?.(data)
+    if (onFlip) {
+      if (onFlip.length === 0) {
+        (onFlip as () => void)()
+      } else {
+        (onFlip as (pageIndex: number) => void)(data)
+      }
+    }
   }
 
   return (

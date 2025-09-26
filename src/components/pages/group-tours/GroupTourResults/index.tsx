@@ -20,7 +20,7 @@ const GroupTourResults = ({
   const handleDetailsClick = (tourId: string) => {
     setTimeout(() => {
       router.push(`/group-tours/${tourId}`)
-    }, 250)
+    }, 300)
   }
 
   return (
