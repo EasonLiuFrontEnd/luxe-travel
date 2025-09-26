@@ -9,7 +9,10 @@ type TGroupTourResultsProps = TBaseComponent & {
   tours?: TTourData[]
 }
 
-const GroupTourResults = ({ tours = [], className }: TGroupTourResultsProps) => {
+const GroupTourResults = ({
+  tours = [],
+  className,
+}: TGroupTourResultsProps) => {
   const toursToDisplay = tours.length > 0 ? tours : mockTours
 
   const handleDetailsClick = (tourId: string) => {
