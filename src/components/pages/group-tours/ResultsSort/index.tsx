@@ -1,19 +1,16 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import { cn } from '@/lib/utils'
 import type { TBaseComponent } from '@/types'
-import { SORT_OPTIONS } from '../config'
+import { SORT_OPTIONS, type TSelectedFilters } from '../config'
+import { useClickOutside } from '@/hooks/useClickOutside'
 import CloseIcon from './icons/CloseIcon'
 import SortIcon from './icons/SortIcon'
 
 type TSearchResultsProps = TBaseComponent & {
   resultCount?: number
-  selectedFilters?: Array<{
-    id: string
-    label: string
-    type: 'country' | 'price' | 'other'
-  }>
+  selectedFilters?: TSelectedFilters
   onRemoveFilter?: (filterId: string) => void
   onSort?: (sortOption: string) => void
 }
@@ -21,30 +18,18 @@ type TSearchResultsProps = TBaseComponent & {
 const SearchResults = ({
   className,
   resultCount = 10,
-  selectedFilters = [
-    { id: '1', label: '義大利', type: 'country' },
-    { id: '2', label: '希臘', type: 'country' },
-  ],
+  selectedFilters = [],
   onRemoveFilter,
   onSort,
 }: TSearchResultsProps) => {
   const [sortOption, setSortOption] = useState('價格（低到高）')
   const [showSortDropdown, setShowSortDropdown] = useState(false)
-  const sortDropdownRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        sortDropdownRef.current &&
-        !sortDropdownRef.current.contains(event.target as Node)
-      ) {
-        setShowSortDropdown(false)
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+  const handleCloseSortDropdown = useCallback(() => {
+    setShowSortDropdown(false)
   }, [])
+
+  const sortDropdownRef = useClickOutside<HTMLDivElement>(handleCloseSortDropdown)
 
   const handleSort = (option: string) => {
     setSortOption(option)

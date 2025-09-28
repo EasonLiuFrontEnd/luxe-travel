@@ -153,7 +153,7 @@ const GroupTourCard = ({
   return (
     <div
       className={cn(
-        'group relative w-full max-w-[680px] xl:max-w-[900px] mx-auto',
+        'group relative w-full max-w-[680px] xl:max-w-[900px]',
         styles.foldedCornerHolder, className,
       )}
     >
@@ -243,7 +243,7 @@ const GroupTourCard = ({
               </div>
             </div>
 
-            <div className='bg-figma-primary-0 flex items-center gap-1 w-full relative p-4 xl:p-0'>
+            <div className='bg-figma-primary-0 flex justify-between items-center gap-1 w-full relative p-4 xl:p-0'>
               <div
                 ref={scrollContainerRef}
                 className='flex gap-3 items-center overflow-x-scroll scroll-smooth hide-scrollbar cursor-grab select-none'
