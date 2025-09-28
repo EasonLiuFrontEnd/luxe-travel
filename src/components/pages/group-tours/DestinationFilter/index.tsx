@@ -1,12 +1,13 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import SearchIcon from '@/components/shared/icons/header/SearchIcon'
 import DropdownArrowIcon from './icons/DropdownArrowIcon'
 import ClearIcon from './icons/ClearIcon'
 import CheckIcon from './icons/CheckIcon'
 import type { TBaseComponent } from '@/types'
 import { REGIONS } from '../config'
+import { useClickOutside } from '@/hooks/useClickOutside'
 import styles from './styles.module.css'
 
 type TDestinationFilterProps = TBaseComponent & {
@@ -20,22 +21,13 @@ const DestinationFilter = ({
   const [isOpen, setIsOpen] = useState(false)
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null)
   const [selectedCountries, setSelectedCountries] = useState<string[]>([])
-  const dropdownRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false)
-        setSelectedRegion(null)
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+  const handleCloseDropdown = useCallback(() => {
+    setIsOpen(false)
+    setSelectedRegion(null)
   }, [])
+
+  const dropdownRef = useClickOutside<HTMLDivElement>(handleCloseDropdown)
 
   const handleRegionSelect = (regionId: string) => {
     if (selectedRegion === regionId) {
@@ -69,6 +61,15 @@ const DestinationFilter = ({
     return (
       countryNames.slice(0, 2).join('、') +
       (countryNames.length > 2 ? `等${countryNames.length}個國家` : '')
+    )
+  }
+
+  const hasSelectedCountriesInRegion = (regionId: string) => {
+    const region = REGIONS.find((r) => r.id === regionId)
+    if (!region) return false
+
+    return region.countries.some((country) =>
+      selectedCountries.includes(country.id)
     )
   }
 
@@ -118,15 +119,20 @@ const DestinationFilter = ({
                     <div>
                       {!selectedRegion
                         ? // 第一層：顯示所有區域
-                          REGIONS.map((region) => (
-                            <button
-                              key={region.id}
-                              onClick={() => handleRegionSelect(region.id)}
-                              className='w-full text-left py-3 px-4 hover:bg-gray-50 rounded font-family-noto-serif font-semibold text-base cursor-pointer text-figma-neutral-300'
-                            >
-                              {region.name}
-                            </button>
-                          ))
+                          REGIONS.map((region) => {
+                            const hasSelected = hasSelectedCountriesInRegion(region.id)
+                            return (
+                              <button
+                                key={region.id}
+                                onClick={() => handleRegionSelect(region.id)}
+                                className={`w-full text-left py-3 px-4 hover:bg-gray-50 rounded font-family-noto-serif font-semibold text-base cursor-pointer ${
+                                  hasSelected ? 'text-figma-secondary-950' : 'text-figma-neutral-300'
+                                }`}
+                              >
+                                {region.name}
+                              </button>
+                            )
+                          })
                         : // 第二層：顯示選中區域和其國家
                           (() => {
                             const currentRegion = REGIONS.find(

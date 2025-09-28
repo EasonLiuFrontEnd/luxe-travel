@@ -6,6 +6,10 @@ export {
   useBooks,
 } from './home'
 
+export {
+  useProductsSearch,
+} from './group-tours'
+
 export type {
   TAdvantages,
   TConcern,
@@ -20,5 +24,11 @@ export type {
   TBannersResponse,
   TBooksResponse,
 } from './type'
+
+export type {
+  TProduct,
+  TProductSearchParams,
+  TProductSearchResponse,
+} from './group-tours'
 
 export { default as apiClient } from './client'

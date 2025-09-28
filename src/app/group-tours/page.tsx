@@ -1,36 +1,138 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import GroupToursBanner from '@/components/pages/group-tours/Banner'
 import DestinationFilter from '@/components/pages/group-tours/DestinationFilter'
 import ResultsSort from '@/components/pages/group-tours/ResultsSort'
 import GroupTourResults from '@/components/pages/group-tours/GroupTourResults'
-import { convertCountriesToFilters } from '@/components/pages/group-tours/config'
+import {
+  convertCountriesToFilters,
+  getCountryCodes,
+  convertSortOption,
+  convertProductToTourData,
+  type TTourData,
+  type TSelectedFilters
+} from '@/components/pages/group-tours/config'
+import { useProductsSearch, type TProductSearchParams } from '@/api'
 import type { TBaseComponent } from '@/types'
 
 type TGroupToursPageProps = TBaseComponent
 
 const GroupToursPage = ({ className }: TGroupToursPageProps) => {
-  const [searchedCountries, setSearchedCountries] = useState<
-    Array<{
-      id: string
-      label: string
-      type: 'country' | 'price' | 'other'
-    }>
-  >([])
+  const [searchedCountries, setSearchedCountries] = useState<TSelectedFilters>([])
   const [showResultsSort, setShowResultsSort] = useState(false)
+  const [searchParams, setSearchParams] = useState<TProductSearchParams>({
+    page: 1,
+    limit: 10,
+    sort: 'priceMin',
+    order: 'asc'
+  })
+  const [tours, setTours] = useState<TTourData[]>([])
 
-  const handleSearch = (selectedCountries: string[]) => {
+  const { query: searchQuery, mock: searchMock } = useProductsSearch(searchParams)
+
+  useEffect(() => {
+    if (searchedCountries.length === 0) {
+      setTours([])
+      return
+    }
+
+    const searchedCountryIds = searchedCountries
+      .filter(f => f.type === 'country')
+      .map(f => f.id)
+
+    if (searchedCountryIds.length === 0) {
+      setTours([])
+      return
+    }
+
+    if (searchQuery.data && searchQuery.data.length > 0) {
+      const convertedTours = searchQuery.data.map(convertProductToTourData)
+      setTours(convertedTours)
+    } else {
+      const searchedCountryCodes = getCountryCodes(searchedCountryIds)
+
+      const mockDataMatches = searchMock.data?.some(mockProduct => {
+        return mockProduct.countries.some(mockCountryCode =>
+          searchedCountryCodes.includes(mockCountryCode)
+        )
+      })
+
+      if (mockDataMatches && searchMock.data) {
+        const relevantMockData = searchMock.data.filter(mockProduct =>
+          mockProduct.countries.some(mockCountryCode =>
+            searchedCountryCodes.includes(mockCountryCode)
+          )
+        )
+        const convertedTours = relevantMockData.map(convertProductToTourData)
+        setTours(convertedTours)
+      } else {
+        setTours([])
+      }
+    }
+  }, [searchQuery.data, searchedCountries, searchMock.data])
+
+  const handleSearch = useCallback((selectedCountries: string[]) => {
     const countryFilters = convertCountriesToFilters(selectedCountries)
     setSearchedCountries(countryFilters)
     setShowResultsSort(true)
-  }
 
-  const handleRemoveFilter = (filterId: string) => {
-    setSearchedCountries((prev) =>
-      prev.filter((filter) => filter.id !== filterId),
-    )
-  }
+    if (selectedCountries.length > 0) {
+      const countryCodes = getCountryCodes(selectedCountries)
+      const newSearchParams = {
+        destination: countryCodes[0],
+        page: 1,
+        limit: 10,
+        sort: searchParams.sort || 'priceMin',
+        order: searchParams.order || 'asc'
+      }
+      setSearchParams(newSearchParams)
+    } else {
+      setTours([])
+      setShowResultsSort(false)
+    }
+  }, [searchParams.sort, searchParams.order])
+
+  const handleRemoveFilter = useCallback((filterId: string) => {
+    const updatedFilters = searchedCountries.filter((filter) => filter.id !== filterId)
+    setSearchedCountries(updatedFilters)
+
+    if (updatedFilters.length === 0) {
+      setSearchParams(prev => ({
+        ...prev,
+        destination: undefined,
+        page: 1
+      }))
+      setTours([])
+      setShowResultsSort(false)
+    } else {
+      const remainingCountryIds = updatedFilters
+        .filter(f => f.type === 'country')
+        .map(f => f.id)
+
+      if (remainingCountryIds.length > 0) {
+        const countryCodes = getCountryCodes(remainingCountryIds)
+        setSearchParams(prev => ({
+          ...prev,
+          destination: countryCodes[0],
+          page: 1
+        }))
+      } else {
+        setTours([])
+        setShowResultsSort(false)
+      }
+    }
+  }, [searchedCountries])
+
+  const handleSort = useCallback((sortOption: string) => {
+    const { sort, order } = convertSortOption(sortOption)
+    setSearchParams(prev => ({
+      ...prev,
+      sort,
+      order,
+      page: 1
+    }))
+  }, [])
 
   return (
     <main className={`min-h-screen bg-figma-neutral-50 ${className || ''}`}>
@@ -43,13 +145,15 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
       <DestinationFilter onSearch={handleSearch} />
       {showResultsSort && (
         <ResultsSort
+          resultCount={tours.length}
           selectedFilters={searchedCountries}
           onRemoveFilter={handleRemoveFilter}
+          onSort={handleSort}
         />
       )}
 
       <div className='px-[clamp(12px,2.5vw,48px)] pb-[80px] mt-9 xl:mt-[79px]'>
-        <GroupTourResults />
+        <GroupTourResults tours={tours} />
       </div>
     </main>
   )
