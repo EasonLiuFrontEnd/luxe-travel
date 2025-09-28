@@ -1,0 +1,77 @@
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/Carousel'
+import type { CarouselApi } from '@/components/ui/Carousel'
+import { mockTimeSlots } from '../config'
+import TimeSlotCard from './TimeSlotCard'
+import { useState, useEffect } from 'react'
+
+const DepartureDate = () => {
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>()
+  const [canScrollNext, setCanScrollNext] = useState(false)
+
+  useEffect(() => {
+    if (!carouselApi) return
+
+    const updateButtonState = () => {
+      setCanScrollNext(carouselApi.canScrollNext())
+    }
+
+    updateButtonState()
+    carouselApi.on('select', updateButtonState)
+
+    return () => {
+      if (carouselApi) {
+        carouselApi.off('select', updateButtonState)
+      }
+    }
+  }, [carouselApi])
+
+  const handleNext = () => carouselApi?.scrollNext()
+  return (
+    <div>
+      <div className="flex items-center mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" className="p-1 mr-2">
+          <path d="M13.0283 10.9922H0.984375V13.0372H8.97126V21.0155H10.9503V13.0372H13.0283V10.9922Z" fill="#926D3C" />
+          <path d="M8.97266 10.9923H21.0166V8.96283H13.0297V0.984497H11.0648V8.96283H8.97266V10.9923Z" fill="#926D3C" />
+        </svg>
+        <p className="font-noto-serif-body-l-semibold text-figma-secondary-950">出發日期</p>
+      </div>
+      <div className="p-7 rounded-2xl bg-figma-neutral-0">
+        <div className="flex items-center gap-x-4">
+          <div className="flex-1 relative min-w-0 overflow-hidden">
+            <Carousel
+              opts={{
+                slidesToScroll: 1,
+                containScroll: 'trimSnaps',
+                align: 'start'
+              }}
+              className="relative"
+              setApi={setCarouselApi}
+            >
+              <CarouselContent className="gap-x-3 -ml-0">
+                {mockTimeSlots.map((slot) => (
+                  <CarouselItem key={slot.id} className="basis-auto pl-0">
+                    <TimeSlotCard slot={slot} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              {canScrollNext && (
+                <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-figma-neutral-0 to-transparent pointer-events-none" />
+              )}
+            </Carousel>
+          </div>
+          <button
+            onClick={handleNext}
+            disabled={!canScrollNext}
+            className="group pt-3 px-4 pb-4 rounded-[41px] border border-figma-secondary-950 bg-figma-neutral-0 enabled:hover:bg-figma-secondary-950 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="6" viewBox="0 0 20 6" fill="none">
+              <path d="M0.8 4.33H0V5.67H0.8V5V4.33ZM16.8 5V5.67H19.746L17.205 4.425L16.8 5ZM0.8 5V5.67H16.8V5V4.33H0.8V5ZM16.8 5L17.205 4.425L9.019 0.425L8.614 1L8.209 1.575L16.395 5.575L16.8 5Z" fill="#926D3C" className="group-enabled:group-hover:fill-white" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default DepartureDate
