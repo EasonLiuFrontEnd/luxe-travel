@@ -100,14 +100,17 @@ const BannerCarousel = ({
         >
           即刻預約 · 輕鬆啟程
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="40"
-            height="14"
-            viewBox="0 0 40 14"
-            fill="none"
+            xmlns='http://www.w3.org/2000/svg'
+            width='40'
+            height='14'
+            viewBox='0 0 40 14'
+            fill='none'
             className='hidden xl:block transition-transform duration-300 origin-right group-hover:scale-x-[1.3] ml-[29px]'
           >
-            <path d="M39.088 13.3333H0.00714111V10.1666H27.4279L16.2549 3.61528L17.8568 0.884644L39.088 13.3333Z" fill="#926D3C" />
+            <path
+              d='M39.088 13.3333H0.00714111V10.1666H27.4279L16.2549 3.61528L17.8568 0.884644L39.088 13.3333Z'
+              fill='#926D3C'
+            />
           </svg>
           <svg
             xmlns='http://www.w3.org/2000/svg'

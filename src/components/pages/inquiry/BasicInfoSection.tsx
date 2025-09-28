@@ -34,8 +34,11 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
           name='basicInfo.travelType'
           render={({ field }) => (
             <FormItem className='w-full'>
-              <FormLabel className="font-noto-serif-body-l-semibold text-figma-primary-950">
-                旅遊形式 <span className='font-genseki-body-l-regular text-figma-function-alert'>*</span>
+              <FormLabel className='font-noto-serif-body-l-semibold text-figma-primary-950'>
+                旅遊形式{' '}
+                <span className='font-genseki-body-l-regular text-figma-function-alert'>
+                  *
+                </span>
               </FormLabel>
               <FormControl>
                 <RadioFieldGroup
@@ -53,7 +56,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
         <div className='w-full'>
           <div className='flex flex-wrap gap-0.5 items-center mb-2'>
             <div className='flex gap-1 items-center justify-start'>
-              <div className="font-noto-serif-body-l-semibold text-figma-primary-950">
+              <div className='font-noto-serif-body-l-semibold text-figma-primary-950'>
                 聯絡人
               </div>
               <div className='font-genseki-body-s-regular text-figma-function-alert'>
@@ -119,8 +122,11 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
             name='basicInfo.phoneNumber'
             render={({ field }) => (
               <FormItem className='w-full mb-6 xl:mb-0'>
-                <FormLabel className="font-noto-serif-body-l-semibold text-figma-primary-950 mb-2">
-                  手機號碼 <span className='font-genseki-body-l-regular text-figma-function-alert'>*</span>
+                <FormLabel className='font-noto-serif-body-l-semibold text-figma-primary-950 mb-2'>
+                  手機號碼{' '}
+                  <span className='font-genseki-body-l-regular text-figma-function-alert'>
+                    *
+                  </span>
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -143,7 +149,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
                 <FormLabel className='font-noto-serif-body-l-semibold text-figma-primary-950 mb-2'>
                   LINE ID
                   <span className='font-genseki-body-s-regular text-figma-primary-950'>
-                  （較建議，最方便專員聯繫討論）
+                    （較建議，最方便專員聯繫討論）
                   </span>
                 </FormLabel>
                 <FormControl>
@@ -163,7 +169,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
           name='basicInfo.contactMethod'
           render={({ field }) => (
             <FormItem className='w-full'>
-              <FormLabel className="font-noto-serif-body-l-semibold text-figma-primary-950 mb-2">
+              <FormLabel className='font-noto-serif-body-l-semibold text-figma-primary-950 mb-2'>
                 請選擇偏好的聯絡方式
               </FormLabel>
               <FormControl>
@@ -198,7 +204,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
             <FormItem className='w-full'>
               <div className='flex flex-wrap gap-0.5 items-center mb-2'>
                 <div className='flex gap-1 items-center'>
-                  <div className="font-noto-serif-body-l-semibold text-figma-primary-950">
+                  <div className='font-noto-serif-body-l-semibold text-figma-primary-950'>
                     聯絡時間
                   </div>
                   <div className='font-genseki-body-s-regular text-figma-function-alert'>
@@ -226,7 +232,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
           name='basicInfo.contactSource'
           render={({ field }) => (
             <FormItem className='w-full'>
-              <FormLabel className="font-noto-serif-body-l-semibold text-figma-primary-950 mb-2">
+              <FormLabel className='font-noto-serif-body-l-semibold text-figma-primary-950 mb-2'>
                 您是從何管道得知典藏旅遊？
               </FormLabel>
               <FormControl>

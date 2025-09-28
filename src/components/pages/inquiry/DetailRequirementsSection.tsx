@@ -25,7 +25,7 @@ export const DetailRequirementsSection = ({
         <div className='flex flex-col xl:flex-row gap-6 xl:items-end w-full'>
           <div className='flex flex-col gap-1'>
             <div className='flex gap-1 items-center mb-2'>
-              <div className="font-noto-serif-body-l-semibold text-figma-primary-950">
+              <div className='font-noto-serif-body-l-semibold text-figma-primary-950'>
                 預計人數
               </div>
               <div className='font-genseki-body-l-regular text-figma-function-alert'>
@@ -69,7 +69,7 @@ export const DetailRequirementsSection = ({
           </div>
           <div className='w-full xl:flex-1 flex flex-col gap-1 xl:min-w-0'>
             <div className='flex gap-1 items-center mb-2'>
-              <div className="font-noto-serif-body-l-semibold text-figma-primary-950">
+              <div className='font-noto-serif-body-l-semibold text-figma-primary-950'>
                 預計旅遊天數
               </div>
               <div className='font-genseki-body-l-regular text-figma-function-alert'>
@@ -96,7 +96,7 @@ export const DetailRequirementsSection = ({
           </div>
           <div className='w-full xl:flex-1 flex flex-col gap-1 xl:min-w-0'>
             <div className='flex gap-1 items-center mb-2'>
-              <div className="font-noto-serif-body-l-semibold text-figma-primary-950">
+              <div className='font-noto-serif-body-l-semibold text-figma-primary-950'>
                 預計出發日
               </div>
               <div className='font-genseki-body-l-regular text-figma-function-alert'>
@@ -155,7 +155,7 @@ export const DetailRequirementsSection = ({
           render={({ field }) => (
             <FormItem className='w-full'>
               <div className='flex gap-0.5 items-center mb-2'>
-                <FormLabel className="font-noto-serif-body-l-semibold text-figma-primary-950">
+                <FormLabel className='font-noto-serif-body-l-semibold text-figma-primary-950'>
                   心願清單
                 </FormLabel>
                 <span className='font-genseki-body-s-regular text-figma-primary-950'>
@@ -164,17 +164,17 @@ export const DetailRequirementsSection = ({
               </div>
               <FormControl>
                 <div className='flex gap-2.5 items-center px-0 py-3 w-full border-b border-[rgba(56,56,65,0.7)]'>
-                    <input
-                      placeholder='歡迎將需求告訴我們，典藏將竭誠為您服務'
-                      className='flex-1 bg-transparent border-none outline-none font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950 placeholder:text-figma-primary-300'
-                      maxLength={100}
-                      {...field}
-                    />
-                    <div className='flex gap-1.5 items-center shrink-0'>
-                      <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-300'>
-                        {field.value?.length || 0}/100
-                      </span>
-                    </div>
+                  <input
+                    placeholder='歡迎將需求告訴我們，典藏將竭誠為您服務'
+                    className='flex-1 bg-transparent border-none outline-none font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950 placeholder:text-figma-primary-300'
+                    maxLength={100}
+                    {...field}
+                  />
+                  <div className='flex gap-1.5 items-center shrink-0'>
+                    <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-300'>
+                      {field.value?.length || 0}/100
+                    </span>
+                  </div>
                 </div>
               </FormControl>
               <FormMessage />
@@ -187,7 +187,7 @@ export const DetailRequirementsSection = ({
           render={({ field }) => (
             <FormItem className='w-full'>
               <div className='flex gap-0.5 items-center mb-2'>
-                <FormLabel className="font-noto-serif-body-l-semibold text-figma-primary-950">
+                <FormLabel className='font-noto-serif-body-l-semibold text-figma-primary-950'>
                   其他特別需求
                 </FormLabel>
                 <span className='font-genseki-body-s-regular text-figma-primary-950'>
@@ -196,17 +196,17 @@ export const DetailRequirementsSection = ({
               </div>
               <FormControl>
                 <div className='flex gap-2.5 items-center px-0 py-3 w-full border-b border-[rgba(56,56,65,0.7)]'>
-                    <input
-                      placeholder='歡迎將需求告訴我們，典藏將竭誠為您服務'
-                      className='flex-1 bg-transparent border-none outline-none font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950 placeholder:text-figma-primary-300'
-                      maxLength={100}
-                      {...field}
-                    />
-                    <div className='flex gap-1.5 items-center shrink-0'>
-                      <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-300'>
-                        {field.value?.length || 0}/100
-                      </span>
-                    </div>
+                  <input
+                    placeholder='歡迎將需求告訴我們，典藏將竭誠為您服務'
+                    className='flex-1 bg-transparent border-none outline-none font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950 placeholder:text-figma-primary-300'
+                    maxLength={100}
+                    {...field}
+                  />
+                  <div className='flex gap-1.5 items-center shrink-0'>
+                    <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-300'>
+                      {field.value?.length || 0}/100
+                    </span>
+                  </div>
                 </div>
               </FormControl>
               <FormMessage />
@@ -232,8 +232,17 @@ export const DetailRequirementsSection = ({
         >
           <span>送出諮詢</span>
           <div className='h-1.5 w-5 shrink-0'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="9" viewBox="0 0 25 9" fill="none">
-              <path d="M1 6.33105H0V8.33105H1V7.33105V6.33105ZM21 7.33105V8.33105H24.6824L21.5058 6.46842L21 7.33105ZM1 7.33105V8.33105H21V7.33105V6.33105H1V7.33105ZM21 7.33105L21.5058 6.46842L11.2733 0.468416L10.7674 1.33105L10.2616 2.19369L20.4942 8.19369L21 7.33105Z" fill="#926D3C"/>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='25'
+              height='9'
+              viewBox='0 0 25 9'
+              fill='none'
+            >
+              <path
+                d='M1 6.33105H0V8.33105H1V7.33105V6.33105ZM21 7.33105V8.33105H24.6824L21.5058 6.46842L21 7.33105ZM1 7.33105V8.33105H21V7.33105V6.33105H1V7.33105ZM21 7.33105L21.5058 6.46842L11.2733 0.468416L10.7674 1.33105L10.2616 2.19369L20.4942 8.19369L21 7.33105Z'
+                fill='#926D3C'
+              />
             </svg>
           </div>
         </button>
