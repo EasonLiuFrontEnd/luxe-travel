@@ -6,6 +6,7 @@ import styles from './styles.module.css'
 import Banner from '@/components/pages/tour-content/Banner'
 import DepartureDate from '@/components/pages/tour-content/DepartureDate'
 import Flight from '@/components/pages/tour-content/Flight'
+import Registration from '@/components/pages/tour-content/Registration'
 
 const TourContentPage = () => {
   return (
@@ -67,6 +68,7 @@ const TourContentPage = () => {
             </div>
           </div>
         </div>
+        <Registration />
       </div>
     </div>
   )
