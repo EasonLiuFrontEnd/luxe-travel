@@ -28,6 +28,14 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
     order: 'asc'
   })
   const [tours, setTours] = useState<TTourData[]>([])
+  const [isUsingMockData, setIsUsingMockData] = useState(false)
+  const [bannerData, setBannerData] = useState<Array<{
+    id: string
+    namePrefix: string
+    name: string
+    summary: string
+    mainImageUrl: string
+  }>>([])
 
   const { query: searchQuery, mock: searchMock } = useProductsSearch(searchParams)
 
@@ -49,6 +57,8 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
     if (searchQuery.data && searchQuery.data.length > 0) {
       const convertedTours = searchQuery.data.map(convertProductToTourData)
       setTours(convertedTours)
+      setBannerData(searchQuery.data)
+      setIsUsingMockData(false)
     } else {
       const searchedCountryCodes = getCountryCodes(searchedCountryIds)
 
@@ -66,8 +76,12 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
         )
         const convertedTours = relevantMockData.map(convertProductToTourData)
         setTours(convertedTours)
+        setBannerData(relevantMockData)
+        setIsUsingMockData(true)
       } else {
         setTours([])
+        setBannerData([])
+        setIsUsingMockData(false)
       }
     }
   }, [searchQuery.data, searchedCountries, searchMock.data])
@@ -80,7 +94,7 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
     if (selectedCountries.length > 0) {
       const countryCodes = getCountryCodes(selectedCountries)
       const newSearchParams = {
-        destination: countryCodes[0],
+        destination: countryCodes.join(','),
         page: 1,
         limit: 10,
         sort: searchParams.sort || 'priceMin',
@@ -114,7 +128,7 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
         const countryCodes = getCountryCodes(remainingCountryIds)
         setSearchParams(prev => ({
           ...prev,
-          destination: countryCodes[0],
+          destination: countryCodes.join(','),
           page: 1
         }))
       } else {
@@ -141,7 +155,7 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
           精緻團體行
         </h1>
       </div>
-      <GroupToursBanner />
+      <GroupToursBanner tours={bannerData} />
       <DestinationFilter onSearch={handleSearch} />
       {showResultsSort && (
         <ResultsSort
@@ -149,6 +163,7 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
           selectedFilters={searchedCountries}
           onRemoveFilter={handleRemoveFilter}
           onSort={handleSort}
+          isUsingMockData={isUsingMockData}
         />
       )}
 

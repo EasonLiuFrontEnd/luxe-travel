@@ -15,7 +15,7 @@ type TGroupTourCardProps = TBaseComponent & {
   price: number
   tags: string[]
   dates: TTourDate[]
-  imageIndex?: number
+  mainImageUrl: string
   onDetailsClick?: () => void
 }
 
@@ -26,7 +26,7 @@ const GroupTourCard = ({
   price,
   tags,
   dates,
-  imageIndex = 1,
+  mainImageUrl,
   onDetailsClick,
   className,
 }: TGroupTourCardProps) => {
@@ -51,7 +51,7 @@ const GroupTourCard = ({
     }
   }
 
-  const imageUrl = `/group-tours/${imageIndex}.jpg`
+  const imageUrl = mainImageUrl
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   // 創建翻頁書頁面

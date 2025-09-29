@@ -8,13 +8,34 @@ import type { TBaseComponent } from '@/types'
 import { SLIDE_CONTENT } from '../config'
 import styles from './styles.module.css'
 
-type TGroupToursBannerProps = TBaseComponent
+type TGroupToursBannerProps = TBaseComponent & {
+  tours?: Array<{
+    id: string
+    namePrefix: string
+    name: string
+    summary: string
+    mainImageUrl: string
+  }>
+}
 
-const GroupToursBanner = ({ className }: TGroupToursBannerProps) => {
+const GroupToursBanner = ({ className, tours = [] }: TGroupToursBannerProps) => {
   const [currentSlide, setCurrentSlide] = useState(1)
-  const totalSlides = SLIDE_CONTENT.length
 
-  const currentContent = SLIDE_CONTENT[currentSlide - 1]
+  // 如果有 tours 資料就使用，否則使用靜態資料
+  const useApiData = tours.length > 0
+  const totalSlides = useApiData ? tours.length : SLIDE_CONTENT.length
+
+  const currentContent = useApiData
+    ? {
+        title: tours[currentSlide - 1]?.namePrefix || '',
+        subtitle: tours[currentSlide - 1]?.name || '',
+        description: tours[currentSlide - 1]?.summary || ''
+      }
+    : SLIDE_CONTENT[currentSlide - 1]
+
+  const currentImageUrl = useApiData
+    ? tours[currentSlide - 1]?.mainImageUrl
+    : undefined
 
   const handlePrevSlide = () => {
     setCurrentSlide((prev) => (prev > 1 ? prev - 1 : totalSlides))
@@ -51,7 +72,7 @@ const GroupToursBanner = ({ className }: TGroupToursBannerProps) => {
       <div className='xl:relative flex flex-col rounded-2xl xl:w-full xl:h-[670px]'>
         <div className='relative xl:absolute xl:inset-0 flex w-full h-[460px] xl:h-full'>
           <Image
-            src={`/group-tours/${currentSlide}.jpg`}
+            src={currentImageUrl || `/group-tours/${currentSlide}.jpg`}
             alt={`團體旅遊精選行程 ${currentSlide}`}
             width={1824}
             height={670}

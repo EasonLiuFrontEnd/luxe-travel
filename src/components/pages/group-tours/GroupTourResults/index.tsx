@@ -33,7 +33,7 @@ const GroupTourResults = ({
             price={tour.price}
             tags={tour.tags}
             dates={tour.dates}
-            imageIndex={tour.imageIndex}
+            mainImageUrl={tour.mainImageUrl!}
             onDetailsClick={() => handleDetailsClick(tour.id)}
           />
         ))}
