@@ -14,6 +14,24 @@ export type TProductSearchParams = {
   order?: 'asc' | 'desc'
 }
 
+export type TTour = {
+  id: string
+  productId: string
+  code: string
+  departDate: string
+  returnDate: string
+  adult: string
+  childWithBed: string
+  childNoBed: string
+  childExtraBed: string
+  infant: string
+  deposit: string
+  status: number
+  note: string | null
+  createdAt: string
+  updatedAt: string
+}
+
 export type TProduct = {
   id: string
   code: string
@@ -39,6 +57,7 @@ export type TProduct = {
   subCategoryId: string
   createdAt: string
   updatedAt: string
+  tour: TTour[]
 }
 
 export type TProductSearchResponse = {
@@ -108,7 +127,26 @@ export const productsSearchApiMock: TProductSearchResponse = {
       categoryId: '68b0375597cf77dce8590407',
       subCategoryId: '68d3abd7d9e9051454d7f91a',
       createdAt: '2025-09-25T09:41:43.998Z',
-      updatedAt: '2025-09-26T08:54:51.325Z'
+      updatedAt: '2025-09-26T08:54:51.325Z',
+      tour: [
+        {
+          "id": "68da22fb078dbf20c0acc92f",
+          "productId": "68d7e8e520c7e711cdd774e6",
+          "code": "123-20250929-01",
+          "departDate": "2025-09-29T06:10:59.016Z",
+          "returnDate": "2025-09-29T06:10:59.016Z",
+          "adult": "5000",
+          "childWithBed": "5000",
+          "childNoBed": "5000",
+          "childExtraBed": "5000",
+          "infant": "5000",
+          "deposit": "5000",
+          "status": 1,
+          "note": null,
+          "createdAt": "2025-09-29T06:11:07.583Z",
+          "updatedAt": "2025-09-29T06:11:07.583Z"
+        }
+      ],
     }
   ]
 }

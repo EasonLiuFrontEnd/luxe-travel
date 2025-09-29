@@ -42,7 +42,7 @@ export type TTourData = {
   price: number
   tags: string[]
   dates: TTourDate[]
-  imageIndex?: number
+  mainImageUrl?: string
 }
 
 // DestinationFilter 搜尋選項
@@ -208,14 +208,52 @@ export const convertProductToTourData = (product: {
   priceMin: number
   tags?: string[]
   days?: number
+  mainImageUrl?: string
+  tour?: Array<{
+    id: string
+    productId: string
+    code: string
+    departDate: string
+    returnDate: string
+    adult: string
+    childWithBed: string
+    childNoBed: string
+    childExtraBed: string
+    infant: string
+    deposit: string
+    status: number
+    note: string | null
+    createdAt: string
+    updatedAt: string
+  }>
 }): TTourData => {
-  const mockDates: TTourDate[] = [
-    { date: '9/9(日)', status: '已成團' },
-    { date: '9/12(三)', status: '熱銷中' },
-    { date: '9/19(二)', status: '已成團' },
-    { date: '10/8(四)', status: '已滿團' },
-    { date: '10/18(五)', status: '熱銷中' },
-  ]
+  const convertTourDates = (): TTourDate[] => {
+    if (product.tour && product.tour.length > 0) {
+      return product.tour.map(tour => {
+        const departDate = new Date(tour.departDate)
+        const month = departDate.getMonth() + 1
+        const day = departDate.getDate()
+        const weekdays = ['日', '一', '二', '三', '四', '五', '六']
+        const weekday = weekdays[departDate.getDay()]
+
+        const dateString = `${month}/${day}(${weekday})`
+
+        const status = tour.status === 1 ? '已成團' :
+                      tour.status === 2 ? '熱銷中' :
+                      tour.status === 3 ? '已滿團' : '熱銷中'
+
+        return { date: dateString, status }
+      })
+    }
+
+    return [
+      { date: '9/9(日)', status: '已成團' },
+      { date: '9/12(三)', status: '熱銷中' },
+      { date: '9/19(二)', status: '已成團' },
+      { date: '10/8(四)', status: '已滿團' },
+      { date: '10/18(五)', status: '熱銷中' },
+    ]
+  }
 
   return {
     id: product.id,
@@ -224,8 +262,8 @@ export const convertProductToTourData = (product: {
     description: product.summary || product.description || '',
     price: product.priceMin,
     tags: product.tags || [],
-    dates: mockDates,
-    imageIndex: Math.floor(Math.random() * 6) + 1,
+    dates: convertTourDates(),
+    mainImageUrl: product.mainImageUrl || '',
   }
 }
 
