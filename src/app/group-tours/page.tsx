@@ -28,7 +28,6 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
     order: 'asc'
   })
   const [tours, setTours] = useState<TTourData[]>([])
-  const [isUsingMockData, setIsUsingMockData] = useState(false)
   const [bannerData, setBannerData] = useState<Array<{
     id: string
     namePrefix: string
@@ -55,10 +54,10 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
     }
 
     if (searchQuery.data && searchQuery.data.length > 0) {
+      console.log('🔥 使用真實 API 資料:', searchQuery.data.length, '筆結果')
       const convertedTours = searchQuery.data.map(convertProductToTourData)
       setTours(convertedTours)
       setBannerData(searchQuery.data)
-      setIsUsingMockData(false)
     } else {
       const searchedCountryCodes = getCountryCodes(searchedCountryIds)
 
@@ -74,14 +73,14 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
             searchedCountryCodes.includes(mockCountryCode)
           )
         )
+        console.log('📋 使用測試資料 (API 無對應結果):', relevantMockData.length, '筆結果')
         const convertedTours = relevantMockData.map(convertProductToTourData)
         setTours(convertedTours)
         setBannerData(relevantMockData)
-        setIsUsingMockData(true)
       } else {
+        console.log('❌ 無搜尋結果 (API 和測試資料都沒有)')
         setTours([])
         setBannerData([])
-        setIsUsingMockData(false)
       }
     }
   }, [searchQuery.data, searchedCountries, searchMock.data])
@@ -163,7 +162,6 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
           selectedFilters={searchedCountries}
           onRemoveFilter={handleRemoveFilter}
           onSort={handleSort}
-          isUsingMockData={isUsingMockData}
         />
       )}
 
