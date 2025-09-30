@@ -126,4 +126,76 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
     patternTopOffset: '110px',
     margin: { left: '0px', right: '0px' },
   },
+  {
+    size: {
+      mobileClassName: 'w-[107.05px] h-[319.63px]',
+      web: { width: '136.38px', height: '383.63px' },
+    },
+    rotation: '-rotate-5',
+    patternTopOffset: '110px',
+    margin: { left: '18px', right: '8px' },
+  },
+  {
+    size: {
+      mobileClassName: 'w-[89.09px] h-[264.43px]',
+      web: { width: '115.28px', height: '328.43px' },
+    },
+    rotation: 'rotate-2',
+    patternTopOffset: '110px',
+    margin: { left: '15px', right: '6px' },
+  },
+  {
+    size: {
+      mobileClassName: 'w-[64px] h-[394px]',
+      web: { width: '80px', height: '458px' },
+    },
+    rotation: 'rotate-0',
+    patternTopOffset: '110px',
+    margin: { left: '0px', right: '0px' },
+  },
+  {
+    size: {
+      mobileClassName: 'w-[75.98px] h-[346.54px]',
+      web: { width: '94.19px', height: '410.54px' },
+    },
+    rotation: '-rotate-2',
+    patternTopOffset: '110px',
+    margin: { left: '8px', right: '8px' },
+  },
+  {
+    size: {
+      mobileClassName: 'w-[144px] h-[304px]',
+      web: { width: '200px', height: '368px' },
+    },
+    rotation: 'rotate-0',
+    patternTopOffset: '110px',
+    margin: { left: '0px', right: '0px' },
+  },
+  {
+    size: {
+      mobileClassName: 'w-[64px] h-[354px]',
+      web: { width: '80px', height: '418px' },
+    },
+    rotation: 'rotate-0',
+    patternTopOffset: '110px',
+    margin: { left: '0px', right: '0px' },
+  },
+  {
+    size: {
+      mobileClassName: 'w-[86.95px] h-[270.72px]',
+      web: { width: '108.37px', height: '334.72px' },
+    },
+    rotation: '-rotate-5',
+    patternTopOffset: '110px',
+    margin: { left: '15px', right: '15px' },
+  },
+  {
+    size: {
+      mobileClassName: 'w-[80px] h-[378px]',
+      web: { width: '104px', height: '442px' },
+    },
+    rotation: 'rotate-0',
+    patternTopOffset: '110px',
+    margin: { left: '0px', right: '0px' },
+  },
 ]
