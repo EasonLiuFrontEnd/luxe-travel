@@ -7,6 +7,7 @@ import Banner from '@/components/pages/tour-content/Banner'
 import DepartureDate from '@/components/pages/tour-content/DepartureDate'
 import Flight from '@/components/pages/tour-content/Flight'
 import Registration from '@/components/pages/tour-content/Registration'
+import Featured from '@/components/pages/tour-content/Featured'
 
 const TourContentPage = () => {
   return (
@@ -70,6 +71,7 @@ const TourContentPage = () => {
         </div>
         <Registration />
       </div>
+      <Featured />
     </div>
   )
 }
