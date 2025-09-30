@@ -13,7 +13,7 @@ const TourContentPage = () => {
     <div className='bg-figma-neutral-50'>
       <Banner />
       <div className='flex pb-7 px-9'>
-        <div className='box-content flex flex-col gap-y-5 py-3.5 px-7 w-[914px]'>
+        <div className='box-content flex flex-col gap-y-5 pt-3.5 px-7 pb-7 w-[914px]'>
           <DepartureDate />
           <Flight />
           <Image

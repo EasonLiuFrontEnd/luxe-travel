@@ -1,4 +1,6 @@
-import { mockTourData, formatNumber } from './config'
+import { mockTourData, formatNumber } from '../config'
+import { cn } from '@/lib/utils'
+import style from './styles.module.css'
 
 const Registration = () => {
   const depositDisplay = mockTourData.deposit === null
@@ -58,7 +60,14 @@ const Registration = () => {
     : mockTourData.infant === 0 ? 'text-figma-secondary-950' : 'text-figma-primary-950'
 
   return (
-    <div className='box-content w-[790px] h-[590px] flex flex-col gap-y-[30px] p-7 rounded-2xl bg-figma-neutral-0 font-genseki-h6-regular text-figma-primary-950'>
+    <div className='box-content w-[790px] h-[590px] sticky top-12 flex flex-col gap-y-[30px] p-7 mt-[49px] mb-7 rounded-2xl bg-figma-neutral-0 font-genseki-h6-regular text-figma-primary-950'>
+      <button className={cn('absolute top-0 right-0 pl-3 pb-3 rounded-bl-2xl bg-figma-neutral-50 cursor-pointer', style['concave-border'])}>
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="19.5" stroke="#926D3C"/>
+          <path d="M18 21.5C18.4295 22.0742 18.9774 22.5492 19.6066 22.893C20.2357 23.2367 20.9315 23.4411 21.6467 23.4924C22.3618 23.5436 23.0796 23.4404 23.7513 23.1898C24.4231 22.9392 25.0331 22.5471 25.54 22.04L28.54 19.04C29.4508 18.097 29.9548 16.834 29.9434 15.523C29.932 14.212 29.4061 12.958 28.4791 12.0309C27.5521 11.1039 26.298 10.578 24.987 10.5667C23.676 10.5553 22.413 11.0592 21.47 11.97L19.75 13.68" stroke="#926D3C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M22.0002 19.5C21.5707 18.9259 21.0228 18.4508 20.3936 18.107C19.7645 17.7633 19.0687 17.5589 18.3535 17.5076C17.6384 17.4564 16.9206 17.5596 16.2489 17.8102C15.5771 18.0608 14.9671 18.4529 14.4602 18.96L11.4602 21.96C10.5494 22.903 10.0454 24.166 10.0568 25.477C10.0682 26.788 10.5941 28.042 11.5211 28.9691C12.4481 29.8961 13.7022 30.422 15.0132 30.4334C16.3242 30.4447 17.5872 29.9408 18.5302 29.03L20.2402 27.32" stroke="#926D3C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
       <div className='flex gap-x-7'>
         <div className="min-w-[328px] mr-[50px]">
           <div className='flex justify-between'>
