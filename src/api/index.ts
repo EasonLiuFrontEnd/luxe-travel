@@ -8,6 +8,7 @@ export {
 
 export {
   useProductsSearch,
+  useProductCountries,
 } from './group-tours'
 
 export type {
@@ -29,6 +30,9 @@ export type {
   TProduct,
   TProductSearchParams,
   TProductSearchResponse,
+  TCountryData,
+  TRegionData,
+  TCountriesResponse,
 } from './group-tours'
 
 export { default as apiClient } from './client'

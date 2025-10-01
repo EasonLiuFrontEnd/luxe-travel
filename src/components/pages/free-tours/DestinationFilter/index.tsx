@@ -1,13 +1,14 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import SearchIcon from '@/components/shared/icons/header/SearchIcon'
 import DropdownArrowIcon from './icons/DropdownArrowIcon'
 import ClearIcon from './icons/ClearIcon'
 import CheckIcon from './icons/CheckIcon'
 import type { TBaseComponent } from '@/types'
-import { REGIONS } from '../config'
 import { useClickOutside } from '@/hooks/useClickOutside'
+import { useProductCountries } from '@/api/free-tours'
+import type { TRegionData } from '@/api/free-tours'
 import styles from './styles.module.css'
 
 type TDestinationFilterProps = TBaseComponent & {
@@ -22,9 +23,20 @@ const DestinationFilter = ({
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null)
   const [selectedCountries, setSelectedCountries] = useState<string[]>([])
   const [budgetRange, setBudgetRange] = useState<[number, number]>([80000, 600000])
-  const [selectedDaysRange, setSelectedDaysRange] = useState<string | null>(null)
+  const [selectedDaysRange, setSelectedDaysRange] = useState<string | null>('不限天數')
+  const [regions, setRegions] = useState<TRegionData[]>([])
 
+  const { query: countriesQuery, mock: countriesMock } = useProductCountries()
   const daysRangeOptions = ['6-10天', '11-15天', '16-20天', '21-25天', '不限天數']
+
+  useEffect(() => {
+    if (countriesQuery.isSuccess) {
+      const dataSource = countriesQuery.data && countriesQuery.data.length > 0
+        ? countriesQuery.data
+        : (countriesMock.data || [])
+      setRegions(dataSource)
+    }
+  }, [countriesQuery.isSuccess, countriesQuery.data, countriesMock.data])
 
   const handleCloseDropdown = useCallback(() => {
     setIsOpen(false)
@@ -53,10 +65,10 @@ const DestinationFilter = ({
     if (selectedCountries.length === 0) return '國家'
 
     const countryNames = selectedCountries
-      .map((countryId) => {
-        for (const region of REGIONS) {
-          const country = region.countries.find((c) => c.id === countryId)
-          if (country) return country.name
+      .map((countryCode) => {
+        for (const region of regions) {
+          const country = region.countries.find((c) => c.code === countryCode)
+          if (country) return country.nameZh
         }
         return ''
       })
@@ -68,12 +80,12 @@ const DestinationFilter = ({
     )
   }
 
-  const hasSelectedCountriesInRegion = (regionId: string) => {
-    const region = REGIONS.find((r) => r.id === regionId)
+  const hasSelectedCountriesInRegion = (regionName: string) => {
+    const region = regions.find((r) => r.region === regionName)
     if (!region) return false
 
     return region.countries.some((country) =>
-      selectedCountries.includes(country.id)
+      selectedCountries.includes(country.code)
     )
   }
 
@@ -137,23 +149,23 @@ const DestinationFilter = ({
                   <div className='absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 z-50 max-h-96 overflow-y-auto w-full max-w-[240px]'>
                     <div>
                       {!selectedRegion
-                        ? REGIONS.map((region) => {
-                            const hasSelected = hasSelectedCountriesInRegion(region.id)
+                        ? regions.map((region) => {
+                            const hasSelected = hasSelectedCountriesInRegion(region.region)
                             return (
                               <button
-                                key={region.id}
-                                onClick={() => handleRegionSelect(region.id)}
+                                key={region.region}
+                                onClick={() => handleRegionSelect(region.region)}
                                 className={`w-full text-left py-3 px-4 hover:bg-gray-50 rounded font-family-noto-serif font-semibold text-base cursor-pointer ${
                                   hasSelected ? 'text-figma-secondary-950' : 'text-figma-neutral-300'
                                 }`}
                               >
-                                {region.name}
+                                {region.region}
                               </button>
                             )
                           })
                         : (() => {
-                            const currentRegion = REGIONS.find(
-                              (r) => r.id === selectedRegion,
+                            const currentRegion = regions.find(
+                              (r) => r.region === selectedRegion,
                             )
                             if (!currentRegion) return null
 
@@ -167,22 +179,22 @@ const DestinationFilter = ({
                                     <ClearIcon color='var(--color-figma-secondary-100)' />
                                   </div>
                                   <span className='font-family-noto-serif font-semibold text-base text-figma-secondary-950'>
-                                    {currentRegion.name}
+                                    {currentRegion.region}
                                   </span>
                                 </button>
 
                                 <div>
                                   {currentRegion.countries.map((country) => (
                                     <button
-                                      key={country.id}
+                                      key={country.code}
                                       onClick={() =>
-                                        handleCountryToggle(country.id)
+                                        handleCountryToggle(country.code)
                                       }
                                       className='flex items-center gap-4 w-full text-left py-3 px-7 hover:bg-gray-50 rounded cursor-pointer'
                                     >
                                       <div className='w-5 h-5 flex items-center justify-center'>
                                         {selectedCountries.includes(
-                                          country.id,
+                                          country.code,
                                         ) ? (
                                           <CheckIcon />
                                         ) : (
@@ -190,7 +202,7 @@ const DestinationFilter = ({
                                         )}
                                       </div>
                                       <span className='font-family-noto-serif font-semibold text-base text-figma-neutral-300'>
-                                        {country.name}
+                                        {country.nameZh}
                                       </span>
                                     </button>
                                   ))}

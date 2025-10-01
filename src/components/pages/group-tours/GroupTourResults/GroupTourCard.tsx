@@ -174,7 +174,7 @@ const GroupTourCard = ({
         <div className='relative flex flex-1 min-w-0'>
           <div className='hidden xl:block absolute bg-figma-secondary-500 bottom-0 right-0 transition-all duration-300 group-hover:-translate-x-[40px] group-hover:-translate-y-[36px] h-full w-full' />
 
-          <div className='xl:bg-white flex flex-col justify-between min-w-0 relative xl:gap-7 xl:pl-8 xl:pr-5 xl:py-5 transition-all duration-300'>
+          <div className='xl:bg-white flex flex-col justify-between w-full min-w-0 relative xl:gap-7 xl:pl-8 xl:pr-5 xl:py-5 transition-all duration-300'>
             <div className='flex flex-col xl:gap-3 w-full'>
               <div className='flex items-end xl:items-start xl:justify-between w-full'>
                 {/* 手機版書本 */}

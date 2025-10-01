@@ -167,7 +167,7 @@ export const productsSearchApiMock: TProductSearchResponse = {
       arriveCountry: "BE",
       arriveCity: "BRU",
       arriveAirport: "BRU",
-      category: "GROUP",
+      category: "FREE",
       priceMin: 158000,
       priceMax: 178000,
       tags: [
@@ -188,25 +188,7 @@ export const productsSearchApiMock: TProductSearchResponse = {
       feedback: null,
       createdAt: "2025-09-30T06:34:15.998Z",
       updatedAt: "2025-10-01T04:15:27.824Z",
-      tour: [
-        {
-          id: "68dbd8e75c47feee260fdb9f",
-          productId: "68d7e47e087da9aeb1dad29b",
-          code: "LLWCX1550927CDG-20250927-01",
-          departDate: "2025-09-27T13:20:42.820Z",
-          returnDate: "2025-10-11T13:20:42.820Z",
-          adult: "2000",
-          childWithBed: "2000",
-          childNoBed: "2000",
-          childExtraBed: "NIL",
-          infant: "2000",
-          deposit: "2000",
-          status: 4,
-          note: null,
-          createdAt: "2025-09-30T13:19:35.975Z",
-          updatedAt: "2025-09-30T13:19:35.975Z"
-        },
-      ],
+      tour: [],
       flights: [
         {
           id: "68db7b59eca955c01cedb52d",
@@ -253,7 +235,7 @@ export const productsSearchApiMock: TProductSearchResponse = {
 
 export const useProductsSearch = (params: TProductSearchParams): TUseHomeQueryResult<TProduct[], TProductSearchResponse> => {
   const query = useQuery<TProduct[], AxiosError<TApiResponse<TProduct[]>>>({
-    queryKey: ['products-search', params],
+    queryKey: ['free-tours-products-search', params],
     queryFn: () => fetchProductsSearch(params),
     enabled: true,
   })
