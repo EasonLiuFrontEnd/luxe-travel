@@ -39,6 +39,7 @@ export type TTravelerReview = {
 
 export type TTourData = {
   id: string
+  isFeatured: boolean
   title: string
   subtitle: string
   description: string
@@ -99,9 +100,6 @@ export const SLIDE_CONTENT: TSlideContent[] = [
 export const SORT_OPTIONS = [
   '價格（低到高）',
   '價格（高到低）',
-  '評價（低到高）',
-  '評價（高到低）',
-  '離市中心遠近',
 ]
 
 export const TOTAL_SLIDES = 1
@@ -116,26 +114,32 @@ export const getCountryById = (countryId: string): TCountry | null => {
   return null
 }
 
-export const getCountryCodes = (countryIds: string[]): string[] => {
-  return countryIds
-    .map((countryId) => {
-      const country = getCountryById(countryId)
-      return country?.code
-    })
-    .filter(Boolean) as string[]
+export const getCountryCodes = (countryCodes: string[]): string[] => {
+  return countryCodes
 }
 
 export const convertCountriesToFilters = (
   selectedCountries: string[],
+  regionsData?: Array<{ region: string; countries: Array<{ code: string; nameZh: string }> }>
 ): TFilter[] => {
+  if (!regionsData || regionsData.length === 0) {
+    return selectedCountries.map((code) => ({
+      id: code,
+      label: code,
+      type: 'country' as const
+    }))
+  }
+
   return selectedCountries
-    .map((countryId) => {
-      const country = getCountryById(countryId)
-      if (country) {
-        return {
-          id: countryId,
-          label: country.name,
-          type: 'country' as const,
+    .map((countryCode) => {
+      for (const region of regionsData) {
+        const country = region.countries.find((c) => c.code === countryCode)
+        if (country) {
+          return {
+            id: countryCode,
+            label: country.nameZh,
+            type: 'country' as const,
+          }
         }
       }
       return null
@@ -143,38 +147,44 @@ export const convertCountriesToFilters = (
     .filter(Boolean) as TFilter[]
 }
 
-export const mockTours: TTourData[] = [
-  {
-    id: '1',
-    title: '限量甄藏！春日雙慶典 荷比自由行12天',
-    subtitle: '荷蘭．比利時',
-    description:
-      '限量兩團，手刀快搶！一年僅此一天的【荷蘭國王節】、聞名全球的【庫肯霍夫鬱金香花季】、雙國經典城鎮自由探索，荷蘭與比利時豐富多元的人文美景一次典藏！',
-    price: 88000,
-    days: 12,
-    tags: [
-      '自由行',
-      '荷蘭國王節',
-      '庫肯霍夫鬱金香花季',
-      '經典城鎮',
-      '雙國探索',
-    ],
-    dates: [
-      { date: '9/9(日)', status: '已成團' },
-      { date: '9/12(三)', status: '熱銷中' },
-      { date: '9/19(二)', status: '已成團' },
-      { date: '10/8(四)', status: '已滿團' },
-      { date: '10/18(五)', status: '熱銷中' },
-      { date: '10/21(一)', status: '熱銷中' },
-      { date: '10/28(日)', status: '已成團' },
-      { date: '10/30(日)', status: '已成團' },
-    ],
-    countries: ['netherlands', 'belgium'],
-    mainImageUrl: '/free-tours/1.jpg',
-    travelerReview: {
-      author: 'MAVIS小夫妻',
-      avatarUrl: '/free-tours/avatar-placeholder.jpg',
-    },
-    note: '備註：此案例為參考範本，可依實際行程調整需求',
-  },
-]
+export const convertProductToTourData = (product: {
+  id: string
+  name: string
+  namePrefix?: string
+  summary?: string
+  description?: string
+  priceMin: number
+  tags?: string[]
+  days?: number
+  mainImageUrl?: string
+  feedback?: string | null
+}): TTourData => {
+  const parseFeedback = (): TTravelerReview | undefined => {
+    if (!product.feedback) return undefined
+
+    try {
+      const feedbackData = JSON.parse(product.feedback)
+      return {
+        author: feedbackData.author || '',
+        avatarUrl: feedbackData.avatarUrl || '',
+      }
+    } catch {
+      return undefined
+    }
+  }
+
+  return {
+    id: product.id,
+    isFeatured: false,
+    title: product.name,
+    subtitle: product.namePrefix || '',
+    description: product.summary || product.description || '',
+    price: product.priceMin,
+    days: product.days,
+    tags: product.tags || [],
+    dates: [],
+    mainImageUrl: product.mainImageUrl || '',
+    countries: [],
+    travelerReview: parseFeedback(),
+  }
+}

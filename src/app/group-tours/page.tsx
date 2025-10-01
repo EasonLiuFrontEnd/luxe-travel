@@ -8,116 +8,83 @@ import GroupTourResults from '@/components/pages/group-tours/GroupTourResults'
 import {
   convertCountriesToFilters,
   getCountryCodes,
-  convertSortOption,
   convertProductToTourData,
   type TTourData,
   type TSelectedFilters
 } from '@/components/pages/group-tours/config'
-import { useProductsSearch, type TProductSearchParams } from '@/api'
+import { useProductsSearch, useProductCountries, type TProductSearchParams, type TProduct } from '@/api'
 import type { TBaseComponent } from '@/types'
 
 type TGroupToursPageProps = TBaseComponent
 
+const sortProducts = (products: TProduct[]): TProduct[] => {
+  return [...products].sort((a, b) => {
+    if (a.isFeatured && !b.isFeatured) return -1
+    if (!a.isFeatured && b.isFeatured) return 1
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  })
+}
+
 const GroupToursPage = ({ className }: TGroupToursPageProps) => {
   const [searchedCountries, setSearchedCountries] = useState<TSelectedFilters>([])
-  const [showResultsSort, setShowResultsSort] = useState(false)
   const [searchParams, setSearchParams] = useState<TProductSearchParams>({
+    category: 'GROUP',
     page: 1,
-    limit: 10,
-    sort: 'priceMin',
-    order: 'asc'
+    limit: 100,
+    sort: 'createdAt',
+    order: 'desc'
   })
   const [tours, setTours] = useState<TTourData[]>([])
-  const [bannerData, setBannerData] = useState<Array<{
-    id: string
-    namePrefix: string
-    name: string
-    summary: string
-    mainImageUrl: string
-  }>>([])
+  const [hasSearched, setHasSearched] = useState(false)
 
   const { query: searchQuery, mock: searchMock } = useProductsSearch(searchParams)
+  const { query: countriesQuery, mock: countriesMock } = useProductCountries()
+
+  const regionsData = countriesQuery.data || countriesMock.data || []
 
   useEffect(() => {
-    if (searchedCountries.length === 0) {
-      setTours([])
-      return
-    }
+    if (searchQuery.isSuccess) {
+      const dataSource = searchQuery.data && searchQuery.data.length > 0
+        ? searchQuery.data
+        : (searchMock.data || [])
 
-    const searchedCountryIds = searchedCountries
-      .filter(f => f.type === 'country')
-      .map(f => f.id)
-
-    if (searchedCountryIds.length === 0) {
-      setTours([])
-      return
-    }
-
-    if (searchQuery.data && searchQuery.data.length > 0) {
-      console.log('🔥 使用真實 API 資料:', searchQuery.data.length, '筆結果')
-      const convertedTours = searchQuery.data.map(convertProductToTourData)
-      setTours(convertedTours)
-      setBannerData(searchQuery.data)
-    } else {
-      const searchedCountryCodes = getCountryCodes(searchedCountryIds)
-
-      const mockDataMatches = searchMock.data?.some(mockProduct => {
-        return mockProduct.countries.some(mockCountryCode =>
-          searchedCountryCodes.includes(mockCountryCode)
-        )
-      })
-
-      if (mockDataMatches && searchMock.data) {
-        const relevantMockData = searchMock.data.filter(mockProduct =>
-          mockProduct.countries.some(mockCountryCode =>
-            searchedCountryCodes.includes(mockCountryCode)
-          )
-        )
-        console.log('📋 使用測試資料 (API 無對應結果):', relevantMockData.length, '筆結果')
-        const convertedTours = relevantMockData.map(convertProductToTourData)
+      if (dataSource.length > 0) {
+        const sortedProducts = sortProducts(dataSource)
+        const convertedTours = sortedProducts.map(convertProductToTourData)
         setTours(convertedTours)
-        setBannerData(relevantMockData)
-      } else {
-        console.log('❌ 無搜尋結果 (API 和測試資料都沒有)')
-        setTours([])
-        setBannerData([])
       }
     }
-  }, [searchQuery.data, searchedCountries, searchMock.data])
+  }, [searchQuery.isSuccess, searchQuery.data, searchMock.data])
 
   const handleSearch = useCallback((selectedCountries: string[]) => {
-    const countryFilters = convertCountriesToFilters(selectedCountries)
+    const countryFilters = convertCountriesToFilters(selectedCountries, regionsData)
     setSearchedCountries(countryFilters)
-    setShowResultsSort(true)
+    setHasSearched(true)
+
+    const newParams: TProductSearchParams = {
+      category: 'GROUP',
+      page: 1,
+      limit: 100,
+      sort: 'priceMin',
+      order: 'asc'
+    }
 
     if (selectedCountries.length > 0) {
       const countryCodes = getCountryCodes(selectedCountries)
-      const newSearchParams = {
-        destination: countryCodes.join(','),
-        page: 1,
-        limit: 10,
-        sort: searchParams.sort || 'priceMin',
-        order: searchParams.order || 'asc'
-      }
-      setSearchParams(newSearchParams)
-    } else {
-      setTours([])
-      setShowResultsSort(false)
+      newParams.destination = countryCodes.join(',')
     }
-  }, [searchParams.sort, searchParams.order])
+
+    setSearchParams(newParams)
+  }, [regionsData])
 
   const handleRemoveFilter = useCallback((filterId: string) => {
     const updatedFilters = searchedCountries.filter((filter) => filter.id !== filterId)
     setSearchedCountries(updatedFilters)
 
+    const newParams: TProductSearchParams = { ...searchParams }
+
     if (updatedFilters.length === 0) {
-      setSearchParams(prev => ({
-        ...prev,
-        destination: undefined,
-        page: 1
-      }))
-      setTours([])
-      setShowResultsSort(false)
+      delete newParams.destination
     } else {
       const remainingCountryIds = updatedFilters
         .filter(f => f.type === 'country')
@@ -125,27 +92,34 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
 
       if (remainingCountryIds.length > 0) {
         const countryCodes = getCountryCodes(remainingCountryIds)
-        setSearchParams(prev => ({
-          ...prev,
-          destination: countryCodes.join(','),
-          page: 1
-        }))
+        newParams.destination = countryCodes.join(',')
       } else {
-        setTours([])
-        setShowResultsSort(false)
+        delete newParams.destination
       }
     }
-  }, [searchedCountries])
+
+    setSearchParams(newParams)
+  }, [searchedCountries, searchParams])
 
   const handleSort = useCallback((sortOption: string) => {
-    const { sort, order } = convertSortOption(sortOption)
-    setSearchParams(prev => ({
-      ...prev,
-      sort,
-      order,
-      page: 1
-    }))
-  }, [])
+    const newParams: TProductSearchParams = { ...searchParams }
+
+    switch (sortOption) {
+      case '價格（低到高）':
+        newParams.sort = 'priceMin'
+        newParams.order = 'asc'
+        break
+      case '價格（高到低）':
+        newParams.sort = 'priceMin'
+        newParams.order = 'desc'
+        break
+      default:
+        newParams.sort = 'priceMin'
+        newParams.order = 'asc'
+    }
+
+    setSearchParams(newParams)
+  }, [searchParams])
 
   return (
     <main className={`min-h-screen bg-figma-neutral-50 ${className || ''}`}>
@@ -154,16 +128,15 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
           精緻團體行
         </h1>
       </div>
-      <GroupToursBanner tours={bannerData} />
+      <GroupToursBanner tours={searchQuery.data || []} isLoading={searchQuery.isLoading} />
       <DestinationFilter onSearch={handleSearch} />
-      {showResultsSort && (
-        <ResultsSort
-          resultCount={tours.length}
-          selectedFilters={searchedCountries}
-          onRemoveFilter={handleRemoveFilter}
-          onSort={handleSort}
-        />
-      )}
+      <ResultsSort
+        resultCount={tours.length}
+        selectedFilters={searchedCountries}
+        onRemoveFilter={handleRemoveFilter}
+        onSort={handleSort}
+        hasSearched={hasSearched}
+      />
 
       <div className='px-[clamp(12px,2.5vw,48px)] pb-[80px] mt-9 xl:mt-[79px]'>
         <GroupTourResults tours={tours} />

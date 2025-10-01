@@ -16,13 +16,13 @@ type TGroupToursBannerProps = TBaseComponent & {
     summary: string
     mainImageUrl: string
   }>
+  isLoading?: boolean
 }
 
-const GroupToursBanner = ({ className, tours = [] }: TGroupToursBannerProps) => {
+const GroupToursBanner = ({ className, tours = [], isLoading = false }: TGroupToursBannerProps) => {
   const [currentSlide, setCurrentSlide] = useState(1)
 
-  // 如果有 tours 資料就使用，否則使用靜態資料
-  const useApiData = tours.length > 0
+  const useApiData = !isLoading && tours.length > 0
   const totalSlides = useApiData ? tours.length : SLIDE_CONTENT.length
 
   const currentContent = useApiData
@@ -31,7 +31,7 @@ const GroupToursBanner = ({ className, tours = [] }: TGroupToursBannerProps) => 
         subtitle: tours[currentSlide - 1]?.name || '',
         description: tours[currentSlide - 1]?.summary || ''
       }
-    : SLIDE_CONTENT[currentSlide - 1]
+    : !isLoading ? SLIDE_CONTENT[currentSlide - 1] : { title: '', subtitle: '', description: '' }
 
   const currentImageUrl = useApiData
     ? tours[currentSlide - 1]?.mainImageUrl
@@ -62,7 +62,7 @@ const GroupToursBanner = ({ className, tours = [] }: TGroupToursBannerProps) => 
           <h2 className='font-noto-serif-tc font-bold text-[32px] xl:text-[64px] leading-[1.2] text-figma-secondary-500 whitespace-nowrap transition-all duration-500'>
             {currentContent.title}
           </h2>
-          <div className='hidden xl:block h-px xl:w-[120px] bg-figma-secondary-500'></div>
+          {!isLoading && <div className='hidden xl:block h-px xl:w-[120px] bg-figma-secondary-500'></div>}
           <h3 className='font-noto-serif-tc font-bold text-[16px] xl:text-[40px] leading-[1.2] text-figma-primary-500 whitespace-nowrap transition-all duration-500'>
             {currentContent.subtitle}
           </h3>
@@ -71,53 +71,57 @@ const GroupToursBanner = ({ className, tours = [] }: TGroupToursBannerProps) => 
 
       <div className='xl:relative flex flex-col rounded-2xl xl:w-full xl:h-[670px]'>
         <div className='relative xl:absolute xl:inset-0 flex w-full h-[460px] xl:h-full'>
-          <Image
-            src={currentImageUrl || `/group-tours/${currentSlide}.jpg`}
-            alt={`團體旅遊精選行程 ${currentSlide}`}
-            width={1824}
-            height={670}
-            className='object-cover transition-opacity duration-500 w-full h-full rounded-2xl'
-            priority={currentSlide === 1}
-          />
+          {!isLoading && (
+            <Image
+              src={currentImageUrl || `/group-tours/${currentSlide}.jpg`}
+              alt={`團體旅遊精選行程 ${currentSlide}`}
+              width={1824}
+              height={670}
+              className='object-cover transition-opacity duration-500 w-full h-full rounded-2xl'
+              priority={currentSlide === 1}
+            />
+          )}
 
-          <div className={styles.controls}>
-            <div
-              className={cn(
-                'pr-[5px] pl-[10px] pb-[9px] pt-[13px] xl:px-0 xl:py-0 flex items-center gap-[6px]',
-                styles.controlsContainer,
-              )}
-            >
-              <button
-                onClick={handlePrevSlide}
+          {!isLoading && (
+            <div className={styles.controls}>
+              <div
                 className={cn(
-                  'w-[32px] h-[32px] rounded-full cursor-pointer',
-                  'flex items-center justify-center',
-                  'bg-figma-secondary-300 hover:bg-figma-secondary-500 text-figma-neutral-0 transition-colors',
+                  'pr-[5px] pl-[10px] pb-[9px] pt-[13px] xl:px-0 xl:py-0 flex items-center gap-[6px]',
+                  styles.controlsContainer,
                 )}
-                aria-label='Previous slide'
               >
-                <ChevronLeft className='w-6 h-6' />
-              </button>
+                <button
+                  onClick={handlePrevSlide}
+                  className={cn(
+                    'w-[32px] h-[32px] rounded-full cursor-pointer',
+                    'flex items-center justify-center',
+                    'bg-figma-secondary-300 hover:bg-figma-secondary-500 text-figma-neutral-0 transition-colors',
+                  )}
+                  aria-label='Previous slide'
+                >
+                  <ChevronLeft className='w-6 h-6' />
+                </button>
 
-              <div className={styles.slideCounter}>
-                <span>{currentSlide.toString().padStart(2, '0')}</span>
-                <span>/</span>
-                <span>{totalSlides.toString().padStart(2, '0')}</span>
+                <div className={styles.slideCounter}>
+                  <span>{currentSlide.toString().padStart(2, '0')}</span>
+                  <span>/</span>
+                  <span>{totalSlides.toString().padStart(2, '0')}</span>
+                </div>
+
+                <button
+                  onClick={handleNextSlide}
+                  className={cn(
+                    'w-[32px] h-[32px] rounded-full cursor-pointer',
+                    'flex items-center justify-center',
+                    'bg-figma-secondary-300 hover:bg-figma-secondary-500 text-figma-neutral-0 transition-colors',
+                  )}
+                  aria-label='Next slide'
+                >
+                  <ChevronRight className='w-6 h-6' />
+                </button>
               </div>
-
-              <button
-                onClick={handleNextSlide}
-                className={cn(
-                  'w-[32px] h-[32px] rounded-full cursor-pointer',
-                  'flex items-center justify-center',
-                  'bg-figma-secondary-300 hover:bg-figma-secondary-500 text-figma-neutral-0 transition-colors',
-                )}
-                aria-label='Next slide'
-              >
-                <ChevronRight className='w-6 h-6' />
-              </button>
             </div>
-          </div>
+          )}
         </div>
 
         <div className='xl:absolute xl:bottom-0 xl:right-0 xl:rounded-tl-2xl xl:bg-figma-neutral-50'>

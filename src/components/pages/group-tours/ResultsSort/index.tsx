@@ -13,6 +13,7 @@ type TSearchResultsProps = TBaseComponent & {
   selectedFilters?: TSelectedFilters
   onRemoveFilter?: (filterId: string) => void
   onSort?: (sortOption: string) => void
+  hasSearched?: boolean
 }
 
 const SearchResults = ({
@@ -21,6 +22,7 @@ const SearchResults = ({
   selectedFilters = [],
   onRemoveFilter,
   onSort,
+  hasSearched = false,
 }: TSearchResultsProps) => {
   const [sortOption, setSortOption] = useState('價格（低到高）')
   const [showSortDropdown, setShowSortDropdown] = useState(false)
@@ -45,6 +47,10 @@ const SearchResults = ({
     if (sortOption.includes('低到高')) return 'asc'
     if (sortOption.includes('高到低')) return 'desc'
     return 'none'
+  }
+
+  if (!hasSearched) {
+    return null
   }
 
   return (

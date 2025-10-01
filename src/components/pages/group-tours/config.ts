@@ -91,39 +91,11 @@ export const SLIDE_CONTENT: TSlideContent[] = [
   },
 ]
 
-// 排序選項
 export const SORT_OPTIONS = [
   '價格（低到高）',
   '價格（高到低）',
-  '評價（低到高）',
-  '評價（高到低）',
-  '離市中心遠近',
 ]
 
-export const convertSortOption = (sortOption: string): { sort: string; order: 'asc' | 'desc' } => {
-  switch (sortOption) {
-    case '價格（低到高）':
-      return { sort: 'priceMin', order: 'asc' }
-    case '價格（高到低）':
-      return { sort: 'priceMin', order: 'desc' }
-    case '評價（低到高）':
-      // TODO: 後端缺少評價欄位，暫時用建立時間替代（最舊的優先）
-      // 等待後端提供 rating 或 reviewScore 欄位
-      return { sort: 'createdAt', order: 'asc' }
-    case '評價（高到低）':
-      // TODO: 後端缺少評價欄位，暫時用建立時間替代（最新的優先）
-      // 等待後端提供 rating 或 reviewScore 欄位
-      return { sort: 'createdAt', order: 'desc' }
-    case '離市中心遠近':
-      // TODO: 後端缺少地理位置欄位，暫時用最高價格替代
-      // 等待後端提供 distanceToCenter 欄位
-      return { sort: 'priceMax', order: 'asc' }
-    default:
-      return { sort: 'priceMin', order: 'asc' }
-  }
-}
-
-// 常數
 export const TOTAL_SLIDES = 6
 
 // 工具函數
@@ -137,26 +109,32 @@ export const getCountryById = (countryId: string): TCountry | null => {
   return null
 }
 
-export const getCountryCodes = (countryIds: string[]): string[] => {
-  return countryIds
-    .map((countryId) => {
-      const country = getCountryById(countryId)
-      return country?.code
-    })
-    .filter(Boolean) as string[]
+export const getCountryCodes = (countryCodes: string[]): string[] => {
+  return countryCodes
 }
 
 export const convertCountriesToFilters = (
   selectedCountries: string[],
+  regionsData?: Array<{ region: string; countries: Array<{ code: string; nameZh: string }> }>
 ): TFilter[] => {
+  if (!regionsData || regionsData.length === 0) {
+    return selectedCountries.map((code) => ({
+      id: code,
+      label: code,
+      type: 'country' as const
+    }))
+  }
+
   return selectedCountries
-    .map((countryId) => {
-      const country = getCountryById(countryId)
-      if (country) {
-        return {
-          id: countryId,
-          label: country.name,
-          type: 'country' as const,
+    .map((countryCode) => {
+      for (const region of regionsData) {
+        const country = region.countries.find((c) => c.code === countryCode)
+        if (country) {
+          return {
+            id: countryCode,
+            label: country.nameZh,
+            type: 'country' as const,
+          }
         }
       }
       return null
@@ -211,13 +189,7 @@ export const convertProductToTourData = (product: {
       })
     }
 
-    return [
-      { date: '9/9(日)', status: '已成團' },
-      { date: '9/12(三)', status: '熱銷中' },
-      { date: '9/19(二)', status: '已成團' },
-      { date: '10/8(四)', status: '已滿團' },
-      { date: '10/18(五)', status: '熱銷中' },
-    ]
+    return []
   }
 
   return {
