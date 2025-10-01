@@ -240,7 +240,7 @@ const DestinationFilter = ({
                     step='10000'
                     value={budgetRange[1]}
                     onChange={(e) => handleBudgetChange(1, Number(e.target.value))}
-                    className='absolute w-full h-[20px] top-0 appearance-none bg-transparent cursor-pointer'
+                    className={`absolute w-full h-[20px] top-0 appearance-none bg-transparent cursor-pointer ${styles.rangeInput}`}
                     style={{
                       WebkitAppearance: 'none',
                       zIndex: 3
@@ -253,7 +253,7 @@ const DestinationFilter = ({
                     step='10000'
                     value={budgetRange[0]}
                     onChange={(e) => handleBudgetChange(0, Number(e.target.value))}
-                    className='absolute w-full h-[20px] top-0 appearance-none bg-transparent cursor-pointer'
+                    className={`absolute w-full h-[20px] top-0 appearance-none bg-transparent cursor-pointer ${styles.rangeInput}`}
                     style={{
                       WebkitAppearance: 'none',
                       zIndex: 4

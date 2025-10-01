@@ -198,7 +198,6 @@ input[type='range']::-webkit-slider-thumb {
   height: 20px;
   border-radius: 50%;
   background: var(--color-figma-secondary-50);
-  border: 2px solid var(--color-figma-secondary-500);
   cursor: pointer;
   position: relative;
   pointer-events: auto;
@@ -209,7 +208,6 @@ input[type='range']::-moz-range-thumb {
   height: 20px;
   border-radius: 50%;
   background: var(--color-figma-secondary-50);
-  border: 2px solid var(--color-figma-secondary-500);
   cursor: pointer;
   position: relative;
   pointer-events: auto;
