@@ -127,7 +127,7 @@ const DestinationFilter = ({
 
       <div className='relative z-10'>
         <div className='max-w-[1824px] mx-auto'>
-          <div className='bg-white rounded-2xl p-6 flex flex-col lg:flex-row gap-[20px] lg:gap-9 lg:items-center'>
+          <div className='bg-white rounded-2xl p-6 flex flex-col lg:flex-row gap-[20px] lg:gap-8 lg:items-center'>
             <div className='flex-1 relative' ref={dropdownRef}>
               <div className='flex flex-col gap-1'>
                 <label className='font-family-noto-serif font-semibold text-lg text-figma-primary-950'>
@@ -216,12 +216,12 @@ const DestinationFilter = ({
               </div>
             </div>
 
-            <div className='flex-1 flex flex-col gap-1'>
+            <div className='flex-1 flex flex-col gap-2'>
               <label className='font-family-noto-serif font-semibold text-lg text-figma-primary-950'>
                 預算
               </label>
-              <div className='flex flex-col gap-2'>
-                <div className='font-family-genseki text-sm text-figma-primary-950'>
+              <div className='flex flex-col'>
+                <div className='font-family-genseki text-sm text-figma-primary-950 mb-3'>
                   NT ${budgetRange[0].toLocaleString()} ~ NT ${budgetRange[1].toLocaleString()}
                 </div>
                 <div className='relative h-[20px]'>
@@ -267,16 +267,16 @@ const DestinationFilter = ({
               </div>
             </div>
 
-            <div className='flex-1 flex flex-col gap-1'>
+            <div className='flex-1 flex flex-col gap-2'>
               <label className='font-family-noto-serif font-semibold text-lg text-figma-primary-950'>
                 旅行天數
               </label>
-              <div className='flex gap-3 flex-wrap'>
+              <div className='flex gap-4 flex-wrap'>
                 {daysRangeOptions.map((range) => (
                   <button
                     key={range}
                     onClick={() => handleDaysRangeToggle(range)}
-                    className={`px-3 py-2 border cursor-pointer transition-colors ${
+                    className={`px-4 py-3 border cursor-pointer transition-colors ${
                       selectedDaysRange === range
                         ? 'border-figma-secondary-500 bg-figma-secondary-100 text-figma-secondary-950'
                         : 'border-figma-primary-500 text-figma-primary-500 hover:bg-figma-neutral-50'
@@ -292,7 +292,7 @@ const DestinationFilter = ({
 
             <button
               onClick={handleSearch}
-              className='bg-figma-secondary-500 text-white rounded-2xl p-3.5 flex lg:flex-col justify-center items-center gap-2 min-w-[80px] lg:min-h-[80px] hover:bg-figma-secondary-950 cursor-pointer transition-colors self-end'
+              className='bg-figma-secondary-500 text-white rounded-2xl p-3.5 flex lg:flex-col justify-center items-center gap-2 min-w-[80px] lg:min-h-[80px] hover:bg-figma-secondary-950 cursor-pointer transition-colors'
             >
               <SearchIcon color='white' size='19' />
               <span className='font-family-genseki text-base leading-[1.5]'>

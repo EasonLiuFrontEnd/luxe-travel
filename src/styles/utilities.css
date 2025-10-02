@@ -401,6 +401,9 @@
   .bg-figma-accent-blue-light {
     background-color: var(--color-figma-accent-blue-light);
   }
+  .bg-figma-accent-blue-normal {
+    background-color: var(--color-figma-accent-blue-normal);
+  }
   .bg-figma-accent-yellow-light {
     background-color: var(--color-figma-accent-yellow-light);
   }
