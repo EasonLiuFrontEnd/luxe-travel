@@ -6,7 +6,12 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 const TOTAL_SCROLL_DISTANCE = 1000
 const NOTE_TRAVEL_DISTANCE = 200
 
-type TAnimationPhase = 'idle' | 'appearing' | 'appeared' | 'disappearing' | 'disappeared'
+type TAnimationPhase =
+  | 'idle'
+  | 'appearing'
+  | 'appeared'
+  | 'disappearing'
+  | 'disappeared'
 
 type TAnimationState = {
   isIntersecting: boolean
@@ -85,7 +90,10 @@ export const useScrollDrivenAnimation = () => {
       } else if (prev.animationPhase === 'disappearing' && newProgress <= 0) {
         newPhase = 'disappeared'
         canScroll = true
-      } else if (prev.animationPhase === 'appearing' || prev.animationPhase === 'disappearing') {
+      } else if (
+        prev.animationPhase === 'appearing' ||
+        prev.animationPhase === 'disappearing'
+      ) {
         canScroll = false
       }
 
@@ -115,7 +123,8 @@ export const useScrollDrivenAnimation = () => {
             animationPhase: 'disappearing',
           }))
           // 根據當前進度反轉 accumulatedScrollRef
-          accumulatedScrollRef.current = TOTAL_SCROLL_DISTANCE - accumulatedScrollRef.current
+          accumulatedScrollRef.current =
+            TOTAL_SCROLL_DISTANCE - accumulatedScrollRef.current
           return
         }
       } else if (state.animationPhase === 'disappearing') {
@@ -129,7 +138,8 @@ export const useScrollDrivenAnimation = () => {
             animationPhase: 'appearing',
           }))
           // 根據當前進度反轉 accumulatedScrollRef
-          accumulatedScrollRef.current = TOTAL_SCROLL_DISTANCE - accumulatedScrollRef.current
+          accumulatedScrollRef.current =
+            TOTAL_SCROLL_DISTANCE - accumulatedScrollRef.current
           return
         }
       } else if (state.animationPhase === 'appeared') {
@@ -166,7 +176,13 @@ export const useScrollDrivenAnimation = () => {
         updateAnimationProgress(event.deltaY)
       }
     },
-    [state.isIntersecting, state.canScroll, state.animationPhase, state.entryDirection, updateAnimationProgress],
+    [
+      state.isIntersecting,
+      state.canScroll,
+      state.animationPhase,
+      state.entryDirection,
+      updateAnimationProgress,
+    ],
   )
 
   const detectScrollDirection = useCallback(() => {
@@ -204,7 +220,8 @@ export const useScrollDrivenAnimation = () => {
             const newPhase = direction === 'down' ? 'appearing' : 'disappearing'
             const newProgress = direction === 'down' ? 0 : 1
 
-            accumulatedScrollRef.current = direction === 'down' ? 0 : TOTAL_SCROLL_DISTANCE
+            accumulatedScrollRef.current =
+              direction === 'down' ? 0 : TOTAL_SCROLL_DISTANCE
 
             return {
               ...prev,
@@ -216,7 +233,11 @@ export const useScrollDrivenAnimation = () => {
               entryDirection: direction,
             }
           })
-        } else if (!entry.isIntersecting && (state.animationPhase === 'appeared' || state.animationPhase === 'disappeared')) {
+        } else if (
+          !entry.isIntersecting &&
+          (state.animationPhase === 'appeared' ||
+            state.animationPhase === 'disappeared')
+        ) {
           setState((prev) => ({
             ...prev,
             isIntersecting: false,
@@ -237,7 +258,12 @@ export const useScrollDrivenAnimation = () => {
     return () => {
       observer.disconnect()
     }
-  }, [detectScrollDirection, state.animationPhase, state.isInitialLoad, isMobile])
+  }, [
+    detectScrollDirection,
+    state.animationPhase,
+    state.isInitialLoad,
+    isMobile,
+  ])
 
   useEffect(() => {
     if (state.isIntersecting && !isMobile) {
@@ -280,7 +306,7 @@ export const useScrollDrivenAnimation = () => {
 
   useEffect(() => {
     if (isMobile) return
-    
+
     const handleScroll = () => {
       if (state.isInitialLoad) {
         setState((prev) => ({
@@ -313,7 +339,9 @@ export const useScrollDrivenAnimation = () => {
     containerRef,
     notePositions: getNotePositions(),
     scrollProgress: state.animationProgress,
-    isAnimationComplete: state.animationPhase === 'appeared' || state.animationPhase === 'disappeared',
+    isAnimationComplete:
+      state.animationPhase === 'appeared' ||
+      state.animationPhase === 'disappeared',
     isScrollLocked: !state.canScroll,
     getNoteTransformY,
   }

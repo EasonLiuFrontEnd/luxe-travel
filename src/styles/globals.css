@@ -186,3 +186,29 @@
 :root {
   --color-figma-primary-950-70: rgba(56, 56, 65, 0.7);
 }
+
+input[type='range'] {
+  pointer-events: none;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-figma-secondary-50);
+  cursor: pointer;
+  position: relative;
+  pointer-events: auto;
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-figma-secondary-50);
+  cursor: pointer;
+  position: relative;
+  pointer-events: auto;
+}
