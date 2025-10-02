@@ -3,10 +3,17 @@
 import { useState, useCallback } from 'react'
 import { cn } from '@/lib/utils'
 import type { TBaseComponent } from '@/types'
-import { SORT_OPTIONS, type TSelectedFilters } from '../config'
 import { useClickOutside } from '@/hooks/useClickOutside'
 import CloseIcon from '@/components/shared/icons/common/CloseIcon'
 import SortIcon from '@/components/shared/icons/common/SortIcon'
+
+export type TSelectedFilter = {
+  id: string
+  label: string
+  type: 'country' | 'price' | 'other'
+}
+
+export type TSelectedFilters = TSelectedFilter[]
 
 type TResultsSortProps = TBaseComponent & {
   resultCount?: number
@@ -14,7 +21,10 @@ type TResultsSortProps = TBaseComponent & {
   onRemoveFilter?: (filterId: string) => void
   onSort?: (sortOption: string) => void
   hasSearched?: boolean
+  sortOptions?: string[]
 }
+
+const DEFAULT_SORT_OPTIONS = ['價格（低到高）', '價格（高到低）']
 
 const ResultsSort = ({
   className,
@@ -23,8 +33,9 @@ const ResultsSort = ({
   onRemoveFilter,
   onSort,
   hasSearched = false,
+  sortOptions = DEFAULT_SORT_OPTIONS,
 }: TResultsSortProps) => {
-  const [sortOption, setSortOption] = useState('價格（低到高）')
+  const [sortOption, setSortOption] = useState(sortOptions[0])
   const [showSortDropdown, setShowSortDropdown] = useState(false)
 
   const handleCloseSortDropdown = useCallback(() => {
@@ -105,7 +116,7 @@ const ResultsSort = ({
 
               {showSortDropdown && (
                 <div className='absolute top-full left-0 bg-white border border-figma-primary-300 rounded shadow-lg z-50 min-w-full'>
-                  {SORT_OPTIONS.map((option, index) => (
+                  {sortOptions.map((option, index) => (
                     <button
                       key={option}
                       onClick={() => handleSort(option)}
@@ -115,7 +126,7 @@ const ResultsSort = ({
                           ? 'text-figma-secondary-950 bg-figma-secondary-100'
                           : 'text-figma-primary-500',
                         index === 0 && 'rounded-t',
-                        index === SORT_OPTIONS.length - 1 && 'rounded-b',
+                        index === sortOptions.length - 1 && 'rounded-b',
                       )}
                     >
                       {option}

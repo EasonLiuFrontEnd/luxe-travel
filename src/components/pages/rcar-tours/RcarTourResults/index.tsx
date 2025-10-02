@@ -20,7 +20,7 @@ const RcarTourResults = ({
     router.push(`/rcar-tours/${tourId}`)
   }
 
-  const handleReviewClick = (tourId: string) => {
+  const handleReviewClick = () => {
   }
 
   return (
@@ -38,7 +38,7 @@ const RcarTourResults = ({
             travelerReview={tour.travelerReview}
             note={tour.note}
             onDetailsClick={() => handleDetailsClick(tour.id)}
-            onReviewClick={() => handleReviewClick(tour.id)}
+            onReviewClick={handleReviewClick}
           />
         ))}
       </div>

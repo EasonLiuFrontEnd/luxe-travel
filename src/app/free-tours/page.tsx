@@ -1,14 +1,16 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
-import FreeToursBanner from '@/components/pages/free-tours/Banner'
+import { useState, useCallback, useEffect, useMemo } from 'react'
+import TourBanner from '@/components/shared/TourBanner'
 import DestinationFilter from '@/components/pages/free-tours/DestinationFilter'
-import ResultsSort from '@/components/pages/free-tours/ResultsSort'
+import ResultsSort from '@/components/shared/ResultsSort'
 import FreeTourResults from '@/components/pages/free-tours/FreeTourResults'
 import {
   convertCountriesToFilters,
   getCountryCodes,
   convertProductToTourData,
+  SORT_OPTIONS,
+  SLIDE_CONTENT,
   type TTourData,
   type TSelectedFilters
 } from '@/components/pages/free-tours/config'
@@ -40,21 +42,51 @@ const FreeToursPage = ({ className }: TFreeToursPageProps) => {
   const { query: searchQuery, mock: searchMock } = useProductsSearch(searchParams)
   const { query: countriesQuery, mock: countriesMock } = useProductCountries()
 
-  const regionsData = countriesQuery.data || countriesMock.data || []
+  const regionsData = useMemo(() =>
+    countriesQuery.data || countriesMock.data || []
+  , [countriesQuery.data, countriesMock.data])
 
   useEffect(() => {
     if (searchQuery.isSuccess) {
-      const dataSource = searchQuery.data && searchQuery.data.length > 0
+      let dataSource = searchQuery.data && searchQuery.data.length > 0
         ? searchQuery.data
         : (searchMock.data || [])
 
       if (dataSource.length > 0) {
+        const destinationCodes = searchParams.destination?.split(',') || []
+        if (destinationCodes.length > 0) {
+          dataSource = dataSource.filter(product =>
+            destinationCodes.some(code => product.countries.includes(code))
+          )
+        }
+
+        if (searchParams.budgetMin !== undefined || searchParams.budgetMax !== undefined) {
+          const minBudget = searchParams.budgetMin ?? 0
+          const maxBudget = searchParams.budgetMax ?? Infinity
+          dataSource = dataSource.filter(product =>
+            product.priceMin >= minBudget && product.priceMin <= maxBudget
+          )
+        }
+
+        if (searchParams.daysRange) {
+          const daysRangeMatch = searchParams.daysRange.match(/(\d+)-(\d+)/)
+          if (daysRangeMatch) {
+            const minDays = parseInt(daysRangeMatch[1])
+            const maxDays = parseInt(daysRangeMatch[2])
+            dataSource = dataSource.filter(product =>
+              product.days >= minDays && product.days <= maxDays
+            )
+          }
+        }
+
         const sortedProducts = sortProducts(dataSource)
         const convertedTours = sortedProducts.map(convertProductToTourData)
         setTours(convertedTours)
+      } else {
+        setTours([])
       }
     }
-  }, [searchQuery.isSuccess, searchQuery.data, searchMock.data])
+  }, [searchQuery.isSuccess, searchQuery.data, searchMock.data, searchParams])
 
   const handleSearch = useCallback((selectedCountries: string[], budgetRange: [number, number], daysRange: string | null) => {
     const filters: TSelectedFilters = []
@@ -162,7 +194,13 @@ const FreeToursPage = ({ className }: TFreeToursPageProps) => {
           歐洲自由行
         </h1>
       </div>
-      <FreeToursBanner tours={searchQuery.data || []} isLoading={searchQuery.isLoading} />
+      <TourBanner
+        tourType='free-tours'
+        slideContent={SLIDE_CONTENT}
+        tours={searchQuery.data || []}
+        isLoading={searchQuery.isLoading}
+        altTextPrefix='自由行程精選'
+      />
       <DestinationFilter onSearch={handleSearch} />
       <ResultsSort
         resultCount={tours.length}
@@ -170,6 +208,7 @@ const FreeToursPage = ({ className }: TFreeToursPageProps) => {
         onRemoveFilter={handleRemoveFilter}
         onSort={handleSort}
         hasSearched={hasSearched}
+        sortOptions={SORT_OPTIONS}
       />
 
       <div className='px-[clamp(12px,2.5vw,48px)] pb-[80px] mt-9 xl:mt-[79px]'>

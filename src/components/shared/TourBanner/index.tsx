@@ -5,10 +5,18 @@ import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { TBaseComponent } from '@/types'
-import { SLIDE_CONTENT } from '../config'
 import styles from './styles.module.css'
 
-type TGroupToursBannerProps = TBaseComponent & {
+export type TSlideContent = {
+  id: number
+  title: string
+  subtitle: string
+  description: string
+}
+
+type TTourBannerProps = TBaseComponent & {
+  tourType: 'free-tours' | 'group-tours' | 'rcar-tours'
+  slideContent: TSlideContent[]
   tours?: Array<{
     id: string
     namePrefix: string
@@ -17,13 +25,21 @@ type TGroupToursBannerProps = TBaseComponent & {
     mainImageUrl: string
   }>
   isLoading?: boolean
+  altTextPrefix?: string
 }
 
-const GroupToursBanner = ({ className, tours = [], isLoading = false }: TGroupToursBannerProps) => {
+const TourBanner = ({
+  className,
+  tourType,
+  slideContent,
+  tours = [],
+  isLoading = false,
+  altTextPrefix = '精選行程',
+}: TTourBannerProps) => {
   const [currentSlide, setCurrentSlide] = useState(1)
 
   const useApiData = !isLoading && tours.length > 0
-  const totalSlides = useApiData ? tours.length : SLIDE_CONTENT.length
+  const totalSlides = useApiData ? tours.length : slideContent.length
 
   const currentContent = useApiData
     ? {
@@ -31,7 +47,7 @@ const GroupToursBanner = ({ className, tours = [], isLoading = false }: TGroupTo
         subtitle: tours[currentSlide - 1]?.name || '',
         description: tours[currentSlide - 1]?.summary || ''
       }
-    : !isLoading ? SLIDE_CONTENT[currentSlide - 1] : { title: '', subtitle: '', description: '' }
+    : !isLoading ? slideContent[currentSlide - 1] : { title: '', subtitle: '', description: '' }
 
   const currentImageUrl = useApiData
     ? tours[currentSlide - 1]?.mainImageUrl
@@ -73,8 +89,8 @@ const GroupToursBanner = ({ className, tours = [], isLoading = false }: TGroupTo
         <div className='relative xl:absolute xl:inset-0 flex w-full h-[460px] xl:h-full'>
           {!isLoading && (
             <Image
-              src={currentImageUrl || `/group-tours/${currentSlide}.jpg`}
-              alt={`團體旅遊精選行程 ${currentSlide}`}
+              src={currentImageUrl || `/${tourType}/${currentSlide}.jpg`}
+              alt={`${altTextPrefix} ${currentSlide}`}
               width={1824}
               height={670}
               className='object-cover transition-opacity duration-500 w-full h-full rounded-2xl'
@@ -141,4 +157,4 @@ const GroupToursBanner = ({ className, tours = [], isLoading = false }: TGroupTo
   )
 }
 
-export default GroupToursBanner
+export default TourBanner

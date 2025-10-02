@@ -1,14 +1,16 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
-import GroupToursBanner from '@/components/pages/group-tours/Banner'
+import { useState, useEffect, useCallback, useMemo } from 'react'
+import TourBanner from '@/components/shared/TourBanner'
 import DestinationFilter from '@/components/pages/group-tours/DestinationFilter'
-import ResultsSort from '@/components/pages/group-tours/ResultsSort'
+import ResultsSort from '@/components/shared/ResultsSort'
 import GroupTourResults from '@/components/pages/group-tours/GroupTourResults'
 import {
   convertCountriesToFilters,
   getCountryCodes,
   convertProductToTourData,
+  SORT_OPTIONS,
+  SLIDE_CONTENT,
   type TTourData,
   type TSelectedFilters
 } from '@/components/pages/group-tours/config'
@@ -40,21 +42,32 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
   const { query: searchQuery, mock: searchMock } = useProductsSearch(searchParams)
   const { query: countriesQuery, mock: countriesMock } = useProductCountries()
 
-  const regionsData = countriesQuery.data || countriesMock.data || []
+  const regionsData = useMemo(() =>
+    countriesQuery.data || countriesMock.data || []
+  , [countriesQuery.data, countriesMock.data])
 
   useEffect(() => {
     if (searchQuery.isSuccess) {
-      const dataSource = searchQuery.data && searchQuery.data.length > 0
+      let dataSource = searchQuery.data && searchQuery.data.length > 0
         ? searchQuery.data
         : (searchMock.data || [])
 
       if (dataSource.length > 0) {
+        const destinationCodes = searchParams.destination?.split(',') || []
+        if (destinationCodes.length > 0) {
+          dataSource = dataSource.filter(product =>
+            destinationCodes.some(code => product.countries.includes(code))
+          )
+        }
+
         const sortedProducts = sortProducts(dataSource)
         const convertedTours = sortedProducts.map(convertProductToTourData)
         setTours(convertedTours)
+      } else {
+        setTours([])
       }
     }
-  }, [searchQuery.isSuccess, searchQuery.data, searchMock.data])
+  }, [searchQuery.isSuccess, searchQuery.data, searchMock.data, searchParams])
 
   const handleSearch = useCallback((selectedCountries: string[]) => {
     const countryFilters = convertCountriesToFilters(selectedCountries, regionsData)
@@ -128,7 +141,13 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
           精緻團體行
         </h1>
       </div>
-      <GroupToursBanner tours={searchQuery.data || []} isLoading={searchQuery.isLoading} />
+      <TourBanner
+        tourType='group-tours'
+        slideContent={SLIDE_CONTENT}
+        tours={searchQuery.data || []}
+        isLoading={searchQuery.isLoading}
+        altTextPrefix='團體旅遊精選行程'
+      />
       <DestinationFilter onSearch={handleSearch} />
       <ResultsSort
         resultCount={tours.length}
@@ -136,6 +155,7 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
         onRemoveFilter={handleRemoveFilter}
         onSort={handleSort}
         hasSearched={hasSearched}
+        sortOptions={SORT_OPTIONS}
       />
 
       <div className='px-[clamp(12px,2.5vw,48px)] pb-[80px] mt-9 xl:mt-[79px]'>

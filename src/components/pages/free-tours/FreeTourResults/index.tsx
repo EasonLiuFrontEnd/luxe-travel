@@ -20,7 +20,7 @@ const FreeTourResults = ({
     router.push(`/free-tours/${tourId}`)
   }
 
-  const handleReviewClick = (tourId: string) => {
+  const handleReviewClick = () => {
   }
 
   return (
@@ -38,7 +38,7 @@ const FreeTourResults = ({
             travelerReview={tour.travelerReview}
             note={tour.note}
             onDetailsClick={() => handleDetailsClick(tour.id)}
-            onReviewClick={() => handleReviewClick(tour.id)}
+            onReviewClick={handleReviewClick}
           />
         ))}
       </div>
