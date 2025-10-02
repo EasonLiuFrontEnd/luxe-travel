@@ -54,3 +54,16 @@
   border: none;
 }
 
+.rangeTrack {
+  left: var(--left-percent);
+  right: var(--right-percent);
+}
+
+.rangeInputUpper {
+  z-index: 3;
+}
+
+.rangeInputLower {
+  z-index: 4;
+}
+

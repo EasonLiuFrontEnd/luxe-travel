@@ -18,7 +18,6 @@ const SortIcon = ({
 
   return (
     <div className={`inline-flex flex-col gap-1 ${className}`}>
-      {/* 向上箭頭 */}
       <svg
         width='12'
         height='5'
@@ -29,7 +28,6 @@ const SortIcon = ({
         <path d='M6 0.5L11.1962 5H0.803848L6 0.5Z' fill={upColor} />
       </svg>
 
-      {/* 向下箭頭 */}
       <svg
         width='12'
         height='5'

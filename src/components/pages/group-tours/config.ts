@@ -1,5 +1,3 @@
-// 團體行程配置數據
-
 export type TRegion = {
   id: string
   name: string

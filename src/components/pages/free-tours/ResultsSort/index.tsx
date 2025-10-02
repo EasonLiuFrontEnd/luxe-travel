@@ -5,8 +5,8 @@ import { cn } from '@/lib/utils'
 import type { TBaseComponent } from '@/types'
 import { SORT_OPTIONS, type TSelectedFilters } from '../config'
 import { useClickOutside } from '@/hooks/useClickOutside'
-import CloseIcon from './icons/CloseIcon'
-import SortIcon from './icons/SortIcon'
+import CloseIcon from '@/components/shared/icons/common/CloseIcon'
+import SortIcon from '@/components/shared/icons/common/SortIcon'
 
 type TResultsSortProps = TBaseComponent & {
   resultCount?: number

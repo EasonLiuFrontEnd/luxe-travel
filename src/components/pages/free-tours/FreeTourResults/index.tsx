@@ -22,7 +22,6 @@ const FreeTourResults = ({
   }
 
   const handleReviewClick = (tourId: string) => {
-    console.log('Review clicked for tour:', tourId)
   }
 
   return (

@@ -2,9 +2,9 @@
 
 import { useState, useCallback, useEffect } from 'react'
 import SearchIcon from '@/components/shared/icons/header/SearchIcon'
-import DropdownArrowIcon from './icons/DropdownArrowIcon'
-import ClearIcon from './icons/ClearIcon'
-import CheckIcon from './icons/CheckIcon'
+import DropdownArrowIcon from '@/components/shared/icons/common/DropdownArrowIcon'
+import ClearIcon from '@/components/shared/icons/common/ClearIcon'
+import CheckIcon from '@/components/shared/icons/common/CheckIcon'
 import type { TBaseComponent } from '@/types'
 import { useClickOutside } from '@/hooks/useClickOutside'
 import { useProductCountries } from '@/api/free-tours'
@@ -227,11 +227,11 @@ const DestinationFilter = ({
                 <div className='relative h-[20px]'>
                   <div className='absolute bg-[#ebebeb] h-[6px] left-0 right-0 rounded-full top-[7px] pointer-events-none' />
                   <div
-                    className='absolute bg-figma-secondary-500 h-[6px] rounded-full top-[7px] pointer-events-none'
+                    className={`absolute bg-figma-secondary-500 h-[6px] rounded-full top-[7px] pointer-events-none ${styles.rangeTrack}`}
                     style={{
-                      left: `${((budgetRange[0] - 80000) / (600000 - 80000)) * 100}%`,
-                      right: `${100 - ((budgetRange[1] - 80000) / (600000 - 80000)) * 100}%`
-                    }}
+                      '--left-percent': `${((budgetRange[0] - 80000) / (600000 - 80000)) * 100}%`,
+                      '--right-percent': `${100 - ((budgetRange[1] - 80000) / (600000 - 80000)) * 100}%`
+                    } as React.CSSProperties}
                   />
                   <input
                     type='range'
@@ -240,11 +240,7 @@ const DestinationFilter = ({
                     step='10000'
                     value={budgetRange[1]}
                     onChange={(e) => handleBudgetChange(1, Number(e.target.value))}
-                    className={`absolute w-full h-[20px] top-0 appearance-none bg-transparent cursor-pointer ${styles.rangeInput}`}
-                    style={{
-                      WebkitAppearance: 'none',
-                      zIndex: 3
-                    }}
+                    className={`absolute w-full h-[20px] top-0 appearance-none bg-transparent cursor-pointer ${styles.rangeInput} ${styles.rangeInputUpper}`}
                   />
                   <input
                     type='range'
@@ -253,11 +249,7 @@ const DestinationFilter = ({
                     step='10000'
                     value={budgetRange[0]}
                     onChange={(e) => handleBudgetChange(0, Number(e.target.value))}
-                    className={`absolute w-full h-[20px] top-0 appearance-none bg-transparent cursor-pointer ${styles.rangeInput}`}
-                    style={{
-                      WebkitAppearance: 'none',
-                      zIndex: 4
-                    }}
+                    className={`absolute w-full h-[20px] top-0 appearance-none bg-transparent cursor-pointer ${styles.rangeInput} ${styles.rangeInputLower}`}
                   />
                 </div>
                 <div className='flex justify-between font-family-genseki text-xs text-figma-primary-950'>
