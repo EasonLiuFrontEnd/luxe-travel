@@ -122,7 +122,7 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
   }, [searchParams])
 
   return (
-    <main className={`min-h-screen bg-figma-neutral-50 ${className || ''}`}>
+    <main className='min-h-screen bg-figma-neutral-50'>
       <div className='pt-[37px] xl:pt-[60px] px-[clamp(12px,2.5vw,48px)]'>
         <h1 className='font-family-noto-serif font-bold text-[48px] xl:text-[96px] leading-[1.2] text-figma-primary-950'>
           精緻團體行

@@ -8,9 +8,11 @@ import { useAdvantages } from '@/api/home/useAdvantages'
 import type { TBaseComponent } from '@/types'
 import '@/styles/components.css'
 
-type TAdvantageProps = TBaseComponent
+type TAdvantageProps = TBaseComponent & {
+  collectionRef?: React.RefObject<HTMLDivElement>
+}
 
-const Advantage = ({ className }: TAdvantageProps) => {
+const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
   const trackRef = useRef<HTMLDivElement>(null)
   const backgroundRef = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)

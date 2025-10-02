@@ -1,0 +1,27 @@
+.vertical-line {
+  position: relative;
+  width: 2px;
+  height: 126px;
+  background-color: #BDA05E;
+  margin: 6px 0;
+}
+
+.vertical-line::before,
+.vertical-line::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #BDA05E;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.vertical-line::before {
+  top: -3px;
+}
+
+.vertical-line::after {
+  bottom: -3px;
+}
