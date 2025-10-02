@@ -262,7 +262,7 @@ export const useProductsSearch = (params: TProductSearchParams): TUseHomeQueryRe
 }
 
 const fetchProductCountries = async (): Promise<TRegionData[]> => {
-  const endpoint = '/api/products/countries'
+  const endpoint = 'api/admin/product/countries'
   const response = await apiClient.get<TCountriesResponse>(endpoint)
   return response?.data?.data || []
 }

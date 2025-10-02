@@ -95,7 +95,7 @@ const FreeTourCard = ({
         </div>
 
         <div className='relative flex flex-1 min-w-0'>
-          <div className='hidden xl:block absolute bg-figma-secondary-500 bottom-0 right-0 transition-all duration-300 group-hover:-translate-x-[40px] group-hover:-translate-y-[36px] h-full w-full' />
+          <div className='hidden xl:block absolute bg-figma-accent-blue-normal bottom-0 right-0 transition-all duration-300 group-hover:-translate-x-[40px] group-hover:-translate-y-[36px] h-full w-full' />
 
           <div className='xl:bg-white flex flex-col justify-between w-full min-w-0 relative xl:gap-7 xl:pl-8 xl:pr-5 xl:py-5 transition-all duration-300'>
             <div className='flex flex-col xl:gap-3 w-full'>
@@ -123,7 +123,7 @@ const FreeTourCard = ({
                 </div>
 
                 <div className='flex-1 flex relative min-w-0'>
-                  <div className='xl:hidden absolute z-[-1] bg-figma-secondary-500 bottom-0 right-0 transition-all duration-300 -translate-x-[16px] -translate-y-[22px] h-full w-full' />
+                  <div className='xl:hidden absolute z-[-1] bg-figma-accent-blue-normal bottom-0 right-0 transition-all duration-300 -translate-x-[16px] -translate-y-[22px] h-full w-full' />
 
                   <div className='flex flex-col xl:flex-row xl:items-start justify-between gap-4 xl:gap-3 p-4 xl:p-0 w-full bg-figma-primary-0 xl:bg-transparent'>
                     <div className='flex flex-col gap-1 text-figma-primary-950 flex-1 min-w-0'>
@@ -134,7 +134,7 @@ const FreeTourCard = ({
                         {title}
                       </div>
                     </div>
-                    <div className='flex items-end gap-1 text-figma-secondary-500 shrink-0'>
+                    <div className='flex items-end gap-1 text-figma-accent-blue-normal shrink-0'>
                       <div className='whitespace-nowrap font-noto-serif-body-l-semibold xl:font-noto-serif-h5-bold'>
                         ＄{price.toLocaleString()}
                       </div>

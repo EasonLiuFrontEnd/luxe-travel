@@ -1,18 +1,18 @@
 .backgroundLayer1 {
   background-image: url(/free-tours/background.svg);
-  background-position: 150px 150%;
+  background-position: 150px 200%;
   background-repeat: repeat-x;
 }
 
 .backgroundLayer2 {
   background-image: url(/free-tours/background.svg);
-  background-position: 500px 20%;
+  background-position: 510px 35%;
   background-repeat: repeat-x;
 }
 
 .backgroundLayer3 {
   background-image: url(/free-tours/background.svg);
-  background-position: 150px -75%;
+  background-position: 150px -140%;
   background-repeat: repeat-x;
 }
 
@@ -52,5 +52,18 @@
 .rangeInput:focus::-moz-range-thumb {
   outline: none;
   border: none;
+}
+
+.rangeTrack {
+  left: var(--left-percent);
+  right: var(--right-percent);
+}
+
+.rangeInputUpper {
+  z-index: 3;
+}
+
+.rangeInputLower {
+  z-index: 4;
 }
 

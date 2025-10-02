@@ -2,9 +2,9 @@
 
 import { useState, useCallback, useEffect } from 'react'
 import SearchIcon from '@/components/shared/icons/header/SearchIcon'
-import DropdownArrowIcon from './icons/DropdownArrowIcon'
-import ClearIcon from './icons/ClearIcon'
-import CheckIcon from './icons/CheckIcon'
+import DropdownArrowIcon from '@/components/shared/icons/common/DropdownArrowIcon'
+import ClearIcon from '@/components/shared/icons/common/ClearIcon'
+import CheckIcon from '@/components/shared/icons/common/CheckIcon'
 import type { TBaseComponent } from '@/types'
 import { useClickOutside } from '@/hooks/useClickOutside'
 import { useProductCountries } from '@/api/group-tours'
@@ -95,7 +95,6 @@ const DestinationFilter = ({
     <section
       className={`relative xl:sticky xl:top-0 xl:left-0 xl:z-10 xl:bg-figma-neutral-50 border-y border-figma-secondary-500 py-4 px-[clamp(12px,2.5vw,48px)] xl:py-9 ${className || ''}`}
     >
-      {/* 交錯背景圖層 - 上排和下排 */}
       <div
         className={`absolute inset-0 opacity-15 ${styles.backgroundLayer1}`}
       />
@@ -105,8 +104,6 @@ const DestinationFilter = ({
       <div
         className={`absolute inset-0 opacity-15 ${styles.backgroundLayer3}`}
       />
-
-      {/* 內容層 */}
       <div className='relative z-10'>
         <div className='max-w-[1824px] mx-auto'>
           <div className='bg-white rounded-2xl p-6 flex flex-col lg:flex-row gap-[20px] lg:gap-9 lg:items-center'>

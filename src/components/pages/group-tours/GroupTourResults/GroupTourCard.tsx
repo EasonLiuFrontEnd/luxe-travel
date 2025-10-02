@@ -124,7 +124,6 @@ const GroupTourCard = ({
     setIsDragging(true)
     setStartX(e.pageX - container.offsetLeft)
     setScrollLeft(container.scrollLeft)
-    container.style.cursor = 'grabbing'
   }
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -138,16 +137,10 @@ const GroupTourCard = ({
 
   const handleMouseUp = () => {
     setIsDragging(false)
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.style.cursor = 'grab'
-    }
   }
 
   const handleMouseLeave = () => {
     setIsDragging(false)
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.style.cursor = 'grab'
-    }
   }
 
   return (
@@ -158,7 +151,6 @@ const GroupTourCard = ({
       )}
     >
       <div className='flex items-end relative isolate w-full'>
-        {/* 電腦版書本 - 翻頁書 */}
         <div className='hidden xl:block xl:w-[245px] xl:h-[326px] xl:bg-figma-neutral-50 relative shrink-0 z-[1] transition-transform duration-300 origin-bottom-left cursor-pointer'>
           <RightOnlyFlipBook
             pages={flipBookPages}
@@ -169,7 +161,6 @@ const GroupTourCard = ({
             onFlip={onDetailsClick}
           />
         </div>
-        {/* 電腦版書本 - 翻頁書 */}
 
         <div className='relative flex flex-1 min-w-0'>
           <div className='hidden xl:block absolute bg-figma-secondary-500 bottom-0 right-0 transition-all duration-300 group-hover:-translate-x-[40px] group-hover:-translate-y-[36px] h-full w-full' />
@@ -177,7 +168,6 @@ const GroupTourCard = ({
           <div className='xl:bg-white flex flex-col justify-between w-full min-w-0 relative xl:gap-7 xl:pl-8 xl:pr-5 xl:py-5 transition-all duration-300'>
             <div className='flex flex-col xl:gap-3 w-full'>
               <div className='flex items-end xl:items-start xl:justify-between w-full'>
-                {/* 手機版書本 */}
                 <div className={cn('xl:hidden relative cursor-pointer', styles.foldedCornerMobile)} onClick={onDetailsClick}>
                   <div
                     className='bg-center bg-cover bg-no-repeat flex items-center relative shrink-0 h-[193px] w-[145px] min-w-[145px]'
@@ -199,7 +189,6 @@ const GroupTourCard = ({
                     </div>
                   </div>
                 </div>
-                {/* 手機版書本 */}
 
                 <div className='flex-1 flex relative min-w-0'>
                   <div className='xl:hidden absolute z-[-1] bg-figma-secondary-500 bottom-0 right-0 transition-all duration-300 -translate-x-[16px] -translate-y-[22px] h-full w-full' />
@@ -246,7 +235,7 @@ const GroupTourCard = ({
             <div className='bg-figma-primary-0 flex justify-between items-center gap-1 w-full relative p-4 xl:p-0'>
               <div
                 ref={scrollContainerRef}
-                className='flex gap-3 items-center overflow-x-scroll scroll-smooth hide-scrollbar cursor-grab select-none'
+                className={`flex gap-3 items-center overflow-x-scroll scroll-smooth hide-scrollbar select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}

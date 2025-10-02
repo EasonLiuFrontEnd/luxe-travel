@@ -5,8 +5,8 @@ import { cn } from '@/lib/utils'
 import type { TBaseComponent } from '@/types'
 import { SORT_OPTIONS, type TSelectedFilters } from '../config'
 import { useClickOutside } from '@/hooks/useClickOutside'
-import CloseIcon from './icons/CloseIcon'
-import SortIcon from './icons/SortIcon'
+import CloseIcon from '@/components/shared/icons/common/CloseIcon'
+import SortIcon from '@/components/shared/icons/common/SortIcon'
 
 type TSearchResultsProps = TBaseComponent & {
   resultCount?: number
@@ -62,16 +62,13 @@ const SearchResults = ({
     >
       <div className='max-w-[1824px] mx-auto'>
         <div className='flex flex-col xl:flex-row xl:justify-between gap-[10px]'>
-          {/* 搜尋結果數量 */}
           <div className='flex gap-1 font-genseki-gothic text-figma-primary-500 text-xl'>
             <span className='text-nowrap'>搜尋出</span>
             <span className='text-nowrap'>{resultCount}</span>
             <span className='text-nowrap'>筆行程</span>
           </div>
 
-          {/* 篩選條件和排序 */}
           <div className='flex flex-col xl:flex-row gap-5'>
-            {/* 已選篩選條件 */}
             {selectedFilters.length > 0 && (
               <div className='flex flex-wrap gap-3'>
                 {selectedFilters.map((filter) => (
@@ -94,7 +91,6 @@ const SearchResults = ({
               </div>
             )}
 
-            {/* 排序選項 */}
             <div className='relative h-fit w-fit' ref={sortDropdownRef}>
               <button
                 onClick={() => setShowSortDropdown(!showSortDropdown)}
