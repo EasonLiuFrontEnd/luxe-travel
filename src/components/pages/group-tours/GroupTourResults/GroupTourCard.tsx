@@ -124,7 +124,6 @@ const GroupTourCard = ({
     setIsDragging(true)
     setStartX(e.pageX - container.offsetLeft)
     setScrollLeft(container.scrollLeft)
-    container.style.cursor = 'grabbing'
   }
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -138,16 +137,10 @@ const GroupTourCard = ({
 
   const handleMouseUp = () => {
     setIsDragging(false)
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.style.cursor = 'grab'
-    }
   }
 
   const handleMouseLeave = () => {
     setIsDragging(false)
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.style.cursor = 'grab'
-    }
   }
 
   return (
@@ -242,7 +235,7 @@ const GroupTourCard = ({
             <div className='bg-figma-primary-0 flex justify-between items-center gap-1 w-full relative p-4 xl:p-0'>
               <div
                 ref={scrollContainerRef}
-                className='flex gap-3 items-center overflow-x-scroll scroll-smooth hide-scrollbar cursor-grab select-none'
+                className={`flex gap-3 items-center overflow-x-scroll scroll-smooth hide-scrollbar select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}

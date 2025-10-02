@@ -15,10 +15,9 @@ const FreeTourResults = ({
 }: TFreeTourResultsProps) => {
 
   const router = useRouter()
+
   const handleDetailsClick = (tourId: string) => {
-    setTimeout(() => {
-      router.push(`/free-tours/${tourId}`)
-    }, 300)
+    router.push(`/free-tours/${tourId}`)
   }
 
   const handleReviewClick = (tourId: string) => {
@@ -35,7 +34,7 @@ const FreeTourResults = ({
             description={tour.description}
             price={tour.price}
             tags={tour.tags}
-            mainImageUrl={tour.mainImageUrl!}
+            mainImageUrl={tour.mainImageUrl || ''}
             travelerReview={tour.travelerReview}
             note={tour.note}
             onDetailsClick={() => handleDetailsClick(tour.id)}

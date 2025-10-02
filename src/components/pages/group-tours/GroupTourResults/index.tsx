@@ -15,10 +15,9 @@ const GroupTourResults = ({
 }: TGroupTourResultsProps) => {
 
   const router = useRouter()
+
   const handleDetailsClick = (tourId: string) => {
-    setTimeout(() => {
-      router.push(`/group-tours/${tourId}`)
-    }, 300)
+    router.push(`/group-tours/${tourId}`)
   }
 
   return (
@@ -33,7 +32,7 @@ const GroupTourResults = ({
             price={tour.price}
             tags={tour.tags}
             dates={tour.dates}
-            mainImageUrl={tour.mainImageUrl!}
+            mainImageUrl={tour.mainImageUrl || ''}
             onDetailsClick={() => handleDetailsClick(tour.id)}
           />
         ))}
