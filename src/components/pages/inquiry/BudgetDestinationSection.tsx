@@ -60,7 +60,11 @@ export const BudgetDestinationSection = ({
           name='budgetDestination.countries'
           render={({ field }) => (
             <FormItem>
-              <RequiredLabel required subText='可複選' className='font-noto-serif-body-l-semibold mb-2'>
+              <RequiredLabel
+                required
+                subText='可複選'
+                className='font-noto-serif-body-l-semibold mb-2'
+              >
                 想去的國家組合
               </RequiredLabel>
               <FormControl>

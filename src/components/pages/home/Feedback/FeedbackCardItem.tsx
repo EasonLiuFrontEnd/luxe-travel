@@ -38,7 +38,6 @@ const FeedbackCardItem = ({
     }
   }, [mode, content])
 
-
   if (mode === 'REAL') {
     return (
       <div

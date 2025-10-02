@@ -1,0 +1,55 @@
+.concave-border::before {
+  content: '';
+  width: 32px;
+  height: 32px;
+  display: block;
+  position: absolute;
+  background-color: var(--color-figma-neutral-50);
+  left: -32px;
+  top: 0;
+  mask:
+    linear-gradient(
+      to right,
+      transparent 50%,
+      var(--color-figma-neutral-50) 50%
+    ),
+    linear-gradient(
+      to top,
+      transparent 50%,
+      var(--color-figma-neutral-50) 50%
+    ),
+    radial-gradient(
+      circle 16px at center,
+      transparent 16px,
+      var(--color-figma-neutral-50) 16px
+    );
+  mask-composite: intersect;
+}
+
+.concave-border::after {
+  content: '';
+  width: 32px;
+  height: 32px;
+  display: block;
+  position: absolute;
+  background-color: var(--color-figma-neutral-50);
+  right: 0;
+  bottom: -32px;
+  mask:
+    linear-gradient(
+      to right,
+      transparent 50%,
+      var(--color-figma-neutral-50) 50%
+    ),
+    linear-gradient(
+      to top,
+      transparent 50%,
+      var(--color-figma-neutral-50) 50%
+    ),
+    radial-gradient(
+      circle 16px at center,
+      transparent 16px,
+      var(--color-figma-neutral-50) 16px
+    );
+  mask-composite: intersect;
+}

@@ -138,7 +138,7 @@ const Carousel = ({
         className={cn(
           'relative',
           overflowXHidden && 'overflow-x-hidden',
-          className
+          className,
         )}
         role='region'
         aria-roledescription='carousel'
@@ -155,21 +155,24 @@ const CarouselContent = ({
   className,
   ...props
 }: React.ComponentProps<'div'>) => {
-  const { carouselRef, orientation, contentClassName, disableDefaultOverflow } = useCarousel()
+  const { carouselRef, orientation, contentClassName, disableDefaultOverflow } =
+    useCarousel()
 
   return (
     <div
       ref={carouselRef}
       className={cn(
         !disableDefaultOverflow && 'overflow-hidden',
-        contentClassName
+        contentClassName,
       )}
       data-slot='carousel-content'
     >
       <div
         className={cn(
           'flex',
-          orientation === 'horizontal' && !disableDefaultOverflow ? '-ml-4' : '',
+          orientation === 'horizontal' && !disableDefaultOverflow
+            ? '-ml-4'
+            : '',
           orientation === 'vertical' ? '-mt-4 flex-col' : '',
           orientation === 'horizontal' && disableDefaultOverflow ? '' : '',
           className,
