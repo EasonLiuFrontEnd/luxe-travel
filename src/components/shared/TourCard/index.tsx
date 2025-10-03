@@ -5,10 +5,10 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { RightOnlyFlipBook } from '@/components/ui/RightOnlyFlipBook'
 import type { TBaseComponent, TFlipBookPage } from '@/types'
+import type { TTravelerReview } from '@/lib/tours/types'
 import styles from './style.module.css'
-import type { TTravelerReview } from '../config'
 
-type TFreeTourCardProps = TBaseComponent & {
+export type TTourCardProps = TBaseComponent & {
   title: string
   subtitle: string
   description: string
@@ -19,9 +19,11 @@ type TFreeTourCardProps = TBaseComponent & {
   note?: string
   onDetailsClick?: () => void
   onReviewClick?: () => void
+  tourType: 'free' | 'rcar' // 用來區分顏色主題
+  logoPath: string // 自定義 logo 路徑
 }
 
-const FreeTourCard = ({
+const TourCard = ({
   title,
   subtitle,
   description,
@@ -33,8 +35,16 @@ const FreeTourCard = ({
   onDetailsClick,
   onReviewClick,
   className,
-}: TFreeTourCardProps) => {
+  tourType,
+  logoPath,
+}: TTourCardProps) => {
   const imageUrl = mainImageUrl
+
+  // 根據 tourType 設置顏色主題
+  const colorTheme = {
+    bgColor: tourType === 'free' ? 'bg-figma-accent-blue-normal' : 'bg-figma-primary-300',
+    textColor: tourType === 'free' ? 'text-figma-accent-blue-normal' : 'text-figma-primary-300',
+  }
 
   const flipBookPages: TFlipBookPage[] = [
     {
@@ -54,7 +64,7 @@ const FreeTourCard = ({
 
             <div className='absolute h-[17px] w-[64px] top-[10px] xl:top-[13px] left-1/2 transform -translate-x-1/2'>
               <Image
-                src='/free-tours/logo.png'
+                src={logoPath}
                 alt='Logo'
                 width={64}
                 height={17}
@@ -95,7 +105,7 @@ const FreeTourCard = ({
         </div>
 
         <div className='relative flex flex-1 min-w-0'>
-          <div className='hidden xl:block absolute bg-figma-accent-blue-normal bottom-0 right-0 transition-all duration-300 group-hover:-translate-x-[40px] group-hover:-translate-y-[36px] h-full w-full' />
+          <div className={`hidden xl:block absolute ${colorTheme.bgColor} bottom-0 right-0 transition-all duration-300 group-hover:-translate-x-[40px] group-hover:-translate-y-[36px] h-full w-full`} />
 
           <div className='xl:bg-white flex flex-col justify-between w-full min-w-0 relative xl:gap-7 xl:pl-8 xl:pr-5 xl:py-5 transition-all duration-300'>
             <div className='flex flex-col xl:gap-3 w-full'>
@@ -112,7 +122,7 @@ const FreeTourCard = ({
 
                     <div className='absolute h-[17px] w-[64px] top-[10px] left-1/2 transform -translate-x-1/2'>
                       <Image
-                        src='/free-tours/logo.png'
+                        src={logoPath}
                         alt='Logo'
                         width={64}
                         height={17}
@@ -123,7 +133,7 @@ const FreeTourCard = ({
                 </div>
 
                 <div className='flex-1 flex relative min-w-0'>
-                  <div className='xl:hidden absolute z-[-1] bg-figma-accent-blue-normal bottom-0 right-0 transition-all duration-300 -translate-x-[16px] -translate-y-[22px] h-full w-full' />
+                  <div className={`xl:hidden absolute z-[-1] ${colorTheme.bgColor} bottom-0 right-0 transition-all duration-300 -translate-x-[16px] -translate-y-[22px] h-full w-full`} />
 
                   <div className='flex flex-col xl:flex-row xl:items-start justify-between gap-4 xl:gap-3 p-4 xl:p-0 w-full bg-figma-primary-0 xl:bg-transparent'>
                     <div className='flex flex-col gap-1 text-figma-primary-950 flex-1 min-w-0'>
@@ -134,7 +144,7 @@ const FreeTourCard = ({
                         {title}
                       </div>
                     </div>
-                    <div className='flex items-end gap-1 text-figma-accent-blue-normal shrink-0'>
+                    <div className={`flex items-end gap-1 ${colorTheme.textColor} shrink-0`}>
                       <div className='whitespace-nowrap font-noto-serif-body-l-semibold xl:font-noto-serif-h5-bold'>
                         ＄{price.toLocaleString()}
                       </div>
@@ -176,7 +186,7 @@ const FreeTourCard = ({
                         <path d='M9 2.25L7.5 6.75L3 8.25L7.5 9.75L9 14.25L10.5 9.75L15 8.25L10.5 6.75L9 2.25Z' fill='#8BC3DE' />
                         <path d='M3.75 11.25L2.625 13.875L0 15L2.625 16.125L3.75 18.75L4.875 16.125L7.5 15L4.875 13.875L3.75 11.25Z' fill='#8BC3DE' />
                       </svg>
-                      <span className='font-genseki-body-s-bold text-figma-accent-blue-normal'>
+                      <span className={`font-genseki-body-s-bold ${colorTheme.textColor}`}>
                         旅客迴響
                       </span>
                     </div>
@@ -224,4 +234,4 @@ const FreeTourCard = ({
   )
 }
 
-export default FreeTourCard
+export default TourCard

@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import { RightOnlyFlipBook } from '@/components/ui/RightOnlyFlipBook'
 import type { TBaseComponent, TFlipBookPage } from '@/types'
 import styles from './style.module.css'
-import type { TTourDate } from '../config'
+import type { TTourDate } from './config'
 
 type TGroupTourCardProps = TBaseComponent & {
   title: string

@@ -7,24 +7,45 @@ import ClearIcon from '@/components/shared/icons/common/ClearIcon'
 import CheckIcon from '@/components/shared/icons/common/CheckIcon'
 import type { TBaseComponent } from '@/types'
 import { useClickOutside } from '@/hooks/useClickOutside'
-import { useProductCountries } from '@/api/group-tours'
-import type { TRegionData } from '@/api/group-tours'
 import styles from './styles.module.css'
 
+type TRegionData = {
+  region: string
+  countries: Array<{ code: string; nameZh: string }>
+}
+
 type TDestinationFilterProps = TBaseComponent & {
-  onSearch?: (selectedCountries: string[]) => void
+  showBudgetFilter?: boolean
+  showDaysFilter?: boolean
+  gapSize?: 'lg:gap-8' | 'lg:gap-9' // 支援不同的間距設定
+  useProductCountriesHook: () => {
+    query: { isSuccess: boolean; data?: TRegionData[] }
+    mock: { data?: TRegionData[] }
+  }
+  onSearch?: (
+    selectedCountries: string[],
+    budgetRange?: [number, number],
+    daysRange?: string | null
+  ) => void
 }
 
 const DestinationFilter = ({
   className,
+  showBudgetFilter = true,
+  showDaysFilter = true,
+  gapSize = 'lg:gap-8', // 預設值
+  useProductCountriesHook,
   onSearch,
 }: TDestinationFilterProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null)
   const [selectedCountries, setSelectedCountries] = useState<string[]>([])
+  const [budgetRange, setBudgetRange] = useState<[number, number]>([80000, 600000])
+  const [selectedDaysRange, setSelectedDaysRange] = useState<string | null>('不限天數')
   const [regions, setRegions] = useState<TRegionData[]>([])
 
-  const { query: countriesQuery, mock: countriesMock } = useProductCountries()
+  const { query: countriesQuery, mock: countriesMock } = useProductCountriesHook()
+  const daysRangeOptions = ['6-10天', '11-15天', '16-20天', '21-25天', '不限天數']
 
   useEffect(() => {
     if (countriesQuery.isSuccess) {
@@ -86,8 +107,33 @@ const DestinationFilter = ({
     )
   }
 
+  const handleBudgetChange = (index: number, value: number) => {
+    const newRange: [number, number] = [...budgetRange] as [number, number]
+    newRange[index] = value
+    if (newRange[0] > newRange[1]) {
+      if (index === 0) {
+        newRange[1] = newRange[0]
+      } else {
+        newRange[0] = newRange[1]
+      }
+    }
+    setBudgetRange(newRange)
+  }
+
+  const handleDaysRangeToggle = (range: string) => {
+    setSelectedDaysRange(prev => prev === range ? null : range)
+  }
+
   const handleSearch = () => {
-    onSearch?.(selectedCountries)
+    if (showBudgetFilter && showDaysFilter) {
+      onSearch?.(selectedCountries, budgetRange, selectedDaysRange)
+    } else if (showBudgetFilter) {
+      onSearch?.(selectedCountries, budgetRange)
+    } else if (showDaysFilter) {
+      onSearch?.(selectedCountries, undefined, selectedDaysRange)
+    } else {
+      onSearch?.(selectedCountries)
+    }
     setIsOpen(false)
   }
 
@@ -104,9 +150,10 @@ const DestinationFilter = ({
       <div
         className={`absolute inset-0 opacity-15 ${styles.backgroundLayer3}`}
       />
+
       <div className='relative z-10'>
         <div className='max-w-[1824px] mx-auto'>
-          <div className='bg-white rounded-2xl p-6 flex flex-col lg:flex-row gap-[20px] lg:gap-9 lg:items-center'>
+          <div className={`bg-white rounded-2xl p-6 flex flex-col lg:flex-row gap-[20px] ${gapSize} lg:items-center`}>
             <div className='flex-1 relative' ref={dropdownRef}>
               <div className='flex flex-col gap-1'>
                 <label className='font-family-noto-serif font-semibold text-lg text-figma-primary-950'>
@@ -194,6 +241,76 @@ const DestinationFilter = ({
                 )}
               </div>
             </div>
+
+            {showBudgetFilter && (
+              <div className='flex-1 flex flex-col gap-2'>
+                <label className='font-family-noto-serif font-semibold text-lg text-figma-primary-950'>
+                  預算
+                </label>
+                <div className='flex flex-col'>
+                  <div className='font-family-genseki text-sm text-figma-primary-950 mb-3'>
+                    NT ${budgetRange[0].toLocaleString()} ~ NT ${budgetRange[1].toLocaleString()}
+                  </div>
+                  <div className='relative h-[20px]'>
+                    <div className='absolute bg-[#ebebeb] h-[6px] left-0 right-0 rounded-full top-[7px] pointer-events-none' />
+                    <div
+                      className={`absolute bg-figma-secondary-500 h-[6px] rounded-full top-[7px] pointer-events-none ${styles.rangeTrack}`}
+                      style={{
+                        '--left-percent': `${((budgetRange[0] - 80000) / (600000 - 80000)) * 100}%`,
+                        '--right-percent': `${100 - ((budgetRange[1] - 80000) / (600000 - 80000)) * 100}%`
+                      } as React.CSSProperties}
+                    />
+                    <input
+                      type='range'
+                      min='80000'
+                      max='600000'
+                      step='10000'
+                      value={budgetRange[1]}
+                      onChange={(e) => handleBudgetChange(1, Number(e.target.value))}
+                      className={`absolute w-full h-[20px] top-0 appearance-none bg-transparent cursor-pointer ${styles.rangeInput} ${styles.rangeInputUpper}`}
+                    />
+                    <input
+                      type='range'
+                      min='80000'
+                      max='600000'
+                      step='10000'
+                      value={budgetRange[0]}
+                      onChange={(e) => handleBudgetChange(0, Number(e.target.value))}
+                      className={`absolute w-full h-[20px] top-0 appearance-none bg-transparent cursor-pointer ${styles.rangeInput} ${styles.rangeInputLower}`}
+                    />
+                  </div>
+                  <div className='flex justify-between font-family-genseki text-xs text-figma-primary-950'>
+                    <span>80,000</span>
+                    <span>600,000</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {showDaysFilter && (
+              <div className='flex-1 flex flex-col gap-2'>
+                <label className='font-family-noto-serif font-semibold text-lg text-figma-primary-950'>
+                  旅行天數
+                </label>
+                <div className='flex gap-4 flex-wrap'>
+                  {daysRangeOptions.map((range) => (
+                    <button
+                      key={range}
+                      onClick={() => handleDaysRangeToggle(range)}
+                      className={`px-4 py-3 border cursor-pointer transition-colors ${
+                        selectedDaysRange === range
+                          ? 'border-figma-secondary-500 bg-figma-secondary-100 text-figma-secondary-950'
+                          : 'border-figma-primary-500 text-figma-primary-500 hover:bg-figma-neutral-50'
+                      }`}
+                    >
+                      <span className='font-family-genseki text-base leading-[1.2]'>
+                        {range}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <button
               onClick={handleSearch}

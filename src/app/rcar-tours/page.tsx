@@ -2,9 +2,9 @@
 
 import { useState, useCallback, useEffect, useMemo } from 'react'
 import TourBanner from '@/components/shared/TourBanner'
-import DestinationFilter from '@/components/pages/rcar-tours/DestinationFilter'
+import DestinationFilter from '@/components/shared/DestinationFilter'
 import ResultsSort from '@/components/shared/ResultsSort'
-import RcarTourResults from '@/components/pages/rcar-tours/RcarTourResults'
+import RcarTours from '@/components/pages/rcar-tours'
 import {
   convertCountriesToFilters,
   getCountryCodes,
@@ -88,7 +88,11 @@ const RcarToursPage = ({ className }: TRcarToursPageProps) => {
     }
   }, [searchQuery.isSuccess, searchQuery.data, searchMock.data, searchParams])
 
-  const handleSearch = useCallback((selectedCountries: string[], budgetRange: [number, number], daysRange: string | null) => {
+  const handleSearch = useCallback((
+    selectedCountries: string[],
+    budgetRange?: [number, number],
+    daysRange?: string | null
+  ) => {
     const filters: TSelectedFilters = []
 
     if (selectedCountries.length > 0) {
@@ -96,17 +100,19 @@ const RcarToursPage = ({ className }: TRcarToursPageProps) => {
       filters.push(...countryFilters)
     }
 
-    const isDefaultBudget = budgetRange[0] === 80000 && budgetRange[1] === 600000
-    if (!isDefaultBudget) {
-      filters.push({
-        id: 'budget',
-        label: `＄${budgetRange[0].toLocaleString()} - ＄${budgetRange[1].toLocaleString()}`,
-        type: 'price'
-      })
+    if (budgetRange) {
+      const isDefaultBudget = budgetRange[0] === 80000 && budgetRange[1] === 600000
+      if (!isDefaultBudget) {
+        filters.push({
+          id: 'budget',
+          label: `＄${budgetRange[0].toLocaleString()} - ＄${budgetRange[1].toLocaleString()}`,
+          type: 'price'
+        })
+      }
     }
 
     const isDefaultDays = !daysRange || daysRange === '不限天數'
-    if (!isDefaultDays) {
+    if (daysRange && !isDefaultDays) {
       filters.push({
         id: 'days',
         label: daysRange,
@@ -122,9 +128,12 @@ const RcarToursPage = ({ className }: TRcarToursPageProps) => {
       page: 1,
       limit: 100,
       sort: 'priceMin',
-      order: 'asc',
-      budgetMin: budgetRange[0],
-      budgetMax: budgetRange[1]
+      order: 'asc'
+    }
+
+    if (budgetRange) {
+      newParams.budgetMin = budgetRange[0]
+      newParams.budgetMax = budgetRange[1]
     }
 
     if (selectedCountries.length > 0) {
@@ -201,7 +210,11 @@ const RcarToursPage = ({ className }: TRcarToursPageProps) => {
         isLoading={searchQuery.isLoading}
         altTextPrefix='包車行程精選'
       />
-      <DestinationFilter onSearch={handleSearch} />
+      <DestinationFilter
+        gapSize="lg:gap-8"
+        useProductCountriesHook={useProductCountries}
+        onSearch={handleSearch}
+      />
       <ResultsSort
         resultCount={tours.length}
         selectedFilters={searchedCountries}
@@ -212,7 +225,7 @@ const RcarToursPage = ({ className }: TRcarToursPageProps) => {
       />
 
       <div className='px-[clamp(12px,2.5vw,48px)] pb-[80px] mt-9 xl:mt-[79px]'>
-        <RcarTourResults tours={tours} />
+        <RcarTours tours={tours} />
       </div>
     </main>
   )

@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import TourBanner from '@/components/shared/TourBanner'
-import DestinationFilter from '@/components/pages/group-tours/DestinationFilter'
+import DestinationFilter from '@/components/shared/DestinationFilter'
 import ResultsSort from '@/components/shared/ResultsSort'
-import GroupTourResults from '@/components/pages/group-tours/GroupTourResults'
+import GroupTours from '@/components/pages/group-tours'
 import {
   convertCountriesToFilters,
   getCountryCodes,
@@ -14,7 +14,7 @@ import {
   type TTourData,
   type TSelectedFilters
 } from '@/components/pages/group-tours/config'
-import { useProductsSearch, useProductCountries, type TProductSearchParams, type TProduct } from '@/api'
+import { useProductsSearch, useProductCountries, type TProductSearchParams, type TProduct } from '@/api/group-tours'
 import type { TBaseComponent } from '@/types'
 
 type TGroupToursPageProps = TBaseComponent
@@ -69,7 +69,13 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
     }
   }, [searchQuery.isSuccess, searchQuery.data, searchMock.data, searchParams])
 
-  const handleSearch = useCallback((selectedCountries: string[]) => {
+  const handleSearch = useCallback((
+    selectedCountries: string[],
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    budgetRange?: [number, number],
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    daysRange?: string | null
+  ) => {
     const countryFilters = convertCountriesToFilters(selectedCountries, regionsData)
     setSearchedCountries(countryFilters)
     setHasSearched(true)
@@ -148,7 +154,13 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
         isLoading={searchQuery.isLoading}
         altTextPrefix='團體旅遊精選行程'
       />
-      <DestinationFilter onSearch={handleSearch} />
+      <DestinationFilter
+        showBudgetFilter={false}
+        showDaysFilter={false}
+        gapSize="lg:gap-9"
+        useProductCountriesHook={useProductCountries}
+        onSearch={handleSearch}
+      />
       <ResultsSort
         resultCount={tours.length}
         selectedFilters={searchedCountries}
@@ -159,7 +171,7 @@ const GroupToursPage = ({ className }: TGroupToursPageProps) => {
       />
 
       <div className='px-[clamp(12px,2.5vw,48px)] pb-[80px] mt-9 xl:mt-[79px]'>
-        <GroupTourResults tours={tours} />
+        <GroupTours tours={tours} />
       </div>
     </main>
   )

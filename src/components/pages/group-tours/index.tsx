@@ -2,17 +2,17 @@
 
 import GroupTourCard from './GroupTourCard'
 import type { TBaseComponent } from '@/types'
-import type { TTourData } from '../config'
+import type { TTourData } from './config'
 import { useRouter } from 'next/navigation'
 
-type TGroupTourResultsProps = TBaseComponent & {
+type TGroupToursProps = TBaseComponent & {
   tours?: TTourData[]
 }
 
-const GroupTourResults = ({
+const GroupTours = ({
   tours = [],
   className,
-}: TGroupTourResultsProps) => {
+}: TGroupToursProps) => {
 
   const router = useRouter()
 
@@ -41,4 +41,4 @@ const GroupTourResults = ({
   )
 }
 
-export default GroupTourResults
+export default GroupTours
