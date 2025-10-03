@@ -8,11 +8,14 @@ const Introduction = () => {
   const { query: introductionsQuery, mock } = useIntroductions()
 
   const currentIntroduction = useMemo(() => {
-    const data = introductionsQuery.data || mock.rows
+    // 只有在 API 錯誤時才使用假資料，API 正常回應（包括空陣列）都使用 API 資料
+    const data = introductionsQuery.error 
+      ? mock.rows 
+      : (introductionsQuery.data || [])
     return (
       data.find((intro) => intro.countryId === selectedCountryId) || data[0]
     )
-  }, [introductionsQuery.data, mock.rows, selectedCountryId])
+  }, [introductionsQuery.data, introductionsQuery.error, mock.rows, selectedCountryId])
 
   if (!currentIntroduction) {
     return (
