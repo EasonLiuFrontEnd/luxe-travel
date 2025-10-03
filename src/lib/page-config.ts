@@ -8,6 +8,7 @@ export type TPageType =
   | 'group-tours'
   | 'tour-content'
   | 'free-tours'
+  | 'rcar-tours'
   | 'default'
 
 export type TPageConfig = {
@@ -77,6 +78,15 @@ export const PAGE_CONFIGS: Record<string, TPageConfig> = {
   },
   '/free-tours': {
     type: 'free-tours',
+    hasScrollAnimation: false,
+    hasTransparentHeader: false,
+    showConsultButton: true,
+    headerBehavior: 'sticky',
+    footerStyle: 'default',
+    scrollToTopBg: 'bg-figma-neutral-50',
+  },
+  '/rcar-tours': {
+    type: 'rcar-tours',
     hasScrollAnimation: false,
     hasTransparentHeader: false,
     showConsultButton: true,
