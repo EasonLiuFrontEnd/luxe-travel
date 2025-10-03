@@ -4,8 +4,8 @@ import React from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { RightOnlyFlipBook } from '@/components/ui/RightOnlyFlipBook'
-import type { TBaseComponent, TFlipBookPage } from '@/types'
-import type { TTravelerReview } from '@/lib/tours/types'
+import type { TBaseComponent, TFlipBookPage } from '../../../../types'
+import type { TTravelerReview } from '../types'
 import styles from './style.module.css'
 
 export type TTourCardProps = TBaseComponent & {
