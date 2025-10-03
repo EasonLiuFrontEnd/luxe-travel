@@ -9,19 +9,14 @@ type TFreeTourResultsProps = TBaseComponent & {
   tours?: TTourData[]
 }
 
-const FreeTourResults = ({
-  tours = [],
-  className,
-}: TFreeTourResultsProps) => {
-
+const FreeTourResults = ({ tours = [], className }: TFreeTourResultsProps) => {
   const router = useRouter()
 
   const handleDetailsClick = (tourId: string) => {
     router.push(`/free-tours/${tourId}`)
   }
 
-  const handleReviewClick = (tourId: string) => {
-  }
+  const handleReviewClick = () => {}
 
   return (
     <div className={`w-full max-w-[1920px] mx-auto ${className || ''}`}>
@@ -38,7 +33,7 @@ const FreeTourResults = ({
             travelerReview={tour.travelerReview}
             note={tour.note}
             onDetailsClick={() => handleDetailsClick(tour.id)}
-            onReviewClick={() => handleReviewClick(tour.id)}
+            onReviewClick={handleReviewClick}
           />
         ))}
       </div>
