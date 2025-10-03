@@ -8,6 +8,7 @@ import DepartureDate from '@/components/pages/tour-content/DepartureDate'
 import Flight from '@/components/pages/tour-content/Flight'
 import Registration from '@/components/pages/tour-content/Registration'
 import Featured from '@/components/pages/tour-content/Featured'
+import DailyItinerary from '@/components/pages/tour-content/DailyItinerary'
 
 const TourContentPage = () => {
   return (
@@ -32,7 +33,7 @@ const TourContentPage = () => {
               </svg>
               <p className='font-noto-serif-body-l-semibold text-figma-secondary-950'>NOTE</p>
             </div>
-            <p className='font-genseki-body-m-regular text-figma-primary-500'>
+            <p className='font-family-genseki leading-[1.5] text-figma-primary-500'>
               上方為參考航班，實際航班時間以航空公司為最終確認。若因航空公司或不可抗力因素，變動航班時間或轉機點，造成團體行程變更、增加餐食，本公司將不另行加價。若行程變更、減少餐食，則酌於退費。幾乎所有外籍航空公司之團體機票(含燃油附加稅)一經開票後，均無退票價值，此點基於航空公司之規定，敬請見諒。因應航空公司開票及保險的需求，及為了提供您在旅途中更完善的服務，請務必在繳交訂金的時候填妥客戶基本資料表。旅客資料表下載
               <br />
               <br />
@@ -72,6 +73,7 @@ const TourContentPage = () => {
         <Registration />
       </div>
       <Featured />
+      <DailyItinerary />
     </div>
   )
 }

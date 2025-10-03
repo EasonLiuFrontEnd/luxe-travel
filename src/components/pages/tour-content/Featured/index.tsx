@@ -2,11 +2,6 @@ import Image from "next/image"
 import FeaturedCarousel from './FeaturedCarousel'
 
 const Featured = () => {
-  const gradientStyle = {
-    fill:
-      'linear-gradient(180deg, #F5F5F5 11.06%, rgba(189, 160, 94, 0.00) 100%)',
-  }
-
   return (
     <div className="flex flex-col border-t border-figma-secondary-500">
       <h2 className='mx-auto font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-4 mt-13 mb-12 gradient-title-border'>
@@ -48,25 +43,11 @@ const Featured = () => {
         className="relative pt-[150px] px-[240px] pb-[172px]"
         style={{ background: 'linear-gradient(180deg, #F5F5F5 0%, rgba(189, 160, 94, 0.25) 40%, rgba(189, 160, 94, 0.25) 80%, #F5F5F5 100%)' }}
       >
-        <Image
-          src='/tour-content/plus-aggregate.svg'
-          alt='plus-aggregate'
-          width={290}
-          height={290}
-          className="w-[290px] h-[290px] rounded-2xl object-cover absolute top-0 left-0 z-0"
-        />
         <FeaturedCarousel
           images={[
             '/tour-content/hotel-lobby.jpg'
           ]}
           className="w-[1440px] h-[530px] rounded-2xl overflow-hidden z-10"
-        />
-        <Image
-          src='/tour-content/plus-aggregate-large.svg'
-          alt='plus-aggregate-large'
-          width={429}
-          height={395}
-          className="w-[429px] h-[395px] rounded-2xl object-cover absolute bottom-0 right-0 translate-y-[45%] z-0"
         />
       </div>
       <div className="mx-[240px] mb-[150px]">
@@ -118,25 +99,11 @@ const Featured = () => {
         className="relative pt-[150px] px-[240px] pb-[172px]"
         style={{ background: 'linear-gradient(180deg, #F5F5F5 0%, rgba(189, 160, 94, 0.25) 40%, rgba(189, 160, 94, 0.25) 80%, #F5F5F5 100%)' }}
       >
-        <Image
-          src='/tour-content/plus-aggregate.svg'
-          alt='plus-aggregate'
-          width={290}
-          height={290}
-          className="w-[290px] h-[290px] rounded-2xl object-cover absolute top-0 left-0 z-0"
-        />
         <FeaturedCarousel
           images={[
             '/tour-content/hotel-lobby.jpg'
           ]}
           className="w-[1440px] h-[530px] rounded-2xl overflow-hidden z-10"
-        />
-        <Image
-          src='/tour-content/plus-aggregate-large.svg'
-          alt='plus-aggregate-large'
-          width={429}
-          height={395}
-          className="w-[429px] h-[395px] rounded-2xl object-cover absolute bottom-0 right-0 translate-y-[45%] z-0"
         />
       </div>
       <div className="mx-[240px] mb-[150px]">
@@ -158,29 +125,70 @@ const Featured = () => {
           alt='scene-a'
           width={428}
           height={664}
-          className="w-[428px] h-[664px] rounded-2xl object-cover mt-[190px]"
+          className="rounded-2xl object-cover mt-[190px]"
         />
         <Image
           src='/tour-content/scene-b.jpg'
           alt='scene-b'
           width={428}
           height={664}
-          className="w-[428px] h-[664px] rounded-2xl object-cover mb-[190px]"
+          className="rounded-2xl object-cover mb-[190px]"
         />
         <Image
           src='/tour-content/scene-c.jpg'
           alt='scene-c'
           width={428}
           height={664}
-          className="w-[428px] h-[664px] rounded-2xl object-cover mt-[190px]"
+          className="rounded-2xl object-cover mt-[190px]"
         />
         <Image
           src='/tour-content/scene-d.jpg'
           alt='scene-d'
           width={428}
           height={664}
-          className="w-[428px] h-[664px] rounded-2xl object-cover mb-[190px]"
+          className="rounded-2xl object-cover mb-[190px]"
         />
+      </div>
+      <div className="flex items-start">
+        <Image
+          src='/tour-content/food-a.jpg'
+          alt='food-a'
+          width={586}
+          height={586}
+          className="rounded-2xl object-cover mt-[120px] ml-[301px]"
+        />
+        <Image
+          src='/tour-content/tradition.jpg'
+          alt='tradition'
+          width={610}
+          height={610}
+          className="rounded-2xl object-cover mt-[281px] ml-[135px]"
+        />
+      </div>
+      <div className="flex">
+        <div className="relative mt-[64px] ml-[459px] mb-[170px]">
+          <Image
+            src='/tour-content/plus-aggregate-small.svg'
+            alt='plus-aggregat-small'
+            width={234}
+            height={234}
+            className="absolute top-[-64px] left-[-113px] rounded-2xl object-cover z-0"
+          />
+          <Image
+            src='/tour-content/food-b.jpg'
+            alt='food-b'
+            width={428}
+            height={428}
+            className="relative rounded-2xl object-cover"
+          />
+        </div>
+        <div className="w-[609px] mt-[193px] ml-[135px]">
+          <h3 className="font-noto-serif-h3-bold text-figma-secondary-500 mb-[45px]">道地西葡統美食、百年餐廳、佛朗明哥舞晚宴---為您呈現多感官的美味盛宴!</h3>
+          <p className="font-genseki-h6-regular text-figma-primary-950">
+            馬德里百年酒窖餐廳、塞哥維亞香烤乳豬、佛朗明哥舞晚宴、Tapas、法朵 Fado 晚宴、葡萄牙海鮮<br /><br />
+            燉飯、波多百年餐廳.....豐富的菜色、精彩的表演,為您呈現多感官的美味盛宴。
+          </p>
+        </div>
       </div>
     </div>
   )

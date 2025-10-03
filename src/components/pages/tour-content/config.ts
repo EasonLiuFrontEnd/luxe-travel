@@ -36,6 +36,18 @@ export type TTourPricing = {
   infant: TPriceValue
 }
 
+export type TItinerary = {
+  day: string
+  destination: string
+  route: Array<{
+    start: string
+    end: string
+    time: string
+    distance: string
+  }>
+  routeDescription: string
+}
+
 export const mockTimeSlots: TTimeSlot[] = [
   { id: '1', date: '9/9(日)', status: '已成團', href: '#' },
   { id: '2', date: '9/16(日)', status: '熱銷中', href: '#' },
@@ -140,3 +152,37 @@ export const formatNumber = (price: TPriceValue): string => {
   if (price === null || price === 0) return ''
   return price.toLocaleString()
 }
+
+export const itineraryData: TItinerary[] = [
+  {
+    day: 'Day04',
+    destination: '哥多華 – 格拉納達',
+    route: [
+      {
+        start: '哥都華',
+        end: '格拉納達',
+        time: '2hrs',
+        distance: '127KM',
+      },
+      {
+        start: '格拉納達',
+        end: '曼達拉',
+        time: '2hrs',
+        distance: '127KM',
+      },
+      {
+        start: '曼達拉',
+        end: '格拉納達',
+        time: '2hrs',
+        distance: '127KM',
+      },
+      {
+        start: '格拉納達',
+        end: '哥都華',
+        time: '2hrs',
+        distance: '127KM',
+      }
+    ],
+    routeDescription: '今日準備好行李及輕鬆愉快的心情,前往桃園機場集合,專人替您辦理完登機手續後,搭乘豪華客機,航向西班牙馬德里,今晚將宿於機上,祝您一夜好眠!今日準備好行李及輕鬆愉快的心情,前往桃園機場集合,專人替您辦理完登機手續後,搭乘豪華客機,航向西班牙馬德里,今晚將宿於機上,祝您一夜好眠!今日準備好行李及輕鬆愉快的心情,前往桃園機場集合,專人替您辦理完登機手續後,搭乘豪華客機,航向西班牙馬德里。'
+  },
+]

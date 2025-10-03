@@ -38,57 +38,73 @@ const FeaturedCarousel = ({
   }
 
   return (
-    <Carousel
-      setApi={setApi}
-      opts={{
-        align: 'start',
-        loop: true,
-      }}
-      className={cn('relative', className)}
-    >
-      <CarouselContent>
-        {images.map((image, index) => (
-          <CarouselItem key={index}>
-            <Image
-              src={image}
-              alt={`featured-image-${index + 1}`}
-              className='object-cover rounded-2xl'
-              width={1440}
-              height={590}
-              priority={index === 0}
-            />
-          </CarouselItem>
-        ))}
-      </CarouselContent>
+    <>
+      <Image
+        src='/tour-content/plus-aggregate.svg'
+        alt='plus-aggregate'
+        width={290}
+        height={290}
+        className="absolute top-0 left-0 rounded-2xl object-cover z-0"
+      />
+      <Carousel
+        setApi={setApi}
+        opts={{
+          align: 'start',
+          loop: true,
+        }}
+        className={cn('relative', className)}
+      >
+        <CarouselContent>
+          {images.map((image, index) => (
+            <CarouselItem key={index}>
+              <Image
+                src={image}
+                alt={`featured-image-${index + 1}`}
+                className='object-cover rounded-2xl'
+                width={1440}
+                height={590}
+                priority={index === 0}
+              />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
 
-      <div className='absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center space-x-4 z-10'>
-        <button
-          onClick={() => api?.scrollPrev()}
-          className={cn(
-            'w-[32px] h-[32px] rounded-full cursor-pointer',
-            'flex items-center justify-center',
-            'bg-figma-secondary-300 hover:bg-figma-secondary-500 text-figma-neutral-0',
-          )}
-        >
-          <ChevronLeft className='w-6 h-6' />
-        </button>
+        <div className='absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center space-x-4 z-10'>
+          <button
+            onClick={() => api?.scrollPrev()}
+            className={cn(
+              'w-[32px] h-[32px] rounded-full cursor-pointer',
+              'flex items-center justify-center',
+              'bg-figma-secondary-300 hover:bg-figma-secondary-500 text-figma-neutral-0',
+            )}
+          >
+            <ChevronLeft className='w-6 h-6' />
+          </button>
 
-        <div className='font-genseki-h5-medium text-figma-neutral-0'>
-          {formatNumber(current + 1)}/{formatNumber(images.length)}
+          <div className='font-genseki-h5-medium text-figma-neutral-0'>
+            {formatNumber(current + 1)}/{formatNumber(images.length)}
+          </div>
+
+          <button
+            onClick={() => api?.scrollNext()}
+            className={cn(
+              'w-[32px] h-[32px] rounded-full cursor-pointer',
+              'flex items-center justify-center',
+              'bg-figma-secondary-300 hover:bg-figma-secondary-500 text-figma-neutral-0',
+            )}
+          >
+            <ChevronRight className='w-6 h-6' />
+          </button>
         </div>
-
-        <button
-          onClick={() => api?.scrollNext()}
-          className={cn(
-            'w-[32px] h-[32px] rounded-full cursor-pointer',
-            'flex items-center justify-center',
-            'bg-figma-secondary-300 hover:bg-figma-secondary-500 text-figma-neutral-0',
-          )}
-        >
-          <ChevronRight className='w-6 h-6' />
-        </button>
-      </div>
-    </Carousel>
+      </Carousel>
+      <Image
+        src='/tour-content/plus-aggregate-large.svg'
+        alt='plus-aggregate-large'
+        width={429}
+        height={395}
+        className="absolute bottom-0 right-0 translate-y-[45%] rounded-2xl object-cover z-0"
+      />
+    </>
   )
 }
 
