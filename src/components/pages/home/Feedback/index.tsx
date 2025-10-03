@@ -22,15 +22,16 @@ const Feedback = () => {
   } = useFeedBack()
 
   const effectiveData = useMemo(() => {
-    if (feedbacksError || !feedbacksData) {
+    if (feedbacksError) {
       return mock.data
     }
 
     if (isFeedbacksLoading) {
-      return mock.data
+      return [] // 載入中時返回空陣列，讓組件自己處理載入狀態
     }
 
-    return feedbacksData
+    // 如果 API 正常回應，即使是空陣列也使用 API 資料
+    return feedbacksData || []
   }, [feedbacksError, feedbacksData, isFeedbacksLoading, mock.data])
 
   const cardData: {

@@ -11,17 +11,23 @@ const GroupTourRecommendation = () => {
     useIntroductions()
 
   const currentCountryName = useMemo(() => {
-    const data = introductionsQuery.data || introductionsMock.rows
+    // 只有在 API 錯誤時才使用假資料，API 正常回應（包括空陣列）都使用 API 資料
+    const data = introductionsQuery.error 
+      ? introductionsMock.rows 
+      : (introductionsQuery.data || [])
     const country = data.find((intro) => intro.countryId === selectedCountryId)
     return country?.countryName || '義大利'
-  }, [introductionsQuery.data, introductionsMock.rows, selectedCountryId])
+  }, [introductionsQuery.data, introductionsQuery.error, introductionsMock.rows, selectedCountryId])
 
   const currentGroupTours = useMemo(() => {
-    const data = groupToursQuery.data || groupToursMock.rows
+    // 只有在 API 錯誤時才使用假資料，API 正常回應（包括空陣列）都使用 API 資料
+    const data = groupToursQuery.error 
+      ? groupToursMock.rows 
+      : (groupToursQuery.data || [])
     return data
       .filter((tour) => tour.countryId === selectedCountryId)
       .slice(0, 3)
-  }, [groupToursQuery.data, groupToursMock.rows, selectedCountryId])
+  }, [groupToursQuery.data, groupToursQuery.error, groupToursMock.rows, selectedCountryId])
 
   return (
     <div className='bg-white box-border flex flex-col gap-8 justify-between items-center pb-6 pt-0 px-6 xl:px-6 px-4 relative rounded-2xl xl:rounded-2xl rounded-[12px] w-full h-full'>

@@ -18,16 +18,16 @@ const Concerns = () => {
   } = concernsQuery
 
   const effectiveData = useMemo(() => {
-    if (concernsError || !concernsData) {
+    if (concernsError) {
       return mock.rows
     }
 
     if (isConcernsLoading) {
-      return mock.rows
+      return [] // 載入中時返回空陣列，讓組件自己處理載入狀態
     }
 
-    // 使用 API 資料
-    return concernsData
+    // 如果 API 正常回應，即使是空陣列也使用 API 資料
+    return concernsData || []
   }, [concernsError, concernsData, isConcernsLoading, mock.rows])
 
   const gradientStyle = {

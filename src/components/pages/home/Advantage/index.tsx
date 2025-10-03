@@ -37,7 +37,7 @@ const Advantage = ({ className }: TAdvantageProps) => {
   } = advantagesQuery
 
   const displayData = useMemo(() => {
-    if (advantagesError || !advantagesData) {
+    if (advantagesError) {
       return transformAdvantageData(mock.rows)
     }
 
@@ -45,7 +45,8 @@ const Advantage = ({ className }: TAdvantageProps) => {
       return []
     }
 
-    return transformAdvantageData(advantagesData)
+    // 如果 API 正常回應，即使是空陣列也使用 API 資料
+    return transformAdvantageData(advantagesData || [])
   }, [advantagesError, advantagesData, isAdvantagesLoading, mock.rows])
 
   useEffect(() => {

@@ -47,9 +47,13 @@ const TourPageLayout = ({
   const { query: searchQuery, mock: searchMock } = useProductsSearch(searchParams)
   const { query: countriesQuery, mock: countriesMock } = useProductCountries()
 
-  const regionsData = useMemo(() =>
-    countriesQuery.data || countriesMock.data || []
-  , [countriesQuery.data, countriesMock.data])
+  const regionsData = useMemo(() => {
+    // 只有在 API 錯誤時才使用假資料，API 正常回應（包括空陣列）都使用 API 資料
+    if (countriesQuery.error) {
+      return countriesMock.data || []
+    }
+    return countriesQuery.data || []
+  }, [countriesQuery.data, countriesQuery.error, countriesMock.data])
 
   const tourConfig = getTourTypeConfig(tourType)
   const slideConfig = getSlideConfig(tourType)
@@ -64,9 +68,8 @@ const TourPageLayout = ({
 
   useEffect(() => {
     if (searchQuery.isSuccess) {
-      let dataSource = searchQuery.data && searchQuery.data.length > 0
-        ? searchQuery.data
-        : (searchMock.data || [])
+      // 如果 API 正常回應，使用 API 資料（即使是空陣列）
+      let dataSource = searchQuery.data || []
 
       if (dataSource.length > 0) {
         const destinationCodes = searchParams.destination?.split(',') || []
@@ -106,8 +109,16 @@ const TourPageLayout = ({
       } else {
         setTours([])
       }
+    } else if (searchQuery.isError) {
+      // 只有在 API 錯誤時才使用假資料
+      const dataSource = searchMock.data || []
+      const sortedProducts = sortProducts(dataSource)
+      const convertedTours = sortedProducts.map((product: any) => 
+        convertProductToTourData(product, tourType)
+      )
+      setTours(convertedTours)
     }
-  }, [searchQuery.isSuccess, searchQuery.data, searchMock.data, searchParams, tourType])
+  }, [searchQuery.isSuccess, searchQuery.isError, searchQuery.data, searchMock.data, searchParams, tourType])
 
   const handleSearch = useCallback((
     selectedCountries: string[],
@@ -233,8 +244,9 @@ const TourPageLayout = ({
       <TourBanner
         tourType={tourType}
         slideContent={slideConfig.content}
-        tours={searchQuery.data || []}
+        tours={searchQuery.data}
         isLoading={searchQuery.isLoading}
+        hasError={!!searchQuery.error}
         altTextPrefix={tourConfig.altTextPrefix}
       />
       <DestinationFilter

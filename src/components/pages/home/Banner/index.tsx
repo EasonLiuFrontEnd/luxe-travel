@@ -65,15 +65,16 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
   } = bannersQuery
 
   const effectiveData = useMemo(() => {
-    if (bannersError || !bannersData) {
+    if (bannersError) {
       return mock.rows
     }
 
     if (isBannersLoading) {
-      return mock.rows
+      return [] // 載入中時返回空陣列，讓組件自己處理載入狀態
     }
 
-    return bannersData
+    // 如果 API 正常回應，即使是空陣列也使用 API 資料
+    return bannersData || []
   }, [bannersError, bannersData, isBannersLoading, mock.rows])
 
   const dynamicPadding = useMemo(
@@ -275,7 +276,13 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
         </div>
 
         <BannerCarousel
-          images={effectiveData.map((banner) => banner.imageUrl)}
+          images={
+            bannersError 
+              ? ['/home/banners/banner.jpg']
+              : (effectiveData && effectiveData.length > 0)
+                ? effectiveData.map(banner => banner.imageUrl)
+                : []
+          }
           autoPlayInterval={10000}
         />
       </div>
