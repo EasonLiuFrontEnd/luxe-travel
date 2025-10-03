@@ -244,8 +244,9 @@ const TourPageLayout = ({
       <TourBanner
         tourType={tourType}
         slideContent={slideConfig.content}
-        tours={searchQuery.data || []}
+        tours={searchQuery.data}
         isLoading={searchQuery.isLoading}
+        hasError={!!searchQuery.error}
         altTextPrefix={tourConfig.altTextPrefix}
       />
       <DestinationFilter

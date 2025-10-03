@@ -25,6 +25,7 @@ type TTourBannerProps = TBaseComponent & {
     mainImageUrl: string
   }>
   isLoading?: boolean
+  hasError?: boolean
   altTextPrefix?: string
 }
 
@@ -34,22 +35,27 @@ const TourBanner = ({
   slideContent,
   tours = [],
   isLoading = false,
+  hasError = false,
   altTextPrefix = '精選行程',
 }: TTourBannerProps) => {
   const [currentSlide, setCurrentSlide] = useState(1)
 
-  const useApiData = !isLoading && tours.length > 0
-  const totalSlides = useApiData ? tours.length : slideContent.length
 
-  const currentContent = useApiData
+  const shouldShowDefault = hasError
+  const shouldShowApi = !isLoading && !hasError && tours && tours.length > 0 // API 正常且有資料
+  const totalSlides = shouldShowApi ? tours.length : (shouldShowDefault ? slideContent.length : 1)
+
+  const currentContent = shouldShowApi
     ? {
         title: tours[currentSlide - 1]?.namePrefix || '',
         subtitle: tours[currentSlide - 1]?.name || '',
         description: tours[currentSlide - 1]?.summary || ''
       }
-    : !isLoading ? slideContent[currentSlide - 1] : { title: '', subtitle: '', description: '' }
+    : shouldShowDefault 
+      ? slideContent[currentSlide - 1] 
+      : { title: '', subtitle: '', description: '' }
 
-  const currentImageUrl = useApiData
+  const currentImageUrl = shouldShowApi
     ? tours[currentSlide - 1]?.mainImageUrl
     : undefined
 
@@ -87,7 +93,8 @@ const TourBanner = ({
 
       <div className='xl:relative flex flex-col rounded-2xl xl:w-full xl:h-[670px]'>
         <div className='relative xl:absolute xl:inset-0 flex w-full h-[460px] xl:h-full'>
-          {!isLoading && (
+
+          {shouldShowApi && (
             <Image
               src={currentImageUrl || `/${tourType}/${currentSlide}.jpg`}
               alt={`${altTextPrefix} ${currentSlide}`}
@@ -97,8 +104,27 @@ const TourBanner = ({
               priority={currentSlide === 1}
             />
           )}
+          
 
-          {!isLoading && (
+          {shouldShowDefault && (
+            <Image
+              src={`/${tourType}/${currentSlide}.jpg`}
+              alt={`${altTextPrefix} ${currentSlide}`}
+              width={1824}
+              height={670}
+              className='object-cover transition-opacity duration-500 w-full h-full rounded-2xl'
+              priority={currentSlide === 1}
+            />
+          )}
+          
+
+          {!isLoading && !hasError && tours && tours.length === 0 && (
+            <div className='w-full h-full bg-gray-100 rounded-2xl flex items-center justify-center'>
+              <div className="text-gray-500 text-lg">暫無行程資料</div>
+            </div>
+          )}
+
+          {(shouldShowApi || shouldShowDefault) && (
             <div className={styles.controls}>
               <div
                 className={cn(

@@ -276,7 +276,13 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
         </div>
 
         <BannerCarousel
-          images={effectiveData.map((banner) => banner.imageUrl)}
+          images={
+            bannersError 
+              ? ['/home/banners/banner.jpg']
+              : (effectiveData && effectiveData.length > 0)
+                ? effectiveData.map(banner => banner.imageUrl)
+                : []
+          }
           autoPlayInterval={10000}
         />
       </div>

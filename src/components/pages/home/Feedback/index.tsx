@@ -5,7 +5,6 @@ import { useState, useEffect, useMemo } from 'react'
 import type { TFeedbackMode } from './FeedbackCardItem'
 import type { CarouselApi } from '@/components/ui/Carousel'
 import { useFeedBack } from '@/api/home/useFeedBack'
-import LoadingSkeleton from '@/components/ui/LoadingSkeleton'
 import '@/styles/components.css'
 
 const Feedback = () => {
