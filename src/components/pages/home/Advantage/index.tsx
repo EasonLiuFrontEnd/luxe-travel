@@ -12,7 +12,7 @@ type TAdvantageProps = TBaseComponent & {
   collectionRef?: React.RefObject<HTMLDivElement>
 }
 
-const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
+const Advantage = ({ className }: TAdvantageProps) => {
   const trackRef = useRef<HTMLDivElement>(null)
   const backgroundRef = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)
