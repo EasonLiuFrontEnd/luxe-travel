@@ -8,7 +8,6 @@ import {
   CarouselItem,
   type CarouselApi,
 } from '@/components/ui/Carousel'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { TBaseComponent } from '@/types'
 import Image from 'next/image'
 
@@ -78,7 +77,9 @@ const FeaturedCarousel = ({
               'bg-figma-secondary-300 hover:bg-figma-secondary-500 text-figma-neutral-0',
             )}
           >
-            <ChevronLeft className='w-6 h-6' />
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16" fill="none">
+              <path d="M9 15L1 8L9 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </button>
 
           <div className='font-genseki-h5-medium text-figma-neutral-0'>
@@ -93,7 +94,9 @@ const FeaturedCarousel = ({
               'bg-figma-secondary-300 hover:bg-figma-secondary-500 text-figma-neutral-0',
             )}
           >
-            <ChevronRight className='w-6 h-6' />
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16" fill="none">
+              <path d="M1 15L9 8L1 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </button>
         </div>
       </Carousel>
