@@ -1,7 +1,7 @@
 import ItineraryCarousel, { type TItineraryCarouselRef } from './ItineraryCarousel'
 import { cn } from "@/lib/utils"
 import Image from 'next/image'
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import styles from "./styles.module.css"
 import { TBaseComponent } from "@/types"
 import type { TItinerary } from '../config'
@@ -12,10 +12,31 @@ type TItineraryCardProps = TBaseComponent & {
 
 const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
   const carouselRef = useRef<TItineraryCarouselRef>(null)
+  const [current, setCurrent] = useState(0)
+  const [count, setCount] = useState(itinerary.itineraryItems.length)
 
   const formatNumber = (num: number) => {
     return String(num).padStart(2, '0')
   }
+
+  useEffect(() => {
+    const api = carouselRef.current?.api
+    if (!api) return
+
+    const updateState = () => {
+      setCurrent(api.selectedScrollSnap())
+      setCount(api.scrollSnapList().length)
+    }
+
+    updateState()
+    api.on('select', updateState)
+    api.on('reInit', updateState)
+
+    return () => {
+      api.off('select', updateState)
+      api.off('reInit', updateState)
+    }
+  }, [carouselRef.current?.api])
 
   const handlePrevious = () => {
     carouselRef.current?.api?.scrollPrev()
@@ -48,7 +69,7 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
           </button>
 
           <div className='font-genseki-body-m-medium text-figma-secondary-500'>
-            {formatNumber((carouselRef.current?.current ?? 0) + 1)} / {formatNumber(carouselRef.current?.count ?? itinerary.itineraryItems.length / 2)}
+            {formatNumber(current + 1)} / {formatNumber(count)}
           </div>
 
           <button
@@ -95,7 +116,7 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
             <p className="font-genseki-h6-regular text-figma-primary-950">{itinerary.routeDescription}</p>
           </div>
         </div>
-        <div className='relative'>
+        <div className='relative w-full max-w-[calc(100%-577px)]'>
           <div className="flex items-center mb-5">
             <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22' fill='none' className='p-1 mr-2'>
               <path d='M13.0283 10.9922H0.984375V13.0372H8.97126V21.0155H10.9503V13.0372H13.0283V10.9922Z' fill='#926D3C' />
@@ -103,7 +124,9 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
             </svg>
             <p className='font-noto-serif-body-l-semibold text-figma-secondary-950'>精選行程</p>
           </div>
-          <ItineraryCarousel ref={carouselRef} itineraryItems={itinerary.itineraryItems} />
+          <div className='overflow-hidden'>
+            <ItineraryCarousel ref={carouselRef} itineraryItems={itinerary.itineraryItems} />
+          </div>
           <div className='absolute top-[56px] right-0 w-[82px] h-[calc(100%-56px)] bg-gradient-to-r from-transparent to-[rgba(255,255,255,0.8)] pointer-events-none z-10'></div>
           <Image
             src='tour-content/highlight.svg'
