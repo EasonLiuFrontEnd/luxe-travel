@@ -175,7 +175,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
           className={cn(
             'z-10 sticky',
             'top-[104px] -mt-[192px]',
-            'xl:top-[123px] xl:-mt-[250px]',
+            'xl:top-[80px] xl:-mt-[140px]',
           )}
         >
           <div className='gooey-text-container relative'>

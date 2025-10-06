@@ -369,16 +369,14 @@ const Advantage = ({ className }: TAdvantageProps) => {
               }
 
               // 組合變換
-              return `perspective(${perspective}px) translate3d(0px, ${translateY}px, ${translateZ}px) rotate(${rotateZ}deg) rotateY(${rotateY}deg)`
+              return `perspective(0px) translate3d(0px, 0px, 0px) rotate(0deg) rotateY(0deg)`
             }
 
             return (
               <div
                 key={card.id}
                 data-card-index={index}
-                className={`${styles.cardContainer} flex-shrink-0 ${
-                  isMobile ? styles.cardMobile : styles.cardDesktop
-                }`}
+                className={`${styles.cardContainer} flex-shrink-0 ${styles.cardWidth}`}
                 style={
                   !isMobile
                     ? {

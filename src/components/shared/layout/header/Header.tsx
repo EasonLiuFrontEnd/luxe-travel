@@ -32,7 +32,7 @@ const Header = ({
   const showConsultButton = scrollY > 797
 
   const baseClasses =
-    'z-50 w-full flex items-center justify-between max-xl:p-[12px] xl:pb-[48px] xl:px-[48px]  bg-figma-neutral-50'
+    'z-50 w-full flex items-center justify-between p-4 xl:pt-0 xl:pb-7 bg-figma-neutral-50'
   const positionClass =
     headerBehavior === 'fixed'
       ? 'fixed'

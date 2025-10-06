@@ -95,13 +95,12 @@ const Navigation = ({
             onMouseEnter={() => setActiveDropdown(item.label)}
             onMouseLeave={() => setActiveDropdown(null)}
           >
-            <button className='font-noto-serif-body-l-semibold text-figma-primary-950 hover:text-figma-secondary-950 cursor-pointer pt-[48px] relative'>
+            <button className='font-noto-serif-body-l-semibold text-figma-primary-950 hover:text-figma-secondary-950 cursor-pointer pt-7 relative'>
               {activeDropdown === item.label && (
                 <NavigationHoverIcon className='absolute top-0 right-[50%] translate-x-[50%]' />
               )}
               {item.label}
             </button>
-            <div className='absolute top-full left-0 right-0 h-[16px] bg-transparent' />
             <DropdownMenu
               isVisible={activeDropdown === item.label}
               items={
@@ -112,7 +111,7 @@ const Navigation = ({
             />
           </div>
         ))}
-        <button className='pt-[48px] px-[8px] max-xl:hidden'>
+        <button className='pt-7 px-[8px] max-xl:hidden'>
           <SearchIcon onClick={openSearch} />
         </button>
       </div>

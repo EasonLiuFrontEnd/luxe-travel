@@ -195,73 +195,74 @@ export const useScrollDrivenAnimation = () => {
   useEffect(() => {
     if (!containerRef.current || isMobile) return
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0]
-        const direction = detectScrollDirection()
+    const handleScroll = () => {
+      if (!containerRef.current) return
+      
+      const containerRect = containerRef.current.getBoundingClientRect()
+      const isContainerAtTop = Math.abs(containerRect.top) <= 50
+      const direction = detectScrollDirection()
 
-        if (entry.isIntersecting && state.animationPhase === 'idle') {
-          setState((prev) => {
-            if (prev.isInitialLoad) {
-              accumulatedScrollRef.current = TOTAL_SCROLL_DISTANCE
-
-              return {
-                ...prev,
-                isIntersecting: true,
-                scrollDirection: direction,
-                animationPhase: 'appeared',
-                animationProgress: 1,
-                canScroll: true,
-                isInitialLoad: false,
-                entryDirection: 'down',
-              }
-            }
-
-            const newPhase = direction === 'down' ? 'appearing' : 'disappearing'
-            const newProgress = direction === 'down' ? 0 : 1
-
-            accumulatedScrollRef.current =
-              direction === 'down' ? 0 : TOTAL_SCROLL_DISTANCE
+      if (isContainerAtTop && state.animationPhase === 'idle') {
+        setState((prev) => {
+          if (prev.isInitialLoad) {
+            accumulatedScrollRef.current = TOTAL_SCROLL_DISTANCE
 
             return {
               ...prev,
               isIntersecting: true,
               scrollDirection: direction,
-              animationPhase: newPhase,
-              animationProgress: newProgress,
-              canScroll: false,
-              entryDirection: direction,
+              animationPhase: 'appeared',
+              animationProgress: 1,
+              canScroll: true,
+              isInitialLoad: false,
+              entryDirection: 'down',
             }
-          })
-        } else if (
-          !entry.isIntersecting &&
-          (state.animationPhase === 'appeared' ||
-            state.animationPhase === 'disappeared')
-        ) {
-          setState((prev) => ({
-            ...prev,
-            isIntersecting: false,
-            animationPhase: 'idle',
-            canScroll: true,
-            entryDirection: null,
-          }))
-        }
-      },
-      {
-        threshold: 1,
-        rootMargin: '-30% 0px -30% 0px',
-      },
-    )
+          }
 
-    observer.observe(containerRef.current)
+          const newPhase = direction === 'down' ? 'appearing' : 'disappearing'
+          const newProgress = direction === 'down' ? 0 : 1
+
+          accumulatedScrollRef.current =
+            direction === 'down' ? 0 : TOTAL_SCROLL_DISTANCE
+
+          return {
+            ...prev,
+            isIntersecting: true,
+            scrollDirection: direction,
+            animationPhase: newPhase,
+            animationProgress: newProgress,
+            canScroll: false,
+            entryDirection: direction,
+          }
+        })
+      } else if (
+        !isContainerAtTop &&
+        (state.animationPhase === 'appeared' ||
+          state.animationPhase === 'disappeared')
+      ) {
+        setState((prev) => ({
+          ...prev,
+          isIntersecting: false,
+          animationPhase: 'idle',
+          canScroll: true,
+          entryDirection: null,
+        }))
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    
+    // 初始檢查
+    handleScroll()
 
     return () => {
-      observer.disconnect()
+      window.removeEventListener('scroll', handleScroll)
     }
   }, [
     detectScrollDirection,
     state.animationPhase,
     state.isInitialLoad,
+    state.isIntersecting,
     isMobile,
   ])
 
@@ -277,10 +278,10 @@ export const useScrollDrivenAnimation = () => {
 
   useEffect(() => {
     if (state.isInitialLoad && containerRef.current && !isMobile) {
-      const h2Rect = containerRef.current.getBoundingClientRect()
-      const isScrolledPast = h2Rect.top < 0
+      const containerRect = containerRef.current.getBoundingClientRect()
+      const isContainerAtTop = Math.abs(containerRect.top) <= 50
 
-      if (isScrolledPast) {
+      if (isContainerAtTop) {
         accumulatedScrollRef.current = TOTAL_SCROLL_DISTANCE
         setState((prev) => ({
           ...prev,
@@ -304,24 +305,6 @@ export const useScrollDrivenAnimation = () => {
     }
   }, [state.isInitialLoad, isMobile])
 
-  useEffect(() => {
-    if (isMobile) return
-
-    const handleScroll = () => {
-      if (state.isInitialLoad) {
-        setState((prev) => ({
-          ...prev,
-          isInitialLoad: false,
-        }))
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [state.isInitialLoad, isMobile])
 
   // 行動裝置直接返回靜態狀態，無動畫
   if (isMobile) {

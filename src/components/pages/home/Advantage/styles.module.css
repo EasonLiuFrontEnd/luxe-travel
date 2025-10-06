@@ -11,14 +11,21 @@
   transition: none;
 }
 
-.cardDesktop {
-  width: 30vw;
-  max-width: 522px;
+.cardWidth {
+  width: 318px;
 }
 
-.cardMobile {
-  width: 318px;
-  max-width: none;
+@media (min-width: 1280px) {
+  .cardWidth {
+    width: 30vw;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cardWidth {
+    width: 25vw;
+    max-width: 522px;
+  }
 }
 
 .scrollContainer {
@@ -52,20 +59,16 @@
 }
 
 .gradientMask {
-  mask: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 1) 50%,
-    rgba(0, 0, 0, 0.5) 65%,
-    rgba(0, 0, 0, 0) 100%
-  );
-  -webkit-mask: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 1) 50%,
-    rgba(0, 0, 0, 0.5) 65%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  mask: linear-gradient(to bottom,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0.5) 65%,
+      rgba(0, 0, 0, 0) 100%);
+  -webkit-mask: linear-gradient(to bottom,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0.5) 65%,
+      rgba(0, 0, 0, 0) 100%);
 }
 
 @media (min-width: 1280px) {

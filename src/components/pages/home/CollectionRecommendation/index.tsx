@@ -22,10 +22,10 @@ const CollectionRecommendation = ({
 
   return (
     <section
-      className={`pb-[60px] lg:py-[120px] px-[clamp(12px,2.5vw,48px)] bg-[var(--color-figma-secondary-100)] relative xl:sticky xl:top-[-40vh] xl:left-0 ${className || ''}`}
+      className={`pb-[60px] lg:py-[120px] px-[clamp(12px,2.5vw,48px)] bg-[var(--color-figma-secondary-100)] relative xl:sticky xl:top-[-30vh] xl:left-0 ${className || ''}`}
     >
       <div className='mx-auto relative'>
-        <div className='w-full bg-figma-neutral-50 relative rounded-2xl overflow-hidden'>
+        <div className='w-full bg-figma-neutral-50 relative rounded-2xl overflow-hidden xl:max-h-[calc(100vh-184px)]'>
           <Image
             alt='背景裝飾'
             className='object-cover'
@@ -44,7 +44,7 @@ const CollectionRecommendation = ({
             </h2>
 
             <div className='mt-[40px] flex justify-center'>
-              <div className='w-[361px] h-[435px] lg:w-[402px] lg:h-[485px] relative'>
+              <div className='w-[361px] h-[435px] lg:aspect-[402/485] lg:w-auto lg:h-full relative'>
                 <InteractiveMap
                   selectedRegion={selectedRegion}
                   onRegionSelect={setSelectedRegion}

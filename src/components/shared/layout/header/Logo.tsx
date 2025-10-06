@@ -31,11 +31,11 @@ const Logo = ({
   return (
     <Link href='/'>
       <div
-        className='absolute top-[12px] left-[48px] logo-container scale-[var(--logo-scale)] translate-y-[var(--translate-y)]'
+        className='absolute top-[12px] left-[48px] will-change-transform logo-container scale-[var(--logo-scale)] translate-y-[var(--translate-y)]'
         style={
           {
             '--logo-scale': scale,
-            '--translate-y': `31px`,
+            '--translate-y': `0px`,
           } as React.CSSProperties
         }
       >
