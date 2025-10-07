@@ -12,7 +12,7 @@ type TAdvantageProps = TBaseComponent & {
   collectionRef?: React.RefObject<HTMLDivElement>
 }
 
-const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
+const Advantage = ({ className }: TAdvantageProps) => {
   const trackRef = useRef<HTMLDivElement>(null)
   const backgroundRef = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)
@@ -37,7 +37,7 @@ const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
   } = advantagesQuery
 
   const displayData = useMemo(() => {
-    if (advantagesError || !advantagesData) {
+    if (advantagesError) {
       return transformAdvantageData(mock.rows)
     }
 
@@ -45,7 +45,8 @@ const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
       return []
     }
 
-    return transformAdvantageData(advantagesData)
+    // 如果 API 正常回應，即使是空陣列也使用 API 資料
+    return transformAdvantageData(advantagesData || [])
   }, [advantagesError, advantagesData, isAdvantagesLoading, mock.rows])
 
   useEffect(() => {
@@ -85,7 +86,6 @@ const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
     (event: WheelEvent) => {
       if (isMobile || !isInDetectionZone) return
 
-      // 先阻止事件，然後檢查是否需要釋放
       event.preventDefault()
       event.stopPropagation()
 
@@ -97,9 +97,8 @@ const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
       }
 
       const moveAmount = delta * 2
-      const maxLeft = -(
-        window.innerWidth + (trackRef.current?.scrollWidth || 0)
-      )
+      const trackWidth = trackRef.current?.scrollWidth || 0
+      const maxLeft = -trackWidth
       const maxRight = window.innerWidth
 
       setTranslateX((prev) => {
@@ -288,7 +287,7 @@ const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
         </div>
       </div>
 
-      <div className={`px-3 xl:px-0 pb-[60px] xl:pb-0`}>
+      <div className='px-3 xl:px-0 pb-[60px] xl:pb-0 xl:absolute xl:top-[45vh]'>
         <div
           ref={trackRef}
           data-track='advantage-track'
@@ -368,16 +367,14 @@ const Advantage = ({ className, collectionRef }: TAdvantageProps) => {
               }
 
               // 組合變換
-              return `perspective(${perspective}px) translate3d(0px, ${translateY}px, ${translateZ}px) rotate(${rotateZ}deg) rotateY(${rotateY}deg)`
+              return `perspective(0px) translate3d(0px, 0px, 0px) rotate(0deg) rotateY(0deg)`
             }
 
             return (
               <div
                 key={card.id}
                 data-card-index={index}
-                className={`${styles.cardContainer} flex-shrink-0 ${
-                  isMobile ? styles.cardMobile : styles.cardDesktop
-                }`}
+                className={`${styles.cardContainer} flex-shrink-0 ${styles.cardWidth}`}
                 style={
                   !isMobile
                     ? {

@@ -55,7 +55,7 @@ const PageFlip = forwardRef<TPageFlipRef, TFlipBookProps>(
       usePortrait = true,
       startZIndex = 0,
       autoSize = true,
-      maxShadowOpacity = 1,
+      maxShadowOpacity = 0.25,
       showCover = false,
       mobileScrollSupport = true,
       onFlip,

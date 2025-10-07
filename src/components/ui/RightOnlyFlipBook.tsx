@@ -85,7 +85,6 @@ export const RightOnlyFlipBook = ({
                 onClick={(e) => {
                   e.preventDefault()
                   e.stopPropagation()
-                  console.log('Blocked backward flip attempt')
                 }}
               />
             </div>

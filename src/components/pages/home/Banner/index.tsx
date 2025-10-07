@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useEffect, useRef } from 'react'
+import { useMemo, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { useScrollContext } from '@/context/ScrollContext'
 import { useBanners } from '@/api/home/useBanners'
@@ -9,6 +9,7 @@ import { APP_CONFIG } from '@/lib/config'
 import type { TBaseComponent } from '@/types'
 import AirplaneIcon from '@/components/shared/icons/banner/AirplaneIcon'
 import BannerCarousel from './BannerCarousel'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 export type TBannerComponent = TBaseComponent & {
   logoProgress?: number
@@ -52,6 +53,7 @@ const GooeyFilters = () => (
 
 const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
   const { logoProgress: contextLogoProgress } = useScrollContext()
+  const { isMobile } = useMediaQuery()
   const gooAreaRef = useRef<HTMLDivElement>(null)
   const fallbackRef = useRef<HTMLDivElement>(null)
 
@@ -65,15 +67,16 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
   } = bannersQuery
 
   const effectiveData = useMemo(() => {
-    if (bannersError || !bannersData) {
+    if (bannersError) {
       return mock.rows
     }
 
     if (isBannersLoading) {
-      return mock.rows
+      return []
     }
 
-    return bannersData
+    // 如果 API 正常回應，即使是空陣列也使用 API 資料
+    return bannersData || []
   }, [bannersError, bannersData, isBannersLoading, mock.rows])
 
   const dynamicPadding = useMemo(
@@ -81,6 +84,49 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
       `${APP_CONFIG.SCROLL.BANNER_HEIGHT * 0.1 + (1 - logoProgress) * APP_CONFIG.SCROLL.LOGO_TRANSITION_END * 0.2}px`,
     [logoProgress],
   )
+
+  const [isStickyEnded, setIsStickyEnded] = useState(false)
+  const stickyRef = useRef<HTMLDivElement>(null)
+
+  const dynamicTranslateY = useMemo(
+    () => {
+      if (isMobile) {
+        return '0px'
+      }
+      
+      if (isStickyEnded) {
+        return '-5px'
+      }
+      const startY = 223
+      const endY = 76
+      const range = startY - endY
+      const calculatedY = startY - logoProgress * range
+      
+      return `${calculatedY}px`
+    },
+    [logoProgress, isStickyEnded, isMobile],
+  )
+
+  useEffect(() => {
+    const checkStickyEnd = () => {
+      const scrollY = window.scrollY
+      const shouldEnd = scrollY > 600
+      
+      if (shouldEnd && !isStickyEnded) {
+        setIsStickyEnded(true)
+      } else if (!shouldEnd && isStickyEnded) {
+        setIsStickyEnded(false)
+      }
+    }
+
+    window.addEventListener('scroll', checkStickyEnd)
+    window.addEventListener('resize', checkStickyEnd)
+
+    return () => {
+      window.removeEventListener('scroll', checkStickyEnd)
+      window.removeEventListener('resize', checkStickyEnd)
+    }
+  }, [isStickyEnded])
 
   const firstBanner = effectiveData[0] || mock.rows[0]
 
@@ -161,7 +207,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
       <div
         className={cn(
           'banner-dynamic-padding',
-          'pt-[168px] px-[12px]',
+          'pt-[227px] px-[12px]',
           'xl:pt-[152px] xl:px-[48px]',
         )}
         style={
@@ -171,11 +217,16 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
         }
       >
         <div
+          ref={stickyRef}
           className={cn(
             'z-10 sticky',
-            'top-[104px] -mt-[192px]',
-            'xl:top-[123px] xl:-mt-[250px]',
+            'top-[120px] -mt-[192px]',
+            'xl:top-0 xl:-mt-[140px]',
+            'transition-all duration-250 ease-in-out',
           )}
+          style={{
+            transform: `translateY(${dynamicTranslateY})`,
+          }}
         >
           <div className='gooey-text-container relative'>
             <div
@@ -188,7 +239,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
               <h1
                 className={cn(
                   'flex flex-col',
-                  'font-noto-serif-tc font-bold text-[40px] xl:text-[96px]',
+                  'font-noto-serif-tc font-bold text-[40px] xl:text-[96px] leading-[1.2]',
                   'xl:text-right max-xl:text-left',
                 )}
               >
@@ -197,10 +248,10 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
                     className={cn(
                       'goo-text-row relative inline-block',
                       'xl:self-end max-xl:self-start',
-                      'text-figma-neutral-950 px-[14px] xl:mb-[0.05em] xl:mt-[0.1em] max-xl:mb-[0.05em] max-xl:mt-[0.05em]',
+                      'text-figma-neutral-950 px-[14px]',
                       "before:content-[''] before:absolute before:z-[-1]",
-                      'before:left-[0] before:right-[-8px] before:top-1/2',
-                      'before:h-[1.8em] before:translate-y-[-50%]',
+                      'before:left-[0] before:right-[-8px] before:top-[-18px]',
+                      'before:h-[3em] before:translate-y-[-50%]',
                       'before:bg-figma-neutral-50',
                       'xl:before:rounded-bl-[50px] max-xl:before:rounded-r-[50px]',
                     )}
@@ -213,10 +264,10 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
                     className={cn(
                       'goo-text-row relative inline-block',
                       'xl:self-end max-xl:self-start',
-                      'text-figma-neutral-950 px-[14px] xl:mt-[-8px] xl:mb-2 max-xl:mt-[0.02em] max-xl:mb-[0.05em]',
+                      'text-figma-neutral-950 px-[14px]',
                       "before:content-[''] before:absolute before:z-[-1]",
                       'before:left-[-8px] before:right-[-8px] before:top-1/2',
-                      'before:h-[1.8em] before:translate-y-[-50%]',
+                      'before:h-[1.4em] before:translate-y-[-50%]',
                       'before:bg-figma-neutral-50',
                       'xl:before:rounded-l-[50px] max-xl:before:rounded-r-[50px]',
                     )}
@@ -252,7 +303,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
                     className={cn(
                       'goo-text-row relative inline-block',
                       'xl:self-end max-xl:self-start',
-                      'text-figma-primary-950 px-[14px] mt-[0.1em] mb-[0.1em]',
+                      'text-figma-primary-950 px-[14px]',
                       "before:content-[''] before:absolute before:z-[-1]",
                       'before:left-0 before:right-0 before:top-1/2',
                       'before:h-[2em] before:translate-y-[-50%]',
@@ -275,7 +326,13 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
         </div>
 
         <BannerCarousel
-          images={effectiveData.map((banner) => banner.imageUrl)}
+          images={
+            bannersError 
+              ? ['/home/banners/banner.jpg']
+              : (effectiveData && effectiveData.length > 0)
+                ? effectiveData.map(banner => banner.imageUrl)
+                : []
+          }
           autoPlayInterval={10000}
         />
       </div>

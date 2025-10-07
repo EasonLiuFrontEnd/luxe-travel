@@ -3,6 +3,7 @@
 import type { TBaseComponent } from '@/types'
 import type { TAdvantages } from '@/api/type'
 import styles from './styles.module.css'
+import { cn } from '@/lib/utils'
 
 type TAdvantageCardProps = TBaseComponent & {
   card: TAdvantages & { gradientOverlay: string }
@@ -12,7 +13,11 @@ type TAdvantageCardProps = TBaseComponent & {
 const AdvantageCard = ({ card, className }: TAdvantageCardProps) => {
   return (
     <div
-      className={`content-stretch flex flex-col h-[60vh] max-h-[480px] items-start justify-between overflow-hidden relative rounded-xl shrink-0 ${className || ''}`}
+      className={cn(
+        'content-stretch flex flex-col items-start justify-between overflow-hidden relative rounded-xl shrink-0',
+        className || '',
+        styles.cardHeight,
+      )}
     >
       {/* 背景圖層 - 模糊效果 */}
       <div
