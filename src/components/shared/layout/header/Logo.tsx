@@ -33,7 +33,7 @@ const Logo = ({
   return (
     <Link href='/'>
       <div
-        className='absolute top-0 left-[48px] will-change-transform transition-all duration-1200 ease-in-out logo-container scale-[var(--logo-scale)] translate-y-[var(--translate-y)]'
+        className='absolute top-0 left-[48px] transition-all duration-1200 ease-in-out logo-container scale-[var(--logo-scale)] translate-y-[var(--translate-y)]'
         style={
           {
             '--logo-scale': scale,

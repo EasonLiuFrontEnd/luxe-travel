@@ -13,8 +13,9 @@ const ServiceStep = ({ step }: { step: TServiceStep }) => {
 
   return (
     <div
+    // hover:scale-x-[1] hover:scale-y-[1] xl:origin-bottom
       className={cn(
-        'flex flex-col items-center justify-between p-7 w-full xl:min-h-auto xl:hover:min-w-[400px] xl:hover:max-w-[25%] xl:hover:h-[526px] transition-all duration-300 ease-out group',
+        'flex flex-col items-center justify-between p-7 w-full xl:min-h-auto xl:hover:min-w-[400px] xl:hover:h-full xl:hover:max-w-[25%] xl:hover:max-h-[526px] transition-all duration-300 ease-out group',
         getStepStyles(number),
         styles.books,
       )}
@@ -58,12 +59,14 @@ const ServiceProcess = ({ className, ...props }: TServiceProcessProps) => {
           典藏服務流程
         </h2>
 
-        <div className='w-full px-[clamp(12px,2.5vw,48px)] xl:border-b xl:border-[var(--color-figma-secondary-500)]'>
-          <div className='w-full max-w-[1440px] mx-auto flex flex-col xl:flex-row xl:items-end xl:justify-center gap-4 xl:gap-[6px]'>
+        <div className='xl:relative max-w-[1440px] w-full xl:h-[641px] px-[clamp(12px,2.5vw,48px)] xl:border-b xl:border-[var(--color-figma-secondary-500)]'>
+
+          <div className='xl:absolute xl:inset-0 flex flex-col xl:flex-row xl:items-end xl:justify-center gap-4 xl:gap-[6px]'>
             {serviceSteps.map((step) => (
               <ServiceStep key={step.number} step={step} />
             ))}
           </div>
+
         </div>
       </div>
     </section>

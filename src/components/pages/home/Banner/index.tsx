@@ -222,7 +222,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
             'z-10 sticky',
             'top-[120px] -mt-[192px]',
             'xl:top-0 xl:-mt-[140px]',
-            'transition-all duration-250 ease-in-out will-change-transform',
+            'transition-all duration-250 ease-in-out',
           )}
           style={{
             transform: `translateY(${dynamicTranslateY})`,
