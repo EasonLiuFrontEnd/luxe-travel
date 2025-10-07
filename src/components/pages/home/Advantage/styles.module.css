@@ -2,7 +2,6 @@
   display: flex;
   position: relative;
   z-index: 20;
-  bottom: 50vh;
   gap: 60px;
   transition: transform 0.3s ease-out;
 }
@@ -11,19 +10,32 @@
   transition: none;
 }
 
+.cardHeight {
+  height: 480px;
+}
+
 .cardWidth {
   width: 318px;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1280px) and (max-width: 1536px) {
+  .cardHeight {
+    height: 50vh;
+    max-height: 480px;
+  }
   .cardWidth {
-    width: 30vw;
+    width: 25vw;
+    max-width: 522px;
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1536px) {
+  .cardHeight {
+    height: 60vh;
+    max-height: 480px;
+  }
   .cardWidth {
-    width: 25vw;
+    width: 30vw;
     max-width: 522px;
   }
 }

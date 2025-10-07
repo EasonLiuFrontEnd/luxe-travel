@@ -95,7 +95,7 @@ const Navigation = ({
             onMouseEnter={() => setActiveDropdown(item.label)}
             onMouseLeave={() => setActiveDropdown(null)}
           >
-            <button className='font-noto-serif-body-l-semibold text-figma-primary-950 hover:text-figma-secondary-950 cursor-pointer pt-7 relative'>
+            <button className='font-noto-serif-body-l-semibold text-figma-primary-950 hover:text-figma-secondary-950 cursor-pointer py-7 relative'>
               {activeDropdown === item.label && (
                 <NavigationHoverIcon className='absolute top-0 right-[50%] translate-x-[50%]' />
               )}
@@ -118,7 +118,7 @@ const Navigation = ({
 
       <ConsultButton
         className={`max-xl:hidden transition-opacity duration-800 ${
-          showConsultButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          showConsultButton ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         }`}
       />
 

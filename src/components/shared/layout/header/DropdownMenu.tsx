@@ -129,7 +129,7 @@ const DropdownMenu = ({
 
   const renderDesktopMenu = () => (
     <div
-      className='absolute left-0 bottom-[-15px] translate-y-full bg-white z-50'
+      className='absolute left-0 bottom-[8px] translate-y-full bg-white z-50'
       onMouseLeave={() => {
         setActiveSubmenu(null)
         onClose()

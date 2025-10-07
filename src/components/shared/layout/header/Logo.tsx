@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { TBaseComponent } from '@/types'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 export type TLogo = TBaseComponent & {
   scale?: number
@@ -12,6 +13,7 @@ const Logo = ({
   scale = 0.34,
   isMobile = false,
 }: TLogo & { isMobile?: boolean }) => {
+  const translateY = 12 + (scale - 0.34) * 71 / 0.66
   if (isMobile) {
     return (
       <Link href='/'>
@@ -31,11 +33,11 @@ const Logo = ({
   return (
     <Link href='/'>
       <div
-        className='absolute top-[12px] left-[48px] will-change-transform logo-container scale-[var(--logo-scale)] translate-y-[var(--translate-y)]'
+        className='absolute top-0 left-[48px] will-change-transform transition-all duration-1200 ease-in-out logo-container scale-[var(--logo-scale)] translate-y-[var(--translate-y)]'
         style={
           {
             '--logo-scale': scale,
-            '--translate-y': `0px`,
+            '--translate-y': `${translateY}px`,
           } as React.CSSProperties
         }
       >

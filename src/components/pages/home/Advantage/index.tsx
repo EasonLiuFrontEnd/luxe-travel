@@ -86,7 +86,6 @@ const Advantage = ({ className }: TAdvantageProps) => {
     (event: WheelEvent) => {
       if (isMobile || !isInDetectionZone) return
 
-      // 先阻止事件，然後檢查是否需要釋放
       event.preventDefault()
       event.stopPropagation()
 
@@ -98,9 +97,8 @@ const Advantage = ({ className }: TAdvantageProps) => {
       }
 
       const moveAmount = delta * 2
-      const maxLeft = -(
-        window.innerWidth + (trackRef.current?.scrollWidth || 0)
-      )
+      const trackWidth = trackRef.current?.scrollWidth || 0
+      const maxLeft = -trackWidth
       const maxRight = window.innerWidth
 
       setTranslateX((prev) => {
@@ -289,7 +287,7 @@ const Advantage = ({ className }: TAdvantageProps) => {
         </div>
       </div>
 
-      <div className={`px-3 xl:px-0 pb-[60px] xl:pb-0`}>
+      <div className='px-3 xl:px-0 pb-[60px] xl:pb-0 xl:absolute xl:top-[45vh]'>
         <div
           ref={trackRef}
           data-track='advantage-track'
