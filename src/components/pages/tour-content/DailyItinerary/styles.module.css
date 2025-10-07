@@ -79,3 +79,24 @@
 .horizontal-line::after {
   right: 0px;
 }
+
+.gridBackground {
+  position: relative;
+}
+
+.gridBackground::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(90deg, #E5D9BF50 1px, transparent 1px),
+    linear-gradient(#E5D9BF50 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+  -webkit-mask: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
