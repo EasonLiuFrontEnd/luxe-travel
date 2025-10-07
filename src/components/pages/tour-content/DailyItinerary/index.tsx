@@ -1,13 +1,130 @@
+import Image from "next/image"
+import { useState } from 'react'
 import ItineraryCard from "./ItineraryCard"
-import { itineraryData } from "../config"
+import { itineraryData, type TItinerary } from "../config"
 
 const DailyItinerary = () => {
+  const [openPlace, setOpenPlace] = useState<TItinerary['activity'][0]['place'][0] | null>(null)
+  const parseHotelString = (hotelStr: string) => {
+    const parts = hotelStr.split(' 或 ')
+    const options = parts.slice(0, -1)
+    const fallback = parts.length === 1 ? parts[0] : `或${parts[parts.length - 1]}`
+    return { options, fallback }
+  }
+
   return (
     <div className="flex flex-col border-t border-figma-secondary-500">
-      <h2 className='mx-auto font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-4 mt-13 mb-12 gradient-title-border'>
+      <h2 className='mx-auto font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-4 mt-13 gradient-title-border'>
         每日行程
       </h2>
-      <ItineraryCard itinerary={itineraryData[0]} />
+      {itineraryData.map((itinerary, index) => {
+        const { options: hotelOptions, fallback: hotelFallback } = parseHotelString(itinerary.hotel)
+
+        return (
+          <div className="border-b border-figma-secondary-950" key={index}>
+            <ItineraryCard itinerary={itinerary} />
+            {itinerary.activity.length > 0 && itinerary.activity.map((activityGroup, activityIndex) => (
+              <div key={activityIndex} className="relative flex justify-between items-center gap-x-[42px] mt-12 mx-[152px] mb-10">
+                <h4 className="w-[571px] font-noto-serif-h4-bold text-figma-secondary-500 text-center">{activityGroup.title}</h4>
+                <div className="w-full text-figma-primary-950 border-t border-b border-figma-secondary-500">
+                  {activityGroup.place.map((place, placeIndex) => {
+                    const isLast = placeIndex === activityGroup.place.length - 1
+                    const hasContent = place.picture || place.intro
+
+                    return (
+                      <div key={placeIndex} className={`flex items-end p-2.5 ${!isLast ? 'border-b border-figma-secondary-500' : ''}`}>
+                        <p className="box-content w-[530px] min-h-9">
+                          {place['zh-TW'] && (
+                            <span className="font-genseki-h5-medium">{place['zh-TW']}</span>
+                          )}
+                          {place.en && (
+                            <span className={`font-luxurious-deco-regular ${place['zh-TW'] ? 'ml-4' : ''}`}>{place.en}</span>
+                          )}
+                        </p>
+                        {hasContent && (
+                          <button
+                            onClick={() => setOpenPlace(openPlace === place ? null : place)}
+                            className="my-[8px] ml-[18px] mr-[5px]"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="9" viewBox="0 0 25 9" fill="none" className="cursor-pointer">
+                              <path d="M25.0029 8.1416H0.320312V6.1416H17.6387L10.582 2.00391L11.5938 0.279297L25.0029 8.1416Z" fill="#926D3C"/>
+                            </svg>
+                          </button>
+                        )}
+                        {openPlace === place && (
+                          <div className="absolute w-[397px] top-[50%] right-[51px] translate-y-[-50%] bg-figma-neutral-50">
+                            {place.picture && (
+                              <Image
+                                src={place.picture}
+                                alt={place['zh-TW'] || place.en}
+                                width={397}
+                                height={231}
+                                className='object-cover rounded-2xl mb-7 h-[231px]'
+                              />
+                            )}
+                            {place.intro && (
+                              <p className="font-family-genseki leading-[1.5]">
+                                {place.intro}
+                              </p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+            <div className='mt-12 mx-[152px] mb-10'>
+              <div className='flex pt-6 border-t border-figma-secondary-500'>
+                <div className='w-full flex flex-col gap-y-[40px] px-[40px] border-r border-figma-secondary-500'>
+                  <h4 className='flex justify-center items-center'>
+                    <span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="37" viewBox="0 0 36 37" fill="none" className='mr-2'>
+                        <path d="M15.7559 4.22754C15.5558 2.85141 16.2069 1.45589 17.7871 1.66309C19.0682 1.8311 19.3743 3.1277 19.251 4.22559C23.8507 4.87758 27.8557 8.00374 29.5342 12.334C29.6517 12.6367 30.037 14.1429 30.0957 14.2217C30.1813 14.3348 30.4964 14.2647 30.6621 14.2988V14.2979C32.3802 14.6531 32.4549 17.0024 30.7773 17.4756L25.3613 17.5039C25.3607 17.7691 25.3889 17.9978 25.3115 18.2598C25.1637 18.7613 24.4409 19.9947 24.1484 20.5117C23.0284 22.4921 21.1301 24.8935 19.5957 26.5898C19.3529 26.8584 18.3173 27.9338 17.8379 28.2441C17.3931 28.6224 16.8877 29.0241 16.3223 29.4346C15.6766 30.0033 13.5751 31.149 13.1484 31.5498C13.0958 31.6363 13.3242 32.0077 13.3174 32.2236C13.3122 32.3876 13.1994 32.6565 13.1104 32.7959C12.9217 33.0917 11.8818 34.097 11.5752 34.3525C11.4313 34.4726 11.2783 34.5422 11.124 34.6416H10.6094L10.2207 34.4189L5.54883 29.748C5.32766 29.4601 5.32466 28.9176 5.51953 28.6182C5.66928 28.3885 6.94224 27.1354 7.19336 26.9424C7.49867 26.7081 7.71265 26.6871 8.09668 26.7188C8.12831 24.6456 9.59158 23.1428 9.99902 21.1807C10.2456 19.9949 10.2121 18.7116 10.3516 17.5059H4.2627C4.19504 17.505 3.70517 17.2491 3.61914 17.1836C2.50432 16.3309 2.97943 14.5812 4.34277 14.2998C4.44788 14.2787 4.612 14.298 4.74023 14.2871C5.26956 12.3784 6.07751 10.701 7.14844 9.28418C7.4814 8.80994 7.82349 8.397 8.14355 8.12012C8.68838 7.5566 9.28348 7.0472 9.92578 6.59277C10.2879 6.28104 10.85 5.96629 11.0811 5.83398C12.5263 5.00394 14.1053 4.47605 15.7559 4.22754ZM7.80469 27.6855C7.63629 27.8971 6.33878 29.0659 6.36035 29.1895L10.833 33.6748C11.0008 33.4637 12.3003 32.2932 12.2783 32.1699L7.80469 27.6855ZM24.3682 17.9561C24.423 17.2021 23.3831 17.5953 22.9971 17.8154C22.1231 18.3141 21.2425 20.405 20.5273 21.2725C19.7546 22.2097 17.1509 24.3373 15.9707 24.5107C13.6191 24.8561 13.213 21.992 12.9922 20.3066C12.8974 19.5831 13.0185 18.5315 12.501 17.9629C12.2822 17.7222 11.3697 17.2391 11.3125 17.7266C11.1369 19.2473 11.2014 20.763 10.7373 22.2412C10.3913 23.3442 9.70121 24.2356 9.36621 25.3154C9.1532 26.0035 9.03686 26.7253 9.00781 27.4443L12.3193 30.7617C12.3367 30.7502 12.3544 30.7382 12.373 30.7285C12.7365 30.542 13.0872 30.3512 13.4229 30.1582L15.8301 28.5889C16.4614 28.1241 17.0138 27.6735 17.4863 27.2578C17.5959 27.1567 17.7204 27.0467 17.8428 26.9385C18.1888 26.6215 18.4832 26.3302 18.7266 26.0791C18.8272 25.9669 18.9269 25.8539 19.0166 25.752C20.9684 23.5316 22.7898 21.1457 24.1113 18.4902L24.3682 17.9561ZM7.50781 28.7842C7.96093 28.0187 9.50248 29.6058 8.55859 29.9688C8.30821 30.0649 8.19152 29.9736 7.99023 29.8252C7.70105 29.6128 7.28258 29.1637 7.50781 28.7842ZM21.4678 17.5186C20.2685 17.6309 19.5678 18.5981 19.043 19.5811C18.411 20.763 17.4324 21.7097 16.5273 22.6631C16.3866 22.8115 16.2485 22.9626 16.1182 23.1201C16.0575 23.1931 15.8978 23.4748 15.8262 23.4961C18.0687 22.8396 19.6541 20.7955 20.8457 18.9287C21.1484 18.4544 21.4512 17.9802 21.7539 17.5059C21.6585 17.5059 21.5626 17.5095 21.4678 17.5186ZM13.4434 17.5059C13.5402 17.8111 13.7405 18.0734 13.8135 18.3916C13.9374 18.9324 13.89 19.5669 13.959 20.1143C14.0848 21.1107 14.1937 22.1952 14.7646 23.0459C14.8576 23.0678 15.9864 21.895 16.1504 21.7266C16.5072 21.3601 17.1535 20.7449 17.4365 20.373C18.0872 19.5178 18.4143 18.2669 19.2412 17.5059H13.4434ZM30.2275 15.2471C28.2433 15.06 25.9786 15.3856 23.9551 15.252H22.1172C22.1154 15.2525 22.1123 15.2528 22.1113 15.2529L4.6543 15.2559C3.7228 15.383 3.79858 16.4639 4.64551 16.542L30.4795 16.5352V16.5342C31.331 16.2029 31.1414 15.3329 30.2275 15.2471ZM17.4922 5.12207H17.4844C17.4399 5.12265 15.111 5.11121 12.5088 6.2959C10.988 6.98783 9.66848 7.94924 8.58984 9.15234C7.84366 9.98499 7.21074 10.9376 6.69434 12C6.35482 12.7319 6.08827 13.4987 5.9043 14.2842H29.0986C27.7907 8.71692 22.8478 5.16105 17.5811 5.11328C17.5521 5.1184 17.5224 5.12207 17.4922 5.12207ZM17.4707 2.61914C17.072 2.63613 16.7786 2.98344 16.7412 3.35254C16.7354 3.41448 16.6747 4.12531 16.7285 4.12598C17.2514 4.11113 17.7477 4.05572 18.2764 4.1377C18.2519 4.13318 18.277 3.42494 18.2744 3.35449C18.2583 2.9672 17.8761 2.60236 17.4707 2.61914Z" fill="#926D3C"/>
+                      </svg>
+                    </span>
+                    <span className='font-noto-serif-h4-bold text-figma-primary-500'>食</span>
+                  </h4>
+                  <div className='flex flex-col gap-y-6 font-genseki-h6-regular text-figma-primary-950'>
+                    <p><span className='text-figma-secondary-950 mr-3'>早</span>{itinerary.diet.breakfast}</p>
+                    <p><span className='text-figma-secondary-950 mr-3'>午</span>{itinerary.diet.lunch}</p>
+                    <p><span className='text-figma-secondary-950 mr-3'>晚</span>{itinerary.diet.dinner}</p>
+                  </div>
+                </div>
+                <div className='w-full flex flex-col gap-y-[40px] px-[40px]'>
+                  <h4 className='flex justify-center items-center'>
+                    <span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="37" viewBox="0 0 36 37" fill="none" className='mr-2'>
+                        <path d="M31.5565 11.3005V20.7624C31.7864 20.9886 32.3139 21.2953 32.3579 21.6219C32.2107 23.2359 32.5424 25.1646 32.3559 26.74C32.3399 26.8738 32.1667 27.2364 32.0555 27.2364H31.025V29.7266C31.025 29.9454 30.6533 30.0778 30.4628 30.0951C29.8992 30.1464 28.3312 30.1703 27.8043 30.0885C27.6551 30.0652 27.3686 29.8656 27.3686 29.7272V27.237H6.49239V29.7272C6.49239 29.9461 6.12069 30.0785 5.93018 30.0958C5.36664 30.147 3.79859 30.171 3.27169 30.0891C3.12248 30.0659 2.83605 29.8663 2.83605 29.7279V27.2377H1.80556C1.74294 27.2377 1.45851 26.8645 1.50514 26.7414L1.51979 21.5075C3.19109 19.9221 5.03691 18.511 6.79214 17.0128C6.91804 15.919 6.73686 14.7421 6.82212 13.6563C6.93669 12.2047 8.21032 11.0511 9.64781 10.9672H24.1466C25.6161 11.0071 26.9223 12.188 27.0382 13.6563C27.0789 14.1746 26.9443 16.8079 27.0689 17.0121L30.4261 19.801V11.3019H27.8669C27.6198 11.3019 27.384 10.7337 27.5325 10.5028L29.2831 6.47515C29.3936 6.24496 29.5568 6.2077 29.792 6.18641C30.3715 6.13385 31.6904 6.12188 32.2566 6.18774C32.4118 6.2057 32.5131 6.23764 32.6223 6.35407L34.4682 10.5534C34.5881 10.7736 34.3469 11.3025 34.1171 11.3025H31.5579L31.5565 11.3005ZM28.8974 10.2381H33.086L31.7924 7.24556L30.1031 7.25887L28.8974 10.2381ZM25.9718 16.6788V13.7242C25.9718 13.0436 25.0645 12.0876 24.3424 12.0982L9.64781 12.0949C8.87111 12.0237 7.88858 12.9804 7.88858 13.7242V16.6788H9.55055C9.42599 15.7374 9.82833 14.8153 10.8542 14.6942C11.5023 14.6177 14.2154 14.6031 14.7656 14.7574C15.6429 15.0036 15.894 15.8512 15.8001 16.6795H18.023C18.0976 16.6695 18.0496 16.0501 18.0669 15.921C18.1628 15.2012 18.793 14.7414 19.4884 14.6842C20.3937 14.6104 21.9058 14.6204 22.8177 14.6842C23.9834 14.7654 24.4257 15.5784 24.3105 16.6788H25.9724H25.9718ZM14.7363 16.6788C14.735 16.3688 14.8076 15.9982 14.4912 15.8285C13.3754 15.8738 12.1458 15.7254 11.0433 15.8119C10.5291 15.8525 10.6143 16.2636 10.615 16.6788H14.737H14.7363ZM23.246 16.6788C23.2447 16.3688 23.3173 15.9982 23.0009 15.8285C21.8851 15.8738 20.6555 15.7254 19.553 15.8119C19.0388 15.8525 19.1241 16.2636 19.1247 16.6788H23.2467H23.246ZM30.227 21.1276L26.3688 17.8431L7.59149 17.8085L3.63473 21.127H30.2276L30.227 21.1276ZM31.2908 22.256H2.57027V26.1732H31.2908V22.256ZM5.42859 27.2364H3.89918V29.0293H5.42859V27.2364ZM29.9605 27.2364H28.4311V29.0293H29.9605V27.2364Z" fill="#926D3C"/>
+                      </svg>
+                    </span>
+                    <span className='font-noto-serif-h4-bold text-figma-primary-500'>飯店</span>
+                  </h4>
+                  <div className='flex flex-col font-genseki-h6-regular text-figma-secondary-500'>
+                    {hotelOptions.map((hotel, index) => (
+                      <p key={index} className='p-[10px] underline'>{hotel}</p>
+                    ))}
+                    <p className='p-[10px] text-figma-primary-950'>{hotelFallback}</p>
+                  </div>
+                </div>
+              </div>
+              <div className='w-full p-7 mt-10 mb-12 rounded-2xl bg-figma-secondary-200'>
+                <div className='flex items-center mb-[10px]'>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22' fill='none' className='p-1 mr-2'>
+                    <path d='M13.0283 10.9922H0.984375V13.0372H8.97126V21.0155H10.9503V13.0372H13.0283V10.9922Z' fill='#926D3C' />
+                    <path d='M8.97266 10.9923H21.0166V8.96283H13.0297V0.984497H11.0648V8.96283H8.97266V10.9923Z' fill='#926D3C' />
+                  </svg>
+                  <p className='font-noto-serif-body-l-semibold text-figma-secondary-950'>NOTE</p>
+                </div>
+                <p className='font-family-genseki leading-[1.5] text-figma-primary-500'>
+                  上方為參考航班，實際航班時間以航空公司為最終確認。若因航空公司或不可抗力因素，變動航班時間或轉機點，造成團體行程變更、增加餐食，本公司將不另行加價。若行程變更、減少餐食，則酌於退費。幾乎所有外籍航空公司之團體機票(含燃油附加稅)一經開票後，均無退票價值，此點基於航空公司之規定，敬請見諒。因應航空公司開票及保險的需求，及為了提供您在旅途中更完善的服務，請務必在繳交訂金的時候填妥客戶基本資料表。 旅客資料表下載
+                </p>
+              </div>
+            </div>
+          </div>
+        )
+      })}
     </div>
   )
 }

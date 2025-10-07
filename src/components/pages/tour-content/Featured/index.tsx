@@ -119,7 +119,7 @@ const Featured = () => {
           能在舒適的飯店享受一夜好眠,迎接下一天的精彩。
         </p>
       </div>
-      <div className="flex item justify-between mt-[112px]">
+      {/* <div className="flex item justify-between mt-[112px]">
         <Image
           src='/tour-content/scene-a.jpg'
           alt='scene-a'
@@ -148,7 +148,7 @@ const Featured = () => {
           height={664}
           className="rounded-2xl object-cover mb-[190px]"
         />
-      </div>
+      </div> */}
       <div className="flex items-start">
         <Image
           src='/tour-content/food-a.jpg'

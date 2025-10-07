@@ -13,7 +13,7 @@ type TItineraryCardProps = TBaseComponent & {
 const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
   const carouselRef = useRef<TItineraryCarouselRef>(null)
   const [current, setCurrent] = useState(0)
-  const [count, setCount] = useState(itinerary.itineraryItems.length)
+  const [count, setCount] = useState(itinerary.attractions.length)
 
   const formatNumber = (num: number) => {
     return String(num).padStart(2, '0')
@@ -47,7 +47,7 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
   }
 
   return (
-    <div className="min-h-[700px] ml-[152px] mr-9 rounded-2xl bg-figma-neutral-0">
+    <div className="min-h-[700px] mt-12 ml-[152px] mr-9 rounded-2xl bg-figma-neutral-0">
       <div className="flex justify-between">
         <h3 className={cn("relative px-7 rounded-ee-2xl bg-figma-neutral-50", styles['concave-border'])}>
           <span className="font-luxurious-deco-l-regular text-figma-secondary-500 mr-6">{itinerary.day}</span>
@@ -88,29 +88,31 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
         </div>
       </div>
       <div className="box-content flex pt-[28px] px-7 pb-9">
-        <div className="flex flex-col w-[541px] h-full justify-between mr-9">
-          <div>
-            <div className="flex items-center mb-8">
-              <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22' fill='none' className='p-1 mr-2'>
-                <path d='M13.0283 10.9922H0.984375V13.0372H8.97126V21.0155H10.9503V13.0372H13.0283V10.9922Z' fill='#926D3C' />
-                <path d='M8.97266 10.9923H21.0166V8.96283H13.0297V0.984497H11.0648V8.96283H8.97266V10.9923Z' fill='#926D3C' />
-              </svg>
-              <p className='font-noto-serif-body-l-semibold text-figma-secondary-950'>參考行車時間距離</p>
-            </div>
-            <div className="flex flex-col gap-y-7 font-noto-serif-title-medium text-figma-primary-950 whitespace-nowrap">
-              {itinerary.route.map((route, index) => (
-                <div key={index} className="flex items-center gap-x-4">
-                  <p>{route.start}</p>
-                  <div className="w-full text-center font-genseki-body-m-medium text-figma-primary-500">
-                    <p>{route.time}</p>
-                    <div className={styles['horizontal-line']}></div>
-                    <p>{route.distance}</p>
+        <div className="flex flex-col w-[541px] justify-between mr-9">
+          {itinerary.route.length > 0 && (
+            <div>
+              <div className="flex items-center mb-8">
+                <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22' fill='none' className='p-1 mr-2'>
+                  <path d='M13.0283 10.9922H0.984375V13.0372H8.97126V21.0155H10.9503V13.0372H13.0283V10.9922Z' fill='#926D3C' />
+                  <path d='M8.97266 10.9923H21.0166V8.96283H13.0297V0.984497H11.0648V8.96283H8.97266V10.9923Z' fill='#926D3C' />
+                </svg>
+                <p className='font-noto-serif-body-l-semibold text-figma-secondary-950'>參考行車時間距離</p>
+              </div>
+              <div className="flex flex-col gap-y-7 font-noto-serif-title-medium text-figma-primary-950 whitespace-nowrap">
+                {itinerary.route.map((route, index) => (
+                  <div key={index} className="flex items-center gap-x-4">
+                    <p>{route.start}</p>
+                    <div className="w-full text-center font-genseki-body-m-medium text-figma-primary-500">
+                      <p>{route.time}</p>
+                      <div className={styles['horizontal-line']}></div>
+                      <p>{route.distance}</p>
+                    </div>
+                    <p>{route.end}</p>
                   </div>
-                  <p>{route.end}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
           <div>
             <div className="w-7 h-[3px] bg-figma-secondary-950 mt-[27px] mb-5"></div>
             <p className="font-genseki-h6-regular text-figma-primary-950">{itinerary.routeDescription}</p>
@@ -125,7 +127,7 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
             <p className='font-noto-serif-body-l-semibold text-figma-secondary-950'>精選行程</p>
           </div>
           <div className='overflow-hidden'>
-            <ItineraryCarousel ref={carouselRef} itineraryItems={itinerary.itineraryItems} />
+            <ItineraryCarousel ref={carouselRef} attractions={itinerary.attractions} />
           </div>
           <div className='absolute top-[56px] right-0 w-[82px] h-[calc(100%-56px)] bg-gradient-to-r from-transparent to-[rgba(255,255,255,0.8)] pointer-events-none z-10'></div>
           <Image

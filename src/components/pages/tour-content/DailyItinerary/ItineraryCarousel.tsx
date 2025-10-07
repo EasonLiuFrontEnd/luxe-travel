@@ -10,7 +10,7 @@ import { TBaseComponent } from "@/types"
 import type { TItinerary } from '../config'
 
 type TItineraryCarouselProps = TBaseComponent & {
-  itineraryItems: TItinerary['itineraryItems']
+  attractions: TItinerary['attractions']
 }
 
 export type TItineraryCarouselRef = {
@@ -20,7 +20,7 @@ export type TItineraryCarouselRef = {
 }
 
 const ItineraryCarousel = forwardRef<TItineraryCarouselRef, TItineraryCarouselProps>(
-  ({ itineraryItems }, ref) => {
+  ({ attractions }, ref) => {
     const [api, setApi] = useState<CarouselApi>()
     const [current, setCurrent] = useState(0)
     const [count, setCount] = useState(0)
@@ -54,7 +54,7 @@ const ItineraryCarousel = forwardRef<TItineraryCarouselRef, TItineraryCarouselPr
         }}
       >
         <CarouselContent>
-          {itineraryItems.map((item, index) => (
+          {attractions.map((item, index) => (
             <CarouselItem key={index} className='box-content basis-[526px] flex-shrink-0 pl-0 mr-[36px] last:mr-0'>
               <div className='relative'>
                 <h5 className='absolute top-0 right-0 font-noto-serif-h5-bold text-figma-secondary-950 py-4 px-7 rounded-es-2xl bg-figma-neutral-0'>
