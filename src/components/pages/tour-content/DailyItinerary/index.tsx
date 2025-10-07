@@ -2,6 +2,7 @@ import { useState } from 'react'
 import ItineraryCard from "./ItineraryCard"
 import ItineraryActivity from "./ItineraryActivity"
 import { itineraryData, type TItinerary } from "../config"
+import ItineraryNotice from './ItineraryNotice'
 
 const DailyItinerary = () => {
   const [openPlace, setOpenPlace] = useState<TItinerary['activity'][0]['place'][0] | null>(null)
@@ -82,6 +83,7 @@ const DailyItinerary = () => {
           </div>
         )
       })}
+      <ItineraryNotice />
     </div>
   )
 }
