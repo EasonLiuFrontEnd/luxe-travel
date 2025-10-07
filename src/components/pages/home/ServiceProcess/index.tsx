@@ -9,29 +9,29 @@ import '@/styles/components.css'
 type TServiceProcessProps = TBaseComponent
 
 const ServiceStep = ({ step }: { step: TServiceStep }) => {
-  const { number, title, englishTitle, description, backgroundClass } = step
+  const { number, title, englishTitle, description } = step
 
   return (
     <div
       className={cn(
-        'flex flex-col items-center justify-between p-7 w-full xl:min-h-auto',
+        'flex flex-col items-center justify-between p-7 w-full xl:min-h-auto xl:hover:min-w-[400px] xl:hover:max-w-[25%] xl:hover:h-[526px] transition-all duration-300 ease-out group',
         getStepStyles(number),
-        backgroundClass && styles[backgroundClass],
+        styles.books,
       )}
     >
-      <div className='flex flex-col gap-3 lg:gap-5 items-center justify-start text-nowrap'>
+      <div className='flex flex-col gap-3 xl:gap-5 items-center justify-start text-nowrap'>
         <p className="font-['Amiri'] text-[64px] leading-none">{number}</p>
         <p className="font-['Noto_Serif_TC'] font-bold text-[32px] 2xl:text-[40px] leading-[1.2] text-center">
           {title}
         </p>
       </div>
 
-      <div className='flex gap-4 lg:gap-8 items-end justify-start w-full'>
+      <div className='flex gap-4 xl:gap-8 items-end justify-start w-full'>
         <p className="rotate-[270deg] font-['Luxurious_Script'] text-[48px] text-center whitespace-nowrap tracking-[0.1em] leading-none max-w-[48px]">
           {englishTitle}
         </p>
         {description && (
-          <p className='text-[20px] leading-[1.5]'>{description}</p>
+          <p className='text-[20px] leading-[1.5] text-transparent group-hover:text-white transition-colors duration-300'>{description}</p>
         )}
       </div>
     </div>
@@ -50,7 +50,7 @@ const ServiceProcess = ({ className, ...props }: TServiceProcessProps) => {
     >
       <div
         className={cn(
-          'px-0 py-[60px] lg:py-[120px] flex flex-col gap-[60px] lg:gap-[120px] items-center border-b border-figma-secondary-500 xl:border-none',
+          'px-0 py-[60px] xl:py-[120px] flex flex-col gap-[60px] xl:gap-[120px] items-center border-b border-figma-secondary-500 xl:border-none',
           styles.serviceProcessBackgroundImage,
         )}
       >
@@ -59,7 +59,7 @@ const ServiceProcess = ({ className, ...props }: TServiceProcessProps) => {
         </h2>
 
         <div className='w-full px-[clamp(12px,2.5vw,48px)] xl:border-b xl:border-[var(--color-figma-secondary-500)]'>
-          <div className='w-full max-w-[1440px] mx-auto flex flex-col lg:flex-row lg:items-end gap-4 lg:gap-[6px]'>
+          <div className='w-full max-w-[1440px] mx-auto flex flex-col xl:flex-row xl:items-end xl:justify-center gap-4 xl:gap-[6px]'>
             {serviceSteps.map((step) => (
               <ServiceStep key={step.number} step={step} />
             ))}
