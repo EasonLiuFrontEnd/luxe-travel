@@ -6,7 +6,8 @@
 
 @font-face {
   font-family: 'genseki';
-  src: url('/font/genseki-font-master/otf/TW/GenSekiGothic2TW-R.otf') format('opentype');
+  src: url('/font/genseki-font-master/otf/TW/GenSekiGothic2TW-R.otf')
+    format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -14,7 +15,8 @@
 
 @font-face {
   font-family: 'genseki';
-  src: url('/font/genseki-font-master/otf/TW/GenSekiGothic2TW-M.otf') format('opentype');
+  src: url('/font/genseki-font-master/otf/TW/GenSekiGothic2TW-M.otf')
+    format('opentype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -22,7 +24,8 @@
 
 @font-face {
   font-family: 'genseki';
-  src: url('/font/genseki-font-master/otf/TW/GenSekiGothic2TW-B.otf') format('opentype');
+  src: url('/font/genseki-font-master/otf/TW/GenSekiGothic2TW-B.otf')
+    format('opentype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;

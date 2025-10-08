@@ -2,7 +2,7 @@
   position: relative;
   width: 2px;
   height: 126px;
-  background-color: #BDA05E;
+  background-color: #bda05e;
   margin: 6px 0;
 }
 
@@ -13,7 +13,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: #BDA05E;
+  background-color: #bda05e;
   left: 50%;
   transform: translateX(-50%);
 }

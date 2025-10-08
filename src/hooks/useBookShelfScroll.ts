@@ -46,23 +46,18 @@ export const useBookShelfScroll = () => {
     const handleScroll = () => {
       if (!bookShelfRef.current || isMobile) return
 
-      const recommendationSection = document.querySelector(
-        '.recommendation-section',
+      const bookshelfTitle = document.querySelector(
+        '[data-bookshelf-title="true"]',
       ) as HTMLElement
 
-      if (recommendationSection) {
-        const recommendationRect = recommendationSection.getBoundingClientRect()
-        const isRecommendationAtBottom =
-          Math.abs(recommendationRect.top - window.innerHeight) <= 50
+      if (bookshelfTitle) {
+        const titleRect = bookshelfTitle.getBoundingClientRect()
+        const isTitleAtTop = Math.abs(titleRect.top) <= 50
 
-        if (isRecommendationAtBottom && !isFixed) {
+        if (isTitleAtTop && !isFixed) {
           setIsFixed(true)
           maxScrollX.current = calculateMaxScroll()
-        } else if (
-          !isRecommendationAtBottom &&
-          isFixed &&
-          scrollProgress === 0
-        ) {
+        } else if (!isTitleAtTop && isFixed && scrollProgress === 0) {
           setIsFixed(false)
         }
       } else {

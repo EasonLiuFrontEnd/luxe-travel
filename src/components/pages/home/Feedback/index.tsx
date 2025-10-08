@@ -22,15 +22,15 @@ const Feedback = () => {
   } = useFeedBack()
 
   const effectiveData = useMemo(() => {
-    if (feedbacksError || !feedbacksData) {
+    if (feedbacksError && process.env.NODE_ENV !== 'production') {
       return mock.data
     }
 
     if (isFeedbacksLoading) {
-      return mock.data
+      return []
     }
 
-    return feedbacksData
+    return feedbacksData || []
   }, [feedbacksError, feedbacksData, isFeedbacksLoading, mock.data])
 
   const cardData: {

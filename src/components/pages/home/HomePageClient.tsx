@@ -29,7 +29,7 @@ const HomePageClient = () => {
       <ServiceProcess />
       <TravelInquiryForm
         className='relative pt-10 pb-[80px] px-4 xl:py-10 xl:px-9 z-10'
-        heroTopPosition='top-[9px] xl:top-[24px]'
+        heroTopPosition='top-[9px] xl:top-[-24px]'
       />
     </div>
   )

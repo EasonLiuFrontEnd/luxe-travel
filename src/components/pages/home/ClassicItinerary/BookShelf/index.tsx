@@ -33,7 +33,7 @@ const BookShelf = ({ trackRef, isMobile = false }: TBookShelfProps) => {
   const { setSelectedCountryId } = useSelectedCountry()
 
   const displayData = useMemo(() => {
-    if (booksError || !booksData) {
+    if (booksError && process.env.NODE_ENV !== 'production') {
       return transformBooksData(mock.rows)
     }
 
@@ -41,7 +41,7 @@ const BookShelf = ({ trackRef, isMobile = false }: TBookShelfProps) => {
       return []
     }
 
-    return transformBooksData(booksData)
+    return transformBooksData(booksData || [])
   }, [booksError, booksData, isBooksLoading, mock.rows])
 
   const handleCardClick = (cardId: string) => {

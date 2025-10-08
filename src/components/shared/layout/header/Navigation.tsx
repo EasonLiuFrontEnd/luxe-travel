@@ -38,7 +38,7 @@ const Navigation = ({
   } = menuQuery
 
   const { navItems, dropdownMenus } = useMemo(() => {
-    if (menuError || !menuData) {
+    if (menuError) {
       return transformMenuData(mock.data)
     }
 
@@ -46,7 +46,7 @@ const Navigation = ({
       return { navItems: [], dropdownMenus: {} }
     }
 
-    return transformMenuData(menuData)
+    return transformMenuData(menuData || [])
   }, [menuError, menuData, isMenuLoading, mock.data])
 
   const openSearch = () => {
@@ -94,13 +94,12 @@ const Navigation = ({
             onMouseEnter={() => setActiveDropdown(item.label)}
             onMouseLeave={() => setActiveDropdown(null)}
           >
-            <button className='font-noto-serif-body-l-semibold text-figma-primary-950 hover:text-figma-secondary-950 cursor-pointer pt-[48px] relative'>
+            <button className='font-noto-serif-body-l-semibold text-figma-primary-950 hover:text-figma-secondary-950 cursor-pointer py-7 relative'>
               {activeDropdown === item.label && (
                 <NavigationHoverIcon className='absolute top-0 right-[50%] translate-x-[50%]' />
               )}
               {item.label}
             </button>
-            <div className='absolute top-full left-0 right-0 h-[16px] bg-transparent' />
             <DropdownMenu
               isVisible={activeDropdown === item.label}
               items={
@@ -111,14 +110,16 @@ const Navigation = ({
             />
           </div>
         ))}
-        <button className='pt-[48px] px-[8px] max-xl:hidden'>
+        <button className='pt-7 px-[8px] max-xl:hidden'>
           <SearchIcon onClick={openSearch} />
         </button>
       </div>
 
       <ConsultButton
         className={`max-xl:hidden transition-opacity duration-800 ${
-          showConsultButton ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          showConsultButton
+            ? 'opacity-100 visible'
+            : 'opacity-0 invisible pointer-events-none'
         }`}
       />
 

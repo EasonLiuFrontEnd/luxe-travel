@@ -1,0 +1,86 @@
+.backgroundLayer1 {
+  background-image: url(/tours/background.svg);
+  background-position: 150px 150%;
+  background-repeat: repeat-x;
+}
+
+.backgroundLayer2 {
+  background-image: url(/tours/background.svg);
+  background-position: 500px 20%;
+  background-repeat: repeat-x;
+}
+
+.backgroundLayer3 {
+  background-image: url(/tours/background.svg);
+  background-position: 150px -75%;
+  background-repeat: repeat-x;
+}
+
+.toursBackgroundLayer1 {
+  background-image: url(/tours/background.svg);
+  background-position: 150px 200%;
+  background-repeat: repeat-x;
+}
+
+.toursBackgroundLayer2 {
+  background-image: url(/tours/background.svg);
+  background-position: 510px 35%;
+  background-repeat: repeat-x;
+}
+
+.toursBackgroundLayer3 {
+  background-image: url(/tours/background.svg);
+  background-position: 150px -140%;
+  background-repeat: repeat-x;
+}
+
+.rangeInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  box-shadow: 0px 0px 3px 1px #bda05e80;
+  outline: none;
+  border: none;
+}
+
+.rangeInput::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  box-shadow: 0px 0px 3px 1px #bda05e80;
+  outline: none;
+  border: none;
+}
+
+.rangeInput:focus {
+  outline: none;
+}
+
+.rangeInput:focus::-webkit-slider-thumb {
+  outline: none;
+  border: none;
+}
+
+.rangeInput:focus::-moz-range-thumb {
+  outline: none;
+  border: none;
+}
+
+.rangeTrack {
+  left: var(--left-percent);
+  right: var(--right-percent);
+}
+
+.rangeInputUpper {
+  z-index: 3;
+}
+
+.rangeInputLower {
+  z-index: 4;
+}

@@ -18,16 +18,15 @@ const Concerns = () => {
   } = concernsQuery
 
   const effectiveData = useMemo(() => {
-    if (concernsError || !concernsData) {
+    if (concernsError && process.env.NODE_ENV !== 'production') {
       return mock.rows
     }
 
     if (isConcernsLoading) {
-      return mock.rows
+      return []
     }
 
-    // 使用 API 資料
-    return concernsData
+    return concernsData || []
   }, [concernsError, concernsData, isConcernsLoading, mock.rows])
 
   const gradientStyle = {

@@ -61,28 +61,40 @@ const BannerCarousel = ({
         align: 'start',
         loop: true,
       }}
+      contentClassName='h-[460px] xl:h-[662px]'
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <CarouselContent>
-        {images.map((image, index) => (
-          <CarouselItem key={index}>
+        {images.length > 0 ? (
+          images.map((image, index) => (
+            <CarouselItem key={index}>
+              <div
+                className={cn(
+                  'h-[460px] xl:h-[662px] relative rounded-2xl overflow-hidden',
+                  className,
+                )}
+              >
+                <Image
+                  src={image}
+                  alt='BannerCarousel'
+                  className='object-cover'
+                  fill
+                  priority={index === 0}
+                />
+              </div>
+            </CarouselItem>
+          ))
+        ) : (
+          <CarouselItem>
             <div
               className={cn(
                 'h-[460px] xl:h-[662px] relative rounded-2xl overflow-hidden',
                 className,
               )}
-            >
-              <Image
-                src={image}
-                alt='BannerCarousel'
-                className='object-cover'
-                fill
-                priority={index === 0}
-              />
-            </div>
+            ></div>
           </CarouselItem>
-        ))}
+        )}
       </CarouselContent>
 
       <div className='absolute bottom-0 max-xl:right-0 xl:left-0'>
