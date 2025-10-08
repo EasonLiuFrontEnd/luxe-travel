@@ -75,7 +75,6 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
       return []
     }
 
-    // 如果 API 正常回應，即使是空陣列也使用 API 資料
     return bannersData || []
   }, [bannersError, bannersData, isBannersLoading, mock.rows])
 
@@ -88,30 +87,27 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
   const [isStickyEnded, setIsStickyEnded] = useState(false)
   const stickyRef = useRef<HTMLDivElement>(null)
 
-  const dynamicTranslateY = useMemo(
-    () => {
-      if (isMobile) {
-        return '0px'
-      }
-      
-      if (isStickyEnded) {
-        return '-5px'
-      }
-      const startY = 223
-      const endY = 76
-      const range = startY - endY
-      const calculatedY = startY - logoProgress * range
-      
-      return `${calculatedY}px`
-    },
-    [logoProgress, isStickyEnded, isMobile],
-  )
+  const dynamicTranslateY = useMemo(() => {
+    if (isMobile) {
+      return '0px'
+    }
+
+    if (isStickyEnded) {
+      return '-5px'
+    }
+    const startY = 223
+    const endY = 76
+    const range = startY - endY
+    const calculatedY = startY - logoProgress * range
+
+    return `${calculatedY}px`
+  }, [logoProgress, isStickyEnded, isMobile])
 
   useEffect(() => {
     const checkStickyEnd = () => {
       const scrollY = window.scrollY
       const shouldEnd = scrollY > 600
-      
+
       if (shouldEnd && !isStickyEnded) {
         setIsStickyEnded(true)
       } else if (!shouldEnd && isStickyEnded) {
@@ -327,10 +323,10 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
 
         <BannerCarousel
           images={
-            bannersError 
+            bannersError
               ? ['/home/banners/banner.jpg']
-              : (effectiveData && effectiveData.length > 0)
-                ? effectiveData.map(banner => banner.imageUrl)
+              : effectiveData && effectiveData.length > 0
+                ? effectiveData.map((banner) => banner.imageUrl)
                 : []
           }
           autoPlayInterval={10000}

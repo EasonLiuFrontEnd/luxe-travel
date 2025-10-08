@@ -1,9 +1,8 @@
 'use client'
 
-import type { TBaseComponent } from '@/types'
 import IconCta from '@/components/shared/icons/IconCta'
 import Image from 'next/image'
-type TTravelCardProps = TBaseComponent & {
+type TTravelCardProps = {
   image: string
   tagText: string
   tagColor: 'primary' | 'secondary'
@@ -14,6 +13,7 @@ type TTravelCardProps = TBaseComponent & {
   hoverTitle?: string
   hoverDescription?: string
   onClick?: () => void
+  className?: string
 }
 
 const TravelCard = ({

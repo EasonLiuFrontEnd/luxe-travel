@@ -42,7 +42,9 @@ const ResultsSort = ({
     setShowSortDropdown(false)
   }, [])
 
-  const sortDropdownRef = useClickOutside<HTMLDivElement>(handleCloseSortDropdown)
+  const sortDropdownRef = useClickOutside<HTMLDivElement>(
+    handleCloseSortDropdown,
+  )
 
   const handleSort = (option: string) => {
     setSortOption(option)

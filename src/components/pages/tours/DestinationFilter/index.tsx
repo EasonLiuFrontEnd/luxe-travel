@@ -26,7 +26,7 @@ type TDestinationFilterProps = TBaseComponent & {
   onSearch?: (
     selectedCountries: string[],
     budgetRange?: [number, number],
-    daysRange?: string | null
+    daysRange?: string | null,
   ) => void
 }
 
@@ -42,12 +42,23 @@ const DestinationFilter = ({
   const [isOpen, setIsOpen] = useState(false)
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null)
   const [selectedCountries, setSelectedCountries] = useState<string[]>([])
-  const [budgetRange, setBudgetRange] = useState<[number, number]>([80000, 600000])
-  const [selectedDaysRange, setSelectedDaysRange] = useState<string | null>('不限天數')
+  const [budgetRange, setBudgetRange] = useState<[number, number]>([
+    80000, 600000,
+  ])
+  const [selectedDaysRange, setSelectedDaysRange] = useState<string | null>(
+    '不限天數',
+  )
   const [regions, setRegions] = useState<TRegionData[]>([])
 
-  const { query: countriesQuery, mock: countriesMock } = useProductCountriesHook()
-  const daysRangeOptions = ['6-10天', '11-15天', '16-20天', '21-25天', '不限天數']
+  const { query: countriesQuery, mock: countriesMock } =
+    useProductCountriesHook()
+  const daysRangeOptions = [
+    '6-10天',
+    '11-15天',
+    '16-20天',
+    '21-25天',
+    '不限天數',
+  ]
 
   const getBackgroundClasses = () => {
     switch (tourType) {
@@ -55,25 +66,25 @@ const DestinationFilter = ({
         return {
           backgroundLayer1: styles.backgroundLayer1,
           backgroundLayer2: styles.backgroundLayer2,
-          backgroundLayer3: styles.backgroundLayer3
+          backgroundLayer3: styles.backgroundLayer3,
         }
       case 'free-tours':
         return {
           backgroundLayer1: styles.toursBackgroundLayer1,
           backgroundLayer2: styles.toursBackgroundLayer2,
-          backgroundLayer3: styles.toursBackgroundLayer3
+          backgroundLayer3: styles.toursBackgroundLayer3,
         }
       case 'rcar-tours':
         return {
           backgroundLayer1: styles.toursBackgroundLayer1,
           backgroundLayer2: styles.toursBackgroundLayer2,
-          backgroundLayer3: styles.toursBackgroundLayer3
+          backgroundLayer3: styles.toursBackgroundLayer3,
         }
       default:
         return {
           backgroundLayer1: styles.backgroundLayer1,
           backgroundLayer2: styles.backgroundLayer2,
-          backgroundLayer3: styles.backgroundLayer3
+          backgroundLayer3: styles.backgroundLayer3,
         }
     }
   }
@@ -82,9 +93,10 @@ const DestinationFilter = ({
 
   useEffect(() => {
     if (countriesQuery.isSuccess) {
-      const dataSource = countriesQuery.data && countriesQuery.data.length > 0
-        ? countriesQuery.data
-        : (countriesMock.data || [])
+      const dataSource =
+        countriesQuery.data && countriesQuery.data.length > 0
+          ? countriesQuery.data
+          : countriesMock.data || []
       setRegions(dataSource)
     }
   }, [countriesQuery.isSuccess, countriesQuery.data, countriesMock.data])
@@ -136,7 +148,7 @@ const DestinationFilter = ({
     if (!region) return false
 
     return region.countries.some((country) =>
-      selectedCountries.includes(country.code)
+      selectedCountries.includes(country.code),
     )
   }
 
@@ -154,7 +166,7 @@ const DestinationFilter = ({
   }
 
   const handleDaysRangeToggle = (range: string) => {
-    setSelectedDaysRange(prev => prev === range ? null : range)
+    setSelectedDaysRange((prev) => (prev === range ? null : range))
   }
 
   const handleSearch = () => {
@@ -186,7 +198,9 @@ const DestinationFilter = ({
 
       <div className='relative z-10'>
         <div className='max-w-[1824px] mx-auto'>
-          <div className={`bg-white rounded-2xl p-6 flex flex-col lg:flex-row gap-[20px] ${gapSize} lg:items-center`}>
+          <div
+            className={`bg-white rounded-2xl p-6 flex flex-col lg:flex-row gap-[20px] ${gapSize} lg:items-center`}
+          >
             <div className='flex-1 relative' ref={dropdownRef}>
               <div className='flex flex-col gap-1'>
                 <label className='font-family-noto-serif font-semibold text-lg text-figma-primary-950'>
@@ -209,13 +223,19 @@ const DestinationFilter = ({
                     <div>
                       {!selectedRegion
                         ? regions.map((region) => {
-                            const hasSelected = hasSelectedCountriesInRegion(region.region)
+                            const hasSelected = hasSelectedCountriesInRegion(
+                              region.region,
+                            )
                             return (
                               <button
                                 key={region.region}
-                                onClick={() => handleRegionSelect(region.region)}
+                                onClick={() =>
+                                  handleRegionSelect(region.region)
+                                }
                                 className={`w-full text-left py-3 px-4 hover:bg-gray-50 rounded font-family-noto-serif font-semibold text-base cursor-pointer ${
-                                  hasSelected ? 'text-figma-secondary-950' : 'text-figma-neutral-300'
+                                  hasSelected
+                                    ? 'text-figma-secondary-950'
+                                    : 'text-figma-neutral-300'
                                 }`}
                               >
                                 {region.region}
@@ -282,16 +302,19 @@ const DestinationFilter = ({
                 </label>
                 <div className='flex flex-col'>
                   <div className='font-family-genseki text-sm text-figma-primary-950 mb-3'>
-                    NT ${budgetRange[0].toLocaleString()} ~ NT ${budgetRange[1].toLocaleString()}
+                    NT ${budgetRange[0].toLocaleString()} ~ NT $
+                    {budgetRange[1].toLocaleString()}
                   </div>
                   <div className='relative h-[20px]'>
                     <div className='absolute bg-[#ebebeb] h-[6px] left-0 right-0 rounded-full top-[7px] pointer-events-none' />
                     <div
                       className={`absolute bg-figma-secondary-500 h-[6px] rounded-full top-[7px] pointer-events-none ${styles.rangeTrack}`}
-                      style={{
-                        '--left-percent': `${((budgetRange[0] - 80000) / (600000 - 80000)) * 100}%`,
-                        '--right-percent': `${100 - ((budgetRange[1] - 80000) / (600000 - 80000)) * 100}%`
-                      } as React.CSSProperties}
+                      style={
+                        {
+                          '--left-percent': `${((budgetRange[0] - 80000) / (600000 - 80000)) * 100}%`,
+                          '--right-percent': `${100 - ((budgetRange[1] - 80000) / (600000 - 80000)) * 100}%`,
+                        } as React.CSSProperties
+                      }
                     />
                     <input
                       type='range'
@@ -299,7 +322,9 @@ const DestinationFilter = ({
                       max='600000'
                       step='10000'
                       value={budgetRange[1]}
-                      onChange={(e) => handleBudgetChange(1, Number(e.target.value))}
+                      onChange={(e) =>
+                        handleBudgetChange(1, Number(e.target.value))
+                      }
                       className={`absolute w-full h-[20px] top-0 appearance-none bg-transparent cursor-pointer ${styles.rangeInput} ${styles.rangeInputUpper}`}
                     />
                     <input
@@ -308,7 +333,9 @@ const DestinationFilter = ({
                       max='600000'
                       step='10000'
                       value={budgetRange[0]}
-                      onChange={(e) => handleBudgetChange(0, Number(e.target.value))}
+                      onChange={(e) =>
+                        handleBudgetChange(0, Number(e.target.value))
+                      }
                       className={`absolute w-full h-[20px] top-0 appearance-none bg-transparent cursor-pointer ${styles.rangeInput} ${styles.rangeInputLower}`}
                     />
                   </div>

@@ -28,7 +28,7 @@ const RootLayout = ({ children }: TRootLayout) => {
       className={`${notoSerifTC.variable} ${luxuriousScript.variable}`}
     >
       <head />
-      <body className="bg-figma-neutral-50">
+      <body className='bg-figma-neutral-50'>
         <ClientLayout className={styles['auto-text-space']}>
           {children}
         </ClientLayout>

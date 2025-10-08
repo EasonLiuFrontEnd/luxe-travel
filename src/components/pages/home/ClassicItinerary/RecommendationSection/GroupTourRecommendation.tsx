@@ -12,27 +12,29 @@ const GroupTourRecommendation = () => {
   const { query: booksQuery, mock: booksMock } = useBooks()
 
   const currentCountryName = useMemo(() => {
-    // 只有在 API 錯誤且非生產環境時才使用假資料，API 正常回應（包括空陣列）都使用 API 資料
-    const data = (booksQuery.error && process.env.NODE_ENV !== 'production')
-      ? booksMock.rows 
-      : (booksQuery.data || [])
+    const data =
+      booksQuery.error && process.env.NODE_ENV !== 'production'
+        ? booksMock.rows
+        : booksQuery.data || []
     const selectedBook = data.find((book) => book.id === selectedCountryId)
     return selectedBook?.title || ''
   }, [booksQuery.data, booksQuery.error, booksMock.rows, selectedCountryId])
 
   const currentGroupTours = useMemo(() => {
-    // 只有在 API 錯誤且非生產環境時才使用假資料，API 正常回應（包括空陣列）都使用 API 資料
-    const data = (booksQuery.error && process.env.NODE_ENV !== 'production')
-      ? booksMock.rows 
-      : (booksQuery.data || [])
+    const data =
+      booksQuery.error && process.env.NODE_ENV !== 'production'
+        ? booksMock.rows
+        : booksQuery.data || []
     const selectedBook = data.find((book) => book.id === selectedCountryId)
     return (selectedBook?.groupProducts || []).slice(0, 3)
   }, [booksQuery.data, booksQuery.error, booksMock.rows, selectedCountryId])
 
   return (
-    <div className='bg-white box-border flex flex-col gap-8 justify-between items-center pb-6 pt-0 px-6 xl:px-6 px-4 relative rounded-2xl xl:rounded-2xl rounded-[12px] w-full h-full'>
+    <div className='bg-white box-border flex flex-col gap-8 justify-between items-center pb-6 pt-0 px-4 xl:px-6 relative rounded-[12px] xl:rounded-2xl w-full h-full'>
       <div className='flex flex-col gap-6 items-center justify-start w-full'>
-        <div className={`bg-figma-neutral-50 box-border flex gap-2.5 items-center justify-center px-6 py-3 relative rounded-bl-[16px] rounded-br-[16px] xl:rounded-bl-[16px] xl:rounded-br-[16px] rounded-bl-[12px] rounded-br-[12px] ${styles.titleContainer}`}>
+        <div
+          className={`bg-figma-neutral-50 box-border flex gap-2.5 items-center justify-center px-6 py-3 relative rounded-bl-[12px] rounded-br-[12px] xl:rounded-bl-[16px] xl:rounded-br-[16px] ${styles.titleContainer}`}
+        >
           <div className='font-family-noto-serif font-bold text-[var(--color-figma-primary-500)] text-[24px] leading-[1.2] whitespace-nowrap'>
             {currentCountryName}團體行推薦
           </div>
@@ -43,12 +45,12 @@ const GroupTourRecommendation = () => {
             currentGroupTours.map((tour) => (
               <TravelCard
                 key={tour.id}
-                image={tour.imageUrl}
-                tagText={tour.tagText}
+                image={tour.imageUrl || ''}
+                tagText={tour.tagText || ''}
                 tagColor='primary'
                 title={tour.title}
-                description={tour.description}
-                price={tour.price}
+                description={tour.description || ''}
+                price={tour.price || ''}
                 priceColor='primary'
                 hoverTitle={tour.hoverTitle}
                 hoverDescription={tour.hoverDescription}
@@ -65,9 +67,9 @@ const GroupTourRecommendation = () => {
         </div>
       </div>
 
-      <RecommendationButton 
-        text='查看更多' 
-        variant='secondary' 
+      <RecommendationButton
+        text='查看更多'
+        variant='secondary'
         onClick={() => router.push('/group-tours')}
       />
     </div>

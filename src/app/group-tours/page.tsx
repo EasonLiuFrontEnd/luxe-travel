@@ -3,18 +3,14 @@
 import TourPageLayout from '@/components/pages/tours/TourPageLayout'
 import { useProductsSearch, useProductCountries } from '@/api/group-tours'
 import * as apiModule from '@/api/group-tours'
-import type { TBaseComponent } from '@/types'
 
-type TGroupToursPageProps = TBaseComponent
-
-const GroupToursPage = ({ className }: TGroupToursPageProps) => {
+const GroupToursPage = () => {
   return (
     <TourPageLayout
-      tourType="group-tours"
+      tourType='group-tours'
       useProductsSearch={useProductsSearch}
       useProductCountries={useProductCountries}
       apiModule={apiModule}
-      className={className}
     />
   )
 }

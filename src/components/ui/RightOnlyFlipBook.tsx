@@ -39,18 +39,16 @@ export const RightOnlyFlipBook = ({
   const handleFlip = (data: number) => {
     if (onFlip) {
       if (onFlip.length === 0) {
-        (onFlip as () => void)()
+        ;(onFlip as () => void)()
       } else {
-        (onFlip as (pageIndex: number) => void)(data)
+        ;(onFlip as (pageIndex: number) => void)(data)
       }
     }
   }
 
   return (
     <div className={className} {...props}>
-      {/* Container that clips the left half */}
       <div className='relative overflow-hidden mx-auto'>
-        {/* Flipbook positioned so only right half shows */}
         <div className='relative'>
           <PageFlip
             ref={flipBookRef}
@@ -73,13 +71,11 @@ export const RightOnlyFlipBook = ({
             ))}
           </PageFlip>
 
-          {/* Overlay to block left-side clicks (backward flips) - only if disabled */}
           {!enableBackwardFlip && (
             <div
               className='absolute inset-0 pointer-events-none'
               style={{ zIndex: 1000 }}
             >
-              {/* Block left half - prevents backward flips */}
               <div
                 className='absolute left-0 top-0 w-1/2 h-full bg-transparent pointer-events-auto'
                 onClick={(e) => {

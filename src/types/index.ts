@@ -100,4 +100,3 @@ export type TFlipBookPage = {
   content: React.ReactNode
   pageContentClassName?: string
 }
-

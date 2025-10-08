@@ -13,11 +13,7 @@
       var(--color-figma-neutral-50) 50%,
       transparent 50%
     ),
-    linear-gradient(
-      to top,
-      var(--color-figma-neutral-50) 50%,
-      transparent 50%
-    ),
+    linear-gradient(to top, var(--color-figma-neutral-50) 50%, transparent 50%),
     radial-gradient(
       circle 16px at center,
       transparent 16px,
@@ -41,11 +37,7 @@
       var(--color-figma-neutral-50) 50%,
       transparent 50%
     ),
-    linear-gradient(
-      to top,
-      var(--color-figma-neutral-50) 50%,
-      transparent 50%
-    ),
+    linear-gradient(to top, var(--color-figma-neutral-50) 50%, transparent 50%),
     radial-gradient(
       circle 16px at center,
       transparent 16px,

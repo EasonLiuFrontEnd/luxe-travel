@@ -6,10 +6,7 @@ export {
   useBooks,
 } from './home'
 
-export {
-  useProductsSearch,
-  useProductCountries,
-} from './group-tours'
+export { useProductsSearch, useProductCountries } from './group-tours'
 
 export type {
   TAdvantages,

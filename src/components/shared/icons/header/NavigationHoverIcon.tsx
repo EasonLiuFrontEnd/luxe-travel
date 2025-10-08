@@ -1,7 +1,6 @@
-import type { TBaseComponent } from '@/types'
-
-export type TNavigationHoverIcon = TBaseComponent & {
+export type TNavigationHoverIcon = {
   size?: string
+  className?: string
 }
 
 const NavigationHoverIcon = ({

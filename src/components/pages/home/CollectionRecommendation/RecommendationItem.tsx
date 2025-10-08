@@ -1,12 +1,12 @@
 import Image from 'next/image'
 import IconCta from '@/components/shared/icons/IconCta'
-import type { TBaseComponent } from '@/types'
 import type { TRecommendationItem } from './config'
 
-type TRecommendationItemProps = TBaseComponent & {
+type TRecommendationItemProps = {
   item: TRecommendationItem
   onClick?: () => void
   style?: React.CSSProperties
+  className?: string
 }
 
 const RecommendationItem = ({

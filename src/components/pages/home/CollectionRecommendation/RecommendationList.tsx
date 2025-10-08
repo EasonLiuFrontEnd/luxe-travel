@@ -1,9 +1,10 @@
 import { useRef, useState, useCallback } from 'react'
 import RecommendationItem from './RecommendationItem'
-import type { TBaseComponent } from '@/types'
 import { recommendationData } from './config'
 
-type TRecommendationListProps = TBaseComponent
+type TRecommendationListProps = {
+  className?: string
+}
 
 const RecommendationList = ({ className }: TRecommendationListProps) => {
   const scrollRef = useRef<HTMLDivElement>(null)

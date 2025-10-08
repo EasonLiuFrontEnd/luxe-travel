@@ -35,7 +35,6 @@ export const serviceSteps: TServiceStep[] = [
       '出發前兩週安排行前說明，提供獨家精美旅遊手冊。完整行程資料及票券，讓您隨時安心出發！',
   },
 ]
-// scale-x-[0.98] scale-y-[1.03]
 export const getStepStyles = (number: string) => {
   switch (number) {
     case '01':

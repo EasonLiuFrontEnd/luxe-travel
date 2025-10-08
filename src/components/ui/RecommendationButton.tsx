@@ -1,9 +1,8 @@
-import type { TBaseComponent } from '@/types'
-
-type TRecommendationButtonProps = TBaseComponent & {
+type TRecommendationButtonProps = {
   text: string
   variant?: 'primary' | 'secondary'
   onClick?: () => void
+  className?: string
 }
 
 const RecommendationButton = ({

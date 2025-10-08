@@ -71,16 +71,20 @@
 }
 
 .gradientMask {
-  mask: linear-gradient(to bottom,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 1) 50%,
-      rgba(0, 0, 0, 0.5) 65%,
-      rgba(0, 0, 0, 0) 100%);
-  -webkit-mask: linear-gradient(to bottom,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 1) 50%,
-      rgba(0, 0, 0, 0.5) 65%,
-      rgba(0, 0, 0, 0) 100%);
+  mask: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0.5) 65%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  -webkit-mask: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0.5) 65%,
+    rgba(0, 0, 0, 0) 100%
+  );
 }
 
 @media (min-width: 1280px) {
@@ -139,7 +143,11 @@
       var(--color-figma-secondary-100) 50%,
       transparent 50%
     ),
-    linear-gradient(to top, transparent 50%, var(--color-figma-secondary-100) 50%),
+    linear-gradient(
+      to top,
+      transparent 50%,
+      var(--color-figma-secondary-100) 50%
+    ),
     radial-gradient(
       circle 16px at center,
       transparent 16px,

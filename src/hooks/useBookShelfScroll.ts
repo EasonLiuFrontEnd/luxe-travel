@@ -57,15 +57,10 @@ export const useBookShelfScroll = () => {
         if (isTitleAtTop && !isFixed) {
           setIsFixed(true)
           maxScrollX.current = calculateMaxScroll()
-        } else if (
-          !isTitleAtTop &&
-          isFixed &&
-          scrollProgress === 0
-        ) {
+        } else if (!isTitleAtTop && isFixed && scrollProgress === 0) {
           setIsFixed(false)
         }
       } else {
-        // 備用邏輯：如果找不到 data-bookshelf-title 元素，使用原本的邏輯
         const rect = bookShelfRef.current.getBoundingClientRect()
         const isBottomAtViewport =
           Math.abs(rect.bottom - window.innerHeight) <= 50

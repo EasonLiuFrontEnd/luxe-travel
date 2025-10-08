@@ -8,13 +8,11 @@ const Introduction = () => {
   const { query: booksQuery, mock } = useBooks()
 
   const currentIntroduction = useMemo(() => {
-    // 只有在 API 錯誤且非生產環境時才使用假資料，API 正常回應（包括空陣列）都使用 API 資料
-    const data = (booksQuery.error && process.env.NODE_ENV !== 'production')
-      ? mock.rows 
-      : (booksQuery.data || [])
-    return (
-      data.find((book) => book.id === selectedCountryId) || data[0]
-    )
+    const data =
+      booksQuery.error && process.env.NODE_ENV !== 'production'
+        ? mock.rows
+        : booksQuery.data || []
+    return data.find((book) => book.id === selectedCountryId) || data[0]
   }, [booksQuery.data, booksQuery.error, mock.rows, selectedCountryId])
 
   if (!currentIntroduction) {

@@ -25,7 +25,8 @@ export const booksApiMock: TBooksResponse = {
       landscapeImage: '/home/itinerary/hr-croatia/pattern.svg',
       title: '克羅埃西亞',
       subtitle: 'Republic Of Croatia',
-      description: '克羅埃西亞位於歐洲東南部，深受中東及巴爾幹半島地區影響，從古羅馬遺跡如斯普利特的戴克里先宮，到中世紀的哥德式與文藝復興建築，處處可見歷史痕跡。',
+      description:
+        '克羅埃西亞位於歐洲東南部，深受中東及巴爾幹半島地區影響，從古羅馬遺跡如斯普利特的戴克里先宮，到中世紀的哥德式與文藝復興建築，處處可見歷史痕跡。',
       linkText: null,
       linkUrl: null,
       order: 1,
@@ -41,7 +42,8 @@ export const booksApiMock: TBooksResponse = {
       landscapeImage: '/home/itinerary/cz-czech/pattern.svg',
       title: '捷克',
       subtitle: 'Czech Republic',
-      description: '捷克位於中歐心臟地帶，是個內陸國家，歷史上屬波西米亞王國，至今仍保有濃厚中世風情與歐陸歷史痕跡。',
+      description:
+        '捷克位於中歐心臟地帶，是個內陸國家，歷史上屬波西米亞王國，至今仍保有濃厚中世風情與歐陸歷史痕跡。',
       linkText: null,
       linkUrl: null,
       order: 2,
@@ -57,7 +59,8 @@ export const booksApiMock: TBooksResponse = {
       landscapeImage: '/home/itinerary/pt-portugal/pattern.svg',
       title: '葡萄牙',
       subtitle: 'Portugal',
-      description: '葡萄牙位在歐洲西南角，正面對著浩瀚大西洋，是地中海邊最璀璨的明珠，也是「航海時代的起點」。',
+      description:
+        '葡萄牙位在歐洲西南角，正面對著浩瀚大西洋，是地中海邊最璀璨的明珠，也是「航海時代的起點」。',
       linkText: null,
       linkUrl: null,
       order: 3,
@@ -73,7 +76,8 @@ export const booksApiMock: TBooksResponse = {
       landscapeImage: '/home/itinerary/ch-switzerland/pattern.svg',
       title: '瑞士',
       subtitle: 'Switzerland',
-      description: '瑞士位在中歐核心，阿爾卑斯山橫跨國土，是歐洲經典山水國度，也是高山鐵道及自然景觀的天堂。',
+      description:
+        '瑞士位在中歐核心，阿爾卑斯山橫跨國土，是歐洲經典山水國度，也是高山鐵道及自然景觀的天堂。',
       linkText: null,
       linkUrl: null,
       order: 4,
@@ -89,7 +93,8 @@ export const booksApiMock: TBooksResponse = {
       landscapeImage: '/home/itinerary/ie-ireland/pattern.svg',
       title: '愛爾蘭',
       subtitle: 'Ireland',
-      description: '愛爾蘭位在歐洲西北部，東臨愛爾蘭海與英國相望，大家稱之為翡翠之島。',
+      description:
+        '愛爾蘭位在歐洲西北部，東臨愛爾蘭海與英國相望，大家稱之為翡翠之島。',
       linkText: null,
       linkUrl: null,
       order: 5,
@@ -105,7 +110,8 @@ export const booksApiMock: TBooksResponse = {
       landscapeImage: '/home/itinerary/de-germany/pattern.svg',
       title: '德國',
       subtitle: 'Germany',
-      description: '德國位於中歐的心臟地帶，融合了豐富的歷史、現代的城市和美麗的自然景觀。',
+      description:
+        '德國位於中歐的心臟地帶，融合了豐富的歷史、現代的城市和美麗的自然景觀。',
       linkText: null,
       linkUrl: null,
       order: 6,

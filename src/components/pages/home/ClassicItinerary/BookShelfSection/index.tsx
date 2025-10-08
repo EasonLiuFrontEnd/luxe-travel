@@ -16,7 +16,7 @@ const BookShelfSection = () => {
       className='bg-figma-neutral-50 pt-[60px] lg:pt-[120px] border-t border-[var(--color-figma-secondary-500)] sticky top-[-60vh] left-0 lg:relative lg:top-auto lg:left-auto'
     >
       <div
-        data-bookshelf-title="true"
+        data-bookshelf-title='true'
         className='mb-[32px] xl:mb-[48px] flex flex-col items-center'
       >
         <h2 className='inline-block font-family-noto-serif font-bold text-[32px] lg:text-[40px] xl:text-[64px] xl:leading-[120%] text-[var(--color-figma-primary-950)] px-5 py-[6px] gradient-title-border'>

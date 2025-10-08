@@ -61,7 +61,7 @@ const BannerCarousel = ({
         align: 'start',
         loop: true,
       }}
-      contentClassName="h-[460px] xl:h-[662px]"
+      contentClassName='h-[460px] xl:h-[662px]'
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -92,8 +92,7 @@ const BannerCarousel = ({
                 'h-[460px] xl:h-[662px] relative rounded-2xl overflow-hidden',
                 className,
               )}
-            >
-            </div>
+            ></div>
           </CarouselItem>
         )}
       </CarouselContent>

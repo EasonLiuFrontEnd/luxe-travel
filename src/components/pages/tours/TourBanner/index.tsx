@@ -40,19 +40,22 @@ const TourBanner = ({
 }: TTourBannerProps) => {
   const [currentSlide, setCurrentSlide] = useState(1)
 
-
   const shouldShowDefault = hasError
-  const shouldShowApi = !isLoading && !hasError && tours && tours.length > 0 // API 正常且有資料
-  const totalSlides = shouldShowApi ? tours.length : (shouldShowDefault ? slideContent.length : 1)
+  const shouldShowApi = !isLoading && !hasError && tours && tours.length > 0
+  const totalSlides = shouldShowApi
+    ? tours.length
+    : shouldShowDefault
+      ? slideContent.length
+      : 1
 
   const currentContent = shouldShowApi
     ? {
         title: tours[currentSlide - 1]?.namePrefix || '',
         subtitle: tours[currentSlide - 1]?.name || '',
-        description: tours[currentSlide - 1]?.summary || ''
+        description: tours[currentSlide - 1]?.summary || '',
       }
-    : shouldShowDefault 
-      ? slideContent[currentSlide - 1] 
+    : shouldShowDefault
+      ? slideContent[currentSlide - 1]
       : { title: '', subtitle: '', description: '' }
 
   const currentImageUrl = shouldShowApi
@@ -84,7 +87,9 @@ const TourBanner = ({
           <h2 className='font-noto-serif-tc font-bold text-[32px] xl:text-[64px] leading-[1.2] text-figma-secondary-500 whitespace-nowrap transition-all duration-500'>
             {currentContent.title}
           </h2>
-          {!isLoading && <div className='hidden xl:block h-px xl:w-[120px] bg-figma-secondary-500'></div>}
+          {!isLoading && (
+            <div className='hidden xl:block h-px xl:w-[120px] bg-figma-secondary-500'></div>
+          )}
           <h3 className='font-noto-serif-tc font-bold text-[16px] xl:text-[40px] leading-[1.2] text-figma-primary-500 whitespace-nowrap transition-all duration-500'>
             {currentContent.subtitle}
           </h3>
@@ -93,7 +98,6 @@ const TourBanner = ({
 
       <div className='xl:relative flex flex-col rounded-2xl xl:w-full xl:h-[670px]'>
         <div className='relative xl:absolute xl:inset-0 flex w-full h-[460px] xl:h-full'>
-
           {shouldShowApi && (
             <Image
               src={currentImageUrl || `/${tourType}/${currentSlide}.jpg`}
@@ -104,7 +108,6 @@ const TourBanner = ({
               priority={currentSlide === 1}
             />
           )}
-          
 
           {shouldShowDefault && (
             <Image
@@ -116,11 +119,10 @@ const TourBanner = ({
               priority={currentSlide === 1}
             />
           )}
-          
 
           {!isLoading && !hasError && tours && tours.length === 0 && (
             <div className='w-full h-full bg-gray-100 rounded-2xl flex items-center justify-center'>
-              <div className="text-gray-500 text-lg">暫無行程資料</div>
+              <div className='text-gray-500 text-lg'>暫無行程資料</div>
             </div>
           )}
 

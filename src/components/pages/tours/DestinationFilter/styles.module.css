@@ -42,7 +42,7 @@
   border-radius: 50%;
   background: #ffffff;
   cursor: pointer;
-  box-shadow: 0px 0px 3px 1px #BDA05E80;
+  box-shadow: 0px 0px 3px 1px #bda05e80;
   outline: none;
   border: none;
 }
@@ -53,7 +53,7 @@
   border-radius: 50%;
   background: #ffffff;
   cursor: pointer;
-  box-shadow: 0px 0px 3px 1px #BDA05E80;
+  box-shadow: 0px 0px 3px 1px #bda05e80;
   outline: none;
   border: none;
 }
@@ -84,4 +84,3 @@
 .rangeInputLower {
   z-index: 4;
 }
-
