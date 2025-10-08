@@ -208,6 +208,14 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* 滾動鎖定樣式 */
+  body.scroll-locked {
+    height: 100vh;
+    overflow: hidden;
+    /* 防止滾動條消失導致的寬度變化 */
+    padding-right: var(--scrollbar-width, 0px);
+  }
 }
 
 :root {

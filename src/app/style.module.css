@@ -1,3 +1,13 @@
 .auto-text-space {
   text-autospace: auto;
 }
+
+.container {
+  scrollbar-gutter: stable both-edges;
+  /* overflow-y: scroll; */
+  :global {
+    body {
+      overflow-y: scroll;
+    }
+  }
+}

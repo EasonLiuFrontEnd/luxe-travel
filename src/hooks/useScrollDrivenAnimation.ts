@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { useScrollLock } from '@/hooks/useScrollLock'
 
 const TOTAL_SCROLL_DISTANCE = 1000
 const NOTE_TRAVEL_DISTANCE = 200
@@ -39,6 +40,8 @@ export const useScrollDrivenAnimation = () => {
     entryDirection: null,
   })
 
+  useScrollLock(!state.canScroll && state.isIntersecting && !isMobile)
+
   const calculateNotePosition = useCallback(
     (noteIndex: number, progress: number): number => {
       const stageStart = noteIndex * 0.2
@@ -48,8 +51,7 @@ export const useScrollDrivenAnimation = () => {
       if (progress >= stageEnd) return 100
 
       const stageProgress = (progress - stageStart) / 0.2
-      const easedProgress =
-        stageProgress * stageProgress * (3 - 2 * stageProgress)
+      const easedProgress = stageProgress * stageProgress * (3 - 2 * stageProgress)
       return easedProgress * 100
     },
     [],
@@ -75,7 +77,7 @@ export const useScrollDrivenAnimation = () => {
   const updateAnimationProgress = useCallback((deltaY: number) => {
     const sensitivity = 0.8
     const adjustedDeltaY = deltaY * sensitivity
-
+    
     const currentAccumulated = accumulatedScrollRef.current + adjustedDeltaY
     const clampedAccumulated = Math.max(
       0,
@@ -87,11 +89,14 @@ export const useScrollDrivenAnimation = () => {
 
     setState((prev) => {
       let newPhase = prev.animationPhase
+      let shouldRelease = false
 
       if (prev.animationPhase === 'appearing' && newProgress >= 1) {
         newPhase = 'appeared'
+        shouldRelease = true
       } else if (prev.animationPhase === 'disappearing' && newProgress <= 0) {
         newPhase = 'disappeared'
+        shouldRelease = true
       }
 
       return {
@@ -107,12 +112,7 @@ export const useScrollDrivenAnimation = () => {
     (event: WheelEvent) => {
       if (!state.isIntersecting) return
 
-      if (
-        state.animationPhase === 'appearing' ||
-        state.animationPhase === 'disappearing'
-      ) {
-        event.preventDefault()
-        event.stopPropagation()
+      if (state.animationPhase === 'appearing' || state.animationPhase === 'disappearing') {
         updateAnimationProgress(event.deltaY)
       }
     },
@@ -131,7 +131,7 @@ export const useScrollDrivenAnimation = () => {
 
     const handleScroll = () => {
       if (!containerRef.current) return
-
+      
       const containerRect = containerRef.current.getBoundingClientRect()
       const isContainerAtTop = Math.abs(containerRect.top) <= 100
       const direction = detectScrollDirection()
@@ -154,8 +154,7 @@ export const useScrollDrivenAnimation = () => {
 
           const newPhase = direction === 'down' ? 'appearing' : 'disappearing'
           const newProgress = direction === 'down' ? 0 : 1
-          accumulatedScrollRef.current =
-            direction === 'down' ? 0 : TOTAL_SCROLL_DISTANCE
+          accumulatedScrollRef.current = direction === 'down' ? 0 : TOTAL_SCROLL_DISTANCE
 
           return {
             ...prev,
@@ -180,7 +179,7 @@ export const useScrollDrivenAnimation = () => {
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-
+    
     handleScroll()
 
     return () => {
@@ -196,13 +195,14 @@ export const useScrollDrivenAnimation = () => {
 
   useEffect(() => {
     if (state.isIntersecting && !isMobile) {
-      window.addEventListener('wheel', handleWheel, { passive: false })
+      window.addEventListener('wheel', handleWheel, { passive: true })
     }
 
     return () => {
       window.removeEventListener('wheel', handleWheel)
     }
   }, [state.isIntersecting, handleWheel, isMobile])
+
 
   useEffect(() => {
     if (state.isInitialLoad && containerRef.current && !isMobile) {

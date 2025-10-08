@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import ClientLayout from './ClientLayout'
 import { Noto_Serif_TC, Luxurious_Script } from 'next/font/google'
 import styles from './style.module.css'
+import { cn } from '@/lib/utils'
 
 const notoSerifTC = Noto_Serif_TC({
   subsets: ['latin'],
@@ -28,7 +29,7 @@ const RootLayout = ({ children }: TRootLayout) => {
       className={`${notoSerifTC.variable} ${luxuriousScript.variable}`}
     >
       <head />
-      <body className='bg-figma-neutral-50'>
+      <body className={cn('bg-figma-neutral-50', styles.container)}>
         <ClientLayout className={styles['auto-text-space']}>
           {children}
         </ClientLayout>

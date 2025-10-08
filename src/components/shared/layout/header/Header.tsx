@@ -46,8 +46,8 @@ const Header = ({
   const borderClass = isMobile
     ? 'border-b border-[var(--color-figma-secondary-500)]'
     : logoProgress >= 1
-      ? 'xl:h-[76px] border-b border-[var(--color-figma-secondary-500)] transition-all duration-1200 ease-in-out'
-      : 'xl:h-[100px] border-b border-transparent'
+      ? 'border-b border-[var(--color-figma-secondary-500)] transition-all duration-1200 ease-in-out'
+      : 'border-b border-transparent'
   const headerClasses = `${baseClasses} ${positionClass} ${backgroundClass} ${borderClass}`
   const opacityClass =
     logoProgress >= 1
