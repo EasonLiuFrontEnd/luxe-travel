@@ -250,6 +250,7 @@ const TourPageLayout = ({
         altTextPrefix={tourConfig.altTextPrefix}
       />
       <DestinationFilter
+        tourType={tourType}
         showBudgetFilter={tourConfig.showBudgetFilter}
         showDaysFilter={tourConfig.showDaysFilter}
         gapSize={tourConfig.gapSize}

@@ -15,9 +15,10 @@ type TRegionData = {
 }
 
 type TDestinationFilterProps = TBaseComponent & {
+  tourType?: 'group-tours' | 'free-tours' | 'rcar-tours'
   showBudgetFilter?: boolean
   showDaysFilter?: boolean
-  gapSize?: 'lg:gap-8' | 'lg:gap-9' // 支援不同的間距設定
+  gapSize?: 'lg:gap-8' | 'lg:gap-9'
   useProductCountriesHook: () => {
     query: { isSuccess: boolean; data?: TRegionData[] }
     mock: { data?: TRegionData[] }
@@ -31,9 +32,10 @@ type TDestinationFilterProps = TBaseComponent & {
 
 const DestinationFilter = ({
   className,
+  tourType = 'free-tours',
   showBudgetFilter = true,
   showDaysFilter = true,
-  gapSize = 'lg:gap-8', // 預設值
+  gapSize = 'lg:gap-8',
   useProductCountriesHook,
   onSearch,
 }: TDestinationFilterProps) => {
@@ -46,6 +48,37 @@ const DestinationFilter = ({
 
   const { query: countriesQuery, mock: countriesMock } = useProductCountriesHook()
   const daysRangeOptions = ['6-10天', '11-15天', '16-20天', '21-25天', '不限天數']
+
+  const getBackgroundClasses = () => {
+    switch (tourType) {
+      case 'group-tours':
+        return {
+          backgroundLayer1: styles.backgroundLayer1,
+          backgroundLayer2: styles.backgroundLayer2,
+          backgroundLayer3: styles.backgroundLayer3
+        }
+      case 'free-tours':
+        return {
+          backgroundLayer1: styles.toursBackgroundLayer1,
+          backgroundLayer2: styles.toursBackgroundLayer2,
+          backgroundLayer3: styles.toursBackgroundLayer3
+        }
+      case 'rcar-tours':
+        return {
+          backgroundLayer1: styles.toursBackgroundLayer1,
+          backgroundLayer2: styles.toursBackgroundLayer2,
+          backgroundLayer3: styles.toursBackgroundLayer3
+        }
+      default:
+        return {
+          backgroundLayer1: styles.backgroundLayer1,
+          backgroundLayer2: styles.backgroundLayer2,
+          backgroundLayer3: styles.backgroundLayer3
+        }
+    }
+  }
+
+  const backgroundClasses = getBackgroundClasses()
 
   useEffect(() => {
     if (countriesQuery.isSuccess) {
@@ -142,13 +175,13 @@ const DestinationFilter = ({
       className={`relative xl:sticky xl:top-0 xl:left-0 xl:z-10 xl:bg-figma-neutral-50 border-y border-figma-secondary-500 py-4 px-[clamp(12px,2.5vw,48px)] xl:py-9 ${className || ''}`}
     >
       <div
-        className={`absolute inset-0 opacity-15 ${styles.backgroundLayer1}`}
+        className={`absolute inset-0 opacity-15 ${backgroundClasses.backgroundLayer1}`}
       />
       <div
-        className={`absolute inset-0 opacity-15 ${styles.backgroundLayer2}`}
+        className={`absolute inset-0 opacity-15 ${backgroundClasses.backgroundLayer2}`}
       />
       <div
-        className={`absolute inset-0 opacity-15 ${styles.backgroundLayer3}`}
+        className={`absolute inset-0 opacity-15 ${backgroundClasses.backgroundLayer3}`}
       />
 
       <div className='relative z-10'>
