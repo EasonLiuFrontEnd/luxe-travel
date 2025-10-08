@@ -11,17 +11,17 @@ const FreeTourRecommendation = () => {
     useIntroductions()
 
   const currentCountryName = useMemo(() => {
-    // 只有在 API 錯誤時才使用假資料，API 正常回應（包括空陣列）都使用 API 資料
-    const data = introductionsQuery.error 
+    // 只有在 API 錯誤且非生產環境時才使用假資料，API 正常回應（包括空陣列）都使用 API 資料
+    const data = (introductionsQuery.error && process.env.NODE_ENV !== 'production')
       ? introductionsMock.rows 
       : (introductionsQuery.data || [])
     const country = data.find((intro) => intro.countryId === selectedCountryId)
-    return country?.countryName || '義大利'
+    return country?.countryName || ''
   }, [introductionsQuery.data, introductionsQuery.error, introductionsMock.rows, selectedCountryId])
 
   const currentFreeTours = useMemo(() => {
-    // 只有在 API 錯誤時才使用假資料，API 正常回應（包括空陣列）都使用 API 資料
-    const data = freeToursQuery.error 
+    // 只有在 API 錯誤且非生產環境時才使用假資料，API 正常回應（包括空陣列）都使用 API 資料
+    const data = (freeToursQuery.error && process.env.NODE_ENV !== 'production')
       ? freeToursMock.rows 
       : (freeToursQuery.data || [])
     return data

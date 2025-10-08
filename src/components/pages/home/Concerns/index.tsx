@@ -18,7 +18,7 @@ const Concerns = () => {
   } = concernsQuery
 
   const effectiveData = useMemo(() => {
-    if (concernsError) {
+    if (concernsError && process.env.NODE_ENV !== 'production') {
       return mock.rows
     }
 

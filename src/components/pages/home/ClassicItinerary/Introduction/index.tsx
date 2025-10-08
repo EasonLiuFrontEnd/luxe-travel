@@ -8,8 +8,8 @@ const Introduction = () => {
   const { query: introductionsQuery, mock } = useIntroductions()
 
   const currentIntroduction = useMemo(() => {
-    // 只有在 API 錯誤時才使用假資料，API 正常回應（包括空陣列）都使用 API 資料
-    const data = introductionsQuery.error 
+    // 只有在 API 錯誤且非生產環境時才使用假資料，API 正常回應（包括空陣列）都使用 API 資料
+    const data = (introductionsQuery.error && process.env.NODE_ENV !== 'production')
       ? mock.rows 
       : (introductionsQuery.data || [])
     return (

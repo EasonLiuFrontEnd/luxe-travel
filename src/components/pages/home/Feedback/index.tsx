@@ -22,7 +22,7 @@ const Feedback = () => {
   } = useFeedBack()
 
   const effectiveData = useMemo(() => {
-    if (feedbacksError) {
+    if (feedbacksError && process.env.NODE_ENV !== 'production') {
       return mock.data
     }
 
