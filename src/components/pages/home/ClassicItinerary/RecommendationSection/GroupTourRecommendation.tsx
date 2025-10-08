@@ -1,10 +1,12 @@
 import { useMemo } from 'react'
+import { useRouter } from 'next/navigation'
 import TravelCard from '@/components/shared/TravelCard'
 import RecommendationButton from '@/components/ui/RecommendationButton'
 import { useSelectedCountry } from '@/hooks/useSelectedCountry'
 import { useGroupTours, useIntroductions } from '@/api/home'
 
 const GroupTourRecommendation = () => {
+  const router = useRouter()
   const { selectedCountryId } = useSelectedCountry()
   const { query: groupToursQuery, mock: groupToursMock } = useGroupTours()
   const { query: introductionsQuery, mock: introductionsMock } =
@@ -56,7 +58,7 @@ const GroupTourRecommendation = () => {
               />
             ))
           ) : (
-            <div className='col-span-3 flex items-center justify-center h-32'>
+            <div className='col-span-3 flex items-center justify-center h-[90px] md:h-[252px]'>
               <p className='text-gray-500'>
                 暫無{currentCountryName}團體行推薦
               </p>
@@ -65,7 +67,11 @@ const GroupTourRecommendation = () => {
         </div>
       </div>
 
-      <RecommendationButton text='查看更多' variant='secondary' />
+      <RecommendationButton 
+        text='查看更多' 
+        variant='secondary' 
+        onClick={() => router.push('/group-tours')}
+      />
     </div>
   )
 }

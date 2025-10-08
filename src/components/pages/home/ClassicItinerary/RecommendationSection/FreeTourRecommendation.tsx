@@ -1,10 +1,12 @@
 import { useMemo } from 'react'
+import { useRouter } from 'next/navigation'
 import TravelCard from '@/components/shared/TravelCard'
 import RecommendationButton from '@/components/ui/RecommendationButton'
 import { useSelectedCountry } from '@/hooks/useSelectedCountry'
 import { useFreeTours, useIntroductions } from '@/api/home'
 
 const FreeTourRecommendation = () => {
+  const router = useRouter()
   const { selectedCountryId } = useSelectedCountry()
   const { query: freeToursQuery, mock: freeToursMock } = useFreeTours()
   const { query: introductionsQuery, mock: introductionsMock } =
@@ -56,7 +58,7 @@ const FreeTourRecommendation = () => {
               />
             ))
           ) : (
-            <div className='col-span-3 flex items-center justify-center h-[90px] md:h-[300px]'>
+            <div className='col-span-3 flex items-center justify-center h-[90px] md:h-[252px]'>
               <p className='text-gray-500'>
                 暫無{currentCountryName}自由行推薦
               </p>
@@ -65,7 +67,11 @@ const FreeTourRecommendation = () => {
         </div>
       </div>
 
-      <RecommendationButton text='查看更多' variant='primary' />
+      <RecommendationButton 
+        text='查看更多' 
+        variant='primary' 
+        onClick={() => router.push('/free-tours')}
+      />
     </div>
   )
 }
