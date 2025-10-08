@@ -73,7 +73,8 @@ export type TBanners = {
 
 export type TBooks = {
   id: string
-  imageUrl: string
+  bookImage: string
+  landscapeImage: string
   title: string
   subtitle: string
   description: string | null
@@ -82,6 +83,9 @@ export type TBooks = {
   order: number
   createdAt: string
   updatedAt: string
+  groupProducts: any[]
+  freeProducts: any[]
+  recoProducts: any[]
 }
 
 export type TAdvantagesResponse = TApiResponse<TAdvantages> & {

@@ -48,8 +48,8 @@ const TourPageLayout = ({
   const { query: countriesQuery, mock: countriesMock } = useProductCountries()
 
   const regionsData = useMemo(() => {
-    // 只有在 API 錯誤時才使用假資料，API 正常回應（包括空陣列）都使用 API 資料
-    if (countriesQuery.error) {
+    // 只有在 API 錯誤且非生產環境時才使用假資料，API 正常回應（包括空陣列）都使用 API 資料
+    if (countriesQuery.error && process.env.NODE_ENV !== 'production') {
       return countriesMock.data || []
     }
     return countriesQuery.data || []
@@ -110,13 +110,18 @@ const TourPageLayout = ({
         setTours([])
       }
     } else if (searchQuery.isError) {
-      // 只有在 API 錯誤時才使用假資料
-      const dataSource = searchMock.data || []
-      const sortedProducts = sortProducts(dataSource)
-      const convertedTours = sortedProducts.map((product: any) => 
-        convertProductToTourData(product, tourType)
-      )
-      setTours(convertedTours)
+      // 只有在 API 錯誤且非生產環境時才使用假資料
+      if (process.env.NODE_ENV !== 'production') {
+        const dataSource = searchMock.data || []
+        const sortedProducts = sortProducts(dataSource)
+        const convertedTours = sortedProducts.map((product: any) => 
+          convertProductToTourData(product, tourType)
+        )
+        setTours(convertedTours)
+      } else {
+        // 生產環境下 API 錯誤時顯示空陣列
+        setTours([])
+      }
     }
   }, [searchQuery.isSuccess, searchQuery.isError, searchQuery.data, searchMock.data, searchParams, tourType])
 
@@ -250,6 +255,7 @@ const TourPageLayout = ({
         altTextPrefix={tourConfig.altTextPrefix}
       />
       <DestinationFilter
+        tourType={tourType}
         showBudgetFilter={tourConfig.showBudgetFilter}
         showDaysFilter={tourConfig.showDaysFilter}
         gapSize={tourConfig.gapSize}

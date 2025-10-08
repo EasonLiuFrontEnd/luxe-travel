@@ -55,7 +55,7 @@ const Tours = ({
         note={tour.note}
         onReviewClick={handleReviewClick}
         tourType={tourType === 'free-tours' ? 'free' : 'rcar'}
-        logoPath={tourType === 'free-tours' ? '/free-tours/logo.png' : '/rcar-tours/logo.png'}
+        logoPath="/tours/logo.png"
       />
     )
   }

@@ -38,7 +38,7 @@ const StickyNotes = ({
 
   const [firstLine, secondLine] = parseContent(data.content)
 
-  const containerClassName = `relative z-20 transition-transform duration-300 ease-out ${isMobile ? '' : 'hover:-translate-y-5'}`
+  const containerClassName = `relative z-20 ${isMobile ? '' : 'hover:-translate-y-5'}`
   const combinedStyle = isMobile
     ? {
         transform: `rotate(${rotation}deg)`,

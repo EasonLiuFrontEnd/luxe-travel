@@ -147,7 +147,7 @@ export const convertProductToTourData = (
 export const TOUR_TYPE_CONFIG = {
   'free-tours': {
     title: '歐洲自由行',
-    logoPath: '/free-tours/logo.png',
+    logoPath: '/tours/logo.png',
     altTextPrefix: '自由行程精選',
     gapSize: 'lg:gap-8' as const,
     showBudgetFilter: true,
@@ -155,7 +155,7 @@ export const TOUR_TYPE_CONFIG = {
   },
   'group-tours': {
     title: '精緻團體行',
-    logoPath: '/group-tours/logo.png',
+    logoPath: '/tours/logo.png',
     altTextPrefix: '團體旅遊精選行程',
     gapSize: 'lg:gap-9' as const,
     showBudgetFilter: false,
@@ -163,7 +163,7 @@ export const TOUR_TYPE_CONFIG = {
   },
   'rcar-tours': {
     title: '歐洲包車行',
-    logoPath: '/rcar-tours/logo.png',
+    logoPath: '/tours/logo.png',
     altTextPrefix: '包車行程精選',
     gapSize: 'lg:gap-8' as const,
     showBudgetFilter: true,

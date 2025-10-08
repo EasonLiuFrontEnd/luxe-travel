@@ -3,6 +3,7 @@ import type { TBaseComponent } from '@/types'
 type TRecommendationButtonProps = TBaseComponent & {
   text: string
   variant?: 'primary' | 'secondary'
+  onClick?: () => void
 }
 
 const RecommendationButton = ({

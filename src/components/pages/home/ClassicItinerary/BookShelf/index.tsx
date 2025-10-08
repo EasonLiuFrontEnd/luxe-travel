@@ -33,7 +33,7 @@ const BookShelf = ({ trackRef, isMobile = false }: TBookShelfProps) => {
   const { setSelectedCountryId } = useSelectedCountry()
 
   const displayData = useMemo(() => {
-    if (booksError) {
+    if (booksError && process.env.NODE_ENV !== 'production') {
       return transformBooksData(mock.rows)
     }
 
