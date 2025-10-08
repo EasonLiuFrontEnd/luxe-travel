@@ -4,6 +4,7 @@ import TravelCard from '@/components/shared/TravelCard'
 import RecommendationButton from '@/components/ui/RecommendationButton'
 import { useSelectedCountry } from '@/hooks/useSelectedCountry'
 import { useBooks } from '@/api/home/useBooks'
+import styles from './styles.module.css'
 
 const FreeTourRecommendation = () => {
   const router = useRouter()
@@ -31,7 +32,7 @@ const FreeTourRecommendation = () => {
   return (
     <div className='bg-white box-border flex flex-col gap-8 justify-between items-center pb-6 pt-0 px-6 xl:px-6 px-4 relative rounded-2xl xl:rounded-2xl rounded-[12px] w-full h-full'>
       <div className='flex flex-col gap-6 items-center w-full'>
-        <div className='bg-[var(--color-figma-primary-50)] box-border flex gap-2.5 items-center justify-center px-6 py-3 relative rounded-bl-[16px] rounded-br-[16px] xl:rounded-bl-[16px] xl:rounded-br-[16px] rounded-bl-[12px] rounded-br-[12px]'>
+        <div className={`bg-figma-neutral-50 box-border flex gap-2.5 items-center justify-center px-6 py-3 relative rounded-bl-[16px] rounded-br-[16px] xl:rounded-bl-[16px] xl:rounded-br-[16px] rounded-bl-[12px] rounded-br-[12px] ${styles.titleContainer}`}>
           <div className='font-family-noto-serif font-bold text-[var(--color-figma-secondary-500)] text-[24px] leading-[1.2] whitespace-nowrap'>
             {currentCountryName}自由行推薦
           </div>

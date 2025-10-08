@@ -31,7 +31,7 @@ const AdvantageCard = ({ card, className }: TAdvantageCardProps) => {
         style={{ backgroundImage: `url('${card.imageUrl}')` }}
       />
       {/* 標題區域 */}
-      <div className='bg-figma-secondary-100 box-border content-stretch flex gap-2.5 items-center justify-center px-6 py-3 relative rounded-br-xl shrink-0 z-10'>
+      <div className={`bg-figma-secondary-100 box-border content-stretch flex gap-2.5 items-center justify-center px-6 py-3 relative rounded-br-xl shrink-0 z-10 ${styles.titleContainer}`}>
         <h3 className='font-family-noto-serif font-bold text-[24px] leading-[1.2] text-figma-primary-950 text-nowrap'>
           {card.title}
         </h3>
