@@ -23,25 +23,29 @@ export const HeroSection = ({
       />
 
       <h2
-        className='
+        className={`
           absolute left-0 translate-[-1px] px-4 py-3 xl:px-7 xl:py-4
           font-family-noto-serif text-[32px] xl:text-[64px] font-bold leading-[1.5] xl:leading-[1.2]
           text-figma-secondary-950 bg-figma-secondary-100
           rounded-br-[12px] xl:rounded-br-[16px]
-        '
+          ${styles.titleContainer}
+        `}
       >
         立即諮詢
       </h2>
-      <p
-        className='
-          absolute bottom-0 right-0 translate-[1px] px-4 py-3 xl:px-7 xl:py-4
+      <div className='absolute bottom-0 right-0'>
+        <p
+          className={`
+          translate-[1px] px-4 py-3 xl:px-7 xl:py-4
           font-family-noto-serif text-[16px] xl:text-[24px] font-semibold xl:font-bold leading-[1.5] xl:leading-[1.2]
           text-figma-primary-950 text-nowrap bg-figma-secondary-100
           rounded-tl-[12px] xl:rounded-tl-[16px]
-        '
-      >
-        為您客製化旅程，典藏精彩回憶
-      </p>
+          ${styles.descriptionContainer}
+        `}
+        >
+          為您客製化旅程，典藏精彩回憶
+        </p>
+      </div>
     </div>
   )
 }

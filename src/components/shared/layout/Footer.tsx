@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { SOCIAL_MEDIAS } from '@/lib/constants'
+import styles from './styles.module.css'
 
 type TFooterProps = {
   scrollToTopBg?: string
@@ -12,16 +13,17 @@ const Footer = ({ scrollToTopBg = 'bg-figma-secondary-100' }: TFooterProps) => {
 
   return (
     <footer className='relative bg-figma-primary-950 text-white py-[80px] px-[12px] xl:pt-[60px] xl:pb-[200px] xl:px-[60px] space-y-10 bg-[url("/shared/icons/background-books.svg")] bg-repeat'>
+      <div className='absolute top-0 right-0'>
       <button
         onClick={scrollToTop}
         className={`
-          absolute top-0 right-0
           flex items-center gap-[16px]
           py-[8px] px-[12px] xl:py-[12px] xl:px-[24px]
           font-genseki-footer-medium tracking-[0.5px]
           text-figma-neutral-950 ${scrollToTopBg}
           rounded-bl-[16px] border-0
           cursor-pointer
+          ${styles.titleContainer}
         `}
       >
         返回頂部
@@ -46,8 +48,9 @@ const Footer = ({ scrollToTopBg = 'bg-figma-secondary-100' }: TFooterProps) => {
             strokeLinecap='round'
             strokeLinejoin='round'
           />
-        </svg>
-      </button>
+          </svg>
+        </button>
+      </div>
       <div className='flex justify-between max-xl:flex-col max-xl:gap-[32px] pb-[32px] xl:pb-[48px] mb-[48px] text-center border-b-[1.5px] border-white'>
         <div className='font-genseki-body-s-regular xl:text-left space-y-3 max-xl:order-2'>
           <p>

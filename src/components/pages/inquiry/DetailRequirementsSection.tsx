@@ -8,6 +8,7 @@ import {
   FormMessage,
 } from '@/components/ui/Form'
 import { CounterInput } from '@/components/ui'
+import styles from './styles.module.css'
 import { TTravelInquiryFormData } from './TravelInquiryForm'
 import { CalendarIcon } from '@/components/ui/CalendarIcon'
 import { formatDateForDisplay } from '@/lib/dateUtils'
@@ -122,11 +123,10 @@ export const DetailRequirementsSection = ({
                   >
                     <div className='flex items-center justify-between px-0 py-3 border-b border-figma-primary-950-70 w-full hover:border-figma-primary-950 transition-colors duration-200'>
                       <span
-                        className={`font-genseki-body-m-regular text-[16px] leading-[1.2] ${
-                          field.value
+                        className={`font-genseki-body-m-regular text-[16px] leading-[1.2] ${field.value
                             ? 'text-figma-primary-950'
                             : 'text-figma-primary-300'
-                        }`}
+                          }`}
                       >
                         {field.value
                           ? formatDateForDisplay(field.value)
@@ -220,32 +220,34 @@ export const DetailRequirementsSection = ({
         您有權提出要求使用、更正、補充、刪除或封鎖這些個人資料，請將任何這類需求寄至
         info@luxetravel.com.tw
       </p>
-      <div className='absolute bg-figma-secondary-100 flex gap-4 items-center justify-center px-4 py-3 xl:px-7 xl:py-4 right-0 rounded-tl-[16px] rounded-br-[16px] bottom-0'>
-        <button
-          type='submit'
-          disabled={isLoading}
-          className='
+      <div className='absolute bottom-0 right-0'>
+        <div className={`bg-figma-secondary-100 flex gap-4 items-center justify-center px-4 py-3 xl:px-7 xl:py-4 rounded-tl-[16px] rounded-br-[16px] ${styles.descriptionContainer}`}>
+          <button
+            type='submit'
+            disabled={isLoading}
+            className='
             flex items-center gap-5 text-figma-secondary-950 tracking-[0.5px]
             font-family-noto-serif xl:font-family-genseki text-[24px] xl:text-[20px] font-bold xl:font-medium leading-[1.2]
             cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed
           '
-        >
-          <span>送出諮詢</span>
-          <div className='h-1.5 w-5 shrink-0'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='25'
-              height='9'
-              viewBox='0 0 25 9'
-              fill='none'
-            >
-              <path
-                d='M1 6.33105H0V8.33105H1V7.33105V6.33105ZM21 7.33105V8.33105H24.6824L21.5058 6.46842L21 7.33105ZM1 7.33105V8.33105H21V7.33105V6.33105H1V7.33105ZM21 7.33105L21.5058 6.46842L11.2733 0.468416L10.7674 1.33105L10.2616 2.19369L20.4942 8.19369L21 7.33105Z'
-                fill='#926D3C'
-              />
-            </svg>
-          </div>
-        </button>
+          >
+            <span>送出諮詢</span>
+            <div className='h-1.5 w-5 shrink-0'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='25'
+                height='9'
+                viewBox='0 0 25 9'
+                fill='none'
+              >
+                <path
+                  d='M1 6.33105H0V8.33105H1V7.33105V6.33105ZM21 7.33105V8.33105H24.6824L21.5058 6.46842L21 7.33105ZM1 7.33105V8.33105H21V7.33105V6.33105H1V7.33105ZM21 7.33105L21.5058 6.46842L11.2733 0.468416L10.7674 1.33105L10.2616 2.19369L20.4942 8.19369L21 7.33105Z'
+                  fill='#926D3C'
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
       </div>
     </div>
   )

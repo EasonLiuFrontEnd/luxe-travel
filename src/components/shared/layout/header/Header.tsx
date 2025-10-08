@@ -32,7 +32,7 @@ const Header = ({
   const showConsultButton = scrollY > 797
 
   const baseClasses =
-    'z-50 w-full flex items-center justify-between p-4 xl:py-0 bg-figma-neutral-50'
+    'z-50 w-full flex items-center justify-between p-4 xl:py-0'
   const positionClass =
     headerBehavior === 'fixed'
       ? 'fixed'
@@ -41,13 +41,13 @@ const Header = ({
         : 'relative'
   const backgroundClass =
     hasTransparentHeader && isHomePage && logoProgress < 1
-      ? 'xl:bg-transparent'
-      : ''
+      ? 'bg-transparent'
+      : 'bg-figma-neutral-50'
   const borderClass = isMobile
     ? 'border-b border-[var(--color-figma-secondary-500)]'
     : logoProgress >= 1
-      ? 'border-b border-[var(--color-figma-secondary-500)] transition-all duration-1200 ease-in-out'
-      : 'border-b border-transparent'
+      ? 'xl:h-[76px] border-b border-[var(--color-figma-secondary-500)] transition-all duration-1200 ease-in-out'
+      : 'xl:h-[100px] border-b border-transparent'
   const headerClasses = `${baseClasses} ${positionClass} ${backgroundClass} ${borderClass}`
   const opacityClass =
     logoProgress >= 1
