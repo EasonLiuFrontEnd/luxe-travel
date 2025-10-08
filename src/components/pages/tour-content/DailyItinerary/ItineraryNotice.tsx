@@ -1,6 +1,6 @@
 const ItineraryNotice = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col border-t border-figma-secondary-500 bg-figma-secondary-100">
       <h2 className='mx-auto font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-4 mt-13 mb-12 gradient-title-border'>
         貼心提醒與參團須知
       </h2>

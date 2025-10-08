@@ -49,7 +49,7 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
   return (
     <div className="min-h-[700px] mt-12 ml-[152px] mr-9 rounded-2xl bg-figma-neutral-0">
       <div className="flex justify-between">
-        <h3 className={cn("relative px-7 rounded-ee-2xl bg-figma-neutral-50", styles['concave-border'])}>
+        <h3 className={cn("relative px-7 rounded-ee-2xl bg-figma-secondary-100", styles['concave-border'])}>
           <span className="font-luxurious-deco-l-regular text-figma-secondary-500 mr-6">{itinerary.day}</span>
           <span className="font-noto-serif-h3-bold text-figma-primary-500">{itinerary.destination}</span>
         </h3>
