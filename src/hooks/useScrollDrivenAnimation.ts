@@ -48,7 +48,9 @@ export const useScrollDrivenAnimation = () => {
       if (progress >= stageEnd) return 100
 
       const stageProgress = (progress - stageStart) / 0.2
-      return stageProgress * 100
+      const easedProgress =
+        stageProgress * stageProgress * (3 - 2 * stageProgress)
+      return easedProgress * 100
     },
     [],
   )
@@ -71,7 +73,10 @@ export const useScrollDrivenAnimation = () => {
   )
 
   const updateAnimationProgress = useCallback((deltaY: number) => {
-    const currentAccumulated = accumulatedScrollRef.current + deltaY
+    const sensitivity = 0.8
+    const adjustedDeltaY = deltaY * sensitivity
+
+    const currentAccumulated = accumulatedScrollRef.current + adjustedDeltaY
     const clampedAccumulated = Math.max(
       0,
       Math.min(TOTAL_SCROLL_DISTANCE, currentAccumulated),
@@ -82,26 +87,18 @@ export const useScrollDrivenAnimation = () => {
 
     setState((prev) => {
       let newPhase = prev.animationPhase
-      let canScroll = false
 
       if (prev.animationPhase === 'appearing' && newProgress >= 1) {
         newPhase = 'appeared'
-        canScroll = true
       } else if (prev.animationPhase === 'disappearing' && newProgress <= 0) {
         newPhase = 'disappeared'
-        canScroll = true
-      } else if (
-        prev.animationPhase === 'appearing' ||
-        prev.animationPhase === 'disappearing'
-      ) {
-        canScroll = false
       }
 
       return {
         ...prev,
         animationProgress: newProgress,
         animationPhase: newPhase,
-        canScroll,
+        canScroll: newPhase === 'appeared' || newPhase === 'disappeared',
       }
     })
   }, [])
@@ -110,79 +107,16 @@ export const useScrollDrivenAnimation = () => {
     (event: WheelEvent) => {
       if (!state.isIntersecting) return
 
-      const currentDirection = event.deltaY > 0 ? 'down' : 'up'
-
-      if (state.animationPhase === 'appearing') {
-        if (state.entryDirection === 'down' && currentDirection === 'up') {
-          // 出現動畫進行中，反方向滾動，切換為消失動畫
-          event.preventDefault()
-          event.stopPropagation()
-          setState((prev) => ({
-            ...prev,
-            scrollDirection: 'up',
-            animationPhase: 'disappearing',
-          }))
-          // 根據當前進度反轉 accumulatedScrollRef
-          accumulatedScrollRef.current =
-            TOTAL_SCROLL_DISTANCE - accumulatedScrollRef.current
-          return
-        }
-      } else if (state.animationPhase === 'disappearing') {
-        if (state.entryDirection === 'up' && currentDirection === 'down') {
-          // 消失動畫進行中，反方向滾動，切換為出現動畫
-          event.preventDefault()
-          event.stopPropagation()
-          setState((prev) => ({
-            ...prev,
-            scrollDirection: 'down',
-            animationPhase: 'appearing',
-          }))
-          // 根據當前進度反轉 accumulatedScrollRef
-          accumulatedScrollRef.current =
-            TOTAL_SCROLL_DISTANCE - accumulatedScrollRef.current
-          return
-        }
-      } else if (state.animationPhase === 'appeared') {
-        if (state.entryDirection === 'down' && currentDirection === 'up') {
-          event.preventDefault()
-          event.stopPropagation()
-          setState((prev) => ({
-            ...prev,
-            scrollDirection: 'up',
-            animationPhase: 'disappearing',
-            canScroll: false,
-          }))
-          accumulatedScrollRef.current = TOTAL_SCROLL_DISTANCE
-          return
-        }
-      } else if (state.animationPhase === 'disappeared') {
-        if (state.entryDirection === 'up' && currentDirection === 'down') {
-          event.preventDefault()
-          event.stopPropagation()
-          setState((prev) => ({
-            ...prev,
-            scrollDirection: 'down',
-            animationPhase: 'appearing',
-            canScroll: false,
-          }))
-          accumulatedScrollRef.current = 0
-          return
-        }
-      }
-
-      if (!state.canScroll) {
+      if (
+        state.animationPhase === 'appearing' ||
+        state.animationPhase === 'disappearing'
+      ) {
         event.preventDefault()
         event.stopPropagation()
         updateAnimationProgress(event.deltaY)
       }
     },
-    [
-      state.isIntersecting,
-      state.canScroll,
-      state.animationPhase,
-      state.entryDirection,
-      updateAnimationProgress,
-    ],
+    [state.isIntersecting, state.animationPhase, updateAnimationProgress],
   )
 
   const detectScrollDirection = useCallback(() => {
@@ -197,16 +131,15 @@ export const useScrollDrivenAnimation = () => {
 
     const handleScroll = () => {
       if (!containerRef.current) return
-      
+
       const containerRect = containerRef.current.getBoundingClientRect()
-      const isContainerAtTop = Math.abs(containerRect.top) <= 50
+      const isContainerAtTop = Math.abs(containerRect.top) <= 100
       const direction = detectScrollDirection()
 
       if (isContainerAtTop && state.animationPhase === 'idle') {
         setState((prev) => {
           if (prev.isInitialLoad) {
             accumulatedScrollRef.current = TOTAL_SCROLL_DISTANCE
-
             return {
               ...prev,
               isIntersecting: true,
@@ -221,7 +154,6 @@ export const useScrollDrivenAnimation = () => {
 
           const newPhase = direction === 'down' ? 'appearing' : 'disappearing'
           const newProgress = direction === 'down' ? 0 : 1
-
           accumulatedScrollRef.current =
             direction === 'down' ? 0 : TOTAL_SCROLL_DISTANCE
 
@@ -235,11 +167,7 @@ export const useScrollDrivenAnimation = () => {
             entryDirection: direction,
           }
         })
-      } else if (
-        !isContainerAtTop &&
-        (state.animationPhase === 'appeared' ||
-          state.animationPhase === 'disappeared')
-      ) {
+      } else if (!isContainerAtTop && state.animationPhase !== 'idle') {
         setState((prev) => ({
           ...prev,
           isIntersecting: false,
@@ -247,12 +175,12 @@ export const useScrollDrivenAnimation = () => {
           canScroll: true,
           entryDirection: null,
         }))
+        accumulatedScrollRef.current = 0
       }
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    
-    // 初始檢查
+
     handleScroll()
 
     return () => {
@@ -305,8 +233,6 @@ export const useScrollDrivenAnimation = () => {
     }
   }, [state.isInitialLoad, isMobile])
 
-
-  // 行動裝置直接返回靜態狀態，無動畫
   if (isMobile) {
     return {
       containerRef,

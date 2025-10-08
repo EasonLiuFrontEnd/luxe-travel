@@ -17,13 +17,16 @@ export const getCountryCodes = (countryCodes: string[]): string[] => {
 
 export const convertCountriesToFilters = (
   selectedCountries: string[],
-  regionsData?: Array<{ region: string; countries: Array<{ code: string; nameZh: string }> }>
+  regionsData?: Array<{
+    region: string
+    countries: Array<{ code: string; nameZh: string }>
+  }>,
 ): TFilter[] => {
   if (!regionsData || regionsData.length === 0) {
     return selectedCountries.map((code) => ({
       id: code,
       label: code,
-      type: 'country' as const
+      type: 'country' as const,
     }))
   }
 

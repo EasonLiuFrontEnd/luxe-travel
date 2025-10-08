@@ -1,11 +1,20 @@
-import type { TSlideContent, TTourDate, TTourData, TTravelerReview } from './types'
+import type {
+  TSlideContent,
+  TTourDate,
+  TTourData,
+  TTravelerReview,
+} from './types'
 import { REGIONS, SORT_OPTIONS } from './constants'
 import { getCountryCodes, convertCountriesToFilters } from './utils'
 
-export type { TSelectedFilters, TTourData, TTourDate, TTravelerReview } from './types'
+export type {
+  TSelectedFilters,
+  TTourData,
+  TTourDate,
+  TTravelerReview,
+} from './types'
 export { REGIONS, SORT_OPTIONS, getCountryCodes, convertCountriesToFilters }
 
-// 各旅遊類型的輪播內容配置
 export const TOUR_SLIDE_CONFIGS = {
   'free-tours': {
     content: [
@@ -47,16 +56,14 @@ export const TOUR_SLIDE_CONFIGS = {
 
 export type TTourType = keyof typeof TOUR_SLIDE_CONFIGS
 
-// 根據旅遊類型獲取輪播配置
 export const getSlideConfig = (tourType: TTourType) => {
   const config = TOUR_SLIDE_CONFIGS[tourType]
   return {
     ...config,
-    content: [...config.content] as TSlideContent[]
+    content: [...config.content] as TSlideContent[],
   }
 }
 
-// 統一的產品轉換函數 - 支援不同旅遊類型
 export const convertProductToTourData = (
   product: {
     id: string
@@ -88,12 +95,11 @@ export const convertProductToTourData = (
       updatedAt: string
     }>
   },
-  tourType: TTourType
+  tourType: TTourType,
 ): TTourData => {
   const convertTourDates = (): TTourDate[] => {
-    // 只有 group-tours 需要處理日期
     if (tourType === 'group-tours' && product.tour && product.tour.length > 0) {
-      return product.tour.map(tour => {
+      return product.tour.map((tour) => {
         const departDate = new Date(tour.departDate)
         const month = departDate.getMonth() + 1
         const day = departDate.getDate()
@@ -102,9 +108,14 @@ export const convertProductToTourData = (
 
         const dateString = `${month}/${day}(${weekday})`
 
-        const status = tour.status === 1 ? '已成團' :
-                      tour.status === 2 ? '熱銷中' :
-                      tour.status === 3 ? '已滿團' : '熱銷中'
+        const status =
+          tour.status === 1
+            ? '已成團'
+            : tour.status === 2
+              ? '熱銷中'
+              : tour.status === 3
+                ? '已滿團'
+                : '熱銷中'
 
         return { date: dateString, status }
       })
@@ -143,11 +154,10 @@ export const convertProductToTourData = (
   }
 }
 
-// 旅遊類型配置
 export const TOUR_TYPE_CONFIG = {
   'free-tours': {
     title: '歐洲自由行',
-    logoPath: '/free-tours/logo.png',
+    logoPath: '/tours/logo.png',
     altTextPrefix: '自由行程精選',
     gapSize: 'lg:gap-8' as const,
     showBudgetFilter: true,
@@ -155,7 +165,7 @@ export const TOUR_TYPE_CONFIG = {
   },
   'group-tours': {
     title: '精緻團體行',
-    logoPath: '/group-tours/logo.png',
+    logoPath: '/tours/logo.png',
     altTextPrefix: '團體旅遊精選行程',
     gapSize: 'lg:gap-9' as const,
     showBudgetFilter: false,
@@ -163,7 +173,7 @@ export const TOUR_TYPE_CONFIG = {
   },
   'rcar-tours': {
     title: '歐洲包車行',
-    logoPath: '/rcar-tours/logo.png',
+    logoPath: '/tours/logo.png',
     altTextPrefix: '包車行程精選',
     gapSize: 'lg:gap-8' as const,
     showBudgetFilter: true,

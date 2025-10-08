@@ -5,11 +5,11 @@ import AdvantageCard from './AdvantageCard'
 import styles from './styles.module.css'
 import { transformAdvantageData } from './config'
 import { useAdvantages } from '@/api/home/useAdvantages'
-import type { TBaseComponent } from '@/types'
 import '@/styles/components.css'
 
-type TAdvantageProps = TBaseComponent & {
+type TAdvantageProps = {
   collectionRef?: React.RefObject<HTMLDivElement>
+  className?: string
 }
 
 const Advantage = ({ className }: TAdvantageProps) => {
@@ -45,7 +45,6 @@ const Advantage = ({ className }: TAdvantageProps) => {
       return []
     }
 
-    // 如果 API 正常回應，即使是空陣列也使用 API 資料
     return transformAdvantageData(advantagesData || [])
   }, [advantagesError, advantagesData, isAdvantagesLoading, mock.rows])
 
@@ -133,7 +132,6 @@ const Advantage = ({ className }: TAdvantageProps) => {
           setIsInDetectionZone(false)
           setScrollDirection(null)
           entryDirection.current = null
-          // 手動觸發一次頁面滾動來彌補被阻止的滾動
           window.scrollBy(0, delta)
           return prev
         }
@@ -309,64 +307,6 @@ const Advantage = ({ className }: TAdvantageProps) => {
         >
           {displayData.map((card, index) => {
             const getCardTransform = () => {
-              if (isMobile || !isInDetectionZone) return ''
-
-              const cardWidth = Math.min(window.innerWidth * 0.3, 522)
-              const cardSpacing = 60
-              const cardPositionX =
-                index * (cardWidth + cardSpacing) + translateX
-              const viewportCenter = window.innerWidth / 2
-              const cardCenter = cardPositionX + cardWidth / 2
-
-              // 計算相對於視窗中心的距離（標準化為-1到1之間）
-              const normalizedPosition =
-                (cardCenter - viewportCenter) / (window.innerWidth / 2)
-              const clampedPosition = Math.max(
-                -1,
-                Math.min(1, normalizedPosition),
-              )
-
-              // 基礎 perspective (降低數值讓透視更明顯)
-              const perspective = 1600
-
-              // 根據位置插值計算各種變換值
-              let translateY, translateZ, rotateZ, rotateY
-
-              if (Math.abs(clampedPosition) > 1) {
-                // 視窗外
-                translateY = 80
-                translateZ = -150
-                rotateZ = clampedPosition > 0 ? 1.5 : -1.5
-                rotateY = clampedPosition > 0 ? 15 : -15
-              } else if (Math.abs(clampedPosition) < 0.1) {
-                // 中間位置
-                translateY = 0
-                translateZ = 80
-                rotateZ = 0
-                rotateY = 0
-              } else {
-                // 中間過渡位置
-                const absPos = Math.abs(clampedPosition)
-                const sign = clampedPosition > 0 ? 1 : -1
-
-                if (absPos > 0.5) {
-                  // 右到中間 或 中間到左邊 (遠離中心)
-                  const factor = (absPos - 0.1) / 0.4 // 0.5-1 映射到 0-1
-                  translateY = 30 + (80 - 30) * factor
-                  translateZ = 80 + (-150 - 80) * factor
-                  rotateZ = (0.5 + (1.5 - 0.5) * factor) * sign
-                  rotateY = (5 + (15 - 5) * factor) * sign
-                } else {
-                  // 中間到兩側 (接近中心)
-                  const factor = absPos / 0.5 // 0-0.5 映射到 0-1
-                  translateY = 15 * factor
-                  translateZ = 80 * (1 - factor)
-                  rotateZ = -0.25 * factor * sign
-                  rotateY = -2.5 * factor * sign
-                }
-              }
-
-              // 組合變換
               return `perspective(0px) translate3d(0px, 0px, 0px) rotate(0deg) rotateY(0deg)`
             }
 

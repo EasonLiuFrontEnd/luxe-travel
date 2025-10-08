@@ -18,15 +18,14 @@ const Concerns = () => {
   } = concernsQuery
 
   const effectiveData = useMemo(() => {
-    if (concernsError) {
+    if (concernsError && process.env.NODE_ENV !== 'production') {
       return mock.rows
     }
 
     if (isConcernsLoading) {
-      return [] // 載入中時返回空陣列，讓組件自己處理載入狀態
+      return []
     }
 
-    // 如果 API 正常回應，即使是空陣列也使用 API 資料
     return concernsData || []
   }, [concernsError, concernsData, isConcernsLoading, mock.rows])
 
@@ -57,7 +56,6 @@ const Concerns = () => {
 
   return (
     <div
-      ref={containerRef}
       className='flex flex-col justify-center items-center self-stretch gap-y-[32px] xl:gap-y-[120px] xl:pt-[200px] py-[60px] px-[12px] relative z-20'
       style={backgroundStyle}
     >
@@ -66,6 +64,7 @@ const Concerns = () => {
         style={gridBackgroundStyle}
       ></div>
       <h2
+        ref={containerRef}
         className='relative font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px] text-center'
       >
         {isMobile ? (

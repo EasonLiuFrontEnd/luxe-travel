@@ -46,7 +46,6 @@ const Navigation = ({
       return { navItems: [], dropdownMenus: {} }
     }
 
-    // 如果 API 正常回應，即使是空陣列也使用 API 資料
     return transformMenuData(menuData || [])
   }, [menuError, menuData, isMenuLoading, mock.data])
 
@@ -118,7 +117,9 @@ const Navigation = ({
 
       <ConsultButton
         className={`max-xl:hidden transition-opacity duration-800 ${
-          showConsultButton ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+          showConsultButton
+            ? 'opacity-100 visible'
+            : 'opacity-0 invisible pointer-events-none'
         }`}
       />
 

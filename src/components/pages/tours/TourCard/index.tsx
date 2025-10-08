@@ -4,11 +4,11 @@ import React from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { RightOnlyFlipBook } from '@/components/ui/RightOnlyFlipBook'
-import type { TBaseComponent, TFlipBookPage } from '../../../../types'
+import type { TFlipBookPage } from '../../../../types'
 import type { TTravelerReview } from '../types'
 import styles from './style.module.css'
 
-export type TTourCardProps = TBaseComponent & {
+export type TTourCardProps = {
   title: string
   subtitle: string
   description: string
@@ -19,8 +19,9 @@ export type TTourCardProps = TBaseComponent & {
   note?: string
   onDetailsClick?: () => void
   onReviewClick?: () => void
-  tourType: 'free' | 'rcar' // 用來區分顏色主題
-  logoPath: string // 自定義 logo 路徑
+  tourType: 'free' | 'rcar'
+  logoPath: string
+  className?: string
 }
 
 const TourCard = ({
@@ -40,10 +41,15 @@ const TourCard = ({
 }: TTourCardProps) => {
   const imageUrl = mainImageUrl
 
-  // 根據 tourType 設置顏色主題
   const colorTheme = {
-    bgColor: tourType === 'free' ? 'bg-figma-accent-blue-normal' : 'bg-figma-primary-300',
-    textColor: tourType === 'free' ? 'text-figma-accent-blue-normal' : 'text-figma-primary-300',
+    bgColor:
+      tourType === 'free'
+        ? 'bg-figma-accent-blue-normal'
+        : 'bg-figma-primary-300',
+    textColor:
+      tourType === 'free'
+        ? 'text-figma-accent-blue-normal'
+        : 'text-figma-primary-300',
   }
 
   const flipBookPages: TFlipBookPage[] = [
@@ -73,23 +79,22 @@ const TourCard = ({
             </div>
           </div>
         </div>
-      )
+      ),
     },
     {
       id: 'content',
       pageNumber: '',
       pageContentClassName: 'h-full w-full',
-      content: (
-        <div />
-      )
-    }
+      content: <div />,
+    },
   ]
 
   return (
     <div
       className={cn(
         'group relative w-full max-w-[680px] xl:max-w-[900px]',
-        styles.foldedCornerHolder, className,
+        styles.foldedCornerHolder,
+        className,
       )}
     >
       <div className='flex items-end relative isolate w-full'>
@@ -105,12 +110,20 @@ const TourCard = ({
         </div>
 
         <div className='relative flex flex-1 min-w-0'>
-          <div className={`hidden xl:block absolute ${colorTheme.bgColor} bottom-0 right-0 transition-all duration-300 group-hover:-translate-x-[40px] group-hover:-translate-y-[36px] h-full w-full`} />
+          <div
+            className={`hidden xl:block absolute ${colorTheme.bgColor} bottom-0 right-0 transition-all duration-300 group-hover:-translate-x-[40px] group-hover:-translate-y-[36px] h-full w-full`}
+          />
 
           <div className='xl:bg-white flex flex-col justify-between w-full min-w-0 relative xl:gap-7 xl:pl-8 xl:pr-5 xl:py-5 transition-all duration-300'>
             <div className='flex flex-col xl:gap-3 w-full'>
               <div className='flex items-end xl:items-start xl:justify-between w-full'>
-                <div className={cn('xl:hidden relative cursor-pointer', styles.foldedCornerMobile)} onClick={onDetailsClick}>
+                <div
+                  className={cn(
+                    'xl:hidden relative cursor-pointer',
+                    styles.foldedCornerMobile,
+                  )}
+                  onClick={onDetailsClick}
+                >
                   <div
                     className='bg-center bg-cover bg-no-repeat flex items-center relative shrink-0 h-[193px] w-[145px] min-w-[145px]'
                     style={{ backgroundImage: `url(${imageUrl})` }}
@@ -133,7 +146,9 @@ const TourCard = ({
                 </div>
 
                 <div className='flex-1 flex relative min-w-0'>
-                  <div className={`xl:hidden absolute z-[-1] ${colorTheme.bgColor} bottom-0 right-0 transition-all duration-300 -translate-x-[16px] -translate-y-[22px] h-full w-full`} />
+                  <div
+                    className={`xl:hidden absolute z-[-1] ${colorTheme.bgColor} bottom-0 right-0 transition-all duration-300 -translate-x-[16px] -translate-y-[22px] h-full w-full`}
+                  />
 
                   <div className='flex flex-col xl:flex-row xl:items-start justify-between gap-4 xl:gap-3 p-4 xl:p-0 w-full bg-figma-primary-0 xl:bg-transparent'>
                     <div className='flex flex-col gap-1 text-figma-primary-950 flex-1 min-w-0'>
@@ -144,7 +159,9 @@ const TourCard = ({
                         {title}
                       </div>
                     </div>
-                    <div className={`flex items-end gap-1 ${colorTheme.textColor} shrink-0`}>
+                    <div
+                      className={`flex items-end gap-1 ${colorTheme.textColor} shrink-0`}
+                    >
                       <div className='whitespace-nowrap font-noto-serif-body-l-semibold xl:font-noto-serif-h5-bold'>
                         ＄{price.toLocaleString()}
                       </div>
@@ -182,11 +199,24 @@ const TourCard = ({
                 >
                   <div className='flex flex-col gap-1 items-start'>
                     <div className='flex gap-0.5 items-center'>
-                      <svg width='18' height='18' viewBox='0 0 18 18' fill='none'>
-                        <path d='M9 2.25L7.5 6.75L3 8.25L7.5 9.75L9 14.25L10.5 9.75L15 8.25L10.5 6.75L9 2.25Z' fill='#8BC3DE' />
-                        <path d='M3.75 11.25L2.625 13.875L0 15L2.625 16.125L3.75 18.75L4.875 16.125L7.5 15L4.875 13.875L3.75 11.25Z' fill='#8BC3DE' />
+                      <svg
+                        width='18'
+                        height='18'
+                        viewBox='0 0 18 18'
+                        fill='none'
+                      >
+                        <path
+                          d='M9 2.25L7.5 6.75L3 8.25L7.5 9.75L9 14.25L10.5 9.75L15 8.25L10.5 6.75L9 2.25Z'
+                          fill='#8BC3DE'
+                        />
+                        <path
+                          d='M3.75 11.25L2.625 13.875L0 15L2.625 16.125L3.75 18.75L4.875 16.125L7.5 15L4.875 13.875L3.75 11.25Z'
+                          fill='#8BC3DE'
+                        />
                       </svg>
-                      <span className={`font-genseki-body-s-bold ${colorTheme.textColor}`}>
+                      <span
+                        className={`font-genseki-body-s-bold ${colorTheme.textColor}`}
+                      >
                         旅客迴響
                       </span>
                     </div>
@@ -217,9 +247,27 @@ const TourCard = ({
 
               {note && (
                 <div className='flex gap-1 items-start flex-1'>
-                  <svg width='18' height='18' viewBox='0 0 18 18' fill='none' className='shrink-0 mt-0.5'>
-                    <circle cx='9' cy='9' r='7.5' stroke='#926D3C' strokeWidth='1.5' />
-                    <path d='M9 6V9.75M9 12.75H9.0075' stroke='#926D3C' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
+                  <svg
+                    width='18'
+                    height='18'
+                    viewBox='0 0 18 18'
+                    fill='none'
+                    className='shrink-0 mt-0.5'
+                  >
+                    <circle
+                      cx='9'
+                      cy='9'
+                      r='7.5'
+                      stroke='#926D3C'
+                      strokeWidth='1.5'
+                    />
+                    <path
+                      d='M9 6V9.75M9 12.75H9.0075'
+                      stroke='#926D3C'
+                      strokeWidth='1.5'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
                   </svg>
                   <p className='font-genseki-body-xs-regular text-figma-secondary-950 line-clamp-2'>
                     {note}

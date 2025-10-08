@@ -1,10 +1,9 @@
 import Link from 'next/link'
-import type { TBaseComponent } from '@/types'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
 
-export type TLogo = TBaseComponent & {
+export type TLogo = {
   scale?: number
+  className?: string
 }
 
 const logoImage = '/shared/icons/logo.svg'
@@ -13,7 +12,7 @@ const Logo = ({
   scale = 0.34,
   isMobile = false,
 }: TLogo & { isMobile?: boolean }) => {
-  const translateY = 12 + (scale - 0.34) * 71 / 0.66
+  const translateY = 12 + ((scale - 0.34) * 71) / 0.66
   if (isMobile) {
     return (
       <Link href='/'>

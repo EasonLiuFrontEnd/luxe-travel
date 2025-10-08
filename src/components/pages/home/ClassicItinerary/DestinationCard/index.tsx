@@ -1,9 +1,8 @@
 'use client'
 
-import type { TBaseComponent } from '@/types'
 import { booksApiMock } from '@/api/home/useBooks'
 
-export type TDestinationCard = TBaseComponent & {
+export type TDestinationCard = {
   number: string
   destination: string
   englishName: string
@@ -14,6 +13,7 @@ export type TDestinationCard = TBaseComponent & {
   containerClassName?: string
   patternContainerClassName?: string
   patternTopOffset?: string
+  className?: string
 }
 import { cn } from '@/lib/utils'
 import React, { useState, useEffect } from 'react'
@@ -55,8 +55,8 @@ const DestinationCard = ({
       const mockBook = booksApiMock.rows.find(
         (book) => book.title === destination,
       )
-      if (mockBook?.imageUrl) {
-        setImageSrc(mockBook.imageUrl)
+      if (mockBook?.landscapeImage) {
+        setImageSrc(mockBook.landscapeImage)
       }
     }
   }

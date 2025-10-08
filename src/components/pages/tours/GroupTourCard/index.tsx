@@ -4,11 +4,11 @@ import { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { RightOnlyFlipBook } from '@/components/ui/RightOnlyFlipBook'
-import type { TBaseComponent, TFlipBookPage } from '../../../../types'
+import type { TFlipBookPage } from '../../../../types'
 import styles from './style.module.css'
 import type { TTourDate } from '../config'
 
-type TGroupTourCardProps = TBaseComponent & {
+type TGroupTourCardProps = {
   title: string
   subtitle: string
   description: string
@@ -17,6 +17,7 @@ type TGroupTourCardProps = TBaseComponent & {
   dates: TTourDate[]
   mainImageUrl: string
   onDetailsClick?: () => void
+  className?: string
 }
 
 const GroupTourCard = ({
@@ -54,7 +55,6 @@ const GroupTourCard = ({
   const imageUrl = mainImageUrl
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
-  // 創建翻頁書頁面
   const flipBookPages: TFlipBookPage[] = [
     {
       id: 'cover',
@@ -73,7 +73,7 @@ const GroupTourCard = ({
 
             <div className='absolute h-[17px] w-[64px] top-[10px] xl:top-[13px] left-1/2 transform -translate-x-1/2'>
               <Image
-                src='/group-tours/logo.png'
+                src='/tours/logo.png'
                 alt='Logo'
                 width={64}
                 height={17}
@@ -82,16 +82,14 @@ const GroupTourCard = ({
             </div>
           </div>
         </div>
-      )
+      ),
     },
     {
       id: 'content',
       pageNumber: '',
       pageContentClassName: 'h-full w-full',
-      content: (
-        <div />
-      )
-    }
+      content: <div />,
+    },
   ]
   const [isScrollAtEnd, setIsScrollAtEnd] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
@@ -147,7 +145,8 @@ const GroupTourCard = ({
     <div
       className={cn(
         'group relative w-full max-w-[680px] xl:max-w-[900px]',
-        styles.foldedCornerHolder, className,
+        styles.foldedCornerHolder,
+        className,
       )}
     >
       <div className='flex items-end relative isolate w-full'>
@@ -168,7 +167,13 @@ const GroupTourCard = ({
           <div className='xl:bg-white flex flex-col justify-between w-full min-w-0 relative xl:gap-7 xl:pl-8 xl:pr-5 xl:py-5 transition-all duration-300'>
             <div className='flex flex-col xl:gap-3 w-full'>
               <div className='flex items-end xl:items-start xl:justify-between w-full'>
-                <div className={cn('xl:hidden relative cursor-pointer', styles.foldedCornerMobile)} onClick={onDetailsClick}>
+                <div
+                  className={cn(
+                    'xl:hidden relative cursor-pointer',
+                    styles.foldedCornerMobile,
+                  )}
+                  onClick={onDetailsClick}
+                >
                   <div
                     className='bg-center bg-cover bg-no-repeat flex items-center relative shrink-0 h-[193px] w-[145px] min-w-[145px]'
                     style={{ backgroundImage: `url(${imageUrl})` }}
@@ -180,7 +185,7 @@ const GroupTourCard = ({
 
                     <div className='absolute h-[17px] w-[64px] top-[10px] left-1/2 transform -translate-x-1/2'>
                       <Image
-                        src='/group-tours/logo.png'
+                        src='/tours/logo.png'
                         alt='Logo'
                         width={64}
                         height={17}
@@ -281,9 +286,7 @@ const GroupTourCard = ({
               </div>
 
               {!isScrollAtEnd && (
-                <button
-                  className='border border-figma-secondary-950 rounded-full px-3 pt-2 pb-3 flex items-center justify-center shrink-0'
-                >
+                <button className='border border-figma-secondary-950 rounded-full px-3 pt-2 pb-3 flex items-center justify-center shrink-0'>
                   <div className='w-[20px] h-[6px] relative'>
                     <div className='absolute inset-0 flex items-center justify-center'>
                       <svg

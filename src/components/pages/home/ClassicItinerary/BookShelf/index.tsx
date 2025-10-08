@@ -33,7 +33,7 @@ const BookShelf = ({ trackRef, isMobile = false }: TBookShelfProps) => {
   const { setSelectedCountryId } = useSelectedCountry()
 
   const displayData = useMemo(() => {
-    if (booksError) {
+    if (booksError && process.env.NODE_ENV !== 'production') {
       return transformBooksData(mock.rows)
     }
 
@@ -41,7 +41,6 @@ const BookShelf = ({ trackRef, isMobile = false }: TBookShelfProps) => {
       return []
     }
 
-    // 如果 API 正常回應，即使是空陣列也使用 API 資料
     return transformBooksData(booksData || [])
   }, [booksError, booksData, isBooksLoading, mock.rows])
 

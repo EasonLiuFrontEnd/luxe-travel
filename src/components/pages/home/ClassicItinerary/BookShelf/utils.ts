@@ -21,7 +21,7 @@ export const transformBooksData = (booksData: TBooks[]): TBook[] => {
       number: String(book.order).padStart(2, '0'),
       destination: book.title,
       english: book.subtitle,
-      pattern: book.imageUrl,
+      pattern: book.bookImage,
       size: styleConfig.size,
       rotation: styleConfig.rotation,
       patternTopOffset: styleConfig.patternTopOffset,

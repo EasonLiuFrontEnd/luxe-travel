@@ -12,20 +12,14 @@ type TToursProps = TBaseComponent & {
   tourType: TTourType
 }
 
-const Tours = ({
-  tours = [],
-  tourType,
-  className,
-}: TToursProps) => {
+const Tours = ({ tours = [], tourType, className }: TToursProps) => {
   const router = useRouter()
 
   const handleDetailsClick = (tourId: string) => {
     router.push(`/${tourType}/${tourId}`)
   }
 
-  const handleReviewClick = () => {
-    // 處理評論點擊
-  }
+  const handleReviewClick = () => {}
 
   const renderTourCard = (tour: TTourData) => {
     const commonProps = {
@@ -40,12 +34,7 @@ const Tours = ({
     }
 
     if (tourType === 'group-tours') {
-      return (
-        <GroupTourCard
-          {...commonProps}
-          dates={tour.dates}
-        />
-      )
+      return <GroupTourCard {...commonProps} dates={tour.dates} />
     }
 
     return (
@@ -55,7 +44,7 @@ const Tours = ({
         note={tour.note}
         onReviewClick={handleReviewClick}
         tourType={tourType === 'free-tours' ? 'free' : 'rcar'}
-        logoPath={tourType === 'free-tours' ? '/free-tours/logo.png' : '/rcar-tours/logo.png'}
+        logoPath='/tours/logo.png'
       />
     )
   }

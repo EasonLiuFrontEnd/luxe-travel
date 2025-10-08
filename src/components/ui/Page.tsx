@@ -13,7 +13,17 @@ export type TPageProps = TBaseComponent & {
 }
 
 const Page = forwardRef<HTMLDivElement, TPageProps>(
-  ({ children, pageContentClassName, className, pageNumber, background, ...props }, ref) => {
+  (
+    {
+      children,
+      pageContentClassName,
+      className,
+      pageNumber,
+      background,
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <div
         ref={ref}

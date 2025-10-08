@@ -1,19 +1,19 @@
 'use client'
 
-import type { TBaseComponent } from '@/types'
 import { cn } from '@/lib/utils'
 import { serviceSteps, getStepStyles, type TServiceStep } from './config'
 import styles from './styles.module.css'
 import '@/styles/components.css'
 
-type TServiceProcessProps = TBaseComponent
+type TServiceProcessProps = {
+  className?: string
+}
 
 const ServiceStep = ({ step }: { step: TServiceStep }) => {
   const { number, title, englishTitle, description } = step
 
   return (
     <div
-    // hover:scale-x-[1] hover:scale-y-[1] xl:origin-bottom
       className={cn(
         'flex flex-col items-center justify-between p-7 w-full xl:min-h-auto xl:hover:min-w-[400px] xl:hover:h-full xl:hover:max-w-[25%] xl:hover:max-h-[526px] transition-all duration-300 ease-out group',
         getStepStyles(number),
@@ -32,7 +32,9 @@ const ServiceStep = ({ step }: { step: TServiceStep }) => {
           {englishTitle}
         </p>
         {description && (
-          <p className='text-[20px] leading-[1.5] text-transparent group-hover:text-white transition-colors duration-300'>{description}</p>
+          <p className='text-[20px] leading-[1.5] text-transparent group-hover:text-white transition-colors duration-300'>
+            {description}
+          </p>
         )}
       </div>
     </div>
@@ -60,13 +62,11 @@ const ServiceProcess = ({ className, ...props }: TServiceProcessProps) => {
         </h2>
 
         <div className='xl:relative max-w-[1440px] w-full xl:h-[641px] px-[clamp(12px,2.5vw,48px)] xl:border-b xl:border-[var(--color-figma-secondary-500)]'>
-
           <div className='xl:absolute xl:inset-0 flex flex-col xl:flex-row xl:items-end xl:justify-center gap-4 xl:gap-[6px]'>
             {serviceSteps.map((step) => (
               <ServiceStep key={step.number} step={step} />
             ))}
           </div>
-
         </div>
       </div>
     </section>

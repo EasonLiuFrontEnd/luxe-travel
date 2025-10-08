@@ -86,74 +86,74 @@ export const mockTimeSlots: TTimeSlot[] = [
 
 export const flightData: TFlight[] = [
   {
-    day: "01",
-    direction: "去程",
-    airline: "長榮航空",
-    flightNumber: "CX-531",
+    day: '01',
+    direction: '去程',
+    airline: '長榮航空',
+    flightNumber: 'CX-531',
     departure: {
-      time: "19:55",
-      airport: "台北市 桃園國際機場(TPE)",
-      code: "TPE"
+      time: '19:55',
+      airport: '台北市 桃園國際機場(TPE)',
+      code: 'TPE',
     },
     arrival: {
-      time: "21:55",
-      airport: "香港 香港國際機場(HK)",
-      code: "HK"
+      time: '21:55',
+      airport: '香港 香港國際機場(HK)',
+      code: 'HK',
     },
-    duration: "02小時00分鐘"
+    duration: '02小時00分鐘',
   },
   {
-    day: "02",
-    direction: "去程",
-    airline: "長榮航空",
-    flightNumber: "CX-531",
+    day: '02',
+    direction: '去程',
+    airline: '長榮航空',
+    flightNumber: 'CX-531',
     departure: {
-      time: "00:20",
-      airport: "香港 香港國際機場(HK)",
-      code: "HK"
+      time: '00:20',
+      airport: '香港 香港國際機場(HK)',
+      code: 'HK',
     },
     arrival: {
-      time: "08:50",
-      airport: "巴賽隆納 巴賽隆納機場(BCN)",
-      code: "BCN"
+      time: '08:50',
+      airport: '巴賽隆納 巴賽隆納機場(BCN)',
+      code: 'BCN',
     },
-    duration: "14小時40分鐘"
+    duration: '14小時40分鐘',
   },
   {
-    day: "15",
-    direction: "回程",
-    airline: "長榮航空",
-    flightNumber: "CX-531",
+    day: '15',
+    direction: '回程',
+    airline: '長榮航空',
+    flightNumber: 'CX-531',
     departure: {
-      time: "13:00",
-      airport: "巴賽隆納 巴賽隆納機場(BCN)",
-      code: "BCN"
+      time: '13:00',
+      airport: '巴賽隆納 巴賽隆納機場(BCN)',
+      code: 'BCN',
     },
     arrival: {
-      time: "07:05",
-      airport: "香港 香港國際機場(HK)",
-      code: "HK",
-      dayOffset: 1
+      time: '07:05',
+      airport: '香港 香港國際機場(HK)',
+      code: 'HK',
+      dayOffset: 1,
     },
-    duration: "12小時05分鐘"
+    duration: '12小時05分鐘',
   },
   {
-    day: "16",
-    direction: "回程",
-    airline: "長榮航空",
-    flightNumber: "CX-531",
+    day: '16',
+    direction: '回程',
+    airline: '長榮航空',
+    flightNumber: 'CX-531',
     departure: {
-      time: "08:35",
-      airport: "香港 香港國際機場(HK)",
-      code: "HK"
+      time: '08:35',
+      airport: '香港 香港國際機場(HK)',
+      code: 'HK',
     },
     arrival: {
-      time: "10:40",
-      airport: "台北市 桃園國際機場(TPE)",
-      code: "TPE"
+      time: '10:40',
+      airport: '台北市 桃園國際機場(TPE)',
+      code: 'TPE',
     },
-    duration: "01小時55分鐘"
-  }
+    duration: '01小時55分鐘',
+  },
 ]
 
 export const mockTourData: TTourPricing = {
@@ -162,7 +162,7 @@ export const mockTourData: TTourPricing = {
   childWithBed: 0,
   childExtraBed: 0,
   childNoBed: null,
-  infant: 0
+  infant: 0,
 }
 
 export const isValidPrice = (price: TPriceValue): boolean => {
@@ -188,7 +188,7 @@ export const itineraryData: TItinerary[] = [
         note: ''
       }
     ],
-    activity:[],
+    activity: [],
     diet: {
       breakfast: '敬請自理',
       lunch: '敬請自理',
@@ -240,7 +240,7 @@ export const itineraryData: TItinerary[] = [
         note: '※如阿罕布拉宮休館或預訂滿,則改安排參觀格拉納達皇室禮拜堂,敬請知悉。'
       }
     ],
-    activity:[],
+    activity: [],
     diet: {
       breakfast: '旅館內',
       lunch: '西班牙傳統料理',

@@ -4,15 +4,15 @@ import { useState, useLayoutEffect } from 'react'
 import Image from 'next/image'
 import EuropeMap from './EuropeMap'
 import IconCta from '@/components/shared/icons/IconCta'
-import type { TBaseComponent } from '@/types'
 import { regionData } from './config'
 
-type TInteractiveMapProps = TBaseComponent & {
+type TInteractiveMapProps = {
   selectedRegion: string | null
   onRegionSelect: (
     regionId: string | null,
     elementPosition?: { x: number; y: number },
   ) => void
+  className?: string
 }
 
 const InteractiveMap = ({

@@ -36,16 +36,13 @@ export const CounterInput = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value
 
-    // 允許空值
     if (rawValue === '') {
       onChange(0)
       return
     }
 
-    // 轉換為數字並限制在範圍內
     const inputValue = parseInt(rawValue, 10)
     if (!isNaN(inputValue)) {
-      // 限制在 min 和 max 範圍內
       const clampedValue = Math.max(min, Math.min(max, inputValue))
       onChange(clampedValue)
     }
