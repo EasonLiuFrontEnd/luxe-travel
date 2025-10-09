@@ -52,7 +52,7 @@ const Header = ({
   const backgroundClass =
     hasTransparentHeader && isHomePage && logoProgress < 1
       ? 'bg-transparent'
-      : 'bg-figma-neutral-50'
+      : 'bg-figma-neutral-50 h-[75.5px]'
   const borderClass = isMobile
     ? 'border-b border-[var(--color-figma-secondary-500)]'
     : logoProgress >= 1

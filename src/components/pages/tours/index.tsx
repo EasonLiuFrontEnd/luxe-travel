@@ -51,7 +51,7 @@ const Tours = ({ tours = [], tourType, className }: TToursProps) => {
 
   return (
     <div className={`w-full max-w-[1920px] mx-auto ${className || ''}`}>
-      <div className='grid grid-cols-1 xl:grid-cols-2 gap-7 xl:gap-y-[79px] xl:gap-x-8'>
+      <div className='flex flex-wrap gap-7 xl:gap-y-[79px] xl:gap-x-8 xl:grid xl:grid-cols-[repeat(auto-fit,minmax(680px,1fr))]'>
         {tours.map(renderTourCard)}
       </div>
     </div>

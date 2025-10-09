@@ -19,6 +19,7 @@ type TDestinationFilterProps = {
   showBudgetFilter?: boolean
   showDaysFilter?: boolean
   gapSize?: 'lg:gap-8' | 'lg:gap-9'
+  maxWidth?: 'max-w-[1824px]' | 'xl:max-w-[740px]'
   useProductCountriesHook: () => {
     query: { isSuccess: boolean; data?: TRegionData[] }
     mock: { data?: TRegionData[] }
@@ -36,6 +37,7 @@ const DestinationFilter = ({
   showBudgetFilter = true,
   showDaysFilter = true,
   gapSize = 'lg:gap-8',
+  maxWidth = 'max-w-[1824px]',
   useProductCountriesHook,
   onSearch,
 }: TDestinationFilterProps) => {
@@ -196,8 +198,8 @@ const DestinationFilter = ({
         className={`absolute inset-0 opacity-15 ${backgroundClasses.backgroundLayer3}`}
       />
 
-      <div className='relative z-10'>
-        <div className='max-w-[1824px] mx-auto'>
+      <div className='relative z-10 flex'>
+        <div className={`${maxWidth} w-full`}>
           <div
             className={`bg-white rounded-2xl p-6 flex flex-col lg:flex-row gap-[20px] ${gapSize} lg:items-center`}
           >

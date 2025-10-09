@@ -76,7 +76,13 @@ export const convertProductToTourData = (
     tags?: string[]
     days?: number
     mainImageUrl?: string
-    feedback?: string | null
+    feedback?: {
+      id: string
+      title: string
+      nickname: string
+      imageUrl: string
+      linkUrl: string
+    } | string | null
     tour?: Array<{
       id: string
       productId: string
@@ -127,11 +133,18 @@ export const convertProductToTourData = (
   const parseFeedback = (): TTravelerReview | undefined => {
     if (!product.feedback) return undefined
 
+    if (typeof product.feedback === 'object') {
+      return {
+        author: product.feedback.nickname || '',
+        avatarUrl: product.feedback.imageUrl || '',
+      }
+    }
+
     try {
       const feedbackData = JSON.parse(product.feedback)
       return {
-        author: feedbackData.author || '',
-        avatarUrl: feedbackData.avatarUrl || '',
+        author: feedbackData.nickname || feedbackData.author || '',
+        avatarUrl: feedbackData.imageUrl || feedbackData.avatarUrl || '',
       }
     } catch {
       return undefined
@@ -143,7 +156,7 @@ export const convertProductToTourData = (
     isFeatured: product.isFeatured || false,
     title: product.name,
     subtitle: product.namePrefix || '',
-    description: product.summary || product.description || '',
+    description: product.summary || '',
     price: product.priceMin,
     days: product.days,
     tags: product.tags || [],
@@ -151,6 +164,7 @@ export const convertProductToTourData = (
     mainImageUrl: product.mainImageUrl || '',
     countries: [],
     travelerReview: parseFeedback(),
+    note: product.description || undefined,
   }
 }
 
@@ -160,6 +174,7 @@ export const TOUR_TYPE_CONFIG = {
     logoPath: '/tours/logo.png',
     altTextPrefix: '自由行程精選',
     gapSize: 'lg:gap-8' as const,
+    maxWidth: 'max-w-[1824px]' as const,
     showBudgetFilter: true,
     showDaysFilter: true,
   },
@@ -168,6 +183,7 @@ export const TOUR_TYPE_CONFIG = {
     logoPath: '/tours/logo.png',
     altTextPrefix: '團體旅遊精選行程',
     gapSize: 'lg:gap-9' as const,
+    maxWidth: 'xl:max-w-[740px]' as const,
     showBudgetFilter: false,
     showDaysFilter: false,
   },
@@ -176,6 +192,7 @@ export const TOUR_TYPE_CONFIG = {
     logoPath: '/tours/logo.png',
     altTextPrefix: '包車行程精選',
     gapSize: 'lg:gap-8' as const,
+    maxWidth: 'max-w-[1824px]' as const,
     showBudgetFilter: true,
     showDaysFilter: true,
   },

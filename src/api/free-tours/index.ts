@@ -85,6 +85,14 @@ export type THighlight = {
   updatedAt: string
 }
 
+export type TFeedback = {
+  id: string
+  title: string
+  nickname: string
+  imageUrl: string
+  linkUrl: string
+}
+
 export type TProduct = {
   id: string
   isFeatured: boolean
@@ -105,14 +113,14 @@ export type TProduct = {
   priceMax: number
   tags: string[]
   countries: string[]
-  policy: string
+  policy: string | null
   status: number
   categoryId: string
   subCategoryId: string
   createdAt: string
   updatedAt: string
   tour: TTour[]
-  feedback: string | null
+  feedback: TFeedback | null
   flights: TFlight[]
   highlights: THighlight[]
 }
@@ -153,91 +161,119 @@ const fetchProductsSearch = async (
 
 export const productsSearchApiMock: TProductSearchResponse = {
   page: 1,
-  limit: 10,
+  limit: 100,
   total: 1,
   totalPages: 1,
-  sort: 'priceMin',
-  order: 'asc',
+  sort: 'createdAt',
+  order: 'desc',
   data: [
     {
-      id: '68db79e7eca955c01cedb51e',
-      code: 'LLWCX1270419BRU',
-      namePrefix: '限量兩團．限時甄藏',
-      name: '花開國王節 春遊荷比雙慶典12天',
-      mainImageUrl:
-        'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/NGxRiFY-fOnYe6AU3r2ORYUAbq4xWDjbQAWTDR.jpeg',
-      summary:
-        '拒絕傳統荷比法快閃玩法！除了親訪荷蘭最重要的兩大年度盛事－每年僅舉辦一天的【荷蘭國王節】及春天限定【庫肯霍夫鬱金香花季】的百萬花海，我們還想邀請您一起走訪荷比大城小鎮：傳統與現代兼容的大都會，或典雅、或古樸的特色小鎮－荷蘭與比利時的美，很多元，值得您慢慢探索、細細品味！\n',
-      description: 'TEST行程描述',
-      days: 12,
-      nights: 9,
+      id: '68e7541179f42429271fa190',
+      code: 'LLWBR1860618MXP',
+      namePrefix: '蜜月精選',
+      name: '義法五大名城 巴黎香頌18天',
+      mainImageUrl: 'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/JoHSetL-hoIPnvvDIoaKbpSqmfOX9h84pMhuEg.jpeg',
+      summary: '義大利四大名城羅馬．威尼斯．佛羅倫斯．米蘭精華快覽Ｘ巴黎七天經典全覽，最適合想規劃多天數蜜月或首遊義法的您！',
+      description: '自由行／包車： 售價包含歐洲網卡每人１張．全程５００萬意外身故＋１０萬意外醫療旅行社責任保險．詳細自由行操作手冊',
+      days: 18,
+      nights: 15,
       departAirport: 'TPE',
-      arriveCountry: 'BE',
-      arriveCity: 'BRU',
-      arriveAirport: 'BRU',
+      arriveCountry: 'IT',
+      arriveCity: 'MIL',
+      arriveAirport: 'MXP',
       category: 'FREE',
-      priceMin: 158000,
-      priceMax: 178000,
+      priceMin: 148000,
+      priceMax: 148000,
       tags: [
-        '荷蘭國王節',
-        '庫肯霍夫鬱金香花季',
-        '雙國經典全覽',
-        '精選星級美饌',
+        '蜜月精選',
+        '義大利四大名城',
+        '巴黎經典全覽',
+        '卡端午連休'
       ],
-      countries: ['NL', 'BE'],
-      policy:
-        '◆ 航空公司座位安排：本行程全程使用『團體經濟艙』機票，不適用於出發前預先選位，也無法事先確認座位相關需求（如，靠窗、靠走道．．等），且機上座位是航空公司依照乘客英文姓名之字母順序做統一安排，因此同行者有可能無法安排在一起，敬請參團貴賓了解。',
+      countries: ['IT', 'FR'],
+      policy: null,
       status: 1,
       categoryId: '68b0375597cf77dce8590407',
       subCategoryId: '68d3abd7d9e9051454d7f91a',
       isFeatured: false,
-      feedback: null,
-      createdAt: '2025-09-30T06:34:15.998Z',
-      updatedAt: '2025-10-01T04:15:27.824Z',
+      feedback: {
+        id: '68dc89f1e3413e4013022ed9',
+        title: '奧匈捷德+杜拜 30日蜜月',
+        nickname: 'Winny 小夫妻',
+        imageUrl: 'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/uTzfM3Y-kRNA9IOp2tAx9zwbzqg6j9C0AVDMDp.webp',
+        linkUrl: 'https://verywed.com/forum/expexch/3267262.html'
+      },
+      createdAt: '2025-10-09T06:20:00.004Z',
+      updatedAt: '2025-10-09T10:04:34.551Z',
       tour: [],
       flights: [
         {
-          id: '68db7b59eca955c01cedb52d',
-          productId: '68db79e7eca955c01cedb51e',
+          id: '68e75d34cf27148d2a5e64f9',
+          productId: '68e7541179f42429271fa190',
           direction: 'OUTBOUND',
           day: 1,
           departAirport: 'TPE',
           departName: '桃園國際機場',
-          arriveAirport: 'HKG',
-          arriveName: '香港國際機場',
-          departTime: '19:50',
-          arriveTime: '22:00',
-          duration: '2h10m',
+          arriveAirport: 'MXP',
+          arriveName: '米蘭馬爾彭薩機場',
+          departTime: '23:15',
+          arriveTime: '07:35+1',
+          duration: '13h50m',
+          crossDay: true,
+          airlineCode: 'BR',
+          airlineName: '長榮航空',
+          flightNo: 'BR95',
+          isTransit: false,
+          remark: '',
+          createdAt: '2025-10-09T06:59:00.796Z',
+          updatedAt: '2025-10-09T06:59:00.796Z'
+        },
+        {
+          id: '68e75d34cf27148d2a5e64fb',
+          productId: '68e7541179f42429271fa190',
+          direction: 'OUTBOUND',
+          day: 10,
+          departAirport: 'FCO',
+          departName: '羅馬達文西機場',
+          arriveAirport: 'CDG',
+          arriveName: '巴黎夏爾·戴高樂機場',
+          departTime: '11:00',
+          arriveTime: '13:15',
+          duration: '2h15m',
           crossDay: false,
           airlineCode: 'CX',
           airlineName: '國泰航空',
-          flightNo: 'CX531',
+          flightNo: ' AZ318',
           isTransit: false,
           remark: '',
-          createdAt: '2025-09-30T06:40:25.126Z',
-          updatedAt: '2025-09-30T06:40:25.126Z',
+          createdAt: '2025-10-09T06:59:00.796Z',
+          updatedAt: '2025-10-09T06:59:00.796Z'
         },
-      ],
-      highlights: [
         {
-          id: '68dca0162a01317fae50c1a9',
-          productId: '68db79e7eca955c01cedb51e',
-          imageUrls: [
-            'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/wEhZb56-BF9oSEPnjakJzhdWiSHJok7Ci1OE54.jpeg',
-            'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/MRcTg5z-3AaNUagl1M7kieTMgJAszFPZhmzP5w.jpeg',
-          ],
-          layout: 2,
-          title: '兩大慶典．限量甄藏',
-          subtitle: '',
-          content:
-            '◆ 一年僅此一天的【荷蘭國王節】－準備好你的橙色造型，一起開趴啦！\n◆ 每年春季限時美景【庫肯霍夫鬱金香花季】－悠遊最壯觀的百萬花海！',
-          order: 0,
-          createdAt: '2025-10-01T03:29:26.006Z',
-          updatedAt: '2025-10-01T03:29:26.006Z',
-        },
+          id: '68e75d34cf27148d2a5e64fa',
+          productId: '68e7541179f42429271fa190',
+          direction: 'RETURN',
+          day: 17,
+          departAirport: 'CDG',
+          departName: '巴黎夏爾·戴高樂機場',
+          arriveAirport: 'TPE',
+          arriveName: '桃園國際機場',
+          departTime: '11:20',
+          arriveTime: '06:40+1',
+          duration: '13h50m',
+          crossDay: true,
+          airlineCode: 'BR',
+          airlineName: '長榮航空',
+          flightNo: 'BR88',
+          isTransit: false,
+          remark: '',
+          createdAt: '2025-10-09T06:59:00.796Z',
+          updatedAt: '2025-10-09T06:59:00.796Z'
+        }
       ],
-    },
-  ],
+      highlights: []
+    }
+  ]
 }
 
 export const useProductsSearch = (
