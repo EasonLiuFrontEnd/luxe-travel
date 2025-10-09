@@ -95,12 +95,9 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
     if (isStickyEnded) {
       return '-5px'
     }
-    const startY = 223
-    const endY = 76
-    const range = startY - endY
-    const calculatedY = startY - logoProgress * range
-
-    return `${calculatedY}px`
+    
+    // 使用 CSS calc 來計算線性插值
+    return `calc(223px - var(--logo-progress) * 147px)`
   }, [logoProgress, isStickyEnded, isMobile])
 
   useEffect(() => {
@@ -221,8 +218,9 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
             'transition-all duration-250 ease-in-out',
           )}
           style={{
+            '--logo-progress': logoProgress,
             transform: `translateY(${dynamicTranslateY})`,
-          }}
+          } as React.CSSProperties}
         >
           <div className='gooey-text-container relative'>
             <div
