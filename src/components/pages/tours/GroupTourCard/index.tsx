@@ -203,9 +203,7 @@ const GroupTourCard = ({
                       <div className='font-genseki-body-s-regular xl:font-genseki-body-m-regular max-h-[21px] xl:max-h-[24px] overflow-hidden truncate'>
                         {subtitle}
                       </div>
-                      <div className='font-noto-serif-h5-bold'>
-                        {title}
-                      </div>
+                      <div className='font-noto-serif-h5-bold'>{title}</div>
                     </div>
                     <div className='flex gap-1 items-end justify-end text-figma-secondary-500 shrink-0 xl:absolute xl:top-[-8px] xl:right-0'>
                       <div className='whitespace-nowrap font-noto-serif-body-l-semibold xl:font-noto-serif-h5-bold'>

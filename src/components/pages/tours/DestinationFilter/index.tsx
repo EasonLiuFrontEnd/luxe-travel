@@ -114,7 +114,7 @@ const DestinationFilter = ({
     setExpandedRegions((prev) =>
       prev.includes(regionId)
         ? prev.filter((id) => id !== regionId)
-        : [...prev, regionId]
+        : [...prev, regionId],
     )
   }
 
@@ -227,14 +227,14 @@ const DestinationFilter = ({
                         const hasSelected = hasSelectedCountriesInRegion(
                           region.region,
                         )
-                        const isExpanded = expandedRegions.includes(region.region)
-                        
+                        const isExpanded = expandedRegions.includes(
+                          region.region,
+                        )
+
                         return (
                           <div key={region.region}>
                             <button
-                              onClick={() =>
-                                handleRegionSelect(region.region)
-                              }
+                              onClick={() => handleRegionSelect(region.region)}
                               className={`w-full text-left py-3 px-4 hover:bg-gray-50 rounded font-family-noto-serif font-semibold text-base cursor-pointer flex items-center gap-4 ${
                                 hasSelected
                                   ? 'text-figma-secondary-950'

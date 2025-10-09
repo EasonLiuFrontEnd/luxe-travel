@@ -156,9 +156,7 @@ const TourCard = ({
                       <div className='font-genseki-body-s-regular xl:font-genseki-body-m-regular max-h-[21px] xl:max-h-[24px] overflow-hidden truncate'>
                         {subtitle}
                       </div>
-                      <div className='font-noto-serif-h5-bold'>
-                        {title}
-                      </div>
+                      <div className='font-noto-serif-h5-bold'>{title}</div>
                     </div>
                     <div
                       className={`flex gap-1 items-end justify-end ${colorTheme.textColor} shrink-0 xl:absolute xl:top-[-8px] xl:right-0`}
@@ -229,7 +227,9 @@ const TourCard = ({
                   </div>
                   <div className='w-[48px] h-[24px] flex items-center justify-end'>
                     <div className='w-[24.68px] group-hover:w-[37.68px] transition-all duration-300 overflow-hidden'>
-                      <IconCta className={`text-[var(--color-figma-secondary-950)]`} />
+                      <IconCta
+                        className={`text-[var(--color-figma-secondary-950)]`}
+                      />
                     </div>
                   </div>
                 </button>
@@ -237,7 +237,13 @@ const TourCard = ({
 
               {note && (
                 <div className='flex gap-2 items-start flex-1'>
-                  <Image src='/tours/icon.svg' alt='Icon' width={15} height={15} className='object-contain' />
+                  <Image
+                    src='/tours/icon.svg'
+                    alt='Icon'
+                    width={15}
+                    height={15}
+                    className='object-contain'
+                  />
                   <p className='font-genseki-body-xs-regular text-figma-secondary-950 line-clamp-2'>
                     {note}
                   </p>

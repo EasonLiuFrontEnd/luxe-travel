@@ -24,7 +24,9 @@ const AdvantageCard = ({ card, className }: TAdvantageCardProps) => {
       />
 
       <div
-        className={cn(`absolute inset-0 bg-center bg-cover bg-no-repeat ${styles.gradientMask}`)}
+        className={cn(
+          `absolute inset-0 bg-center bg-cover bg-no-repeat ${styles.gradientMask}`,
+        )}
         style={{ backgroundImage: `url('${card.imageUrl}')` }}
       />
 

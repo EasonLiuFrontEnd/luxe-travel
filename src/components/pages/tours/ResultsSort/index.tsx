@@ -78,14 +78,13 @@ const ResultsSort = ({
                 <span className='text-nowrap'>{resultCount}</span>
                 <span className='text-nowrap'>筆行程</span>
               </>
-            )
-              : (
-                <>
-                  <span className='text-nowrap'>共</span>
-                  <span className='text-nowrap'>{resultCount}</span>
-                  <span className='text-nowrap'>筆行程</span>
-                </>
-              )}
+            ) : (
+              <>
+                <span className='text-nowrap'>共</span>
+                <span className='text-nowrap'>{resultCount}</span>
+                <span className='text-nowrap'>筆行程</span>
+              </>
+            )}
           </div>
 
           <div className='flex flex-col xl:flex-row gap-5'>

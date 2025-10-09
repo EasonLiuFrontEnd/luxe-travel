@@ -76,13 +76,16 @@ export const convertProductToTourData = (
     tags?: string[]
     days?: number
     mainImageUrl?: string
-    feedback?: {
-      id: string
-      title: string
-      nickname: string
-      imageUrl: string
-      linkUrl: string
-    } | string | null
+    feedback?:
+      | {
+          id: string
+          title: string
+          nickname: string
+          imageUrl: string
+          linkUrl: string
+        }
+      | string
+      | null
     tour?: Array<{
       id: string
       productId: string

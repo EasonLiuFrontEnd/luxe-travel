@@ -172,9 +172,12 @@ export const productsSearchApiMock: TProductSearchResponse = {
       code: 'LLWBR1860618MXP',
       namePrefix: '蜜月精選',
       name: '義法五大名城 巴黎香頌18天',
-      mainImageUrl: 'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/JoHSetL-hoIPnvvDIoaKbpSqmfOX9h84pMhuEg.jpeg',
-      summary: '義大利四大名城羅馬．威尼斯．佛羅倫斯．米蘭精華快覽Ｘ巴黎七天經典全覽，最適合想規劃多天數蜜月或首遊義法的您！',
-      description: '自由行／包車： 售價包含歐洲網卡每人１張．全程５００萬意外身故＋１０萬意外醫療旅行社責任保險．詳細自由行操作手冊',
+      mainImageUrl:
+        'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/JoHSetL-hoIPnvvDIoaKbpSqmfOX9h84pMhuEg.jpeg',
+      summary:
+        '義大利四大名城羅馬．威尼斯．佛羅倫斯．米蘭精華快覽Ｘ巴黎七天經典全覽，最適合想規劃多天數蜜月或首遊義法的您！',
+      description:
+        '自由行／包車： 售價包含歐洲網卡每人１張．全程５００萬意外身故＋１０萬意外醫療旅行社責任保險．詳細自由行操作手冊',
       days: 18,
       nights: 15,
       departAirport: 'TPE',
@@ -184,12 +187,7 @@ export const productsSearchApiMock: TProductSearchResponse = {
       category: 'FREE',
       priceMin: 148000,
       priceMax: 148000,
-      tags: [
-        '蜜月精選',
-        '義大利四大名城',
-        '巴黎經典全覽',
-        '卡端午連休'
-      ],
+      tags: ['蜜月精選', '義大利四大名城', '巴黎經典全覽', '卡端午連休'],
       countries: ['IT', 'FR'],
       policy: null,
       status: 1,
@@ -200,8 +198,9 @@ export const productsSearchApiMock: TProductSearchResponse = {
         id: '68dc89f1e3413e4013022ed9',
         title: '奧匈捷德+杜拜 30日蜜月',
         nickname: 'Winny 小夫妻',
-        imageUrl: 'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/uTzfM3Y-kRNA9IOp2tAx9zwbzqg6j9C0AVDMDp.webp',
-        linkUrl: 'https://verywed.com/forum/expexch/3267262.html'
+        imageUrl:
+          'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/uTzfM3Y-kRNA9IOp2tAx9zwbzqg6j9C0AVDMDp.webp',
+        linkUrl: 'https://verywed.com/forum/expexch/3267262.html',
       },
       createdAt: '2025-10-09T06:20:00.004Z',
       updatedAt: '2025-10-09T10:04:34.551Z',
@@ -226,7 +225,7 @@ export const productsSearchApiMock: TProductSearchResponse = {
           isTransit: false,
           remark: '',
           createdAt: '2025-10-09T06:59:00.796Z',
-          updatedAt: '2025-10-09T06:59:00.796Z'
+          updatedAt: '2025-10-09T06:59:00.796Z',
         },
         {
           id: '68e75d34cf27148d2a5e64fb',
@@ -247,7 +246,7 @@ export const productsSearchApiMock: TProductSearchResponse = {
           isTransit: false,
           remark: '',
           createdAt: '2025-10-09T06:59:00.796Z',
-          updatedAt: '2025-10-09T06:59:00.796Z'
+          updatedAt: '2025-10-09T06:59:00.796Z',
         },
         {
           id: '68e75d34cf27148d2a5e64fa',
@@ -268,12 +267,12 @@ export const productsSearchApiMock: TProductSearchResponse = {
           isTransit: false,
           remark: '',
           createdAt: '2025-10-09T06:59:00.796Z',
-          updatedAt: '2025-10-09T06:59:00.796Z'
-        }
+          updatedAt: '2025-10-09T06:59:00.796Z',
+        },
       ],
-      highlights: []
-    }
-  ]
+      highlights: [],
+    },
+  ],
 }
 
 export const useProductsSearch = (
