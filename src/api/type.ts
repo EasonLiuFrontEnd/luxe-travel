@@ -13,7 +13,7 @@ export type TApiResponse<T> = {
   message?: string
   rows?: T[]
   data?: T[]
-  pagination?: TPagination
+  pagination?: TPagination | null
 }
 
 export type TUseHomeQueryResult<TData, TMock> = {
@@ -45,7 +45,7 @@ export type TConcern = {
 export type TMenuItem = {
   id: string
   title: string
-  linkUrl: string
+  linkUrl: string | null
   icon: string | null
   order: number
   isActive: boolean

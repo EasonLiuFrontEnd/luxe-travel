@@ -129,8 +129,12 @@ const DropdownMenu = ({
 
   const renderDesktopMenu = () => (
     <div
-      className='absolute left-0 bottom-[8px] translate-y-full bg-white z-50'
-      onMouseLeave={() => {
+      className='dropdown-menu absolute left-0 bottom-[8px] translate-y-full bg-white z-50'
+      onMouseLeave={(e) => {
+        const relatedTarget = e.relatedTarget as HTMLElement
+        if (relatedTarget && relatedTarget.closest('[data-navigation-item]')) {
+          return
+        }
         setActiveSubmenu(null)
         onClose()
       }}
