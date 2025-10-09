@@ -27,9 +27,10 @@ export const useBookShelfScroll = () => {
     if (!trackRef.current) return
 
     const clampedProgress = Math.max(0, Math.min(1, progress))
-    const translateX = -clampedProgress * maxScrollX.current
-
-    trackRef.current.style.transform = `translateX(${translateX}px)`
+    
+    trackRef.current.style.setProperty('--scroll-progress', clampedProgress.toString())
+    trackRef.current.style.setProperty('--max-scroll-x', `${maxScrollX.current}px`)
+    trackRef.current.style.transform = `translateX(calc(-1 * var(--scroll-progress) * var(--max-scroll-x)))`
     setScrollProgress(clampedProgress)
   }, [])
 
