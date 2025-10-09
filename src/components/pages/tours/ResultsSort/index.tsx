@@ -62,10 +62,6 @@ const ResultsSort = ({
     return 'none'
   }
 
-  if (!hasSearched) {
-    return null
-  }
-
   return (
     <section
       className={cn(
@@ -76,9 +72,20 @@ const ResultsSort = ({
       <div className='max-w-[1824px] mx-auto'>
         <div className='flex flex-col xl:flex-row xl:justify-between gap-[10px]'>
           <div className='flex gap-1 font-genseki-gothic text-figma-primary-500 text-xl'>
-            <span className='text-nowrap'>搜尋出</span>
-            <span className='text-nowrap'>{resultCount}</span>
-            <span className='text-nowrap'>筆行程</span>
+            {hasSearched ? (
+              <>
+                <span className='text-nowrap'>搜尋出</span>
+                <span className='text-nowrap'>{resultCount}</span>
+                <span className='text-nowrap'>筆行程</span>
+              </>
+            )
+              : (
+                <>
+                  <span className='text-nowrap'>共</span>
+                  <span className='text-nowrap'>{resultCount}</span>
+                  <span className='text-nowrap'>筆行程</span>
+                </>
+              )}
           </div>
 
           <div className='flex flex-col xl:flex-row gap-5'>
