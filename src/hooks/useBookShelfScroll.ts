@@ -63,26 +63,26 @@ export const useBookShelfScroll = () => {
   }, [])
 
   useIntersectionObserver(titleElement, {
-      threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
-      rootMargin: '50px 0px 0px 0px',
-      onIntersect: (entry) => {
-        if (isMobile) return
+    threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+    rootMargin: '50px 0px 0px 0px',
+    onIntersect: (entry) => {
+      if (isMobile) return
 
-        const isTitleAtTop = entry.boundingClientRect.top <= 50
+      const isTitleAtTop = entry.boundingClientRect.top <= 50
 
-        if (isTitleAtTop && !isFixed) {
-          setIsFixed(true)
-          maxScrollX.current = calculateMaxScroll()
-        }
-      },
-      onLeave: () => {
-        if (isMobile) return
+      if (isTitleAtTop && !isFixed) {
+        setIsFixed(true)
+        maxScrollX.current = calculateMaxScroll()
+      }
+    },
+    onLeave: () => {
+      if (isMobile) return
 
-        if (isFixed && scrollProgress === 0) {
-          setIsFixed(false)
-        }
-      },
-    })
+      if (isFixed && scrollProgress === 0) {
+        setIsFixed(false)
+      }
+    },
+  })
 
   useIntersectionObserver(bookShelfRef, {
     threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],

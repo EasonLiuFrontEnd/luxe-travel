@@ -2,7 +2,6 @@
 
 import { useState, useCallback } from 'react'
 import { cn } from '@/lib/utils'
-import type { TBaseComponent } from '@/types'
 import { useClickOutside } from '@/hooks/useClickOutside'
 import CloseIcon from '@/components/shared/icons/common/CloseIcon'
 import SortIcon from '@/components/shared/icons/common/SortIcon'
@@ -15,7 +14,8 @@ export type TSelectedFilter = {
 
 export type TSelectedFilters = TSelectedFilter[]
 
-type TResultsSortProps = TBaseComponent & {
+type TResultsSortProps = {
+  className?: string
   resultCount?: number
   selectedFilters?: TSelectedFilters
   onRemoveFilter?: (filterId: string) => void

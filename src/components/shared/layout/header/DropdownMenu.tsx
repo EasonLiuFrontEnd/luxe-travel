@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import type { TBaseComponent } from '@/types'
 import DropdownCloseIcon from '../../icons/header/DropdownCloseIcon'
 
 export type TSubmenuItem = {
@@ -17,7 +16,8 @@ export type TDropdownItem = {
   submenuItems?: TSubmenuItem[]
 }
 
-export type TDropdownMenu = TBaseComponent & {
+export type TDropdownMenu = {
+  className?: string
   isVisible: boolean
   items: TDropdownItem[]
   onClose: () => void

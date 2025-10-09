@@ -5,7 +5,6 @@ import SearchIcon from '@/components/shared/icons/header/SearchIcon'
 import DropdownArrowIcon from '@/components/shared/icons/common/DropdownArrowIcon'
 import ClearIcon from '@/components/shared/icons/common/ClearIcon'
 import CheckIcon from '@/components/shared/icons/common/CheckIcon'
-import type { TBaseComponent } from '@/types'
 import { useClickOutside } from '@/hooks/useClickOutside'
 import styles from './styles.module.css'
 
@@ -14,7 +13,8 @@ type TRegionData = {
   countries: Array<{ code: string; nameZh: string }>
 }
 
-type TDestinationFilterProps = TBaseComponent & {
+type TDestinationFilterProps = {
+  className?: string
   tourType?: 'group-tours' | 'free-tours' | 'rcar-tours'
   showBudgetFilter?: boolean
   showDaysFilter?: boolean

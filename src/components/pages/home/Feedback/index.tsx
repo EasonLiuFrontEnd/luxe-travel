@@ -44,7 +44,7 @@ const Feedback = () => {
     return (effectiveData || []).map((feedback) => ({
       id: feedback.id,
       mode: feedback.mode,
-      nickname: feedback.mode === 'REAL' ? feedback.nickname : undefined,
+      nickname: feedback.mode === 'REAL' ? feedback.nickname || undefined : undefined,
       content: feedback.content,
       linkUrl:
         feedback.mode !== 'REAL' ? feedback.linkUrl || undefined : undefined,

@@ -4,7 +4,6 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import type { TBaseComponent } from '@/types'
 import styles from './styles.module.css'
 
 export type TSlideContent = {
@@ -14,7 +13,8 @@ export type TSlideContent = {
   description: string
 }
 
-type TTourBannerProps = TBaseComponent & {
+type TTourBannerProps = {
+  className?: string
   tourType: 'free-tours' | 'group-tours' | 'rcar-tours'
   slideContent: TSlideContent[]
   tours?: Array<{

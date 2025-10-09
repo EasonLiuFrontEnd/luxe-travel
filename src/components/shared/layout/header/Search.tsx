@@ -5,10 +5,9 @@ import SearchIcon from '@/components/shared/icons/header/SearchIcon'
 import CloseIcon from '@/components/shared/icons/header/CloseIcon'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useScrollLock } from '@/hooks/useScrollLock'
-import type { TBaseComponent } from '@/types'
 import { cn } from '@/lib/utils'
 
-export type TSearch = TBaseComponent & {
+export type TSearch = {
   isOpen: boolean
   onClose: () => void
 }

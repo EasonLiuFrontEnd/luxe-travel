@@ -2,9 +2,8 @@ import { useState, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { useMenu } from '@/api/home/useMenu'
 import { transformMenuData } from './utils'
-import type { TBaseComponent } from '@/types'
-
-type TNavigation = TBaseComponent & {
+type TNavigation = {
+  className?: string
   isMenuOpen?: boolean
   onMenuToggle?: () => void
   logoProgress?: number
@@ -101,7 +100,7 @@ const Navigation = ({
               setActiveDropdown(null)
             }}
           >
-            <button 
+            <button
               className='font-noto-serif-body-l-semibold text-figma-primary-950 hover:text-figma-secondary-950 cursor-pointer py-7 relative focus-visible:outline-none'
               onClick={() => {
                 if (item.href && item.href !== '#') {

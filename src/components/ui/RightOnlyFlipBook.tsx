@@ -5,7 +5,7 @@ import React, { useRef } from 'react'
 import { Page } from '@/components/ui/Page'
 import { PageFlip } from '@/components/ui/PageFlip'
 
-import type { TPageFlipRef, TBaseComponent } from '@/types'
+import type { TPageFlipRef } from '@/types'
 
 export type TFlipBookPage = {
   id: string
@@ -15,7 +15,8 @@ export type TFlipBookPage = {
   content: React.ReactNode
 }
 
-export type TRightOnlyFlipBookProps = TBaseComponent & {
+export type TRightOnlyFlipBookProps = {
+  className?: string
   pages: TFlipBookPage[]
   width?: number
   height?: number

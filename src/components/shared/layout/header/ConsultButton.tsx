@@ -1,6 +1,10 @@
 import Link from 'next/link'
 
-const ConsultButton = ({ className = '' }) => {
+export type TConsultButton = {
+  className?: string
+}
+
+const ConsultButton = ({ className = '' }: TConsultButton) => {
   return (
     <div
       className={`absolute top-full left-0 right-0 bg-transparent ${className}`}
