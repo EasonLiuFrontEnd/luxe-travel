@@ -6,13 +6,13 @@ import { useScrollContext } from '@/context/ScrollContext'
 import { useBanners } from '@/api/home/useBanners'
 import { cn } from '@/lib/utils'
 import { APP_CONFIG } from '@/lib/config'
-import type { TBaseComponent } from '@/types'
 import AirplaneIcon from '@/components/shared/icons/banner/AirplaneIcon'
 import BannerCarousel from './BannerCarousel'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 
-export type TBannerComponent = TBaseComponent & {
+export type TBannerComponent = {
   logoProgress?: number
+  className?: string
 }
 
 const GooeyFilters = () => (
@@ -95,9 +95,9 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
     if (isStickyEnded) {
       return '-5px'
     }
-    
+
     return `calc(223px - var(--logo-progress) * 147px)`
-  }, [logoProgress, isStickyEnded, isMobile])
+  }, [isStickyEnded, isMobile])
 
   useEffect(() => {
     const checkStickyEnd = () => {
@@ -216,10 +216,12 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
             'xl:top-0 xl:-mt-[140px]',
             'transition-all duration-250 ease-in-out',
           )}
-          style={{
-            '--logo-progress': logoProgress,
-            transform: `translateY(${dynamicTranslateY})`,
-          } as React.CSSProperties}
+          style={
+            {
+              '--logo-progress': logoProgress,
+              transform: `translateY(${dynamicTranslateY})`,
+            } as React.CSSProperties
+          }
         >
           <div className='gooey-text-container relative'>
             <div

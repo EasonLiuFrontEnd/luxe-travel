@@ -17,11 +17,13 @@ type TIntersectionObserverResult = {
 
 export const useIntersectionObserver = <T extends HTMLElement = HTMLElement>(
   ref: RefObject<T | null>,
-  options: TIntersectionObserverOptions = {}
+  options: TIntersectionObserverOptions = {},
 ): TIntersectionObserverResult => {
   const [isIntersecting, setIsIntersecting] = useState(false)
   const [intersectionRatio, setIntersectionRatio] = useState(0)
-  const [boundingClientRect, setBoundingClientRect] = useState<DOMRect | null>(null)
+  const [boundingClientRect, setBoundingClientRect] = useState<DOMRect | null>(
+    null,
+  )
 
   useEffect(() => {
     if (!ref.current) return
@@ -43,19 +45,28 @@ export const useIntersectionObserver = <T extends HTMLElement = HTMLElement>(
         }
       },
       {
-        threshold: options.threshold || [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
-        rootMargin: options.rootMargin || '0px'
-      }
+        threshold: options.threshold || [
+          0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,
+        ],
+        rootMargin: options.rootMargin || '0px',
+      },
     )
 
     observer.observe(ref.current)
 
     return () => observer.disconnect()
-  }, [ref, options.threshold, options.rootMargin, options.onIntersect, options.onLeave])
+  }, [
+    ref,
+    options.threshold,
+    options.rootMargin,
+    options.onIntersect,
+    options.onLeave,
+    options,
+  ])
 
   return {
     isIntersecting,
     intersectionRatio,
-    boundingClientRect
+    boundingClientRect,
   }
 }

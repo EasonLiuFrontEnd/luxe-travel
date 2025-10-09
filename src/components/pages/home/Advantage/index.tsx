@@ -296,10 +296,10 @@ const Advantage = ({ className }: TAdvantageProps) => {
           }`}
           style={
             !isMobile
-              ? {
+              ? ({
                   '--translate-x': `${translateX}px`,
                   transform: `translateX(var(--translate-x))`,
-                } as React.CSSProperties
+                } as React.CSSProperties)
               : {
                   cursor: isDragState ? 'grabbing' : 'grab',
                 }

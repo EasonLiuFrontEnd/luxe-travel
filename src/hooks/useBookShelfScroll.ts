@@ -27,9 +27,15 @@ export const useBookShelfScroll = () => {
     if (!trackRef.current) return
 
     const clampedProgress = Math.max(0, Math.min(1, progress))
-    
-    trackRef.current.style.setProperty('--scroll-progress', clampedProgress.toString())
-    trackRef.current.style.setProperty('--max-scroll-x', `${maxScrollX.current}px`)
+
+    trackRef.current.style.setProperty(
+      '--scroll-progress',
+      clampedProgress.toString(),
+    )
+    trackRef.current.style.setProperty(
+      '--max-scroll-x',
+      `${maxScrollX.current}px`,
+    )
     trackRef.current.style.transform = `translateX(calc(-1 * var(--scroll-progress) * var(--max-scroll-x)))`
     setScrollProgress(clampedProgress)
   }, [])
@@ -48,61 +54,58 @@ export const useBookShelfScroll = () => {
   }, [])
 
   const titleElement = useRef<HTMLElement | null>(null)
-  
+
   useEffect(() => {
-    const title = document.querySelector('[data-bookshelf-title="true"]') as HTMLElement
+    const title = document.querySelector(
+      '[data-bookshelf-title="true"]',
+    ) as HTMLElement
     titleElement.current = title
   }, [])
 
-  const { isIntersecting: isTitleIntersecting, boundingClientRect: titleRect } = useIntersectionObserver(
-    titleElement,
-    {
+  useIntersectionObserver(titleElement, {
       threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
       rootMargin: '50px 0px 0px 0px',
       onIntersect: (entry) => {
         if (isMobile) return
-        
+
         const isTitleAtTop = entry.boundingClientRect.top <= 50
-        
+
         if (isTitleAtTop && !isFixed) {
           setIsFixed(true)
           maxScrollX.current = calculateMaxScroll()
         }
       },
-      onLeave: (entry) => {
+      onLeave: () => {
         if (isMobile) return
-        
+
         if (isFixed && scrollProgress === 0) {
           setIsFixed(false)
-        }
-      }
-    }
-  )
-
-  const { isIntersecting: isBottomIntersecting, boundingClientRect: bottomRect } = useIntersectionObserver(
-    bookShelfRef,
-    {
-      threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
-      rootMargin: '0px 0px 50px 0px',
-      onIntersect: (entry) => {
-        if (isMobile || titleElement.current) return
-        
-        const isBottomAtViewport = Math.abs(entry.boundingClientRect.bottom - window.innerHeight) <= 50
-        
-        if (isBottomAtViewport && !isFixed) {
-          setIsFixed(true)
-          maxScrollX.current = calculateMaxScroll()
         }
       },
-      onLeave: (entry) => {
-        if (isMobile || titleElement.current) return
-        
-        if (isFixed && scrollProgress === 0) {
-          setIsFixed(false)
-        }
+    })
+
+  useIntersectionObserver(bookShelfRef, {
+    threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+    rootMargin: '0px 0px 50px 0px',
+    onIntersect: (entry) => {
+      if (isMobile || titleElement.current) return
+
+      const isBottomAtViewport =
+        Math.abs(entry.boundingClientRect.bottom - window.innerHeight) <= 50
+
+      if (isBottomAtViewport && !isFixed) {
+        setIsFixed(true)
+        maxScrollX.current = calculateMaxScroll()
       }
-    }
-  )
+    },
+    onLeave: () => {
+      if (isMobile || titleElement.current) return
+
+      if (isFixed && scrollProgress === 0) {
+        setIsFixed(false)
+      }
+    },
+  })
 
   useEffect(() => {
     const wheelHandler = (event: WheelEvent) => {

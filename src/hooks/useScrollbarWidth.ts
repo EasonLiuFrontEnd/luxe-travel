@@ -44,7 +44,7 @@ export const useScrollbarWidth = (): ScrollbarDimensions => {
     }
 
     window.addEventListener('resize', handleResize, { passive: true })
-    
+
     return () => {
       window.removeEventListener('resize', handleResize)
     }

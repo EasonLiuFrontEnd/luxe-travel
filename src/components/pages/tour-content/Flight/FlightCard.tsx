@@ -1,10 +1,10 @@
 import Image from 'next/image'
-import type { TBaseComponent } from '@/types'
 import type { TFlight } from '../config'
 import styles from './style.module.css'
 
-type TFlightCardProps = TBaseComponent & {
+type TFlightCardProps = {
   flight: TFlight
+  className?: string
 }
 
 const FlightCard = ({ flight, className = '' }: TFlightCardProps) => {

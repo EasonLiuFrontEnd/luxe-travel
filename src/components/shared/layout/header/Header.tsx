@@ -4,12 +4,11 @@ import { useState } from 'react'
 import Logo from './Logo'
 import Navigation from './Navigation'
 import ConsultButton from '@/components/shared/layout/header/ConsultButton'
-import type { TBaseComponent } from '@/types'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useScroll } from '@/hooks/useScroll'
 import { useScrollbarWidth } from '@/hooks/useScrollbarWidth'
 
-export type THeader = TBaseComponent & {
+export type THeader = {
   isHomePage: boolean
   logoScale?: number
   logoProgress?: number
@@ -17,6 +16,7 @@ export type THeader = TBaseComponent & {
   isConsultButtonVisible?: boolean
   headerBehavior?: 'fixed' | 'sticky' | 'static'
   hasTransparentHeader?: boolean
+  className?: string
 }
 
 const Header = ({
@@ -35,12 +35,14 @@ const Header = ({
 
   const baseClasses =
     'z-50 w-full flex items-center justify-between p-4 xl:py-0'
-  
-  const headerStyle = isHomePage ? {
-    width: `${contentWidth}px`,
-    maxWidth: `${contentWidth}px`,
-    left: '0',
-  } : {}
+
+  const headerStyle = isHomePage
+    ? {
+        width: `${contentWidth}px`,
+        maxWidth: `${contentWidth}px`,
+        left: '0',
+      }
+    : {}
   const positionClass =
     headerBehavior === 'fixed'
       ? 'fixed'

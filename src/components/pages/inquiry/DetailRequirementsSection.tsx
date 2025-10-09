@@ -123,10 +123,11 @@ export const DetailRequirementsSection = ({
                   >
                     <div className='flex items-center justify-between px-0 py-3 border-b border-figma-primary-950-70 w-full hover:border-figma-primary-950 transition-colors duration-200'>
                       <span
-                        className={`font-genseki-body-m-regular text-[16px] leading-[1.2] ${field.value
+                        className={`font-genseki-body-m-regular text-[16px] leading-[1.2] ${
+                          field.value
                             ? 'text-figma-primary-950'
                             : 'text-figma-primary-300'
-                          }`}
+                        }`}
                       >
                         {field.value
                           ? formatDateForDisplay(field.value)
@@ -221,7 +222,9 @@ export const DetailRequirementsSection = ({
         info@luxetravel.com.tw
       </p>
       <div className='absolute bottom-0 right-0'>
-        <div className={`bg-figma-secondary-100 flex gap-4 items-center justify-center px-4 py-3 xl:px-7 xl:py-4 rounded-tl-[16px] rounded-br-[16px] ${styles.descriptionContainer}`}>
+        <div
+          className={`bg-figma-secondary-100 flex gap-4 items-center justify-center px-4 py-3 xl:px-7 xl:py-4 rounded-tl-[16px] rounded-br-[16px] ${styles.descriptionContainer}`}
+        >
           <button
             type='submit'
             disabled={isLoading}

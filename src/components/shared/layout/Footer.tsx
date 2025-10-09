@@ -14,9 +14,9 @@ const Footer = ({ scrollToTopBg = 'bg-figma-secondary-100' }: TFooterProps) => {
   return (
     <footer className='relative bg-figma-primary-950 text-white py-[80px] px-[12px] xl:pt-[60px] xl:pb-[200px] xl:px-[60px] space-y-10 bg-[url("/shared/icons/background-books.svg")] bg-repeat'>
       <div className='absolute top-0 right-0'>
-      <button
-        onClick={scrollToTop}
-        className={`
+        <button
+          onClick={scrollToTop}
+          className={`
           flex items-center gap-[16px]
           py-[8px] px-[12px] xl:py-[12px] xl:px-[24px]
           font-genseki-footer-medium tracking-[0.5px]
@@ -25,29 +25,29 @@ const Footer = ({ scrollToTopBg = 'bg-figma-secondary-100' }: TFooterProps) => {
           cursor-pointer
           ${styles.titleContainer}
         `}
-      >
-        返回頂部
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          width='24'
-          height='25'
-          viewBox='0 0 24 25'
-          fill='none'
         >
-          <path
-            d='M5 12.666L12 5.66602L19 12.666'
-            stroke='#333333'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-          />
-          <path
-            d='M12 19.666V5.66602'
-            stroke='#333333'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-          />
+          返回頂部
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='24'
+            height='25'
+            viewBox='0 0 24 25'
+            fill='none'
+          >
+            <path
+              d='M5 12.666L12 5.66602L19 12.666'
+              stroke='#333333'
+              strokeWidth='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+            />
+            <path
+              d='M12 19.666V5.66602'
+              stroke='#333333'
+              strokeWidth='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+            />
           </svg>
         </button>
       </div>

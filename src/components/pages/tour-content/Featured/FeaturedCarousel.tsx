@@ -9,11 +9,11 @@ import {
   type CarouselApi,
 } from '@/components/ui/Carousel'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import type { TBaseComponent } from '@/types'
 import Image from 'next/image'
 
-export type TFeaturedCarousel = TBaseComponent & {
+export type TFeaturedCarousel = {
   images?: string[]
+  className?: string
 }
 
 const FeaturedCarousel = ({
