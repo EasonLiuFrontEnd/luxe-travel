@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react'
 
-export type TFeedbackMode = 'REAL' | 'VIRTUAL'
+export type TFeedbackMode = 'REAL' | 'VIRTUAL' | 'MARKETING'
 
 type TFeedbackCardItemProps = {
   id: string

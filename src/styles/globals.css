@@ -208,6 +208,12 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  body.scroll-locked {
+    height: 100vh;
+    overflow: hidden;
+    padding-right: var(--scrollbar-width, 0px);
+  }
 }
 
 :root {

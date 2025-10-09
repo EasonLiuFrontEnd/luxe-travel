@@ -25,7 +25,7 @@ export const PAGE_CONFIGS: Record<string, TPageConfig> = {
   '/': {
     type: 'home',
     hasScrollAnimation: true,
-    hasTransparentHeader: true,
+    hasTransparentHeader: false,
     showConsultButton: true,
     headerBehavior: 'fixed',
     footerStyle: 'default',

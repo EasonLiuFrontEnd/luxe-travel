@@ -5,6 +5,7 @@ import AdvantageCard from './AdvantageCard'
 import styles from './styles.module.css'
 import { transformAdvantageData } from './config'
 import { useAdvantages } from '@/api/home/useAdvantages'
+import { useScrollLock } from '@/hooks/useScrollLock'
 import '@/styles/components.css'
 
 type TAdvantageProps = {
@@ -35,6 +36,8 @@ const Advantage = ({ className }: TAdvantageProps) => {
     isLoading: isAdvantagesLoading,
     error: advantagesError,
   } = advantagesQuery
+
+  useScrollLock(isInDetectionZone && !isMobile)
 
   const displayData = useMemo(() => {
     if (advantagesError) {
@@ -84,9 +87,6 @@ const Advantage = ({ className }: TAdvantageProps) => {
   const handleDesktopScroll = useCallback(
     (event: WheelEvent) => {
       if (isMobile || !isInDetectionZone) return
-
-      event.preventDefault()
-      event.stopPropagation()
 
       const delta = event.deltaY
       const currentDirection = delta > 0 ? 'down' : 'up'
@@ -254,8 +254,8 @@ const Advantage = ({ className }: TAdvantageProps) => {
       checkDetectionZone()
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: false })
-    window.addEventListener('wheel', handleDesktopScroll, { passive: false })
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('wheel', handleDesktopScroll, { passive: true })
 
     return () => {
       window.removeEventListener('scroll', handleScroll)
@@ -296,9 +296,10 @@ const Advantage = ({ className }: TAdvantageProps) => {
           }`}
           style={
             !isMobile
-              ? {
-                  transform: `translateX(${translateX}px)`,
-                }
+              ? ({
+                  '--translate-x': `${translateX}px`,
+                  transform: `translateX(var(--translate-x))`,
+                } as React.CSSProperties)
               : {
                   cursor: isDragState ? 'grabbing' : 'grab',
                 }
@@ -306,22 +307,11 @@ const Advantage = ({ className }: TAdvantageProps) => {
           onMouseDown={isMobile ? handleMouseDown : undefined}
         >
           {displayData.map((card, index) => {
-            const getCardTransform = () => {
-              return `perspective(0px) translate3d(0px, 0px, 0px) rotate(0deg) rotateY(0deg)`
-            }
-
             return (
               <div
                 key={card.id}
                 data-card-index={index}
                 className={`${styles.cardContainer} flex-shrink-0 ${styles.cardWidth}`}
-                style={
-                  !isMobile
-                    ? {
-                        transform: getCardTransform(),
-                      }
-                    : {}
-                }
               >
                 <AdvantageCard card={card} />
               </div>

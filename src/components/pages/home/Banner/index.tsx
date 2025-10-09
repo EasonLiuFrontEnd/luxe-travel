@@ -6,13 +6,13 @@ import { useScrollContext } from '@/context/ScrollContext'
 import { useBanners } from '@/api/home/useBanners'
 import { cn } from '@/lib/utils'
 import { APP_CONFIG } from '@/lib/config'
-import type { TBaseComponent } from '@/types'
 import AirplaneIcon from '@/components/shared/icons/banner/AirplaneIcon'
 import BannerCarousel from './BannerCarousel'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 
-export type TBannerComponent = TBaseComponent & {
+export type TBannerComponent = {
   logoProgress?: number
+  className?: string
 }
 
 const GooeyFilters = () => (
@@ -95,13 +95,9 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
     if (isStickyEnded) {
       return '-5px'
     }
-    const startY = 223
-    const endY = 76
-    const range = startY - endY
-    const calculatedY = startY - logoProgress * range
 
-    return `${calculatedY}px`
-  }, [logoProgress, isStickyEnded, isMobile])
+    return `calc(223px - var(--logo-progress) * 147px)`
+  }, [isStickyEnded, isMobile])
 
   useEffect(() => {
     const checkStickyEnd = () => {
@@ -220,9 +216,12 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
             'xl:top-0 xl:-mt-[140px]',
             'transition-all duration-250 ease-in-out',
           )}
-          style={{
-            transform: `translateY(${dynamicTranslateY})`,
-          }}
+          style={
+            {
+              '--logo-progress': logoProgress,
+              transform: `translateY(${dynamicTranslateY})`,
+            } as React.CSSProperties
+          }
         >
           <div className='gooey-text-container relative'>
             <div
@@ -246,8 +245,8 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
                       'xl:self-end max-xl:self-start',
                       'text-figma-neutral-950 px-[14px]',
                       "before:content-[''] before:absolute before:z-[-1]",
-                      'before:left-[0] before:right-[-8px] before:top-[-18px]',
-                      'before:h-[3em] before:translate-y-[-50%]',
+                      'before:left-0 before:right-0 before:right-[-8px] before:top-1/2 xl:before:top-[-18px]',
+                      'before:h-[2em] xl:before:h-[3em] before:translate-y-[-50%]',
                       'before:bg-figma-neutral-50',
                       'xl:before:rounded-bl-[50px] max-xl:before:rounded-r-[50px]',
                     )}

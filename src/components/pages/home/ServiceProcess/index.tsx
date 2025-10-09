@@ -15,7 +15,7 @@ const ServiceStep = ({ step }: { step: TServiceStep }) => {
   return (
     <div
       className={cn(
-        'flex flex-col items-center justify-between p-7 w-full xl:min-h-auto xl:hover:min-w-[400px] xl:hover:h-full xl:hover:max-w-[25%] xl:hover:max-h-[526px] transition-all duration-300 ease-out group',
+        'flex flex-col items-center justify-between p-7 w-full xl:min-h-auto xl:hover:min-w-[400px] xl:hover:h-full xl:hover:max-w-[25%] xl:hover:max-h-[526px] group',
         getStepStyles(number),
         styles.books,
       )}

@@ -1,8 +1,6 @@
 'use client'
 
-import type { TBaseComponent } from '@/types'
-
-type TEuropeMapProps = TBaseComponent & {
+type TEuropeMapProps = {
   selectedRegion: string | null
   onRegionClick: (
     regionId: string | null,

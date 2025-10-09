@@ -3,11 +3,11 @@
 import React from 'react'
 import TourCard from './TourCard'
 import GroupTourCard from './GroupTourCard'
-import type { TBaseComponent } from '../../../types'
 import type { TTourData, TTourType } from './config'
 import { useRouter } from 'next/navigation'
 
-type TToursProps = TBaseComponent & {
+type TToursProps = {
+  className?: string
   tours?: TTourData[]
   tourType: TTourType
 }

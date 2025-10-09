@@ -9,11 +9,11 @@ import {
   type CarouselApi,
 } from '@/components/ui/Carousel'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import type { TBaseComponent } from '@/types'
 
-export type TBannerCarousel = TBaseComponent & {
+export type TBannerCarousel = {
   images?: string[]
   autoPlayInterval?: number
+  className?: string
 }
 import styles from './styles.module.css'
 import Image from 'next/image'
