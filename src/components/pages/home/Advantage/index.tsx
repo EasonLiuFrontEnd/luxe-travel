@@ -297,8 +297,9 @@ const Advantage = ({ className }: TAdvantageProps) => {
           style={
             !isMobile
               ? {
-                  transform: `translateX(${translateX}px)`,
-                }
+                  '--translate-x': `${translateX}px`,
+                  transform: `translateX(var(--translate-x))`,
+                } as React.CSSProperties
               : {
                   cursor: isDragState ? 'grabbing' : 'grab',
                 }
@@ -306,22 +307,11 @@ const Advantage = ({ className }: TAdvantageProps) => {
           onMouseDown={isMobile ? handleMouseDown : undefined}
         >
           {displayData.map((card, index) => {
-            const getCardTransform = () => {
-              return `perspective(0px) translate3d(0px, 0px, 0px) rotate(0deg) rotateY(0deg)`
-            }
-
             return (
               <div
                 key={card.id}
                 data-card-index={index}
                 className={`${styles.cardContainer} flex-shrink-0 ${styles.cardWidth}`}
-                style={
-                  !isMobile
-                    ? {
-                        transform: getCardTransform(),
-                      }
-                    : {}
-                }
               >
                 <AdvantageCard card={card} />
               </div>

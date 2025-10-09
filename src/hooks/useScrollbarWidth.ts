@@ -8,10 +8,6 @@ interface ScrollbarDimensions {
   contentWidth: number
 }
 
-/**
- * Hook for calculating scrollbar width
- * Returns scrollbar width, viewport width, and content width
- */
 export const useScrollbarWidth = (): ScrollbarDimensions => {
   const [dimensions, setDimensions] = useState<ScrollbarDimensions>({
     scrollbarWidth: 0,

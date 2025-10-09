@@ -96,7 +96,6 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
       return '-5px'
     }
     
-    // 使用 CSS calc 來計算線性插值
     return `calc(223px - var(--logo-progress) * 147px)`
   }, [logoProgress, isStickyEnded, isMobile])
 
