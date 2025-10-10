@@ -32,6 +32,14 @@ export type TCountriesResponse = {
   data: TRegionData[]
 }
 
+export type TFeedback = {
+  id: string
+  title: string
+  nickname: string
+  imageUrl: string
+  linkUrl: string
+}
+
 export type TTour = {
   id: string
   productId: string
@@ -112,7 +120,7 @@ export type TProduct = {
   createdAt: string
   updatedAt: string
   tour: TTour[]
-  feedback: string | null
+  feedback: TFeedback | null
   flights: TFlight[]
   highlights: THighlight[]
 }
@@ -191,7 +199,14 @@ export const productsSearchApiMock: TProductSearchResponse = {
       categoryId: '68b0375597cf77dce8590407',
       subCategoryId: '68d3abd7d9e9051454d7f91a',
       isFeatured: false,
-      feedback: null,
+      feedback: {
+        id: '68dc89f1e3413e4013022ed9',
+        title: '奧匈捷德+杜拜 30日蜜月',
+        nickname: 'Winny 小夫妻',
+        imageUrl:
+          'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/uTzfM3Y-kRNA9IOp2tAx9zwbzqg6j9C0AVDMDp.webp',
+        linkUrl: 'https://verywed.com/forum/expexch/3267262.html',
+      },
       createdAt: '2025-09-30T06:34:15.998Z',
       updatedAt: '2025-10-01T04:15:27.824Z',
       tour: [],

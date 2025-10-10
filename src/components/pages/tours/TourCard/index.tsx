@@ -7,6 +7,7 @@ import { RightOnlyFlipBook } from '@/components/ui/RightOnlyFlipBook'
 import type { TFlipBookPage } from '../../../../types'
 import type { TTravelerReview } from '../types'
 import styles from './style.module.css'
+import IconCta from '@/components/shared/icons/IconCta'
 
 export type TTourCardProps = {
   title: string
@@ -92,7 +93,7 @@ const TourCard = ({
   return (
     <div
       className={cn(
-        'group relative w-full max-w-[680px] xl:max-w-[900px]',
+        'group/tour-card relative w-full xl:max-w-[896px]',
         styles.foldedCornerHolder,
         className,
       )}
@@ -111,7 +112,7 @@ const TourCard = ({
 
         <div className='relative flex flex-1 min-w-0'>
           <div
-            className={`hidden xl:block absolute ${colorTheme.bgColor} bottom-0 right-0 transition-all duration-300 group-hover:-translate-x-[40px] group-hover:-translate-y-[36px] h-full w-full`}
+            className={`hidden xl:block absolute ${colorTheme.bgColor} bottom-0 right-0 transition-all duration-300 group-hover/tour-card:-translate-x-[40px] group-hover/tour-card:-translate-y-[36px] h-full w-full`}
           />
 
           <div className='xl:bg-white flex flex-col justify-between w-full min-w-0 relative xl:gap-7 xl:pl-8 xl:pr-5 xl:py-5 transition-all duration-300'>
@@ -150,17 +151,15 @@ const TourCard = ({
                     className={`xl:hidden absolute z-[-1] ${colorTheme.bgColor} bottom-0 right-0 transition-all duration-300 -translate-x-[16px] -translate-y-[22px] h-full w-full`}
                   />
 
-                  <div className='flex flex-col xl:flex-row xl:items-start justify-between gap-4 xl:gap-3 p-4 xl:p-0 w-full bg-figma-primary-0 xl:bg-transparent'>
+                  <div className='xl:relative flex flex-col xl:flex-row xl:items-start justify-between gap-4 xl:gap-3 pt-4 px-4 pb-3 xl:p-0 w-full bg-figma-primary-0 xl:bg-transparent'>
                     <div className='flex flex-col gap-1 text-figma-primary-950 flex-1 min-w-0'>
                       <div className='font-genseki-body-s-regular xl:font-genseki-body-m-regular max-h-[21px] xl:max-h-[24px] overflow-hidden truncate'>
                         {subtitle}
                       </div>
-                      <div className='font-noto-serif-h5-bold truncate'>
-                        {title}
-                      </div>
+                      <div className='font-noto-serif-h5-bold'>{title}</div>
                     </div>
                     <div
-                      className={`flex items-end gap-1 ${colorTheme.textColor} shrink-0`}
+                      className={`flex gap-1 items-end justify-end ${colorTheme.textColor} shrink-0 xl:absolute xl:top-[-8px] xl:right-0`}
                     >
                       <div className='whitespace-nowrap font-noto-serif-body-l-semibold xl:font-noto-serif-h5-bold'>
                         ＄{price.toLocaleString()}
@@ -173,7 +172,7 @@ const TourCard = ({
                 </div>
               </div>
 
-              <div className='flex flex-col gap-3 p-4 xl:p-0 bg-figma-primary-0 xl:bg-transparent'>
+              <div className='flex flex-col gap-3 pt-4 px-4 pb-3 xl:p-0 bg-figma-primary-0 xl:bg-transparent'>
                 <div className='flex flex-wrap gap-3'>
                   {tags.map((tag, index) => (
                     <div
@@ -191,36 +190,28 @@ const TourCard = ({
               </div>
             </div>
 
-            <div className='bg-figma-primary-0 flex gap-4 items-start w-full relative p-4 xl:p-0'>
+            <div className='bg-figma-primary-0 flex gap-3 xl:gap-5 items-start w-full relative p-4 xl:p-0'>
               {travelerReview && (
                 <button
                   onClick={onReviewClick}
-                  className='bg-white rounded-md shadow-[0px_1px_2px_0px_rgba(0,0,0,0.3),0px_1px_3px_1px_rgba(0,0,0,0.15)] px-2.5 py-1 pb-2 flex gap-1 items-end shrink-0 hover:shadow-lg transition-shadow'
+                  className='bg-white rounded-md shadow-[0px_1px_2px_0px_rgba(0,0,0,0.3),0px_1px_3px_1px_rgba(0,0,0,0.15)] px-2.5 pt-1 pb-3 flex gap-2 items-end shrink-0 cursor-pointer group'
                 >
-                  <div className='flex flex-col gap-1 items-start'>
-                    <div className='flex gap-0.5 items-center'>
-                      <svg
-                        width='18'
-                        height='18'
-                        viewBox='0 0 18 18'
-                        fill='none'
-                      >
-                        <path
-                          d='M9 2.25L7.5 6.75L3 8.25L7.5 9.75L9 14.25L10.5 9.75L15 8.25L10.5 6.75L9 2.25Z'
-                          fill='#8BC3DE'
-                        />
-                        <path
-                          d='M3.75 11.25L2.625 13.875L0 15L2.625 16.125L3.75 18.75L4.875 16.125L7.5 15L4.875 13.875L3.75 11.25Z'
-                          fill='#8BC3DE'
-                        />
-                      </svg>
+                  <div className='flex flex-col gap-2 items-start'>
+                    <div className='flex gap-1 items-center'>
+                      <Image
+                        src='/tours/deco.svg'
+                        alt='Deco'
+                        width={18}
+                        height={18}
+                        className='object-contain'
+                      />
                       <span
                         className={`font-genseki-body-s-bold ${colorTheme.textColor}`}
                       >
                         旅客迴響
                       </span>
                     </div>
-                    <div className='flex gap-1 items-center'>
+                    <div className='flex gap-2 items-center'>
                       <div className='w-5 h-5 rounded-xl overflow-hidden relative'>
                         <Image
                           src={travelerReview.avatarUrl}
@@ -234,41 +225,25 @@ const TourCard = ({
                       </span>
                     </div>
                   </div>
-                  <div className='w-12 h-6 relative flex items-center justify-center'>
-                    <svg width='48' height='24' viewBox='0 0 48 24' fill='none'>
-                      <path
-                        d='M12.3536 13.3536C12.5488 13.1583 12.5488 12.8417 12.3536 12.6464L9.17157 9.46447C8.97631 9.2692 8.65973 9.2692 8.46447 9.46447C8.2692 9.65973 8.2692 9.97631 8.46447 10.1716L11.2929 13L8.46447 15.8284C8.2692 16.0237 8.2692 16.3403 8.46447 16.5355C8.65973 16.7308 8.97631 16.7308 9.17157 16.5355L12.3536 13.3536ZM0 13.5H12V12.5H0V13.5Z'
-                        fill='#926D3C'
+                  <div className='w-[48px] h-[24px] flex items-center justify-end'>
+                    <div className='w-[24.68px] group-hover:w-[37.68px] transition-all duration-300 overflow-hidden'>
+                      <IconCta
+                        className={`text-[var(--color-figma-secondary-950)]`}
                       />
-                    </svg>
+                    </div>
                   </div>
                 </button>
               )}
 
               {note && (
-                <div className='flex gap-1 items-start flex-1'>
-                  <svg
-                    width='18'
-                    height='18'
-                    viewBox='0 0 18 18'
-                    fill='none'
-                    className='shrink-0 mt-0.5'
-                  >
-                    <circle
-                      cx='9'
-                      cy='9'
-                      r='7.5'
-                      stroke='#926D3C'
-                      strokeWidth='1.5'
-                    />
-                    <path
-                      d='M9 6V9.75M9 12.75H9.0075'
-                      stroke='#926D3C'
-                      strokeWidth='1.5'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                    />
-                  </svg>
+                <div className='flex gap-2 items-start flex-1'>
+                  <Image
+                    src='/tours/icon.svg'
+                    alt='Icon'
+                    width={15}
+                    height={15}
+                    className='object-contain'
+                  />
                   <p className='font-genseki-body-xs-regular text-figma-secondary-950 line-clamp-2'>
                     {note}
                   </p>

@@ -311,8 +311,9 @@ const Advantage = ({ className }: TAdvantageProps) => {
               <div
                 key={card.id}
                 data-card-index={index}
-                className={`${styles.cardContainer} flex-shrink-0 ${styles.cardWidth}`}
+                className={`${styles.cardContainer} flex-shrink-0 relative ${styles.cardWidth}`}
               >
+                <div className={styles.cornerMaskLeft} />
                 <AdvantageCard card={card} />
               </div>
             )

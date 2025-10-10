@@ -4,7 +4,7 @@ import React from 'react'
 import TourCard from './TourCard'
 import GroupTourCard from './GroupTourCard'
 import type { TTourData, TTourType } from './config'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 
 type TToursProps = {
   className?: string
@@ -14,6 +14,7 @@ type TToursProps = {
 
 const Tours = ({ tours = [], tourType, className }: TToursProps) => {
   const router = useRouter()
+  const pathname = usePathname()
 
   const handleDetailsClick = (tourId: string) => {
     router.push(`/${tourType}/${tourId}`)
@@ -50,8 +51,11 @@ const Tours = ({ tours = [], tourType, className }: TToursProps) => {
   }
 
   return (
-    <div className={`w-full max-w-[1920px] mx-auto ${className || ''}`}>
-      <div className='grid grid-cols-1 xl:grid-cols-2 gap-7 xl:gap-y-[79px] xl:gap-x-8'>
+    <div
+      className={`w-full max-w-[1920px] mx-auto ${className || ''}`}
+      key={pathname}
+    >
+      <div className='flex flex-wrap gap-7 xl:gap-y-[79px] xl:gap-x-8 xl:grid xl:grid-cols-[repeat(auto-fit,minmax(680px,1fr))]'>
         {tours.map(renderTourCard)}
       </div>
     </div>
