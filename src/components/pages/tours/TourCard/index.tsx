@@ -244,7 +244,7 @@ const TourCard = ({
                     height={15}
                     className='object-contain'
                   />
-                  <p className='font-genseki-body-xs-regular text-figma-secondary-950 line-clamp-2'>
+                  <p className='font-genseki-body-xs-regular text-figma-secondary-950'>
                     {note}
                   </p>
                 </div>

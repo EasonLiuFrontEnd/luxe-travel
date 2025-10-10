@@ -123,8 +123,8 @@ const Navigation = ({
             />
           </div>
         ))}
-        <button className='pt-7 px-[8px] max-xl:hidden'>
-          <SearchIcon onClick={openSearch} />
+        <button className='py-7 px-[8px] max-xl:hidden'>
+          <SearchIcon className='w-[20px] aspect-square' onClick={openSearch} />
         </button>
       </div>
 
