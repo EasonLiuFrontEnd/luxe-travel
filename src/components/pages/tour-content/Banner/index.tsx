@@ -26,6 +26,7 @@ const Banner = () => {
       </div>
       <div className='relative'>
         <Image
+          key='tour-content-theme-banner'
           src='/tour-content/theme.jpg'
           alt='theme-banner'
           width={1824}

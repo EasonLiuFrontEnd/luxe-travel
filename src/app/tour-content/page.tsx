@@ -18,6 +18,7 @@ const TourContentPage = () => {
           <DepartureDate />
           <Flight />
           <Image
+            key='flight-map'
             src='/tour-content/flight-map.jpg'
             alt='flight-map'
             width={866}

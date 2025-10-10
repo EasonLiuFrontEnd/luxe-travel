@@ -17,6 +17,7 @@ const Logo = ({
       <Link href='/'>
         <div className='flex items-center'>
           <Image
+            key='mobile-logo'
             src={logoImage}
             alt='典藏旅遊 LUXE TRAVEL'
             className='block'
@@ -40,6 +41,7 @@ const Logo = ({
         }
       >
         <Image
+          key='desktop-logo'
           src={logoImage}
           alt='典藏旅遊 LUXE TRAVEL'
           width={527}

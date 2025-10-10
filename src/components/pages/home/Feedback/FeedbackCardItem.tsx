@@ -46,6 +46,7 @@ const FeedbackCardItem = ({
       >
         <div className='absolute top-[-28px] flex flex-col items-center'>
           <Image
+            key={`feedback-avatar-${id}`}
             src='/home/feedback/avatar.jpg'
             alt='avatar'
             width={56}
@@ -53,6 +54,7 @@ const FeedbackCardItem = ({
             className='mb-[12px]'
           />
           <Image
+            key={`feedback-rating-${id}`}
             src='/home/feedback/rating.jpg'
             alt='rating'
             width={88}

@@ -102,6 +102,7 @@ const DestinationCard = ({
       {...props}
     >
       <Image
+        key={`${destination}-pattern`}
         alt={`${destination} pattern`}
         className={cn(
           styles.pattern,

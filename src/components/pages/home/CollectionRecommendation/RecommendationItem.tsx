@@ -22,6 +22,7 @@ const RecommendationItem = ({
       style={style}
     >
       <Image
+        key={`recommendation-${item.country}`}
         src={item.imageSrc}
         alt={item.imageAlt}
         width={60}

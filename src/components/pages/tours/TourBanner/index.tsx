@@ -100,6 +100,7 @@ const TourBanner = ({
         <div className='relative xl:absolute xl:inset-0 flex w-full h-[460px] xl:h-full'>
           {shouldShowApi && (
             <Image
+              key={`tour-banner-api-${currentSlide}`}
               src={currentImageUrl || `/${tourType}/${currentSlide}.jpg`}
               alt={`${altTextPrefix} ${currentSlide}`}
               width={1824}
@@ -111,6 +112,7 @@ const TourBanner = ({
 
           {shouldShowDefault && (
             <Image
+              key={`tour-banner-default-${currentSlide}`}
               src={`/${tourType}/${currentSlide}.jpg`}
               alt={`${altTextPrefix} ${currentSlide}`}
               width={1824}

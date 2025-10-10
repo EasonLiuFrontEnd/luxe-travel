@@ -16,6 +16,11 @@ export type TFeaturedCarousel = {
   className?: string
 }
 
+const CAROUSEL_OPTS = {
+  align: 'start' as const,
+  loop: true,
+}
+
 const FeaturedCarousel = ({
   images = ['/tour-content/hotel-lobby.jpg'],
   className,
@@ -28,9 +33,15 @@ const FeaturedCarousel = ({
 
     setCurrent(api.selectedScrollSnap())
 
-    api.on('select', () => {
+    const handleSelect = () => {
       setCurrent(api.selectedScrollSnap())
-    })
+    }
+
+    api.on('select', handleSelect)
+
+    return () => {
+      api.off('select', handleSelect)
+    }
   }, [api])
 
   const formatNumber = (num: number) => {
@@ -40,16 +51,14 @@ const FeaturedCarousel = ({
   return (
     <Carousel
       setApi={setApi}
-      opts={{
-        align: 'start',
-        loop: true,
-      }}
+      opts={CAROUSEL_OPTS}
       className={cn('relative', className)}
     >
       <CarouselContent>
         {images.map((image, index) => (
           <CarouselItem key={index}>
             <Image
+              key={`featured-${index}`}
               src={image}
               alt={`featured-image-${index + 1}`}
               className='object-cover rounded-2xl'
