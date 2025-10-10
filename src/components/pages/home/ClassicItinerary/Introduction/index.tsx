@@ -32,6 +32,7 @@ const Introduction = () => {
       <div className='flex flex-col items-center gap-5 xl:gap-7 xl:max-w-[705px]'>
         <div className='relative mx-[62.5px] xl:mx-0'>
           <Image
+            key={`introduction-${currentIntroduction.id}`}
             src={currentIntroduction.landscapeImage}
             alt={`${currentIntroduction.title}介紹圖片`}
             className='aspect-[216/160] xl:aspect-[705/347] object-cover rounded-2xl'

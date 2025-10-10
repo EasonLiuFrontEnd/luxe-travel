@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import FeedbackCardItem from './FeedbackCardItem'
 import type { TFeedbackMode } from './FeedbackCardItem'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
@@ -49,23 +49,27 @@ const FeedbackCard = ({
     return () => clearInterval(interval)
   }, [api, isAutoPlaying, autoPlayInterval, isMobile])
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = useCallback(() => {
     if (!isMobile) {
       setIsAutoPlaying(false)
     }
-  }
-  const handleMouseLeave = () => {
+  }, [isMobile])
+
+  const handleMouseLeave = useCallback(() => {
     if (!isMobile) {
       setIsAutoPlaying(true)
     }
-  }
+  }, [isMobile])
 
-  const carouselOpts = {
-    align: 'start' as const,
-    loop: false,
-    containScroll: 'trimSnaps' as const,
-    ...(isMobile && { dragFree: true }),
-  }
+  const carouselOpts = useMemo(
+    () => ({
+      align: 'start' as const,
+      loop: false,
+      containScroll: 'trimSnaps' as const,
+      ...(isMobile && { dragFree: true }),
+    }),
+    [isMobile],
+  )
 
   return (
     <Carousel

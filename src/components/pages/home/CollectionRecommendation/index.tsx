@@ -28,6 +28,7 @@ const CollectionRecommendation = ({
       <div className='mx-auto relative'>
         <div className='w-full bg-figma-neutral-50 relative rounded-2xl overflow-hidden'>
           <Image
+            key='recommendation-background'
             alt='背景裝飾'
             className='object-cover'
             src='/home/recommend/bg.jpg'

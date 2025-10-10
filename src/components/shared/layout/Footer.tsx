@@ -67,6 +67,7 @@ const Footer = ({ scrollToTopBg = 'bg-figma-secondary-100' }: TFooterProps) => {
         </div>
         <div className='flex flex-col justify-between items-center self-stretch max-xl:gap-[20px] max-xl:order-1'>
           <Image
+            key='footer-logo'
             src='/home/footer/footer-logo.svg'
             alt='footer-logo'
             width={321}
@@ -75,7 +76,13 @@ const Footer = ({ scrollToTopBg = 'bg-figma-secondary-100' }: TFooterProps) => {
           <div className='flex justify-center gap-[24px]'>
             {SOCIAL_MEDIAS.map((media) => (
               <a key={media.alt} href={media.href}>
-                <Image src={media.src} alt={media.alt} width={24} height={24} />
+                <Image
+                  key={`social-${media.alt}`}
+                  src={media.src}
+                  alt={media.alt}
+                  width={24}
+                  height={24}
+                />
               </a>
             ))}
           </div>
@@ -105,6 +112,7 @@ const Footer = ({ scrollToTopBg = 'bg-figma-secondary-100' }: TFooterProps) => {
         </a>
       </div>
       <Image
+        key='footer-company-name'
         src='/shared/icons/company-name.svg'
         alt='company-name'
         className='absolute left-[50%] bottom-0 -translate-x-[50%]'
