@@ -332,7 +332,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
         />
       </div>
 
-      <div className='flex justify-end w-full xl:px-[48px] max-xs:px-[12px] sticky top-0'>
+      <div className='flex justify-end w-full xl:px-[48px] max-xs:px-[12px] sticky top-0 -z-10'>
         <AirplaneIcon className='max-xl:hidden' />
         <Image
           src='/home/banners/slogan.svg'
@@ -344,7 +344,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
         <Image
           src='/home/banners/mobile-slogan.svg'
           alt='mobile slogan'
-          className='xs:hidden '
+          className='xs:hidden'
           width={352}
           height={430}
         />
