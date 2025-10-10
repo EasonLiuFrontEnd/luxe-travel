@@ -156,11 +156,7 @@ const BookShelf = ({ trackRef, isMobile = false }: TBookShelfProps) => {
               : isMobile
                 ? 'cursor-grab'
                 : ''
-          } ${
-            isMobile
-              ? 'scroll-snap-type-x-mandatory touch-pan-x select-none'
-              : ''
-          }`}
+          } ${isMobile ? 'scroll-snap-type-x-mandatory select-none' : ''}`}
           onMouseDown={handleMouseDown}
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}

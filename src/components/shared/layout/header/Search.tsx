@@ -4,10 +4,10 @@ import { useState, useEffect } from 'react'
 import SearchIcon from '@/components/shared/icons/header/SearchIcon'
 import CloseIcon from '@/components/shared/icons/header/CloseIcon'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import type { TBaseComponent } from '@/types'
+import { useScrollLock } from '@/hooks/useScrollLock'
 import { cn } from '@/lib/utils'
 
-export type TSearch = TBaseComponent & {
+export type TSearch = {
   isOpen: boolean
   onClose: () => void
 }
@@ -15,6 +15,8 @@ export type TSearch = TBaseComponent & {
 const Search = ({ isOpen, onClose }: TSearch) => {
   const [searchValue, setSearchValue] = useState('')
   const { isMobile } = useMediaQuery()
+
+  useScrollLock(isOpen)
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -25,12 +27,10 @@ const Search = ({ isOpen, onClose }: TSearch) => {
 
     if (isOpen) {
       document.addEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'hidden'
     }
 
     return () => {
       document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'unset'
     }
   }, [isOpen, onClose])
 

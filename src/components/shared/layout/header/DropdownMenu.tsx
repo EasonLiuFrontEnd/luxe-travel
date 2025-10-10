@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import type { TBaseComponent } from '@/types'
 import DropdownCloseIcon from '../../icons/header/DropdownCloseIcon'
 
 export type TSubmenuItem = {
@@ -17,7 +16,8 @@ export type TDropdownItem = {
   submenuItems?: TSubmenuItem[]
 }
 
-export type TDropdownMenu = TBaseComponent & {
+export type TDropdownMenu = {
+  className?: string
   isVisible: boolean
   items: TDropdownItem[]
   onClose: () => void
@@ -129,8 +129,12 @@ const DropdownMenu = ({
 
   const renderDesktopMenu = () => (
     <div
-      className='absolute left-0 bottom-[8px] translate-y-full bg-white z-50'
-      onMouseLeave={() => {
+      className='dropdown-menu absolute left-0 bottom-[8px] translate-y-full bg-white z-50'
+      onMouseLeave={(e) => {
+        const relatedTarget = e.relatedTarget as HTMLElement
+        if (relatedTarget && relatedTarget.closest('[data-navigation-item]')) {
+          return
+        }
         setActiveSubmenu(null)
         onClose()
       }}

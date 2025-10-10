@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { useScrollLock } from '@/hooks/useScrollLock'
 
 const TOTAL_SCROLL_DISTANCE = 1000
 const NOTE_TRAVEL_DISTANCE = 200
@@ -38,6 +39,8 @@ export const useScrollDrivenAnimation = () => {
     isInitialLoad: true,
     entryDirection: null,
   })
+
+  useScrollLock(!state.canScroll && state.isIntersecting && !isMobile)
 
   const calculateNotePosition = useCallback(
     (noteIndex: number, progress: number): number => {
@@ -111,8 +114,6 @@ export const useScrollDrivenAnimation = () => {
         state.animationPhase === 'appearing' ||
         state.animationPhase === 'disappearing'
       ) {
-        event.preventDefault()
-        event.stopPropagation()
         updateAnimationProgress(event.deltaY)
       }
     },
@@ -196,7 +197,7 @@ export const useScrollDrivenAnimation = () => {
 
   useEffect(() => {
     if (state.isIntersecting && !isMobile) {
-      window.addEventListener('wheel', handleWheel, { passive: false })
+      window.addEventListener('wheel', handleWheel, { passive: true })
     }
 
     return () => {

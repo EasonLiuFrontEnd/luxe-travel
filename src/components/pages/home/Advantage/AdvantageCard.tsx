@@ -24,12 +24,14 @@ const AdvantageCard = ({ card, className }: TAdvantageCardProps) => {
       />
 
       <div
-        className={`absolute inset-0 bg-center bg-cover bg-no-repeat ${styles.gradientMask}`}
+        className={cn(
+          `absolute inset-0 bg-center bg-cover bg-no-repeat ${styles.gradientMask}`,
+        )}
         style={{ backgroundImage: `url('${card.imageUrl}')` }}
       />
 
       <div
-        className={`bg-figma-secondary-100 box-border content-stretch flex gap-2.5 items-center justify-center px-6 py-3 relative rounded-br-xl shrink-0 z-10 ${styles.titleContainer}`}
+        className={`bg-figma-secondary-100 box-border content-stretch flex gap-2.5 items-center justify-center mt-[-1px] px-6 py-3 relative rounded-br-xl shrink-0 z-10 ${styles.titleContainer}`}
       >
         <h3 className='font-family-noto-serif font-bold text-[24px] leading-[1.2] text-figma-primary-950 text-nowrap'>
           {card.title}

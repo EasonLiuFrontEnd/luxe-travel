@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useRouter } from 'next/navigation'
-import TravelCard from '@/components/shared/TravelCard'
+import TravelCard from './TravelCard'
 import RecommendationButton from '@/components/ui/RecommendationButton'
 import { useSelectedCountry } from '@/hooks/useSelectedCountry'
 import { useBooks } from '@/api/home/useBooks'

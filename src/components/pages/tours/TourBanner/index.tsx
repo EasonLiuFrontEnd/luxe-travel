@@ -4,7 +4,6 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import type { TBaseComponent } from '@/types'
 import styles from './styles.module.css'
 
 export type TSlideContent = {
@@ -14,7 +13,8 @@ export type TSlideContent = {
   description: string
 }
 
-type TTourBannerProps = TBaseComponent & {
+type TTourBannerProps = {
+  className?: string
   tourType: 'free-tours' | 'group-tours' | 'rcar-tours'
   slideContent: TSlideContent[]
   tours?: Array<{
@@ -77,7 +77,7 @@ const TourBanner = ({
         className,
       )}
     >
-      <div className='absolute z-10 bg-figma-neutral-50 rounded-br-2xl'>
+      <div className='absolute mt-[-1px] z-10 bg-figma-neutral-50 rounded-br-2xl'>
         <div
           className={cn(
             'flex gap-2 xl:gap-[20px] xl:items-center flex-col xl:flex-row px-4 py-2 xl:px-7 xl:py-[26.5px]',

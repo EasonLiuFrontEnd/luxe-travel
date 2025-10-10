@@ -2,9 +2,8 @@ import { useState, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { useMenu } from '@/api/home/useMenu'
 import { transformMenuData } from './utils'
-import type { TBaseComponent } from '@/types'
-
-type TNavigation = TBaseComponent & {
+type TNavigation = {
+  className?: string
   isMenuOpen?: boolean
   onMenuToggle?: () => void
   logoProgress?: number
@@ -91,10 +90,24 @@ const Navigation = ({
           <div
             key={item.label}
             className='relative'
+            data-navigation-item
             onMouseEnter={() => setActiveDropdown(item.label)}
-            onMouseLeave={() => setActiveDropdown(null)}
+            onMouseLeave={(e) => {
+              const relatedTarget = e.relatedTarget as HTMLElement
+              if (relatedTarget && relatedTarget.closest('.dropdown-menu')) {
+                return
+              }
+              setActiveDropdown(null)
+            }}
           >
-            <button className='font-noto-serif-body-l-semibold text-figma-primary-950 hover:text-figma-secondary-950 cursor-pointer py-7 relative'>
+            <button
+              className='font-noto-serif-body-l-semibold text-figma-primary-950 hover:text-figma-secondary-950 cursor-pointer py-7 relative focus-visible:outline-none'
+              onClick={() => {
+                if (item.href && item.href !== '#') {
+                  handlePageNavigation(item.href)
+                }
+              }}
+            >
               {activeDropdown === item.label && (
                 <NavigationHoverIcon className='absolute top-0 right-[50%] translate-x-[50%]' />
               )}
@@ -110,8 +123,8 @@ const Navigation = ({
             />
           </div>
         ))}
-        <button className='pt-7 px-[8px] max-xl:hidden'>
-          <SearchIcon onClick={openSearch} />
+        <button className='py-7 px-[8px] max-xl:hidden'>
+          <SearchIcon className='w-[20px] aspect-square' onClick={openSearch} />
         </button>
       </div>
 
