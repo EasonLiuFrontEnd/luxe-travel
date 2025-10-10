@@ -71,6 +71,7 @@ const TourCard = ({
 
             <div className='absolute h-[17px] w-[64px] top-[10px] xl:top-[13px] left-1/2 transform -translate-x-1/2'>
               <Image
+                key='tour-card-logo-desktop'
                 src={logoPath}
                 alt='Logo'
                 width={64}
@@ -136,6 +137,7 @@ const TourCard = ({
 
                     <div className='absolute h-[17px] w-[64px] top-[10px] left-1/2 transform -translate-x-1/2'>
                       <Image
+                        key='tour-card-logo-mobile'
                         src={logoPath}
                         alt='Logo'
                         width={64}
@@ -199,6 +201,7 @@ const TourCard = ({
                   <div className='flex flex-col gap-2 items-start'>
                     <div className='flex gap-1 items-center'>
                       <Image
+                        key='tour-card-deco'
                         src='/tours/deco.svg'
                         alt='Deco'
                         width={18}
@@ -214,6 +217,7 @@ const TourCard = ({
                     <div className='flex gap-2 items-center'>
                       <div className='w-5 h-5 rounded-xl overflow-hidden relative'>
                         <Image
+                          key={`tour-card-avatar-${travelerReview.author}`}
                           src={travelerReview.avatarUrl}
                           alt={travelerReview.author}
                           fill
@@ -238,6 +242,7 @@ const TourCard = ({
               {note && (
                 <div className='flex gap-2 items-start flex-1'>
                   <Image
+                    key='tour-card-icon'
                     src='/tours/icon.svg'
                     alt='Icon'
                     width={15}

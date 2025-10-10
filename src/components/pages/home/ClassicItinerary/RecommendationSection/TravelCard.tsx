@@ -51,6 +51,7 @@ const TravelCard = ({
     >
       <div className='w-full max-w-[96px] md:max-w-full aspect-square aspect-[120/120] overflow-hidden relative rounded-[4px]'>
         <Image
+          key={`travel-card-${title}`}
           src={image}
           alt={title}
           className='absolute w-full h-full object-cover rounded-[4px] hover-fade-scale'

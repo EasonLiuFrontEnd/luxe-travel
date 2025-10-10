@@ -9,6 +9,7 @@ const RecommendationSection = () => {
     <div className='recommendation-section bg-[var(--color-figma-primary-50)] relative box-border flex justify-center pt-[32px] pb-[60px] xl:py-20 px-[clamp(12px,2.5vw,48px)] border-y border-[var(--color-figma-secondary-500)]'>
       <div className='absolute flex justify-center items-end w-full h-full top-0 left-0'>
         <Image
+          key='itinerary-background'
           alt='背景裝飾'
           className='object-cover xl:block hidden'
           src='/home/itinerary/bg.png'

@@ -44,6 +44,7 @@ const Featured = () => {
         </div>
         <div className='flex flex-col items-end'>
           <Image
+            key='hotel-outside-1'
             src='/tour-content/hotel-outside.jpg'
             alt='hotel-outside'
             width={732}
@@ -51,6 +52,7 @@ const Featured = () => {
             className='w-[732px] h-[440px] rounded-2xl object-cover mb-12'
           />
           <Image
+            key='hotel-inside-1'
             src='/tour-content/hotel-inside.jpg'
             alt='hotel-inside'
             width={490}
@@ -67,6 +69,7 @@ const Featured = () => {
         }}
       >
         <Image
+          key='plus-aggregate-1'
           src='/tour-content/plus-aggregate.svg'
           alt='plus-aggregate'
           width={290}
@@ -78,6 +81,7 @@ const Featured = () => {
           className='w-[1440px] h-[530px] rounded-2xl overflow-hidden z-10'
         />
         <Image
+          key='plus-aggregate-large-1'
           src='/tour-content/plus-aggregate-large.svg'
           alt='plus-aggregate-large'
           width={429}
@@ -106,6 +110,7 @@ const Featured = () => {
       <div className='flex mx-[240px]'>
         <div className='flex flex-col'>
           <Image
+            key='hotel-outside-2'
             src='/tour-content/hotel-outside.jpg'
             alt='hotel-outside'
             width={732}
@@ -113,6 +118,7 @@ const Featured = () => {
             className='w-[732px] h-[440px] rounded-2xl object-cover mb-12'
           />
           <Image
+            key='hotel-inside-2'
             src='/tour-content/hotel-inside.jpg'
             alt='hotel-inside'
             width={490}
@@ -163,6 +169,7 @@ const Featured = () => {
         }}
       >
         <Image
+          key='plus-aggregate-2'
           src='/tour-content/plus-aggregate.svg'
           alt='plus-aggregate'
           width={290}
@@ -174,6 +181,7 @@ const Featured = () => {
           className='w-[1440px] h-[530px] rounded-2xl overflow-hidden z-10'
         />
         <Image
+          key='plus-aggregate-large-2'
           src='/tour-content/plus-aggregate-large.svg'
           alt='plus-aggregate-large'
           width={429}
@@ -201,6 +209,7 @@ const Featured = () => {
       </div>
       {/* <div className="flex item justify-between mt-[112px]">
         <Image
+          key='scene-a'
           src='/tour-content/scene-a.jpg'
           alt='scene-a'
           width={428}
@@ -208,6 +217,7 @@ const Featured = () => {
           className="rounded-2xl object-cover mt-[190px]"
         />
         <Image
+          key='scene-b'
           src='/tour-content/scene-b.jpg'
           alt='scene-b'
           width={428}
@@ -215,6 +225,7 @@ const Featured = () => {
           className="rounded-2xl object-cover mb-[190px]"
         />
         <Image
+          key='scene-c'
           src='/tour-content/scene-c.jpg'
           alt='scene-c'
           width={428}
@@ -222,6 +233,7 @@ const Featured = () => {
           className="rounded-2xl object-cover mt-[190px]"
         />
         <Image
+          key='scene-d'
           src='/tour-content/scene-d.jpg'
           alt='scene-d'
           width={428}

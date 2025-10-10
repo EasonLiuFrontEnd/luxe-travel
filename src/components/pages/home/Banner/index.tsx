@@ -78,6 +78,20 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
     return bannersData || []
   }, [bannersError, bannersData, isBannersLoading, mock.rows])
 
+  const firstBanner = useMemo(() => {
+    return effectiveData[0] || mock.rows[0]
+  }, [effectiveData, mock.rows])
+
+  const bannerImages = useMemo(() => {
+    if (bannersError) {
+      return ['/home/banners/banner.jpg']
+    }
+    if (effectiveData && effectiveData.length > 0) {
+      return effectiveData.map((banner) => banner.imageUrl)
+    }
+    return []
+  }, [bannersError, effectiveData])
+
   const dynamicPadding = useMemo(
     () =>
       `${APP_CONFIG.SCROLL.BANNER_HEIGHT * 0.1 + (1 - logoProgress) * APP_CONFIG.SCROLL.LOGO_TRANSITION_END * 0.2}px`,
@@ -86,6 +100,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
 
   const [isStickyEnded, setIsStickyEnded] = useState(false)
   const stickyRef = useRef<HTMLDivElement>(null)
+  const isStickyEndedRef = useRef(false)
 
   const dynamicTranslateY = useMemo(() => {
     if (isMobile) {
@@ -104,23 +119,20 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
       const scrollY = window.scrollY
       const shouldEnd = scrollY > 600
 
-      if (shouldEnd && !isStickyEnded) {
-        setIsStickyEnded(true)
-      } else if (!shouldEnd && isStickyEnded) {
-        setIsStickyEnded(false)
+      if (shouldEnd !== isStickyEndedRef.current) {
+        isStickyEndedRef.current = shouldEnd
+        setIsStickyEnded(shouldEnd)
       }
     }
 
-    window.addEventListener('scroll', checkStickyEnd)
+    window.addEventListener('scroll', checkStickyEnd, { passive: true })
     window.addEventListener('resize', checkStickyEnd)
 
     return () => {
       window.removeEventListener('scroll', checkStickyEnd)
       window.removeEventListener('resize', checkStickyEnd)
     }
-  }, [isStickyEnded])
-
-  const firstBanner = effectiveData[0] || mock.rows[0]
+  }, [])
 
   const supportsSvgGoo = () => {
     if (!gooAreaRef.current) return true
@@ -320,21 +332,13 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
           </div>
         </div>
 
-        <BannerCarousel
-          images={
-            bannersError
-              ? ['/home/banners/banner.jpg']
-              : effectiveData && effectiveData.length > 0
-                ? effectiveData.map((banner) => banner.imageUrl)
-                : []
-          }
-          autoPlayInterval={10000}
-        />
+        <BannerCarousel images={bannerImages} autoPlayInterval={10000} />
       </div>
 
-      <div className='flex justify-end w-full xl:px-[48px] max-xs:px-[12px] sticky top-0'>
+      <div className='flex justify-end w-full xl:px-[48px] max-xs:px-[12px] sticky top-0 -z-10'>
         <AirplaneIcon className='max-xl:hidden' />
         <Image
+          key='slogan-desktop'
           src='/home/banners/slogan.svg'
           alt='slogan'
           className='xl:pl-[24px] max-xs:hidden'
@@ -342,9 +346,10 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
           height={231}
         />
         <Image
+          key='slogan-mobile'
           src='/home/banners/mobile-slogan.svg'
           alt='mobile slogan'
-          className='xs:hidden '
+          className='xs:hidden'
           width={352}
           height={430}
         />

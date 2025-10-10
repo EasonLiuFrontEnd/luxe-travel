@@ -73,6 +73,7 @@ const GroupTourCard = ({
 
             <div className='absolute h-[17px] w-[64px] top-[10px] xl:top-[13px] left-1/2 transform -translate-x-1/2'>
               <Image
+                key='group-tour-card-logo-desktop'
                 src='/tours/logo.png'
                 alt='Logo'
                 width={64}
@@ -185,6 +186,7 @@ const GroupTourCard = ({
 
                     <div className='absolute h-[17px] w-[64px] top-[10px] left-1/2 transform -translate-x-1/2'>
                       <Image
+                        key='group-tour-card-logo-mobile'
                         src='/tours/logo.png'
                         alt='Logo'
                         width={64}

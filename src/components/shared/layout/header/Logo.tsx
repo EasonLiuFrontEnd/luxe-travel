@@ -17,6 +17,7 @@ const Logo = ({
       <Link href='/'>
         <div className='flex items-center'>
           <Image
+            key='mobile-logo'
             src={logoImage}
             alt='典藏旅遊 LUXE TRAVEL'
             className='block'
@@ -31,7 +32,7 @@ const Logo = ({
   return (
     <Link href='/'>
       <div
-        className='absolute top-0 left-[48px] transition-all duration-1200 ease-in-out logo-container'
+        className='absolute top-0 left-[48px] transition-all duration-200 ease-in-out logo-container'
         style={
           {
             '--logo-scale': scale,
@@ -40,6 +41,7 @@ const Logo = ({
         }
       >
         <Image
+          key='desktop-logo'
           src={logoImage}
           alt='典藏旅遊 LUXE TRAVEL'
           width={527}

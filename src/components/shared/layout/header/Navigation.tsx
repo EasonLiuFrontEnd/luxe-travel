@@ -198,6 +198,7 @@ const Navigation = ({
 
       {isMenuOpen && (
         <Image
+          key='mobile-menu-company-name'
           src='/shared/icons/company-name.svg'
           alt='company-name'
           className='fixed bottom-0 left-0 right-0 w-full xl:hidden bg-figma-neutral-50 z-30'
