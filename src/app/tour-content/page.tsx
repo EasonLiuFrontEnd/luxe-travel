@@ -9,6 +9,7 @@ import Flight from '@/components/pages/tour-content/Flight'
 import Registration from '@/components/pages/tour-content/Registration'
 import Featured from '@/components/pages/tour-content/Featured'
 import DailyItinerary from '@/components/pages/tour-content/DailyItinerary'
+import TitleIcon from '@/components/pages/tour-content/Featured/icons/TitleIcon'
 
 const TourContentPage = () => {
   return (
@@ -28,23 +29,12 @@ const TourContentPage = () => {
           />
           <div className='flex flex-col gap-y-2.5 p-7 rounded-2xl bg-figma-secondary-150'>
             <div className='flex items-center'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='22'
-                height='22'
-                viewBox='0 0 22 22'
-                fill='none'
-                className='p-1 mr-2'
-              >
-                <path
-                  d='M13.0283 10.9922H0.984375V13.0372H8.97126V21.0155H10.9503V13.0372H13.0283V10.9922Z'
-                  fill='#926D3C'
-                />
-                <path
-                  d='M8.97266 10.9923H21.0166V8.96283H13.0297V0.984497H11.0648V8.96283H8.97266V10.9923Z'
-                  fill='#926D3C'
-                />
-              </svg>
+              <TitleIcon
+                topColor='#926D3C'
+                bottomColor='#926D3C'
+                scale={0.9}
+                className='mr-2'
+              />
               <p className='font-noto-serif-body-l-semibold text-figma-secondary-950'>
                 NOTE
               </p>
