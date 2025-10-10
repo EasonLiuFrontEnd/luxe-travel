@@ -1,7 +1,7 @@
 export const APP_CONFIG = {
   SCROLL: {
     BANNER_HEIGHT: 800,
-    LOGO_TRANSITION_END: 200,
+    LOGO_TRANSITION_END: 1,
     THROTTLE_DELAY: 16,
   },
 
