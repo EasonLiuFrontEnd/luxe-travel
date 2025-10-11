@@ -17,7 +17,7 @@ const Introduction = () => {
 
   if (!currentIntroduction) {
     return (
-      <div className='w-full xl:flex-[0_0_39.2%] xl:max-w-[753.6px] pb-7 px-[17px] xl:pl-7 xl:pr-0'>
+      <div className='w-full xl:flex-[0_0_40.5%] xl:max-w-[753.6px] pb-7 px-[17px] xl:px-7'>
         <div className='flex items-center justify-center h-64'>
           <p className='text-gray-500'>載入中...</p>
         </div>
@@ -27,7 +27,7 @@ const Introduction = () => {
 
   return (
     <div
-      className={`w-full xl:flex-[0_0_39.2%] xl:max-w-[753.6px] pb-7 px-[17px] xl:pl-7 xl:pr-0`}
+      className={`w-full xl:flex-[0_0_40.5%] xl:max-w-[753.6px] pb-7 px-[17px] xl:px-7`}
     >
       <div className='flex flex-col items-center gap-5 xl:gap-7 xl:max-w-[705px]'>
         <div className='relative mx-[62.5px] xl:mx-0'>
