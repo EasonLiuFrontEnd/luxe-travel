@@ -335,24 +335,24 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
         <BannerCarousel images={bannerImages} autoPlayInterval={10000} />
       </div>
 
-      <div className='flex justify-end w-full xl:px-[48px] max-xs:px-[12px] sticky top-0 -z-10'>
-        <AirplaneIcon className='max-xl:hidden' />
-        <Image
-          key='slogan-desktop'
-          src='/home/banners/slogan.svg'
-          alt='slogan'
-          className='xl:pl-[24px] max-xs:hidden'
-          width={1084}
-          height={231}
-        />
-        <Image
-          key='slogan-mobile'
-          src='/home/banners/mobile-slogan.svg'
-          alt='mobile slogan'
-          className='xs:hidden'
-          width={352}
-          height={430}
-        />
+        <div className='flex justify-end w-full xl:px-[48px] max-xs:px-[12px]'>
+          <AirplaneIcon className='max-xl:hidden' />
+          <Image
+            key='slogan-desktop'
+            src='/home/banners/slogan.svg'
+            alt='slogan'
+            className='xl:pl-[24px] max-xs:hidden'
+            width={1084}
+            height={231}
+          />
+          <Image
+            key='slogan-mobile'
+            src='/home/banners/mobile-slogan.svg'
+            alt='mobile slogan'
+            className='xs:hidden'
+            width={352}
+            height={430}
+          />
       </div>
     </>
   )
