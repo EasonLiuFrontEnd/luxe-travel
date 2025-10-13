@@ -1,0 +1,49 @@
+'use client'
+
+import { RefObject } from 'react'
+import BookShelf from '../BookShelf'
+import Introduction from '../Introduction'
+import styles from './styles.module.css'
+import { useBookShelfGsap } from '@/hooks/useBookShelfGsap'
+import '@/styles/components.css'
+
+const BookShelfSection = () => {
+  const { bookShelfWrapperRef, trackRef, isMobile } = useBookShelfGsap()
+
+  return (
+    <div
+      data-bookshelf-section
+      className='bg-figma-neutral-50 pt-[60px] xl:pt-[120px] border-t border-[var(--color-figma-secondary-500)] sticky top-[-60vh] left-0 xl:relative xl:top-[unset] xl:left-[unset]'
+    >
+      <div
+        data-bookshelf-title='true'
+        className='mb-[32px] xl:mb-[48px] flex flex-col items-center'
+      >
+        <h2 className='inline-block font-family-noto-serif font-bold text-[32px] xl:text-[40px] 2xl:text-[64px] xl:leading-[120%] text-[var(--color-figma-primary-950)] px-5 py-[6px] gradient-title-border'>
+          查看經典行程
+        </h2>
+
+        <div
+          className={`w-fit font-family-genseki text-base xl:text-xl leading-[120%] xl:leading-[150%] text-[var(--color-figma-secondary-950)] text-center mt-6 xl:mt-7 flex flex-col xl:flex-row justify-center ${styles.decoBar}`}
+        >
+          <span>從書櫃點擊挑選想去的國家，</span>
+          <span>參考典藏推薦行程！</span>
+        </div>
+      </div>
+
+      <div className='flex flex-col-reverse xl:flex-row'>
+        <BookShelf
+          trackRef={trackRef as RefObject<HTMLDivElement>}
+          bookShelfWrapperRef={
+            bookShelfWrapperRef as RefObject<HTMLDivElement>
+          }
+          isMobile={isMobile}
+        />
+
+        <Introduction />
+      </div>
+    </div>
+  )
+}
+
+export default BookShelfSection
