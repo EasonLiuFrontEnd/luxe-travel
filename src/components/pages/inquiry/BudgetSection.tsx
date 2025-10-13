@@ -19,18 +19,18 @@ import {
   EUROPEAN_REGIONS,
   TCountry,
 } from './TravelInquiryForm'
-export type TBudgetDestinationSectionProps = {
+export type TBudgetSectionProps = {
   control: Control<TTravelInquiryFormData>
 }
-export const BudgetDestinationSection = ({
+export const BudgetSection = ({
   control,
-}: TBudgetDestinationSectionProps) => {
+}: TBudgetSectionProps) => {
   return (
     <FormSection title='' hasBorder>
       <div className='space-y-8'>
         <FormField
           control={control}
-          name='budgetDestination.budget'
+          name='budget.budget'
           render={({ field }) => (
             <FormItem>
               <RequiredLabel
@@ -57,7 +57,7 @@ export const BudgetDestinationSection = ({
         />
         <FormField
           control={control}
-          name='budgetDestination.countries'
+          name='budget.countries'
           render={({ field }) => (
             <FormItem>
               <RequiredLabel
@@ -123,4 +123,4 @@ export const BudgetDestinationSection = ({
     </FormSection>
   )
 }
-export default BudgetDestinationSection
+export default BudgetSection

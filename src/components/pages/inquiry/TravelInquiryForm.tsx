@@ -6,14 +6,14 @@ import { z } from 'zod'
 
 import { HeroSection } from './HeroSection'
 import { BasicInfoSection } from './BasicInfoSection'
-import { BudgetDestinationSection } from './BudgetDestinationSection'
-import { DetailRequirementsSection } from './DetailRequirementsSection'
+import { BudgetSection } from './BudgetSection'
+import { IndependentTravelSection } from './IndependentTravelSection'
 import { Form } from '../../../components/ui/Form'
+import RequirementsSection from './RequirementsSection'
+import GroupTravelSection from './GroupTravelSection'
 
 type DeepPartial<T> = T extends object
-  ? {
-      [P in keyof T]?: DeepPartial<T[P]>
-    }
+  ? { [P in keyof T]?: DeepPartial<T[P]> }
   : T
 
 export type TTravelType =
@@ -71,12 +71,12 @@ export type TBasicInfo = {
   otherSource?: string
 }
 
-export type TBudgetDestination = {
+export type TBudget = {
   budget: TBudgetRange
   countries: TCountry[]
 }
 
-export type TDetailedRequirements = {
+export type TIndependentTravel = {
   adultCount: number
   childCount: number
   travelDays: number
@@ -85,10 +85,19 @@ export type TDetailedRequirements = {
   specialRequirements?: string
 }
 
+export type TGroupTravel = {
+  adultCount: number
+  childCount: number
+  tourProgram: string
+  departureDate: string
+}
+
 export type TTravelInquiryFormData = {
   basicInfo: TBasicInfo
-  budgetDestination: TBudgetDestination
-  detailedRequirements: TDetailedRequirements
+  budget: TBudget
+  independentTravel: TIndependentTravel
+  groupTravel: TGroupTravel
+  requirementsDescription?: string
 }
 
 const travelTypeSchema = z.enum(
@@ -157,12 +166,12 @@ const basicInfoSchema = z.object({
   otherSource: z.string().optional(),
 })
 
-const budgetDestinationSchema = z.object({
+const budgetSchema = z.object({
   budget: budgetRangeSchema,
   countries: z.array(countrySchema).min(1, '請至少選擇一個國家'),
 })
 
-const detailedRequirementsSchema = z.object({
+const independentTravelSchema = z.object({
   adultCount: z
     .number()
     .min(1, '大人數量必須至少為 1')
@@ -180,38 +189,60 @@ const detailedRequirementsSchema = z.object({
   specialRequirements: z.string().optional(),
 })
 
+const groupTravelSchema = z.object({
+  adultCount: z
+    .number()
+    .min(1, '大人數量必須至少為 1')
+    .max(20, '大人數量不能超過 20'),
+  childCount: z
+    .number()
+    .min(0, '孩童數量不能為負數')
+    .max(20, '孩童數量不能超過 20'),
+  tourProgram: z.string().min(1, '請選擇團體行程'),
+  departureDate: z.string().min(1, '請選擇出發日期'),
+})
+
 export const travelInquiryFormSchema = z.object({
   basicInfo: basicInfoSchema,
-  budgetDestination: budgetDestinationSchema,
-  detailedRequirements: detailedRequirementsSchema,
+  budget: budgetSchema,
+  independentTravel: independentTravelSchema,
+  groupTravel: groupTravelSchema,
+  requirementsDescription: z.string().optional(),
 })
 
 export const defaultTravelInquiryFormData: DeepPartial<TTravelInquiryFormData> =
-  {
-    basicInfo: {
-      travelType: undefined,
-      contactName: '',
-      gender: undefined,
-      phoneNumber: '',
-      lineId: '',
-      contactMethod: undefined,
-      contactTime: '',
-      contactSource: undefined,
-      otherSource: '',
-    },
-    budgetDestination: {
-      budget: undefined,
-      countries: [],
-    },
-    detailedRequirements: {
-      adultCount: 1,
-      childCount: 0,
-      travelDays: 1,
-      departureDate: '',
-      wishlist: '',
-      specialRequirements: '',
-    },
-  }
+{
+  basicInfo: {
+    travelType: 'europe-free',
+    contactName: '',
+    gender: undefined,
+    phoneNumber: '',
+    lineId: '',
+    contactMethod: undefined,
+    contactTime: '',
+    contactSource: undefined,
+    otherSource: '',
+  },
+  budget: {
+    budget: undefined,
+    countries: [],
+  },
+  independentTravel: {
+    adultCount: 1,
+    childCount: 0,
+    travelDays: 1,
+    departureDate: '',
+    wishlist: '',
+    specialRequirements: '',
+  },
+  groupTravel: {
+    adultCount: 1,
+    childCount: 0,
+    tourProgram: '',
+    departureDate: '',
+  },
+  requirementsDescription: '',
+}
 
 export const TRAVEL_TYPE_OPTIONS = [
   { value: 'europe-free', label: '歐洲自由行' },
@@ -219,6 +250,17 @@ export const TRAVEL_TYPE_OPTIONS = [
   { value: 'deluxe-group', label: '精緻團體行' },
   { value: 'theme', label: '主題旅遊' },
   { value: 'mitsui-cruise', label: '三井郵輪' },
+]
+
+export const GROUP_TOUR_PROGRAMS = [
+  { value: 'italy-classic-8days', label: '義大利經典8日遊' },
+  { value: 'france-romantic-10days', label: '法國浪漫10日遊' },
+  { value: 'spain-portugal-12days', label: '西葡雙國12日遊' },
+  { value: 'germany-austria-9days', label: '德奧風情9日遊' },
+  { value: 'uk-scotland-10days', label: '英國蘇格蘭10日遊' },
+  { value: 'greece-islands-8days', label: '希臘愛琴海島嶼8日遊' },
+  { value: 'nordic-aurora-11days', label: '北歐極光11日遊' },
+  { value: 'eastern-europe-14days', label: '東歐四國14日遊' },
 ]
 
 export const GENDER_OPTIONS = [
@@ -321,6 +363,40 @@ export const TravelInquiryForm = ({
     mode: 'onChange',
   })
 
+  const selectedTravelType = form.watch('basicInfo.travelType')
+
+  const renderConditionalSections = () => {
+    if (!selectedTravelType) {
+      return null
+    }
+
+    if (selectedTravelType === 'europe-free' || selectedTravelType === 'chartered') {
+      return (
+        <>
+          <BudgetSection control={form.control} />
+          <IndependentTravelSection
+            control={form.control}
+            isLoading={isLoading}
+          />
+        </>
+      )
+    }
+
+    if (selectedTravelType === 'deluxe-group' || selectedTravelType === 'theme' || selectedTravelType === 'mitsui-cruise') {
+      return (
+        <>
+          <RequirementsSection control={form.control} />
+          <GroupTravelSection
+            control={form.control}
+            isLoading={isLoading}
+          />
+        </>
+      )
+    }
+
+    return null
+  }
+
   const handleSubmit = async (data: TTravelInquiryFormData) => {
     try {
       await onSubmit?.(data)
@@ -363,13 +439,7 @@ export const TravelInquiryForm = ({
 
               <div className='flex flex-col gap-4 pb-8 rounded-b-[16px] w-full'>
                 <BasicInfoSection control={form.control} />
-
-                <BudgetDestinationSection control={form.control} />
-
-                <DetailRequirementsSection
-                  control={form.control}
-                  isLoading={isLoading}
-                />
+                {renderConditionalSections()}
               </div>
             </form>
           </Form>

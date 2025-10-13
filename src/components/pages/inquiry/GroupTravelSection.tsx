@@ -1,25 +1,45 @@
 'use client'
+import { useState, useEffect, useRef } from 'react'
 import { Control } from 'react-hook-form'
 import {
-  FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/Form'
 import { CounterInput } from '@/components/ui'
 import styles from './styles.module.css'
-import { TTravelInquiryFormData } from './TravelInquiryForm'
+import { TTravelInquiryFormData, GROUP_TOUR_PROGRAMS } from './TravelInquiryForm'
 import { CalendarIcon } from '@/components/ui/CalendarIcon'
 import { formatDateForDisplay } from '@/lib/dateUtils'
-export type TDetailRequirementsSectionProps = {
+
+export type TGroupTravelSectionProps = {
   control: Control<TTravelInquiryFormData>
   isLoading?: boolean
 }
-export const DetailRequirementsSection = ({
+
+export const GroupTravelSection = ({
   control,
   isLoading = false,
-}: TDetailRequirementsSectionProps) => {
+}: TGroupTravelSectionProps) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false)
+      }
+    }
+
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isDropdownOpen])
+
   return (
     <div className='bg-white flex flex-col gap-8 pb-[60px] pt-5 xl:pt-8 px-4 xl:px-8 relative rounded-2xl rounded-br-0 w-full'>
       <div className='flex flex-col gap-7 xl:pb-7 w-full'>
@@ -36,7 +56,7 @@ export const DetailRequirementsSection = ({
             <div className='flex flex-col xl:flex-row gap-6 xl:gap-7'>
               <FormField
                 control={control}
-                name='detailedRequirements.adultCount'
+                name='groupTravel.adultCount'
                 render={({ field }) => (
                   <FormItem className='w-full xl:w-[218px]'>
                     <CounterInput
@@ -52,7 +72,7 @@ export const DetailRequirementsSection = ({
               />
               <FormField
                 control={control}
-                name='detailedRequirements.childCount'
+                name='groupTravel.childCount'
                 render={({ field }) => (
                   <FormItem className='w-full xl:w-[249px]'>
                     <CounterInput
@@ -71,7 +91,7 @@ export const DetailRequirementsSection = ({
           <div className='w-full xl:flex-1 flex flex-col gap-1 xl:min-w-0'>
             <div className='flex gap-1 items-center mb-2'>
               <div className='font-noto-serif-body-l-semibold text-figma-primary-950'>
-                預計旅遊天數
+                您想詢問的團體行程
               </div>
               <div className='font-genseki-body-l-regular text-figma-function-alert'>
                 *
@@ -79,17 +99,53 @@ export const DetailRequirementsSection = ({
             </div>
             <FormField
               control={control}
-              name='detailedRequirements.travelDays'
+              name='groupTravel.tourProgram'
               render={({ field }) => (
                 <FormItem className='w-full'>
-                  <CounterInput
-                    label='旅遊天數'
-                    value={field.value}
-                    onChange={field.onChange}
-                    min={1}
-                    max={60}
-                    unit='天'
-                  />
+                  <div className='relative' ref={dropdownRef}>
+                    <div className='flex items-center justify-between px-0 py-[8px] border-b border-[rgba(56,56,65,0.7)] w-full hover:border-figma-primary-950 transition-colors duration-200'>
+                      <span
+                        className={`font-genseki-body-m-regular text-[16px] leading-[1.2] ${field.value
+                          ? 'text-figma-primary-950'
+                          : 'text-figma-primary-300'
+                          }`}
+                      >
+                        {field.value ? GROUP_TOUR_PROGRAMS.find(program => program.value === field.value)?.label : '請選擇行程名稱'}
+                      </span>
+                      <button
+                        type='button'
+                        className='px-[12px] py-[4px] border border-figma-secondary-500 rounded-[18px] shrink-0 hover:border-figma-secondary-950 cursor-pointer'
+                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                      >
+                        <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-secondary-500 hover:text-figma-secondary-950'>
+                          查看團型
+                        </span>
+                      </button>
+                    </div>
+                    {isDropdownOpen && (
+                      <div className='absolute top-full left-0 w-full bg-white border border-figma-primary-950-70 rounded-md shadow-lg z-10 mt-1'>
+                        <div className='max-h-60 overflow-y-auto'>
+                          {GROUP_TOUR_PROGRAMS.map((program) => (
+                            <button
+                              key={program.value}
+                              type='button'
+                              className='w-full px-4 py-2 text-left hover:bg-figma-primary-50 font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950'
+                              onClick={() => {
+                                field.onChange(program.value)
+                                setIsDropdownOpen(false)
+                              }}
+                            >
+                              {program.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    <input
+                      type='hidden'
+                      {...field}
+                    />
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
@@ -98,7 +154,7 @@ export const DetailRequirementsSection = ({
           <div className='w-full xl:flex-1 flex flex-col gap-1 xl:min-w-0'>
             <div className='flex gap-1 items-center mb-2'>
               <div className='font-noto-serif-body-l-semibold text-figma-primary-950'>
-                預計出發日
+                出發日期
               </div>
               <div className='font-genseki-body-l-regular text-figma-function-alert'>
                 *
@@ -106,14 +162,14 @@ export const DetailRequirementsSection = ({
             </div>
             <FormField
               control={control}
-              name='detailedRequirements.departureDate'
+              name='groupTravel.departureDate'
               render={({ field }) => (
                 <FormItem className='w-full'>
                   <div
                     className='relative'
                     onClick={() => {
                       const input = document.getElementById(
-                        'departure-date-input',
+                        'group-departure-date-input',
                       ) as HTMLInputElement
                       if (input) {
                         input.focus()
@@ -123,11 +179,10 @@ export const DetailRequirementsSection = ({
                   >
                     <div className='flex items-center justify-between px-0 py-3 border-b border-figma-primary-950-70 w-full hover:border-figma-primary-950 transition-colors duration-200'>
                       <span
-                        className={`font-genseki-body-m-regular text-[16px] leading-[1.2] ${
-                          field.value
-                            ? 'text-figma-primary-950'
-                            : 'text-figma-primary-300'
-                        }`}
+                        className={`font-genseki-body-m-regular text-[16px] leading-[1.2] ${field.value
+                          ? 'text-figma-primary-950'
+                          : 'text-figma-primary-300'
+                          }`}
                       >
                         {field.value
                           ? formatDateForDisplay(field.value)
@@ -138,7 +193,7 @@ export const DetailRequirementsSection = ({
                       </div>
                     </div>
                     <input
-                      id='departure-date-input'
+                      id='group-departure-date-input'
                       type='date'
                       className='absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer'
                       {...field}
@@ -150,70 +205,6 @@ export const DetailRequirementsSection = ({
             />
           </div>
         </div>
-        <FormField
-          control={control}
-          name='detailedRequirements.wishlist'
-          render={({ field }) => (
-            <FormItem className='w-full'>
-              <div className='flex gap-0.5 items-center mb-2'>
-                <FormLabel className='font-noto-serif-body-l-semibold text-figma-primary-950'>
-                  心願清單
-                </FormLabel>
-                <span className='font-genseki-body-s-regular text-figma-primary-950'>
-                  （希望必造訪的景點、城市等）
-                </span>
-              </div>
-              <FormControl>
-                <div className='flex gap-2.5 items-center px-0 py-3 w-full border-b border-[rgba(56,56,65,0.7)]'>
-                  <input
-                    placeholder='歡迎將需求告訴我們，典藏將竭誠為您服務'
-                    className='flex-1 bg-transparent border-none outline-none font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950 placeholder:text-figma-primary-300'
-                    maxLength={100}
-                    {...field}
-                  />
-                  <div className='flex gap-1.5 items-center shrink-0'>
-                    <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-300'>
-                      {field.value?.length || 0}/100
-                    </span>
-                  </div>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={control}
-          name='detailedRequirements.specialRequirements'
-          render={({ field }) => (
-            <FormItem className='w-full'>
-              <div className='flex gap-0.5 items-center mb-2'>
-                <FormLabel className='font-noto-serif-body-l-semibold text-figma-primary-950'>
-                  其他特別需求
-                </FormLabel>
-                <span className='font-genseki-body-s-regular text-figma-primary-950'>
-                  （如交通、接送、特別活動等）
-                </span>
-              </div>
-              <FormControl>
-                <div className='flex gap-2.5 items-center px-0 py-3 w-full border-b border-[rgba(56,56,65,0.7)]'>
-                  <input
-                    placeholder='歡迎將需求告訴我們，典藏將竭誠為您服務'
-                    className='flex-1 bg-transparent border-none outline-none font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950 placeholder:text-figma-primary-300'
-                    maxLength={100}
-                    {...field}
-                  />
-                  <div className='flex gap-1.5 items-center shrink-0'>
-                    <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-primary-300'>
-                      {field.value?.length || 0}/100
-                    </span>
-                  </div>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
       </div>
       <p className='flex items-center w-full font-genseki-body-s-regular text-figma-primary-950'>
         典藏旅遊遵循「個人資料保護法」以妥善處理、利用本表所載之個人資料，並採取資料保護措施。
@@ -255,4 +246,5 @@ export const DetailRequirementsSection = ({
     </div>
   )
 }
-export default DetailRequirementsSection
+
+export default GroupTravelSection
