@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { cn } from '@/lib/utils'
 import {
   Carousel,
@@ -9,14 +9,19 @@ import {
   type CarouselApi,
 } from '@/components/ui/Carousel'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import type { TBaseComponent } from '@/types'
 
-export type TBannerCarousel = TBaseComponent & {
+export type TBannerCarousel = {
   images?: string[]
   autoPlayInterval?: number
+  className?: string
 }
 import styles from './styles.module.css'
 import Image from 'next/image'
+
+const CAROUSEL_OPTS = {
+  align: 'start' as const,
+  loop: true,
+}
 
 const BannerCarousel = ({
   images = ['/home/banners/banner.jpg'],
@@ -32,9 +37,15 @@ const BannerCarousel = ({
 
     setCurrent(api.selectedScrollSnap())
 
-    api.on('select', () => {
+    const handleSelect = () => {
       setCurrent(api.selectedScrollSnap())
-    })
+    }
+
+    api.on('select', handleSelect)
+
+    return () => {
+      api.off('select', handleSelect)
+    }
   }, [api])
 
   useEffect(() => {
@@ -47,8 +58,8 @@ const BannerCarousel = ({
     return () => clearInterval(interval)
   }, [api, isAutoPlaying, autoPlayInterval])
 
-  const handleMouseEnter = () => setIsAutoPlaying(false)
-  const handleMouseLeave = () => setIsAutoPlaying(true)
+  const handleMouseEnter = useCallback(() => setIsAutoPlaying(false), [])
+  const handleMouseLeave = useCallback(() => setIsAutoPlaying(true), [])
 
   const formatNumber = (num: number) => {
     return String(num).padStart(2, '0')
@@ -57,10 +68,7 @@ const BannerCarousel = ({
   return (
     <Carousel
       setApi={setApi}
-      opts={{
-        align: 'start',
-        loop: true,
-      }}
+      opts={CAROUSEL_OPTS}
       contentClassName='h-[460px] xl:h-[662px]'
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -76,6 +84,7 @@ const BannerCarousel = ({
                 )}
               >
                 <Image
+                  key={`banner-${index}`}
                   src={image}
                   alt='BannerCarousel'
                   className='object-cover'

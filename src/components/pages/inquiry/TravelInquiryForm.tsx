@@ -336,7 +336,7 @@ export const TravelInquiryForm = ({
       <div className='w-full max-w-[1440px] mx-auto'>
         <HeroSection topPosition={heroTopPosition} />
 
-        <div className='relative bg-figma-secondary-100'>
+        <div className='relative bg-figma-secondary-100 z-10 [transform:translate3d(0,0,0)]'>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(handleSubmit)}

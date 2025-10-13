@@ -12,12 +12,12 @@ const Logo = ({
   scale = 0.34,
   isMobile = false,
 }: TLogo & { isMobile?: boolean }) => {
-  const translateY = 12 + ((scale - 0.34) * 71) / 0.66
   if (isMobile) {
     return (
       <Link href='/'>
         <div className='flex items-center'>
           <Image
+            key='mobile-logo'
             src={logoImage}
             alt='典藏旅遊 LUXE TRAVEL'
             className='block'
@@ -32,15 +32,16 @@ const Logo = ({
   return (
     <Link href='/'>
       <div
-        className='absolute top-0 left-[48px] transition-all duration-1200 ease-in-out logo-container scale-[var(--logo-scale)] translate-y-[var(--translate-y)]'
+        className='absolute top-0 left-[48px] transition-all duration-200 ease-in-out logo-container'
         style={
           {
             '--logo-scale': scale,
-            '--translate-y': `${translateY}px`,
+            transform: `scale(var(--logo-scale)) translateY(calc(35px + (var(--logo-scale) - 0.34) * 71px / 0.66))`,
           } as React.CSSProperties
         }
       >
         <Image
+          key='desktop-logo'
           src={logoImage}
           alt='典藏旅遊 LUXE TRAVEL'
           width={527}

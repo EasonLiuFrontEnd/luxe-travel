@@ -74,6 +74,7 @@ const InteractiveMap = ({
           }}
         >
           <Image
+            key='map-selection-indicator'
             src='/home/recommend/pressed.svg'
             alt='選中指示器'
             width={33}

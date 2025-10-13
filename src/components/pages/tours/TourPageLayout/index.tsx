@@ -307,6 +307,7 @@ const TourPageLayout = ({
         showBudgetFilter={tourConfig.showBudgetFilter}
         showDaysFilter={tourConfig.showDaysFilter}
         gapSize={tourConfig.gapSize}
+        maxWidth={tourConfig.maxWidth}
         useProductCountriesHook={useProductCountries}
         onSearch={handleSearch}
       />

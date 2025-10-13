@@ -28,7 +28,7 @@ export const transformMenuData = (
 
   const navItems = activeItems.map((item) => ({
     label: item.title,
-    href: item.linkUrl,
+    href: item.linkUrl || '#',
   }))
 
   const dropdownMenus: Record<string, TDropdownItem[]> = {}
@@ -49,13 +49,13 @@ export const transformMenuData = (
           activeGrandChildren.sort((a, b) => a.order - b.order)
           submenuItems = activeGrandChildren.map((grandChild) => ({
             label: grandChild.title,
-            href: grandChild.linkUrl,
+            href: grandChild.linkUrl || '#',
           }))
         }
 
         return {
           label: child.title,
-          href: child.linkUrl,
+          href: child.linkUrl || '#',
           hasSubmenu: hasThirdLayer,
           submenuItems,
         }

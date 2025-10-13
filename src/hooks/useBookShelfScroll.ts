@@ -1,6 +1,10 @@
 'use client'
 
-import { useCallback, useRef, useState, useEffect } from 'react'
+import { useCallback, useRef, useState, useEffect, useMemo } from 'react'
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
+import { useScrollLock } from '@/hooks/useScrollLock'
+
+const THRESHOLD_ARRAY = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
 export const useBookShelfScroll = () => {
   const bookShelfRef = useRef<HTMLDivElement>(null)
@@ -9,6 +13,8 @@ export const useBookShelfScroll = () => {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
   const maxScrollX = useRef(0)
+
+  useScrollLock(isFixed && !isMobile)
 
   const calculateMaxScroll = useCallback(() => {
     if (!trackRef.current) return 0
@@ -23,9 +29,16 @@ export const useBookShelfScroll = () => {
     if (!trackRef.current) return
 
     const clampedProgress = Math.max(0, Math.min(1, progress))
-    const translateX = -clampedProgress * maxScrollX.current
 
-    trackRef.current.style.transform = `translateX(${translateX}px)`
+    trackRef.current.style.setProperty(
+      '--scroll-progress',
+      clampedProgress.toString(),
+    )
+    trackRef.current.style.setProperty(
+      '--max-scroll-x',
+      `${maxScrollX.current}px`,
+    )
+    trackRef.current.style.transform = `translateX(calc(-1 * var(--scroll-progress) * var(--max-scroll-x)))`
     setScrollProgress(clampedProgress)
   }, [])
 
@@ -42,86 +55,126 @@ export const useBookShelfScroll = () => {
     }
   }, [])
 
+  const titleElement = useRef<HTMLElement | null>(null)
+
   useEffect(() => {
-    const handleScroll = () => {
-      if (!bookShelfRef.current || isMobile) return
+    const title = document.querySelector(
+      '[data-bookshelf-title="true"]',
+    ) as HTMLElement
+    titleElement.current = title
+  }, [])
 
-      const bookshelfTitle = document.querySelector(
-        '[data-bookshelf-title="true"]',
-      ) as HTMLElement
+  const titleIntersectCallback = useCallback(
+    (entry: IntersectionObserverEntry) => {
+      if (isMobile) return
 
-      if (bookshelfTitle) {
-        const titleRect = bookshelfTitle.getBoundingClientRect()
-        const isTitleAtTop = Math.abs(titleRect.top) <= 50
+      const isTitleAtTop = entry.boundingClientRect.top <= 50
 
-        if (isTitleAtTop && !isFixed) {
-          setIsFixed(true)
-          maxScrollX.current = calculateMaxScroll()
-        } else if (!isTitleAtTop && isFixed && scrollProgress === 0) {
-          setIsFixed(false)
-        }
-      } else {
-        const rect = bookShelfRef.current.getBoundingClientRect()
-        const isBottomAtViewport =
-          Math.abs(rect.bottom - window.innerHeight) <= 50
-
-        if (isBottomAtViewport && !isFixed) {
-          setIsFixed(true)
-          maxScrollX.current = calculateMaxScroll()
-        } else if (!isBottomAtViewport && isFixed && scrollProgress === 0) {
-          setIsFixed(false)
-        }
+      if (isTitleAtTop && !isFixed) {
+        setIsFixed(true)
+        maxScrollX.current = calculateMaxScroll()
       }
-    }
+    },
+    [isMobile, isFixed, calculateMaxScroll],
+  )
 
-    if (!isMobile) {
-      window.addEventListener('scroll', handleScroll)
-    }
+  const titleLeaveCallback = useCallback(() => {
+    if (isMobile) return
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
+    if (isFixed && scrollProgress === 0) {
+      setIsFixed(false)
     }
-  }, [isFixed, scrollProgress, calculateMaxScroll, isMobile])
+  }, [isMobile, isFixed, scrollProgress])
+
+  const titleObserverOptions = useMemo(
+    () => ({
+      threshold: THRESHOLD_ARRAY,
+      rootMargin: '50px 0px 0px 0px',
+      onIntersect: titleIntersectCallback,
+      onLeave: titleLeaveCallback,
+    }),
+    [titleIntersectCallback, titleLeaveCallback],
+  )
+
+  useIntersectionObserver(titleElement, titleObserverOptions)
+
+  const bookShelfIntersectCallback = useCallback(
+    (entry: IntersectionObserverEntry) => {
+      if (isMobile || titleElement.current) return
+
+      const isBottomAtViewport =
+        Math.abs(entry.boundingClientRect.bottom - window.innerHeight) <= 50
+
+      if (isBottomAtViewport && !isFixed) {
+        setIsFixed(true)
+        maxScrollX.current = calculateMaxScroll()
+      }
+    },
+    [isMobile, isFixed, calculateMaxScroll],
+  )
+
+  const bookShelfLeaveCallback = useCallback(() => {
+    if (isMobile || titleElement.current) return
+
+    if (isFixed && scrollProgress === 0) {
+      setIsFixed(false)
+    }
+  }, [isMobile, isFixed, scrollProgress])
+
+  const bookShelfObserverOptions = useMemo(
+    () => ({
+      threshold: THRESHOLD_ARRAY,
+      rootMargin: '0px 0px 50px 0px',
+      onIntersect: bookShelfIntersectCallback,
+      onLeave: bookShelfLeaveCallback,
+    }),
+    [bookShelfIntersectCallback, bookShelfLeaveCallback],
+  )
+
+  useIntersectionObserver(bookShelfRef, bookShelfObserverOptions)
+
+  const updateBookPositionRef = useRef(updateBookPosition)
+  updateBookPositionRef.current = updateBookPosition
 
   useEffect(() => {
+    let currentProgress = scrollProgress
+
     const wheelHandler = (event: WheelEvent) => {
       if (!isFixed || isMobile) return
-
-      event.preventDefault()
-      event.stopPropagation()
 
       const delta = event.deltaY
       const pixelScrollAmount = 30
       const progressIncrement =
         maxScrollX.current > 0 ? pixelScrollAmount / maxScrollX.current : 0.03
       const newProgress =
-        scrollProgress + (delta > 0 ? progressIncrement : -progressIncrement)
+        currentProgress + (delta > 0 ? progressIncrement : -progressIncrement)
 
       if (newProgress <= 0) {
-        setScrollProgress(0)
-        updateBookPosition(0)
+        currentProgress = 0
+        updateBookPositionRef.current(0)
         setIsFixed(false)
         return
       }
 
       if (newProgress >= 1) {
-        setScrollProgress(1)
-        updateBookPosition(1)
+        currentProgress = 1
+        updateBookPositionRef.current(1)
         setIsFixed(false)
         return
       }
 
-      updateBookPosition(newProgress)
+      currentProgress = newProgress
+      updateBookPositionRef.current(newProgress)
     }
 
     if (isFixed && !isMobile) {
-      window.addEventListener('wheel', wheelHandler, { passive: false })
+      window.addEventListener('wheel', wheelHandler, { passive: true })
     }
 
     return () => {
       window.removeEventListener('wheel', wheelHandler)
     }
-  }, [isFixed, isMobile, scrollProgress, updateBookPosition])
+  }, [isFixed, isMobile, scrollProgress])
 
   return {
     bookShelfRef,
