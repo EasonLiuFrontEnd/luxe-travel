@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useRef } from 'react'
+import { ReactNode, useRef, useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 import { Page } from '@/components/ui/Page'
 import { PageFlip } from '@/components/ui/PageFlip'
@@ -12,7 +13,7 @@ export type TFlipBookPage = {
   pageNumber?: string
   background?: string
   pageContentClassName?: string
-  content: React.ReactNode
+  content: ReactNode
 }
 
 export type TRightOnlyFlipBookProps = {
@@ -36,6 +37,12 @@ export const RightOnlyFlipBook = ({
   ...props
 }: TRightOnlyFlipBookProps) => {
   const flipBookRef = useRef<TPageFlipRef>(null)
+  const pathname = usePathname()
+  const [remountKey, setRemountKey] = useState(0)
+
+  useEffect(() => {
+    setRemountKey((prev) => prev + 1)
+  }, [pathname])
 
   const handleFlip = (data: number) => {
     if (onFlip) {
@@ -52,6 +59,7 @@ export const RightOnlyFlipBook = ({
       <div className='relative overflow-hidden mx-auto'>
         <div className='relative'>
           <PageFlip
+            key={remountKey}
             ref={flipBookRef}
             width={width}
             height={height}
