@@ -13,13 +13,13 @@ const BookShelfSection = () => {
     <div
       ref={bookShelfRef}
       data-bookshelf-section
-      className='bg-figma-neutral-50 pt-[60px] lg:pt-[120px] border-t border-[var(--color-figma-secondary-500)] sticky top-[-60vh] left-0 lg:relative lg:top-auto lg:left-auto'
+      className='bg-figma-neutral-50 pt-[60px] xl:pt-[120px] border-t border-[var(--color-figma-secondary-500)] sticky top-[-60vh] left-0 xl:relative xl:top-[unset] xl:left-[unset]'
     >
       <div
         data-bookshelf-title='true'
         className='mb-[32px] xl:mb-[48px] flex flex-col items-center'
       >
-        <h2 className='inline-block font-family-noto-serif font-bold text-[32px] lg:text-[40px] xl:text-[64px] xl:leading-[120%] text-[var(--color-figma-primary-950)] px-5 py-[6px] gradient-title-border'>
+        <h2 className='inline-block font-family-noto-serif font-bold text-[32px] xl:text-[40px] 2xl:text-[64px] xl:leading-[120%] text-[var(--color-figma-primary-950)] px-5 py-[6px] gradient-title-border'>
           查看經典行程
         </h2>
 
@@ -31,7 +31,7 @@ const BookShelfSection = () => {
         </div>
       </div>
 
-      <div className='flex flex-col-reverse lg:flex-row'>
+      <div className='flex flex-col-reverse xl:flex-row'>
         <BookShelf
           trackRef={trackRef as RefObject<HTMLDivElement>}
           isMobile={isMobile}

@@ -65,7 +65,7 @@ const Header = ({
       : 'max-xl:opacity-100 opacity-0 xl:pointer-events-none'
 
   return (
-    <div className={headerClasses} style={headerStyle}>
+    <div className={headerClasses} style={isMobile ? {} : headerStyle}>
       <div className='max-xl:hidden'>
         <Logo scale={logoScale} />
       </div>

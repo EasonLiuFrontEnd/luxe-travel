@@ -29,13 +29,13 @@ const Introduction = () => {
     <div
       className={`w-full xl:flex-[0_0_40.5%] xl:max-w-[753.6px] pb-7 px-[17px] xl:px-7`}
     >
-      <div className='flex flex-col items-center gap-5 xl:gap-7 xl:max-w-[705px]'>
+      <div className='xl:mx-0 flex flex-col items-center gap-5 xl:gap-7 xl:max-w-[705px]'>
         <div className='relative mx-[62.5px] xl:mx-0'>
           <Image
             key={`introduction-${currentIntroduction.id}`}
             src={currentIntroduction.landscapeImage}
             alt={`${currentIntroduction.title}介紹圖片`}
-            className='aspect-[216/160] xl:aspect-[705/347] object-cover rounded-2xl'
+            className='aspect-[216/160] xl:aspect-[705/347] md:max-h-[280px] xl:max-h-auto md:max-w-[378px] xl:max-w-full object-cover rounded-2xl'
             width={705}
             height={347}
           />

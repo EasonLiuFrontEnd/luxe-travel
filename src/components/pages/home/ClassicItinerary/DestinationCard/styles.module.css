@@ -18,7 +18,7 @@
   transform: scale(0.95);
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .pattern {
     width: 182px;
     height: 533px;
