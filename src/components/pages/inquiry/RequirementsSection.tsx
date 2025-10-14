@@ -6,6 +6,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/Form'
+import { RequiredLabel } from '@/components/ui'
 import { TTravelInquiryFormData } from './TravelInquiryForm'
 
 export type TRequirementsSectionProps = {
@@ -20,14 +21,12 @@ const RequirementsSection = ({ control }: TRequirementsSectionProps) => {
         name='requirementsDescription'
         render={({ field }) => (
           <FormItem className='w-full'>
-            <div className='flex gap-0.5 items-center mb-2'>
-              <FormLabel className='font-noto-serif-body-l-semibold text-figma-primary-950'>
-                需求說明
-              </FormLabel>
-              <span className='font-genseki-body-s-regular text-figma-primary-950'>
-                （如飲食習慣、單人房等）
-              </span>
-            </div>
+            <RequiredLabel
+              subText='（如飲食習慣、單人房等）'
+              className='font-noto-serif-body-l-semibold'
+            >
+              需求說明
+            </RequiredLabel>
             <FormControl>
               <div className='flex gap-2.5 items-center px-0 py-3 w-full border-b border-[rgba(56,56,65,0.7)]'>
                 <input

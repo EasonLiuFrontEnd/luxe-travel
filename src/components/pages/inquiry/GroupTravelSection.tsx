@@ -6,7 +6,10 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/Form'
-import { CounterInput } from '@/components/ui'
+import {
+  CounterInput,
+  RequiredLabel,
+} from '@/components/ui'
 import styles from './styles.module.css'
 import { TTravelInquiryFormData, GROUP_TOUR_PROGRAMS } from './TravelInquiryForm'
 import { CalendarIcon } from '@/components/ui/CalendarIcon'
@@ -45,26 +48,25 @@ export const GroupTravelSection = ({
       <div className='flex flex-col gap-7 xl:pb-7 w-full'>
         <div className='flex flex-col xl:flex-row gap-6 xl:items-end w-full'>
           <div className='flex flex-col gap-1'>
-            <div className='flex gap-1 items-center mb-2'>
-              <div className='font-noto-serif-body-l-semibold text-figma-primary-950'>
-                預計人數
-              </div>
-              <div className='font-genseki-body-l-regular text-figma-function-alert'>
-                *
-              </div>
-            </div>
-            <div className='flex flex-col xl:flex-row gap-6 xl:gap-7'>
+            <div className='flex flex-col xl:flex-row xl:items-end gap-6 xl:gap-7'>
               <FormField
                 control={control}
                 name='groupTravel.adultCount'
                 render={({ field }) => (
                   <FormItem className='w-full xl:w-[218px]'>
+                    <RequiredLabel
+                      required
+                      className='font-noto-serif-body-l-semibold'
+                    >
+                      預計人數
+                    </RequiredLabel>
                     <CounterInput
                       label='大人'
                       value={field.value}
                       onChange={field.onChange}
                       min={1}
                       max={20}
+                      className='py-4'
                     />
                     <FormMessage />
                   </FormItem>
@@ -81,6 +83,7 @@ export const GroupTravelSection = ({
                       onChange={field.onChange}
                       min={0}
                       max={20}
+                      className='py-4'
                     />
                     <FormMessage />
                   </FormItem>
@@ -89,19 +92,17 @@ export const GroupTravelSection = ({
             </div>
           </div>
           <div className='w-full xl:flex-1 flex flex-col gap-1 xl:min-w-0'>
-            <div className='flex gap-1 items-center mb-2'>
-              <div className='font-noto-serif-body-l-semibold text-figma-primary-950'>
-                您想詢問的團體行程
-              </div>
-              <div className='font-genseki-body-l-regular text-figma-function-alert'>
-                *
-              </div>
-            </div>
             <FormField
               control={control}
               name='groupTravel.tourProgram'
               render={({ field }) => (
                 <FormItem className='w-full'>
+                  <RequiredLabel
+                    required
+                    className='font-noto-serif-body-l-semibold mb-[-1px]'
+                  >
+                    您想詢問的團體行程
+                  </RequiredLabel>
                   <div className='relative' ref={dropdownRef}>
                     <div className='flex items-center justify-between px-0 py-[8px] border-b border-[rgba(56,56,65,0.7)] w-full hover:border-figma-primary-950 transition-colors duration-200'>
                       <span
@@ -114,10 +115,10 @@ export const GroupTravelSection = ({
                       </span>
                       <button
                         type='button'
-                        className='px-[12px] py-[4px] border border-figma-secondary-500 rounded-[18px] shrink-0 hover:border-figma-secondary-950 cursor-pointer'
+                        className='px-4 py-1 border border-figma-secondary-500 rounded-[18px] shrink-0 hover:border-figma-secondary-950 cursor-pointer'
                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                       >
-                        <span className='font-genseki-body-s-regular text-[14px] leading-[1.5] text-figma-secondary-500 hover:text-figma-secondary-950'>
+                        <span className='font-genseki-body-s-regular text-figma-secondary-500 hover:text-figma-secondary-950'>
                           查看團型
                         </span>
                       </button>
@@ -152,19 +153,17 @@ export const GroupTravelSection = ({
             />
           </div>
           <div className='w-full xl:flex-1 flex flex-col gap-1 xl:min-w-0'>
-            <div className='flex gap-1 items-center mb-2'>
-              <div className='font-noto-serif-body-l-semibold text-figma-primary-950'>
-                出發日期
-              </div>
-              <div className='font-genseki-body-l-regular text-figma-function-alert'>
-                *
-              </div>
-            </div>
             <FormField
               control={control}
               name='groupTravel.departureDate'
               render={({ field }) => (
                 <FormItem className='w-full'>
+                  <RequiredLabel
+                    required
+                    className='font-noto-serif-body-l-semibold'
+                  >
+                    出發日期
+                  </RequiredLabel>
                   <div
                     className='relative'
                     onClick={() => {
@@ -177,7 +176,7 @@ export const GroupTravelSection = ({
                       }
                     }}
                   >
-                    <div className='flex items-center justify-between px-0 py-3 border-b border-figma-primary-950-70 w-full hover:border-figma-primary-950 transition-colors duration-200'>
+                    <div className='flex items-center justify-between px-0 py-4 border-b border-figma-primary-950-70 w-full hover:border-figma-primary-950 transition-colors duration-200'>
                       <span
                         className={`font-genseki-body-m-regular text-[16px] leading-[1.2] ${field.value
                           ? 'text-figma-primary-950'

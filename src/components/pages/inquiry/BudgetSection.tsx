@@ -37,7 +37,7 @@ export const BudgetSection = ({
                 required
                 subText='（不含午晚餐及部分自理當地城市內交通費用）'
                 requiredText='此為必填資訊'
-                className='font-noto-serif-body-l-semibold mb-2'
+                className='font-noto-serif-body-l-semibold'
               >
                 每人預算
               </RequiredLabel>
@@ -63,7 +63,7 @@ export const BudgetSection = ({
               <RequiredLabel
                 required
                 subText='可複選'
-                className='font-noto-serif-body-l-semibold mb-2'
+                className='font-noto-serif-body-l-semibold'
               >
                 想去的國家組合
               </RequiredLabel>
