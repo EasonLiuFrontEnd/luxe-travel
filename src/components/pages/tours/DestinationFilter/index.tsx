@@ -42,7 +42,6 @@ const DestinationFilter = ({
   onSearch,
 }: TDestinationFilterProps) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [expandedRegions, setExpandedRegions] = useState<string[]>([])
   const [selectedCountries, setSelectedCountries] = useState<string[]>([])
   const [budgetRange, setBudgetRange] = useState<[number, number]>([
     80000, 600000,
@@ -105,18 +104,10 @@ const DestinationFilter = ({
 
   const handleCloseDropdown = useCallback(() => {
     setIsOpen(false)
-    setExpandedRegions([])
   }, [])
 
   const dropdownRef = useClickOutside<HTMLDivElement>(handleCloseDropdown)
 
-  const handleRegionSelect = (regionId: string) => {
-    setExpandedRegions((prev) =>
-      prev.includes(regionId)
-        ? prev.filter((id) => id !== regionId)
-        : [...prev, regionId],
-    )
-  }
 
   const handleCountryToggle = (countryId: string) => {
     setSelectedCountries((prev) =>
@@ -227,54 +218,46 @@ const DestinationFilter = ({
                         const hasSelected = hasSelectedCountriesInRegion(
                           region.region,
                         )
-                        const isExpanded = expandedRegions.includes(
-                          region.region,
-                        )
 
                         return (
                           <div key={region.region}>
-                            <button
-                              onClick={() => handleRegionSelect(region.region)}
-                              className={`w-full text-left py-3 px-4 hover:bg-gray-50 rounded font-family-noto-serif font-semibold text-base cursor-pointer flex items-center gap-4 ${
+                            <div
+                              className={`w-full text-left py-3 px-4 font-family-noto-serif font-semibold text-base flex items-center gap-4 ${
                                 hasSelected
                                   ? 'text-figma-secondary-950'
                                   : 'text-figma-neutral-300'
                               }`}
                             >
-                              {isExpanded && (
-                                <div className='w-5 h-5 rounded-full px-1 flex items-center justify-center bg-figma-secondary-500'>
-                                  <ClearIcon color='var(--color-figma-secondary-100)' />
-                                </div>
-                              )}
-                              <span>{region.region}</span>
-                            </button>
-
-                            {isExpanded && (
-                              <div>
-                                {region.countries.map((country) => (
-                                  <button
-                                    key={country.code}
-                                    onClick={() =>
-                                      handleCountryToggle(country.code)
-                                    }
-                                    className='flex items-center gap-4 w-full text-left py-3 px-7 hover:bg-gray-50 rounded cursor-pointer'
-                                  >
-                                    <div className='w-5 h-5 flex items-center justify-center'>
-                                      {selectedCountries.includes(
-                                        country.code,
-                                      ) ? (
-                                        <CheckIcon />
-                                      ) : (
-                                        <div className='w-5 h-5 rounded-full border border-figma-secondary-500'></div>
-                                      )}
-                                    </div>
-                                    <span className='font-family-noto-serif font-semibold text-base text-figma-neutral-300'>
-                                      {country.nameZh}
-                                    </span>
-                                  </button>
-                                ))}
+                              <div className='w-5 h-5 rounded-full px-1 flex items-center justify-center bg-figma-secondary-500'>
+                                <ClearIcon color='var(--color-figma-secondary-100)' />
                               </div>
-                            )}
+                              <span>{region.region}</span>
+                            </div>
+
+                            <div>
+                              {region.countries.map((country) => (
+                                <button
+                                  key={country.code}
+                                  onClick={() =>
+                                    handleCountryToggle(country.code)
+                                  }
+                                  className='flex items-center gap-4 w-full text-left py-3 px-7 hover:bg-gray-50 rounded cursor-pointer'
+                                >
+                                  <div className='w-5 h-5 flex items-center justify-center'>
+                                    {selectedCountries.includes(
+                                      country.code,
+                                    ) ? (
+                                      <CheckIcon />
+                                    ) : (
+                                      <div className='w-5 h-5 rounded-full border border-figma-secondary-500'></div>
+                                    )}
+                                  </div>
+                                  <span className='font-family-noto-serif font-semibold text-base text-figma-neutral-300'>
+                                    {country.nameZh}
+                                  </span>
+                                </button>
+                              ))}
+                            </div>
                           </div>
                         )
                       })}

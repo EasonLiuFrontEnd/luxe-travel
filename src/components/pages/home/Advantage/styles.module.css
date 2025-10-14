@@ -97,7 +97,7 @@
   z-index: 1;
   background-color: var(--color-figma-secondary-100);
   left: -1px;
-  top: 0;
+  top: -1px;
   border-top-left-radius: 14px;
 }
 
@@ -189,7 +189,7 @@
   position: absolute;
   background-color: var(--color-figma-secondary-100);
   left: 0;
-  top: 45px;
+  top: 44px;
   mask:
     linear-gradient(
       to left,

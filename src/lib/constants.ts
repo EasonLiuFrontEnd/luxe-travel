@@ -47,5 +47,5 @@ export const SOCIAL_MEDIAS = [
     alt: 'line',
     href: 'https://page.line.me/usa1363v?openQrModal=true',
   },
-  { src: '/home/footer/phone.svg', alt: 'phone', href: '#' },
+  { src: '/home/footer/phone.svg', alt: 'phone', href: 'tel:02-2506-2677' },
 ] as const

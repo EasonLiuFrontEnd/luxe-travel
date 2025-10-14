@@ -285,7 +285,7 @@ const Advantage = ({ className }: TAdvantageProps) => {
         </div>
       </div>
 
-      <div className='px-3 xl:px-0 pb-[60px] xl:pb-0 xl:absolute xl:top-[45vh]'>
+      <div className='px-4 xl:px-0 pb-[60px] xl:pb-0 xl:absolute xl:top-[45vh]'>
         <div
           ref={trackRef}
           data-track='advantage-track'
