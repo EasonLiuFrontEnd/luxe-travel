@@ -81,12 +81,23 @@ const TourPageLayout = ({
   const tourConfig = getTourTypeConfig(tourType)
   const slideConfig = getSlideConfig(tourType)
 
-  const sortProducts = (products: TProduct[]): TProduct[] => {
-    return [...products].sort((a, b) => {
+  const sortProducts = (
+    products: TProduct[],
+    params: TProductSearchParams,
+  ): TProduct[] => {
+    const sorted = [...products].sort((a, b) => {
       if (a.isFeatured && !b.isFeatured) return -1
       if (!a.isFeatured && b.isFeatured) return 1
+
+      if (params.sort === 'priceMin') {
+        const priceCompare = a.priceMin - b.priceMin
+        return params.order === 'asc' ? priceCompare : -priceCompare
+      }
+
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
+
+    return sorted
   }
 
   useEffect(() => {
@@ -126,7 +137,7 @@ const TourPageLayout = ({
           }
         }
 
-        const sortedProducts = sortProducts(dataSource)
+        const sortedProducts = sortProducts(dataSource, searchParams)
         const convertedTours = sortedProducts.map((product) =>
           convertProductToTourData(product, tourType),
         )
@@ -137,7 +148,7 @@ const TourPageLayout = ({
     } else if (searchQuery.isError) {
       if (process.env.NODE_ENV !== 'production') {
         const dataSource = searchMock.data || []
-        const sortedProducts = sortProducts(dataSource)
+        const sortedProducts = sortProducts(dataSource, searchParams)
         const convertedTours = sortedProducts.map((product) =>
           convertProductToTourData(product, tourType),
         )

@@ -13,7 +13,7 @@ const BookShelfSection = () => {
     <div
       ref={bookShelfRef}
       data-bookshelf-section
-      className='bg-figma-neutral-50 pt-[60px] xl:pt-[120px] border-t border-[var(--color-figma-secondary-500)] sticky top-[-60vh] left-0 z-1 xl:relative xl:top-[unset] xl:left-[unset]'
+      className='bg-figma-neutral-50 pt-[60px] xl:pt-[120px] border-t border-[var(--color-figma-secondary-500)] sticky top-[-60vh] left-0 z-[-1] xl:relative xl:top-[unset] xl:left-[unset]'
     >
       <div
         data-bookshelf-title='true'

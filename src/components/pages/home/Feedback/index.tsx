@@ -63,8 +63,19 @@ const Feedback = () => {
   useEffect(() => {
     if (!carouselApi) return
 
-    setCanGoLeft(true)
-    setCanGoRight(true)
+    const updateNavigation = () => {
+      setCanGoLeft(carouselApi.canScrollPrev())
+      setCanGoRight(carouselApi.canScrollNext())
+    }
+
+    updateNavigation()
+    carouselApi.on('select', updateNavigation)
+    carouselApi.on('reInit', updateNavigation)
+
+    return () => {
+      carouselApi.off('select', updateNavigation)
+      carouselApi.off('reInit', updateNavigation)
+    }
   }, [carouselApi])
 
   const handlePrevious = () => carouselApi?.scrollPrev()
