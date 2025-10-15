@@ -24,7 +24,6 @@ const Header = ({
   logoScale = 0.34,
   logoProgress = 0,
   headerBehavior = 'fixed',
-  hasTransparentHeader = false,
 }: THeader) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { isMobile } = useMediaQuery()
@@ -50,8 +49,8 @@ const Header = ({
         ? 'sticky'
         : 'relative'
   const backgroundClass =
-    hasTransparentHeader && isHomePage && logoProgress < 1
-      ? 'bg-transparent'
+    isHomePage && logoProgress < 1
+      ? 'bg-transparent h-[75.5px]'
       : 'bg-[#F7F7F8] h-[75.5px]'
   const borderClass = isMobile
     ? 'border-b border-[var(--color-figma-secondary-500)]'

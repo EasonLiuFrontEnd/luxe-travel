@@ -72,6 +72,7 @@ export const convertProductToTourData = (
     namePrefix?: string
     summary?: string
     description?: string
+    policy?: string | null
     priceMin: number
     tags?: string[]
     days?: number
@@ -167,7 +168,7 @@ export const convertProductToTourData = (
     mainImageUrl: product.mainImageUrl || '',
     countries: [],
     travelerReview: parseFeedback(),
-    note: product.description || undefined,
+    note: product.policy || undefined,
   }
 }
 
