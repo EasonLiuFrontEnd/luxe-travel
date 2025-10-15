@@ -35,7 +35,7 @@ const GroupTourRecommendation = () => {
     <div className='bg-white box-border flex flex-col gap-8 justify-between items-center pb-6 pt-0 px-4 xl:px-6 relative rounded-[12px] xl:rounded-2xl w-full h-full'>
       <div className='flex flex-col gap-6 items-center justify-start w-full'>
         <div
-          className={`bg-figma-neutral-50 box-border flex gap-2.5 items-center justify-center px-6 py-3 relative rounded-bl-[12px] rounded-br-[12px] xl:rounded-bl-[16px] xl:rounded-br-[16px] ${styles.titleContainer}`}
+          className={`bg-figma-primary-50 box-border flex gap-2.5 items-center justify-center px-6 py-3 relative rounded-bl-[12px] rounded-br-[12px] xl:rounded-bl-[16px] xl:rounded-br-[16px] ${styles.titleContainer}`}
         >
           <div className='font-family-noto-serif font-bold text-[var(--color-figma-primary-500)] text-[24px] leading-[1.2] whitespace-nowrap'>
             {currentCountryName}團體行推薦

@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { serviceSteps, getStepStyles, type TServiceStep } from './config'
 import styles from './styles.module.css'
@@ -12,15 +11,6 @@ type TServiceProcessProps = {
 
 const ServiceStep = ({ step }: { step: TServiceStep }) => {
   const { number, title, englishTitle, description } = step
-  const [isActive, setIsActive] = useState(false)
-
-  const handleTouchStart = () => {
-    setIsActive(true)
-  }
-
-  const handleTouchEnd = () => {
-    setTimeout(() => setIsActive(false), 300)
-  }
 
   return (
     <div
@@ -28,10 +18,7 @@ const ServiceStep = ({ step }: { step: TServiceStep }) => {
         'flex flex-col items-center justify-between p-7 w-full xl:min-h-auto xl:hover:min-w-[400px] xl:hover:h-full xl:hover:max-w-[25%] xl:hover:max-h-[526px] group',
         getStepStyles(number),
         styles.books,
-        isActive && styles.booksActive,
       )}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
     >
       <div className='flex flex-col gap-3 xl:gap-5 items-center justify-start text-nowrap'>
         <p className="font-['Amiri'] text-[64px] leading-none">{number}</p>
@@ -45,13 +32,7 @@ const ServiceStep = ({ step }: { step: TServiceStep }) => {
           {englishTitle}
         </p>
         {description && (
-          <p
-            className={cn(
-              'text-[20px] leading-[1.5] text-transparent transition-colors duration-300',
-              'group-hover:text-white',
-              isActive && 'text-white',
-            )}
-          >
+          <p className={styles.descriptionText}>
             {description}
           </p>
         )}

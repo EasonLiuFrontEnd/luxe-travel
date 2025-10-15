@@ -8,24 +8,24 @@
   height: 32px;
   display: block;
   position: absolute;
-  background-color: var(--color-figma-neutral-50);
+  background-color: var(--color-figma-primary-50);
   left: -32px;
   top: 0;
   mask:
     linear-gradient(
       to right,
       transparent 50%,
-      var(--color-figma-neutral-50) 50%
+      var(--color-figma-primary-50) 50%
     ),
     linear-gradient(
       to bottom,
-      var(--color-figma-neutral-50) 50%,
+      var(--color-figma-primary-50) 50%,
       transparent 50%
     ),
     radial-gradient(
       circle 16px at center,
       transparent 16px,
-      var(--color-figma-neutral-50) 16px
+      var(--color-figma-primary-50) 16px
     );
   mask-composite: intersect;
 }
@@ -36,20 +36,20 @@
   height: 32px;
   display: block;
   position: absolute;
-  background-color: var(--color-figma-neutral-50);
+  background-color: var(--color-figma-primary-50);
   right: -32px;
   top: 0;
   mask:
     linear-gradient(
       to right,
-      var(--color-figma-neutral-50) 50%,
+      var(--color-figma-primary-50) 50%,
       transparent 50%
     ),
-    linear-gradient(to top, transparent 50%, var(--color-figma-neutral-50) 50%),
+    linear-gradient(to top, transparent 50%, var(--color-figma-primary-50) 50%),
     radial-gradient(
       circle 16px at center,
       transparent 16px,
-      var(--color-figma-neutral-50) 16px
+      var(--color-figma-primary-50) 16px
     );
   mask-composite: intersect;
 }
@@ -64,17 +64,17 @@
       linear-gradient(
         to right,
         transparent 50%,
-        var(--color-figma-neutral-50) 50%
+        var(--color-figma-primary-50) 50%
       ),
       linear-gradient(
         to bottom,
-        var(--color-figma-neutral-50) 50%,
+        var(--color-figma-primary-50) 50%,
         transparent 50%
       ),
       radial-gradient(
         circle 12px at center,
         transparent 12px,
-        var(--color-figma-neutral-50) 12px
+        var(--color-figma-primary-50) 12px
       );
     mask-composite: intersect;
   }
@@ -86,18 +86,18 @@
     mask:
       linear-gradient(
         to right,
-        var(--color-figma-neutral-50) 50%,
+        var(--color-figma-primary-50) 50%,
         transparent 50%
       ),
       linear-gradient(
         to top,
         transparent 50%,
-        var(--color-figma-neutral-50) 50%
+        var(--color-figma-primary-50) 50%
       ),
       radial-gradient(
         circle 12px at center,
         transparent 12px,
-        var(--color-figma-neutral-50) 12px
+        var(--color-figma-primary-50) 12px
       );
     mask-composite: intersect;
   }
