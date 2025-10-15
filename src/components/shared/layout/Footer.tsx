@@ -75,7 +75,13 @@ const Footer = ({ scrollToTopBg = 'bg-figma-secondary-100' }: TFooterProps) => {
           />
           <div className='flex justify-center gap-[24px]'>
             {SOCIAL_MEDIAS.map((media) => (
-              <a key={media.alt} href={media.href}>
+              <a
+                key={media.alt}
+                href={media.href}
+                className={
+                  media.alt === 'phone' ? 'xl:pointer-events-none' : ''
+                }
+              >
                 <Image
                   key={`social-${media.alt}`}
                   src={media.src}
@@ -95,19 +101,22 @@ const Footer = ({ scrollToTopBg = 'bg-figma-secondary-100' }: TFooterProps) => {
         </div>
       </div>
       <div className='flex justify-center items-center flex-wrap gap-[20px] font-noto-serif-body-m-semibold max-xs:mb-0'>
-        <a href='' className='py-[8px] px-[4px]'>
+        <a href='/about' className='py-[8px] px-[4px]'>
           關於典藏
         </a>
-        <a href='' className='py-[8px] px-[4px]'>
+        <a href='/free-tours' className='py-[8px] px-[4px]'>
           自由行專區
         </a>
-        <a href='' className='py-[8px] px-[4px]'>
+        <a href='/rcar-tours' className='py-[8px] px-[4px]'>
           包車旅遊
         </a>
-        <a href='' className='py-[8px] px-[4px]'>
+        <a href='/group-tours' className='py-[8px] px-[4px]'>
           團體專區
         </a>
-        <a href='' className='py-[8px] px-[4px]'>
+        <a
+          href='https://www.mitsuioceancruises.com.tw/'
+          className='py-[8px] px-[4px]'
+        >
           三井郵輪
         </a>
       </div>

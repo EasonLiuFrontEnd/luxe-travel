@@ -269,7 +269,7 @@ const Advantage = ({ className }: TAdvantageProps) => {
     >
       <div
         ref={backgroundRef}
-        className={`${styles.backgroundMap} relative pt-[60px] xl:pt-[200px] xl:left-0 px-0 pb-[60px] xl:pb-0 flex flex-col gap-[20px] xl:gap-[120px] items-center xl:h-[100vh]`}
+        className={`${styles.backgroundMap} relative pt-[60px] xl:pt-[200px] px-0 pb-[60px] xl:pb-0 flex flex-col gap-[20px] xl:gap-[120px] items-center xl:h-[100vh]`}
       >
         <h2 className='inline-block font-family-noto-serif font-bold text-[32px] xl:text-[64px] xl:leading-[120%] text-[var(--color-figma-primary-950)] px-5 py-[6px] gradient-title-border'>
           典藏優勢
@@ -285,7 +285,7 @@ const Advantage = ({ className }: TAdvantageProps) => {
         </div>
       </div>
 
-      <div className='px-3 xl:px-0 pb-[60px] xl:pb-0 xl:absolute xl:top-[45vh]'>
+      <div className='px-4 xl:px-0 pb-[60px] xl:pb-0 xl:absolute xl:top-[45vh]'>
         <div
           ref={trackRef}
           data-track='advantage-track'

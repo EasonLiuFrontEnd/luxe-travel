@@ -106,7 +106,7 @@ export const menuApiMock: TMenuResponse = {
     {
       id: '68b0550565cf8e1dc78c18b8',
       title: '包車',
-      linkUrl: '/rcar-tours',
+      linkUrl: null,
       icon: null,
       order: 3,
       isActive: true,
@@ -129,7 +129,7 @@ export const menuApiMock: TMenuResponse = {
         {
           id: '68d14876c2d771ef469a3ccc',
           title: '包車旅遊',
-          linkUrl: null,
+          linkUrl: 'https://luxe-travel.vercel.app/rcar-tours',
           icon: null,
           order: 1,
           isActive: true,

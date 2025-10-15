@@ -23,7 +23,7 @@ const Feedback = () => {
 
   const effectiveData = useMemo(() => {
     if (feedbacksError && process.env.NODE_ENV !== 'production') {
-      return mock.data
+      return mock.rows
     }
 
     if (isFeedbacksLoading) {
@@ -31,7 +31,7 @@ const Feedback = () => {
     }
 
     return feedbacksData || []
-  }, [feedbacksError, feedbacksData, isFeedbacksLoading, mock.data])
+  }, [feedbacksError, feedbacksData, isFeedbacksLoading, mock.rows])
 
   const cardData: {
     id: string
@@ -40,6 +40,8 @@ const Feedback = () => {
     content: string
     linkUrl?: string
     order: number
+    stars?: number
+    imageUrl?: string
   }[] = useMemo(() => {
     return (effectiveData || []).map((feedback) => ({
       id: feedback.id,
@@ -50,25 +52,19 @@ const Feedback = () => {
       linkUrl:
         feedback.mode !== 'REAL' ? feedback.linkUrl || undefined : undefined,
       order: feedback.order,
+      stars: feedback.mode === 'REAL' ? feedback.stars || undefined : undefined,
+      imageUrl:
+        feedback.mode === 'VIRTUAL'
+          ? feedback.imageUrl || undefined
+          : undefined,
     }))
   }, [effectiveData])
 
   useEffect(() => {
     if (!carouselApi) return
 
-    const updateButtonStates = () => {
-      setCanGoLeft(carouselApi.canScrollPrev())
-      setCanGoRight(carouselApi.canScrollNext())
-    }
-
-    updateButtonStates()
-    carouselApi.on('select', updateButtonStates)
-
-    return () => {
-      if (carouselApi) {
-        carouselApi.off('select', updateButtonStates)
-      }
-    }
+    setCanGoLeft(true)
+    setCanGoRight(true)
   }, [carouselApi])
 
   const handlePrevious = () => carouselApi?.scrollPrev()

@@ -12,6 +12,8 @@ type TFeedbackCardItemProps = {
   content: string
   linkUrl?: string
   order: number
+  stars?: number
+  imageUrl?: string
 }
 
 const FeedbackCardItem = ({
@@ -21,6 +23,8 @@ const FeedbackCardItem = ({
   content,
   linkUrl,
   order,
+  stars,
+  imageUrl,
 }: TFeedbackCardItemProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [showButton, setShowButton] = useState(true)
@@ -51,16 +55,19 @@ const FeedbackCardItem = ({
             alt='avatar'
             width={56}
             height={56}
-            className='mb-[12px]'
+            className='mb-[12px] rounded-[50%] overflow-hidden'
           />
-          <Image
-            key={`feedback-rating-${id}`}
-            src='/home/feedback/rating.jpg'
-            alt='rating'
-            width={88}
-            height={16}
-            className='mb-[4px]'
-          />
+          <div className='flex gap-[2px] mb-[4px]'>
+            {Array.from({ length: stars || 0 }).map((_, index) => (
+              <Image
+                key={`feedback-star-${id}-${index}`}
+                src='/home/feedback/rating.svg'
+                alt='star'
+                width={16}
+                height={16}
+              />
+            ))}
+          </div>
           <p className='font-genseki-body-s-bold text-figma-primary-950'>
             {nickname}
           </p>
@@ -101,13 +108,27 @@ const FeedbackCardItem = ({
   }
 
   if (mode === 'VIRTUAL') {
+    const hasImage = !!imageUrl
     return (
       <div
         id={id}
         data-order={order}
-        className='w-[320px] h-[323px] p-[24px] rounded-[16px] text-figma-accent-blue-normal bg-figma-accent-blue-light'
+        className={`w-[320px] h-[323px] p-[24px] rounded-[16px] ${
+          hasImage
+            ? 'text-white bg-cover bg-center'
+            : 'text-figma-accent-blue-normal bg-figma-accent-blue-light'
+        }`}
+        style={
+          hasImage && imageUrl
+            ? { backgroundImage: `url(${imageUrl})` }
+            : undefined
+        }
       >
-        <div className='inline-block p-[20px] mb-[24px] rounded-[64px] border border-figma-accent-blue-normal'>
+        <div
+          className={`inline-block p-[20px] mb-[24px] rounded-[64px] border ${
+            hasImage ? 'border-white' : 'border-figma-accent-blue-normal'
+          }`}
+        >
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='48'
@@ -117,7 +138,7 @@ const FeedbackCardItem = ({
           >
             <path
               d='M34.2101 28.0139C29.9269 28.0139 26.4545 24.517 26.4545 20.2035C26.4545 15.8909 29.9269 12.394 34.2101 12.394C38.4933 12.394 41.9656 15.8909 41.9656 20.2035L42 21.3195C42 29.9465 35.0553 36.9395 26.4889 36.9395V32.4763C29.4483 32.4763 32.2309 31.3161 34.323 29.2085C34.7264 28.8035 35.0937 28.3715 35.4251 27.9182C35.0291 27.9812 34.6233 28.0139 34.2101 28.0139ZM13.7555 28.0139C9.47237 28.0139 6 24.517 6 20.2035C6 15.8909 9.47237 12.394 13.7555 12.394C18.0387 12.394 21.5111 15.8909 21.5111 20.2035L21.5455 21.3195C21.5455 29.9465 14.6007 36.9395 6.03437 36.9395V32.4763C8.99373 32.4763 11.7764 31.3161 13.8685 29.2085C14.2718 28.8035 14.6392 28.3715 14.9705 27.9182C14.5745 27.9812 14.1687 28.0139 13.7555 28.0139Z'
-              fill='#8BC3DE'
+              fill={hasImage ? '#FFFFFF' : '#8BC3DE'}
             />
           </svg>
         </div>

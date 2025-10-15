@@ -106,7 +106,7 @@ const BannerCarousel = ({
         )}
       </CarouselContent>
 
-      <div className='absolute bottom-0 max-xl:right-0 xl:left-0'>
+      <div className='absolute bottom-0 max-xl:right-0 xl:left-0 mb-[-1px]'>
         <button
           className={cn(
             'group flex items-center cursor-pointer',

@@ -3,7 +3,7 @@
 import IconCta from '@/components/shared/icons/IconCta'
 import Image from 'next/image'
 type TTravelCardProps = {
-  image: string
+  image?: string
   tagText: string
   tagColor: 'primary' | 'secondary'
   title: string
@@ -50,14 +50,20 @@ const TravelCard = ({
       onClick={onClick}
     >
       <div className='w-full max-w-[96px] md:max-w-full aspect-square aspect-[120/120] overflow-hidden relative rounded-[4px]'>
-        <Image
-          key={`travel-card-${title}`}
-          src={image}
-          alt={title}
-          className='absolute w-full h-full object-cover rounded-[4px] hover-fade-scale'
-          width={238}
-          height={238}
-        />
+        {image && image.trim() !== '' ? (
+          <Image
+            key={`travel-card-${title}`}
+            src={image}
+            alt={title}
+            className='absolute w-full h-full object-cover rounded-[4px] hover-fade-scale'
+            width={238}
+            height={238}
+          />
+        ) : (
+          <div className='absolute w-full h-full bg-figma-neutral-200 rounded-[4px] flex items-center justify-center'>
+            <span className='text-figma-neutral-400 text-[12px]'>No image</span>
+          </div>
+        )}
         <div
           className={`absolute ${tagColorStyles[tagColor]} box-border flex gap-2.5 items-center justify-center px-1 py-0 left-0 xl:right-0 xl:left-auto top-3 xl:top-3 top-2`}
         >
