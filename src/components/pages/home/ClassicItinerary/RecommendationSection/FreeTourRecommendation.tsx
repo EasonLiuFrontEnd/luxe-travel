@@ -26,7 +26,9 @@ const FreeTourRecommendation = () => {
         ? booksMock.rows
         : booksQuery.data || []
     const selectedBook = data.find((book) => book.id === selectedCountryId)
-    return (selectedBook?.freeProducts || []).slice(0, 3)
+    return (selectedBook?.freeProducts || [])
+      .filter((tour) => tour.imageUrl && tour.title)
+      .slice(0, 3)
   }, [booksQuery.data, booksQuery.error, booksMock.rows, selectedCountryId])
 
   return (
