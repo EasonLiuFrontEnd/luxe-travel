@@ -183,7 +183,11 @@ const CarouselContent = ({
   )
 }
 
-const CarouselItem = ({ className, ...props }: React.ComponentProps<'div'>) => {
+type CarouselItemProps = React.ComponentProps<'div'> & {
+  index?: number
+}
+
+const CarouselItem = ({ className, index, ...props }: CarouselItemProps) => {
   const { orientation } = useCarousel()
 
   return (
@@ -193,7 +197,8 @@ const CarouselItem = ({ className, ...props }: React.ComponentProps<'div'>) => {
       data-slot='carousel-item'
       className={cn(
         'min-w-0 shrink-0 grow-0 basis-full',
-        orientation === 'horizontal' ? 'pl-4' : 'pt-4',
+        orientation !== 'horizontal' ? 'pt-4' : '',
+        orientation === 'horizontal' && index === 0 ? 'xl:pl-4' : 'pl-4',
         className,
       )}
       {...props}

@@ -34,7 +34,7 @@ export const feedbacksApiMock: TApiResponse<TFeedBack> = {
       order: 0,
       createdAt: '2025-09-11T06:51:53.052Z',
       updatedAt: '2025-09-11T06:51:53.052Z',
-      color: '#F59E0B',
+      color: '#FBBF24',
     },
     {
       id: '68c271c3ea9b6c997ca4e34e',
@@ -48,7 +48,7 @@ export const feedbacksApiMock: TApiResponse<TFeedBack> = {
       order: 1,
       createdAt: '2025-09-11T06:52:50.562Z',
       updatedAt: '2025-09-11T06:52:50.562Z',
-      color: '#A78BFA',
+      color: '#10B981',
     },
     {
       id: '68c69bc65a243c8f10da1a5e',
@@ -58,11 +58,12 @@ export const feedbacksApiMock: TApiResponse<TFeedBack> = {
       content: '歐洲旅遊✕精緻首選 · 醉美蔚藍海岸浪漫璀璨巴黎',
       linkUrl:
         'https://www.luxetravel.com.tw/TripIntroduction.aspx?TripNo=T20250123000200&Date=2025/09/27&type=CX',
-      imageUrl: null,
+      imageUrl:
+        'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/cqfiCYZ-k8IUMyDfSJxz0qbqG4hIACU2CjowyY.jpeg',
       order: 2,
       createdAt: '2025-09-14T10:41:10.833Z',
       updatedAt: '2025-09-14T10:41:57.211Z',
-      color: '#34D399',
+      color: '#FBBF24',
     },
     {
       id: '68c69c1c5a243c8f10da1a5f',
@@ -76,7 +77,7 @@ export const feedbacksApiMock: TApiResponse<TFeedBack> = {
       order: 3,
       createdAt: '2025-09-14T10:42:36.866Z',
       updatedAt: '2025-09-14T10:42:36.866Z',
-      color: '#34D399',
+      color: '#60A5FA',
     },
   ],
   pagination: null,

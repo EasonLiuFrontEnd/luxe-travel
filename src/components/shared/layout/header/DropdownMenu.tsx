@@ -146,7 +146,15 @@ const DropdownMenu = ({
           onMouseEnter={(e) => handleHoverShowSubmenu(item.label, e)}
           onMouseLeave={handleHoverHideSubmenu}
         >
-          <div className='py-[8px] pr-[8px] pl-[12px] cursor-pointer hover:bg-figma-accent-yellow-light transition duration-300'>
+          <div
+            className='py-[8px] pr-[8px] pl-[12px] cursor-pointer hover:bg-figma-accent-yellow-light transition duration-300'
+            onClick={() => {
+              if (!item.hasSubmenu && item.href && item.href !== '#') {
+                onPageNavigation(item.href)
+                onClose()
+              }
+            }}
+          >
             <div className='flex items-center justify-between min-w-[130px] h-[24px] text-figma-primary-500 font-noto-serif-body-m-semibold hover:text-figma-secondary-500 transition duration-300'>
               {item.label}
               {item.hasSubmenu && (

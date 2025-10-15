@@ -290,7 +290,7 @@
       height: 24px;
       right: 0;
       left: auto;
-      top: -24px;
+      top: -23px;
       mask:
         linear-gradient(
           to left,
@@ -345,7 +345,7 @@
     &::after {
       width: 24px;
       height: 24px;
-      left: -24px;
+      left: -23px;
       mask:
         linear-gradient(
           to left,

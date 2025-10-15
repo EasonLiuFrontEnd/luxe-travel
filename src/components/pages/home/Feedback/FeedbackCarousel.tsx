@@ -19,6 +19,8 @@ type TFeedbackCardProps = {
     content: string
     linkUrl?: string
     order: number
+    stars?: number
+    imageUrl?: string
   }[]
   autoPlayInterval?: number
   onApiChange?: (api: CarouselApi | undefined) => void
@@ -64,7 +66,7 @@ const FeedbackCard = ({
   const carouselOpts = useMemo(
     () => ({
       align: 'start' as const,
-      loop: false,
+      loop: true,
       containScroll: 'trimSnaps' as const,
       ...(isMobile && { dragFree: true }),
     }),
@@ -82,9 +84,9 @@ const FeedbackCard = ({
       disableDefaultOverflow
       className='flex self-stretch w-full xl:mb-[60px]'
     >
-      <CarouselContent className='gap-x-[24px] mt-[60px] xl:mt-[120px] pl-4'>
-        {cardData.map((card) => (
-          <CarouselItem key={card.id} className='basis-auto'>
+      <CarouselContent className='xl:gap-x-[24px] mt-[60px] xl:mt-[120px]'>
+        {cardData.map((card, index) => (
+          <CarouselItem key={card.id} index={index} className='basis-auto'>
             <FeedbackCardItem
               id={card.id}
               mode={card.mode}
@@ -92,6 +94,8 @@ const FeedbackCard = ({
               content={card.content}
               linkUrl={card.linkUrl}
               order={card.order}
+              stars={card.stars}
+              imageUrl={card.imageUrl}
             />
           </CarouselItem>
         ))}

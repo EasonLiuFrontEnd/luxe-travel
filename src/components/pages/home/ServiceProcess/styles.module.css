@@ -35,3 +35,14 @@
   background-color: #bda05e;
   color: #ffffff;
 }
+
+.descriptionText {
+  font-size: 20px;
+  line-height: 1.5;
+  color: transparent;
+  transition: color 0.3s ease;
+}
+
+.books:hover .descriptionText {
+  color: #ffffff;
+}
