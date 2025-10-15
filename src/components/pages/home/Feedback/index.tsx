@@ -54,7 +54,9 @@ const Feedback = () => {
       order: feedback.order,
       stars: feedback.mode === 'REAL' ? feedback.stars || undefined : undefined,
       imageUrl:
-        feedback.mode === 'VIRTUAL' ? feedback.imageUrl || undefined : undefined,
+        feedback.mode === 'VIRTUAL'
+          ? feedback.imageUrl || undefined
+          : undefined,
     }))
   }, [effectiveData])
 

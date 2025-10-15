@@ -78,7 +78,9 @@ const Footer = ({ scrollToTopBg = 'bg-figma-secondary-100' }: TFooterProps) => {
               <a
                 key={media.alt}
                 href={media.href}
-                className={media.alt === 'phone' ? 'xl:pointer-events-none' : ''}
+                className={
+                  media.alt === 'phone' ? 'xl:pointer-events-none' : ''
+                }
               >
                 <Image
                   key={`social-${media.alt}`}
@@ -111,7 +113,10 @@ const Footer = ({ scrollToTopBg = 'bg-figma-secondary-100' }: TFooterProps) => {
         <a href='/group-tours' className='py-[8px] px-[4px]'>
           團體專區
         </a>
-        <a href='https://www.mitsuioceancruises.com.tw/' className='py-[8px] px-[4px]'>
+        <a
+          href='https://www.mitsuioceancruises.com.tw/'
+          className='py-[8px] px-[4px]'
+        >
           三井郵輪
         </a>
       </div>

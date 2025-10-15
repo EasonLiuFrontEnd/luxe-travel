@@ -108,7 +108,6 @@ const DestinationFilter = ({
 
   const dropdownRef = useClickOutside<HTMLDivElement>(handleCloseDropdown)
 
-
   const handleCountryToggle = (countryId: string) => {
     setSelectedCountries((prev) =>
       prev.includes(countryId)

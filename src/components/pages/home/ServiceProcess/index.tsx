@@ -31,11 +31,7 @@ const ServiceStep = ({ step }: { step: TServiceStep }) => {
         <p className="rotate-[270deg] font-['Luxurious_Script'] text-[48px] text-center whitespace-nowrap tracking-[0.1em] leading-none max-w-[48px]">
           {englishTitle}
         </p>
-        {description && (
-          <p className={styles.descriptionText}>
-            {description}
-          </p>
-        )}
+        {description && <p className={styles.descriptionText}>{description}</p>}
       </div>
     </div>
   )

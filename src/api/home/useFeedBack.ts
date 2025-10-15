@@ -58,7 +58,8 @@ export const feedbacksApiMock: TApiResponse<TFeedBack> = {
       content: '歐洲旅遊✕精緻首選 · 醉美蔚藍海岸浪漫璀璨巴黎',
       linkUrl:
         'https://www.luxetravel.com.tw/TripIntroduction.aspx?TripNo=T20250123000200&Date=2025/09/27&type=CX',
-      imageUrl: 'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/cqfiCYZ-k8IUMyDfSJxz0qbqG4hIACU2CjowyY.jpeg',
+      imageUrl:
+        'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/cqfiCYZ-k8IUMyDfSJxz0qbqG4hIACU2CjowyY.jpeg',
       order: 2,
       createdAt: '2025-09-14T10:41:10.833Z',
       updatedAt: '2025-09-14T10:41:57.211Z',
