@@ -66,7 +66,7 @@ const FeedbackCard = ({
   const carouselOpts = useMemo(
     () => ({
       align: 'start' as const,
-      loop: true,
+      loop: false,
       containScroll: 'trimSnaps' as const,
       ...(isMobile && { dragFree: true }),
     }),

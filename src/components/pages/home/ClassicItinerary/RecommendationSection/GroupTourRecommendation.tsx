@@ -26,9 +26,20 @@ const GroupTourRecommendation = () => {
         ? booksMock.rows
         : booksQuery.data || []
     const selectedBook = data.find((book) => book.id === selectedCountryId)
+
     return (selectedBook?.groupProducts || [])
-      .filter((tour) => tour.imageUrl && tour.title)
+      .filter((tour) => tour.mainImageUrl && tour.name)
       .slice(0, 3)
+      .map((tour) => ({
+        id: tour.id,
+        imageUrl: tour.mainImageUrl || '',
+        tagText: tour.namePrefix || '',
+        title: tour.name,
+        description: tour.countries ? tour.countries.join('/') : '',
+        price: tour.priceMin ? `$${tour.priceMin.toLocaleString()}` : '',
+        hoverTitle: tour.hoverTitle,
+        hoverDescription: tour.hoverDescription,
+      }))
   }, [booksQuery.data, booksQuery.error, booksMock.rows, selectedCountryId])
 
   return (
@@ -47,12 +58,12 @@ const GroupTourRecommendation = () => {
             currentGroupTours.map((tour) => (
               <TravelCard
                 key={tour.id}
-                image={tour.imageUrl || ''}
-                tagText={tour.tagText || ''}
+                image={tour.imageUrl}
+                tagText={tour.tagText}
                 tagColor='primary'
                 title={tour.title}
-                description={tour.description || ''}
-                price={tour.price || ''}
+                description={tour.description}
+                price={tour.price}
                 priceColor='primary'
                 hoverTitle={tour.hoverTitle}
                 hoverDescription={tour.hoverDescription}
