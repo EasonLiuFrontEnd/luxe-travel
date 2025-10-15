@@ -32,8 +32,60 @@ export const booksApiMock: TBooksResponse = {
       order: 1,
       createdAt: '2025-08-28T13:02:43.217Z',
       updatedAt: '2025-08-28T13:02:43.217Z',
-      groupProducts: [],
-      freeProducts: [],
+      groupProducts: [
+        {
+          'id': '68db79e7eca955c01cedb51e',
+          'mainImageUrl': 'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/NGxRiFY-fOnYe6AU3r2ORYUAbq4xWDjbQAWTDR.jpeg',
+          'code': 'LLWCX1270419BRU',
+          'namePrefix': '限量兩團．限時甄藏',
+          'name': '花開國王節 春遊荷比雙慶典12天',
+          'summary': '拒統荷比法快閃玩法！除了親訪荷蘭最重要的兩大年度盛事－每年僅舉辦一天的【荷蘭國王節】及春天限定【庫肯霍夫鬱金香花季】的百萬花海，我們還想邀請您一起走訪荷比大城小鎮：傳統與現代兼容的大都會，或典雅、或古樸的特色小鎮－荷蘭與比利時的美，很多元，值得您慢慢探索、細細品味！\n',
+          'tags': [
+            '荷蘭國王節',
+            '庫肯霍夫鬱金香花季',
+            '雙國經典全覽',
+            '精選星級美饌'
+          ],
+          'countries': [
+            '荷蘭',
+            '比利時'
+          ],
+          'category': 'GROUP',
+          'arriveCountry': '比利時',
+          'days': 12,
+          'nights': 9,
+          'priceMin': 158000,
+          'priceMax': 178000,
+          'status': 1
+        }
+      ],
+      freeProducts: [
+        {
+          'id': '68e7541179f42429271fa190',
+          'mainImageUrl': 'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/JoHSetL-hoIPnvvDIoaKbpSqmfOX9h84pMhuEg.jpeg',
+          'code': 'LLWBR1860618MXP',
+          'namePrefix': '蜜月精選',
+          'name': '義法五大名城 經典巴黎18天',
+          'summary': '義大利四大名城羅馬．威尼斯．佛羅倫斯．米蘭精華快覽Ｘ巴黎經典全覽，最適合想規劃豐富蜜月行或首遊義法的您！',
+          'tags': [
+            '蜜月精選',
+            '義大利四大名城',
+            '巴黎經典全覽',
+            '卡端午連休'
+          ],
+          'countries': [
+            '義大利',
+            '法國'
+          ],
+          category: 'FREE',
+          'arriveCountry': '義大利',
+          'days': 18,
+          'nights': 15,
+          'priceMin': 148000,
+          'priceMax': 148000,
+          'status': 1
+        }
+      ],
       recoProducts: [],
     },
     {

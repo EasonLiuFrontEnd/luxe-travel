@@ -73,11 +73,20 @@ export type TBanners = {
 
 type TProduct = {
   id: string
-  title: string
-  imageUrl?: string
-  price?: string
-  tagText?: string
-  description?: string
+  mainImageUrl?: string
+  code?: string
+  namePrefix?: string
+  name: string
+  summary?: string
+  tags?: string[]
+  countries?: string[]
+  category?: string
+  arriveCountry?: string
+  days?: number
+  nights?: number
+  priceMin?: number
+  priceMax?: number
+  status?: number
   hoverTitle?: string
   hoverDescription?: string
 }
