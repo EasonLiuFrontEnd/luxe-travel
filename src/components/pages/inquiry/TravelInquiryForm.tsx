@@ -23,19 +23,19 @@ export type TTravelType =
   | 'theme'
   | 'mitsui-cruise'
 
-export type TGender = 'ms' | 'mr'
+export type TGender = '小姐' | '先生'
 
-export type TContactMethod = 'any' | 'phone' | 'line'
+export type TContactMethod = '手機' | 'LINE' | '都可以'
 
 export type TContactSource =
-  | 'triumph-member'
-  | 'line'
-  | 'facebook'
-  | 'search'
-  | 'media'
-  | 'other'
+  | '我是凱旋集團會員'
+  | 'LINE訊息'
+  | 'FB訊息'
+  | '網路搜尋'
+  | '廣告'
+  | '其他'
 
-export type TBudgetRange = '10-12' | '12-15' | '15-20' | '20+'
+export type TBudgetRange = '10~12萬' | '12~15萬' | '15~20萬' | '20萬以上'
 
 export type TEuropeanRegion = 'western' | 'central' | 'southern' | 'northern'
 
@@ -107,22 +107,22 @@ const travelTypeSchema = z.enum(
   },
 )
 
-const genderSchema = z.enum(['ms', 'mr'], {
+const genderSchema = z.enum(['小姐', '先生'], {
   error: '請選擇稱謂',
 })
 
-const contactMethodSchema = z.enum(['any', 'phone', 'line'], {
+const contactMethodSchema = z.enum(['手機', 'LINE', '都可以'], {
   error: '請選擇偏好聯絡方式',
 })
 
 const contactSourceSchema = z.enum(
-  ['triumph-member', 'line', 'facebook', 'search', 'media', 'other'],
+  ['我是凱旋集團會員', 'LINE訊息', 'FB訊息', '網路搜尋', '廣告', '其他'],
   {
     error: '請選擇得知管道',
   },
 )
 
-const budgetRangeSchema = z.enum(['10-12', '12-15', '15-20', '20+'], {
+const budgetRangeSchema = z.enum(['10~12萬', '12~15萬', '15~20萬', '20萬以上'], {
   error: '請選擇每人預算',
 })
 
@@ -164,7 +164,18 @@ const basicInfoSchema = z.object({
   contactTime: z.string().min(1, '請填入您方便的聯繫時段'),
   contactSource: contactSourceSchema,
   otherSource: z.string().optional(),
-})
+}).refine(
+  (data) => {
+    if (data.contactSource === '其他' && !data.otherSource?.trim()) {
+      return false
+    }
+    return true
+  },
+  {
+    message: '請填寫其他管道',
+    path: ['otherSource'],
+  },
+)
 
 const budgetSchema = z.object({
   budget: budgetRangeSchema,
@@ -264,30 +275,30 @@ export const GROUP_TOUR_PROGRAMS = [
 ]
 
 export const GENDER_OPTIONS = [
-  { value: 'ms', label: '小姐' },
-  { value: 'mr', label: '先生' },
+  { value: '小姐', label: '小姐' },
+  { value: '先生', label: '先生' },
 ]
 
 export const CONTACT_METHOD_OPTIONS = [
-  { value: 'any', label: '都可以' },
-  { value: 'phone', label: '手機' },
-  { value: 'line', label: 'LINE' },
+  { value: '都可以', label: '都可以' },
+  { value: '手機', label: '手機' },
+  { value: 'LINE', label: 'LINE' },
 ]
 
 export const CONTACT_SOURCE_OPTIONS = [
-  { value: 'triumph-member', label: '我是凱旋集團會員' },
-  { value: 'line', label: 'LINE訊息' },
-  { value: 'facebook', label: 'FB訊息' },
-  { value: 'search', label: '網路搜尋' },
-  { value: 'media', label: '廣告' },
-  { value: 'other', label: '其他' },
+  { value: '我是凱旋集團會員', label: '我是凱旋集團會員' },
+  { value: 'LINE訊息', label: 'LINE訊息' },
+  { value: 'FB訊息', label: 'FB訊息' },
+  { value: '網路搜尋', label: '網路搜尋' },
+  { value: '廣告', label: '廣告' },
+  { value: '其他', label: '其他' },
 ]
 
 export const BUDGET_OPTIONS = [
-  { value: '10-12', label: '10-12萬' },
-  { value: '12-15', label: '12-15萬' },
-  { value: '15-20', label: '15-20萬' },
-  { value: '20+', label: '20萬以上' },
+  { value: '10~12萬', label: '10~12萬' },
+  { value: '12~15萬', label: '12~15萬' },
+  { value: '15~20萬', label: '15~20萬' },
+  { value: '20萬以上', label: '20萬以上' },
 ]
 
 export const WESTERN_EUROPE_COUNTRIES = [

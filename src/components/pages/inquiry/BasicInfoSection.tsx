@@ -4,7 +4,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/Form'
 import { Input } from '@/components/ui/Input'
@@ -243,7 +242,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
                       <div
                         key={source.value}
                         className={
-                          source.value === 'other'
+                          source.value === '其他'
                             ? 'flex gap-1.5 items-center'
                             : 'flex gap-1 items-center'
                         }
@@ -256,9 +255,9 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
                             value={source.value}
                             id={`contact-source-${source.value}`}
                           />
-                          {source.value === 'other' ? '其他：' : source.label}
+                          {source.value === '其他' ? '其他：' : source.label}
                         </Label>
-                        {source.value === 'other' && (
+                        {source.value === '其他' && (
                           <FormField
                             control={control}
                             name='basicInfo.otherSource'

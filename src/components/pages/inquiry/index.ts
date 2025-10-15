@@ -1,4 +1,4 @@
-export { TravelInquiryForm } from './TravelInquiryForm'
+export { TravelInquiryForm, ALL_COUNTRIES } from './TravelInquiryForm'
 export { HeroSection } from './HeroSection'
 export { BasicInfoSection } from './BasicInfoSection'
 export { BudgetSection } from './BudgetSection'
