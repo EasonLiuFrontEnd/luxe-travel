@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import FeedbackCardItem from './FeedbackCardItem'
 import type { TFeedbackMode } from './FeedbackCardItem'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
@@ -21,19 +21,20 @@ type TFeedbackCardProps = {
     order: number
     stars?: number
     imageUrl?: string
+    color?: {
+      bg: string
+      text: string
+    }
   }[]
-  autoPlayInterval?: number
   onApiChange?: (api: CarouselApi | undefined) => void
 }
 
 const FeedbackCard = ({
   cardData,
-  autoPlayInterval = 5000,
   onApiChange,
 }: TFeedbackCardProps) => {
   const [api, setApi] = useState<CarouselApi>()
   const { isMobile } = useMediaQuery()
-  const [isAutoPlaying, setIsAutoPlaying] = useState(!isMobile)
 
   useEffect(() => {
     if (onApiChange) {
@@ -41,32 +42,10 @@ const FeedbackCard = ({
     }
   }, [api, onApiChange])
 
-  useEffect(() => {
-    if (!api || !isAutoPlaying || isMobile) return
-
-    const interval = setInterval(() => {
-      api.scrollNext()
-    }, autoPlayInterval)
-
-    return () => clearInterval(interval)
-  }, [api, isAutoPlaying, autoPlayInterval, isMobile])
-
-  const handleMouseEnter = useCallback(() => {
-    if (!isMobile) {
-      setIsAutoPlaying(false)
-    }
-  }, [isMobile])
-
-  const handleMouseLeave = useCallback(() => {
-    if (!isMobile) {
-      setIsAutoPlaying(true)
-    }
-  }, [isMobile])
-
   const carouselOpts = useMemo(
     () => ({
       align: 'start' as const,
-      loop: false,
+      loop: true,
       containScroll: 'trimSnaps' as const,
       ...(isMobile && { dragFree: true }),
     }),
@@ -77,8 +56,6 @@ const FeedbackCard = ({
     <Carousel
       setApi={setApi}
       opts={carouselOpts}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       overflowXHidden
       contentClassName='w-full'
       disableDefaultOverflow
@@ -86,7 +63,15 @@ const FeedbackCard = ({
     >
       <CarouselContent className='xl:gap-x-[24px] mt-[60px] xl:mt-[120px]'>
         {cardData.map((card, index) => (
-          <CarouselItem key={card.id} index={index} className='basis-auto'>
+          <CarouselItem
+            key={card.id}
+            index={index}
+            className={
+              index === cardData.length - 1
+                ? 'basis-auto pr-4 xl:pr-7'
+                : 'basis-auto'
+            }
+          >
             <FeedbackCardItem
               id={card.id}
               mode={card.mode}
@@ -96,6 +81,7 @@ const FeedbackCard = ({
               order={card.order}
               stars={card.stars}
               imageUrl={card.imageUrl}
+              color={card.color}
             />
           </CarouselItem>
         ))}

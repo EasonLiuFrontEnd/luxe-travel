@@ -184,7 +184,7 @@ const BookShelf = ({ trackRef, isMobile = false }: TBookShelfProps) => {
 
             const cardClassName = `${
               size.mobileClassName
-            } ${rotation} xl:[width:var(--w)] xl:[height:var(--h)]`
+            } ${rotation} xl:[min-width:var(--w)] xl:[min-height:var(--h)]`
 
             return (
               <div
