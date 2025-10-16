@@ -102,7 +102,7 @@ const Registration = () => {
         : 'text-figma-primary-950'
 
   return (
-    <div className='box-content w-[790px] h-[590px] sticky top-12 flex flex-col gap-y-[30px] p-7 mt-[49px] mb-7 rounded-2xl bg-figma-neutral-0 font-genseki-h6-regular text-figma-primary-950'>
+    <div className='box-content w-[790px] h-[590px] sticky top-12 flex flex-col gap-y-[30px] p-7 mt-[49px] mr-7 mb-7 rounded-2xl bg-figma-neutral-0 font-genseki-h6-regular text-figma-primary-950'>
       <button
         className={cn(
           'absolute top-0 right-0 pl-3 pb-3 rounded-bl-2xl bg-figma-neutral-50 cursor-pointer',

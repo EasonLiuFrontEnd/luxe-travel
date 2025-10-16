@@ -13,7 +13,13 @@ import TitleIcon from '@/components/pages/tour-content/Featured/icons/TitleIcon'
 
 const TourContentPage = () => {
   return (
-    <div className='bg-figma-neutral-50'>
+    <div className='relative bg-figma-neutral-50'>
+      <div className='fixed top-0 right-5 flex gap-x-4 font-noto-serif-body-m-semibold text-figma-primary-300 [writing-mode:vertical-rl] pt-13 z-99'>
+        <div className='[letter-spacing:4px] pt-[3px] pr-[12.5px] pl-[12.5px] pb-1'>行程資訊</div>
+        <div className='[letter-spacing:4px] text-figma-secondary-950 pt-[3px] pr-[12.5px] pl-[12.5px] pb-1 bg-figma-accent-yellow-light tracking-wider'>焦點特色</div>
+        <div className='[letter-spacing:4px] pt-[3px] pr-[12.5px] pl-[12.5px] pb-1 tracking-wider'>每日行程</div>
+        <div className='[letter-spacing:4px] pt-[3px] pr-[12.5px] pl-[12.5px] pb-1 tracking-wider'>參團須知</div>
+      </div>
       <Banner />
       <div className='flex pb-7 px-9'>
         <div className='box-content flex flex-col gap-y-5 pt-3.5 px-7 pb-7 w-[914px]'>
