@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Image from 'next/image'
 import InteractiveMap from './InteractiveMap'
 import RecommendationList from './RecommendationList'
-import { regionData } from './config'
 import styles from './styles.module.css'
+import { useMap } from '@/api/home/useMap'
 
 type TCollectionRecommendationProps = {
   collectionRef?: React.RefObject<HTMLDivElement>
@@ -16,10 +16,56 @@ const CollectionRecommendation = ({
   className,
   collectionRef,
 }: TCollectionRecommendationProps) => {
-  const firstRegionId = Object.keys(regionData)[0]
-  const [selectedRegion, setSelectedRegion] = useState<string | null>(
-    firstRegionId,
-  )
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(null)
+
+  const { query: mapQuery, mock: mapMock } = useMap()
+
+  const availableCountries = useMemo(() => {
+    const data =
+      mapQuery.error && process.env.NODE_ENV !== 'production'
+        ? mapMock.rows
+        : mapQuery.data || []
+
+    const codes = new Set<string>()
+    if (data) {
+      data.forEach((article) => {
+        article.countries?.forEach((country) => {
+          codes.add(country.code)
+        })
+      })
+    }
+    return codes
+  }, [mapQuery.data, mapQuery.error, mapMock.rows])
+
+  const selectedArticle = useMemo(() => {
+    const data =
+      mapQuery.error && process.env.NODE_ENV !== 'production'
+        ? mapMock.rows
+        : mapQuery.data || []
+
+    if (!data || !selectedRegion) return null
+
+    return data.find((item) =>
+      item.countries?.some((country) => country.code === selectedRegion),
+    )
+  }, [selectedRegion, mapQuery.data, mapQuery.error, mapMock.rows])
+
+  useEffect(() => {
+    if (selectedRegion) return
+
+    const data =
+      mapQuery.error && process.env.NODE_ENV !== 'production'
+        ? mapMock.rows
+        : mapQuery.data || []
+
+    if (data && data.length > 0) {
+      const firstArticle = data[0]
+      const firstCountry = firstArticle.countries?.[0]
+      if (firstCountry) {
+        setSelectedRegion(firstCountry.code)
+      }
+    }
+  }, [mapQuery.data, mapQuery.error, mapMock.rows, selectedRegion])
 
   return (
     <section
@@ -27,13 +73,15 @@ const CollectionRecommendation = ({
     >
       <div className='mx-auto relative'>
         <div className='w-full bg-figma-neutral-50 relative rounded-2xl overflow-hidden'>
-          <Image
-            key='recommendation-background'
-            alt='背景裝飾'
-            className='object-cover'
-            src='/home/recommend/bg.jpg'
-            fill
-          />
+          {selectedArticle?.imageUrl && (
+            <Image
+              key={`recommendation-background-${selectedRegion}`}
+              alt={selectedArticle.subtitle || '背景裝飾'}
+              className='object-cover'
+              src={selectedArticle.imageUrl}
+              fill
+            />
+          )}
 
           <div className='absolute inset-0 bg-black/20 rounded-2xl'></div>
 
@@ -53,6 +101,7 @@ const CollectionRecommendation = ({
                 <InteractiveMap
                   selectedRegion={selectedRegion}
                   onRegionSelect={setSelectedRegion}
+                  availableCountries={availableCountries}
                 />
               </div>
             </div>
