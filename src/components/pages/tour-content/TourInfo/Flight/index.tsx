@@ -1,6 +1,6 @@
 import FlightCard from './FlightCard'
-import { flightData } from '../config'
-import TitleIcon from '../Featured/icons/TitleIcon'
+import { flightData } from '../../config'
+import TitleIcon from '../../Featured/icons/TitleIcon'
 
 const Flight = () => {
   return (

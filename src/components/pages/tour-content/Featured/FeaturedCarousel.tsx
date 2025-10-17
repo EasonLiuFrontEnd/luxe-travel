@@ -64,7 +64,6 @@ const FeaturedCarousel = ({
               className='object-cover rounded-2xl'
               width={1440}
               height={590}
-              priority={index === 0}
             />
           </CarouselItem>
         ))}

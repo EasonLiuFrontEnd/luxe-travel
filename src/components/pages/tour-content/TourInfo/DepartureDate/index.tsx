@@ -1,13 +1,13 @@
+import { useState, useEffect } from 'react'
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/Carousel'
 import type { CarouselApi } from '@/components/ui/Carousel'
-import { mockTimeSlots } from '../config'
+import { mockTimeSlots } from '../../config'
 import TimeSlotCard from './TimeSlotCard'
-import TitleIcon from '../Featured/icons/TitleIcon'
-import { useState, useEffect } from 'react'
+import TitleIcon from '../../Featured/icons/TitleIcon'
 
 const DepartureDate = () => {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>()

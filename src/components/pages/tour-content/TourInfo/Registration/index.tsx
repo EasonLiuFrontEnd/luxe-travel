@@ -1,4 +1,4 @@
-import { mockTourData, formatNumber } from '../config'
+import { mockTourData, formatNumber } from '../../config'
 import { cn } from '@/lib/utils'
 import style from './styles.module.css'
 

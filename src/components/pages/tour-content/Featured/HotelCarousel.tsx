@@ -17,7 +17,7 @@ const HotelCarousel = () => {
           alt='plus-aggregate'
           width={290}
           height={290}
-          className='w-[290px] h-[290px] rounded-2xl object-cover absolute top-0 left-0 z-0'
+          className='rounded-2xl object-cover absolute top-0 left-0 z-0'
         />
         <FeaturedCarousel
           images={['/tour-content/hotel-lobby.jpg']}
@@ -29,7 +29,7 @@ const HotelCarousel = () => {
           alt='plus-aggregate-large'
           width={429}
           height={395}
-          className='w-[429px] h-[395px] rounded-2xl object-cover absolute bottom-0 right-0 translate-y-[45%] z-0'
+          className='rounded-2xl object-cover absolute bottom-0 right-0 translate-y-[45%] z-0'
         />
       </div>
       <div className='mx-[240px] mb-[150px]'>

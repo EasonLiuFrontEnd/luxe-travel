@@ -77,7 +77,7 @@ const ItineraryActivity = ({
                       alt={place['zh-TW'] || place.en}
                       width={397}
                       height={231}
-                      className='object-cover rounded-2xl mb-7 h-[231px]'
+                      className='object-cover rounded-2xl mb-7'
                     />
                   )}
                   {place.intro && (

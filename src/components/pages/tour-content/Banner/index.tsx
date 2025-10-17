@@ -32,6 +32,7 @@ const Banner = () => {
           width={1824}
           height={670}
           className='h-[670px] object-cover rounded-2xl'
+          priority
         />
         <div
           className={cn(

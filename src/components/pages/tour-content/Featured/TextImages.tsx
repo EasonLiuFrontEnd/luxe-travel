@@ -44,7 +44,7 @@ const TextImages = () => {
           alt='hotel-outside'
           width={732}
           height={440}
-          className='w-[732px] h-[440px] rounded-2xl object-cover mb-12'
+          className='rounded-2xl object-cover mb-12'
         />
         <Image
           key='hotel-inside-1'
@@ -52,7 +52,7 @@ const TextImages = () => {
           alt='hotel-inside'
           width={490}
           height={294}
-          className='w-[490px] h-[294px] rounded-2xl object-cover mb-[52px]'
+          className='rounded-2xl object-cover mb-[52px]'
         />
       </div>
     </div>

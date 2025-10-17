@@ -1,10 +1,13 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import ItineraryCard from './ItineraryCard'
 import ItineraryActivity from './ItineraryActivity'
 import { itineraryData, type TItinerary } from '../config'
-import ItineraryNotice from './ItineraryNotice'
 
-const DailyItinerary = () => {
+type TDailyItineraryProps = {
+  children?: ReactNode
+}
+
+const DailyItinerary = ({ children }: TDailyItineraryProps) => {
   const [openPlace, setOpenPlace] = useState<
     TItinerary['activity'][0]['place'][0] | null
   >(null)
@@ -17,7 +20,10 @@ const DailyItinerary = () => {
   }
 
   return (
-    <div className='flex flex-col border-t border-figma-secondary-500 bg-figma-secondary-100'>
+    <div
+      id='daily-itinerary'
+      className='flex flex-col border-t border-figma-secondary-500 bg-figma-secondary-100'
+    >
       <h2 className='mx-auto font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-4 mt-13 mb-12 gradient-title-border'>
         每日行程
       </h2>
@@ -164,15 +170,7 @@ const DailyItinerary = () => {
           </div>
         )
       })}
-      <div
-        style={{
-          position: 'sticky',
-          top: `${60 + itineraryData.length * 10}px`,
-          zIndex: itineraryData.length,
-        }}
-      >
-        <ItineraryNotice />
-      </div>
+      {children}
     </div>
   )
 }

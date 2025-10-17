@@ -74,7 +74,7 @@ const ItineraryCarousel = forwardRef<
                 alt={item.title}
                 width={526}
                 height={280}
-                className='object-cover rounded-2xl mb-7 h-[280px]'
+                className='object-cover rounded-2xl mb-7'
               />
               <div className='absolute left-4 bottom-4 flex gap-x-2 p-2 rounded-[4px] bg-figma-secondary-200'>
                 <svg
