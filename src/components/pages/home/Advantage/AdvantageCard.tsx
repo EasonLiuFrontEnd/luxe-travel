@@ -19,7 +19,7 @@ const AdvantageCard = ({ card, className }: TAdvantageCardProps) => {
       )}
     >
       <div
-        className={`absolute -inset-3 bg-center bg-cover bg-no-repeat ${styles.blurredBackground}`}
+        className={`absolute inset-0 bg-center bg-cover bg-no-repeat ${styles.blurredBackground}`}
         style={{ backgroundImage: `url('${card.imageUrl}')` }}
       />
 

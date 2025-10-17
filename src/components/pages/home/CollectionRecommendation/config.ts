@@ -52,32 +52,32 @@ export const recommendationData: TRecommendationItem[] = [
 ]
 
 export const regionData: Record<string, TRegion> = {
-  it: {
-    id: 'it',
+  IT: {
+    id: 'IT',
     name: '義大利',
     description: '新婚夫妻15日蜜月遊',
     image: '/home/recommend/bg.jpg',
   },
-  gb: {
-    id: 'gb',
+  GB: {
+    id: 'GB',
     name: '英國',
     description: '小資5日輕鬆遊',
     image: '/home/recommend/bg.jpg',
   },
-  ie: {
-    id: 'ie',
+  IE: {
+    id: 'IE',
     name: '愛爾蘭',
     description: '孝親輕鬆休閒10日遊',
     image: '/home/recommend/bg.jpg',
   },
-  be: {
-    id: 'be',
+  BE: {
+    id: 'BE',
     name: '比利時',
     description: '閨蜜6日渡假遊',
     image: '/home/recommend/bg.jpg',
   },
-  se: {
-    id: 'se',
+  SE: {
+    id: 'SE',
     name: '瑞典',
     description: '親子五人暑假快樂遊',
     image: '/home/recommend/bg.jpg',

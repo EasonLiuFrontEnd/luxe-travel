@@ -42,6 +42,10 @@ const Feedback = () => {
     order: number
     stars?: number
     imageUrl?: string
+    color?: {
+      bg: string
+      text: string
+    }
   }[] = useMemo(() => {
     return (effectiveData || []).map((feedback) => ({
       id: feedback.id,
@@ -54,9 +58,8 @@ const Feedback = () => {
       order: feedback.order,
       stars: feedback.mode === 'REAL' ? feedback.stars || undefined : undefined,
       imageUrl:
-        feedback.mode === 'VIRTUAL'
-          ? feedback.imageUrl || undefined
-          : undefined,
+        feedback.mode !== 'REAL' ? feedback.imageUrl || undefined : undefined,
+      color: feedback.mode !== 'REAL' ? feedback.color : undefined,
     }))
   }, [effectiveData])
 
@@ -92,11 +95,7 @@ const Feedback = () => {
       <h2 className='font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-[12px] gradient-title-border'>
         真實旅客回饋
       </h2>
-      <FeedbackCarousel
-        cardData={cardData}
-        autoPlayInterval={10000}
-        onApiChange={setCarouselApi}
-      />
+      <FeedbackCarousel cardData={cardData} onApiChange={setCarouselApi} />
       <div className='w-[75vw] hidden xl:flex justify-end mx-auto px-[24px]'>
         <button
           onClick={handlePrevious}

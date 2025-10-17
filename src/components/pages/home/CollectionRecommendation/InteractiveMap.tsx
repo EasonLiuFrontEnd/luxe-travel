@@ -1,10 +1,10 @@
 'use client'
 
-import { useState, useLayoutEffect } from 'react'
+import { useState, useLayoutEffect, useMemo } from 'react'
 import Image from 'next/image'
 import EuropeMap from './EuropeMap'
 import IconCta from '@/components/shared/icons/IconCta'
-import { regionData } from './config'
+import { useMap } from '@/api/home/useMap'
 
 type TInteractiveMapProps = {
   selectedRegion: string | null
@@ -12,18 +12,45 @@ type TInteractiveMapProps = {
     regionId: string | null,
     elementPosition?: { x: number; y: number },
   ) => void
+  availableCountries?: Set<string>
   className?: string
 }
 
 const InteractiveMap = ({
   selectedRegion,
   onRegionSelect,
+  availableCountries,
 }: TInteractiveMapProps) => {
   const [clickPosition, setClickPosition] = useState<{
     x: number
     y: number
   } | null>(null)
-  const selectedRegionData = selectedRegion ? regionData[selectedRegion] : null
+
+  const { query: mapQuery, mock: mapMock } = useMap()
+
+  const selectedRegionData = useMemo(() => {
+    if (!selectedRegion) return null
+
+    const data =
+      mapQuery.error && process.env.NODE_ENV !== 'production'
+        ? mapMock.rows
+        : mapQuery.data || []
+
+    if (!data) return null
+
+    const article = data.find((item) =>
+      item.countries?.some((country) => country.code === selectedRegion),
+    )
+
+    if (!article) return null
+
+    return {
+      id: selectedRegion,
+      name: article.subtitle,
+      description: article.title,
+      image: article.imageUrl,
+    }
+  }, [selectedRegion, mapQuery.data, mapQuery.error, mapMock.rows])
 
   useLayoutEffect(() => {
     if (selectedRegion && !clickPosition) {
@@ -62,6 +89,7 @@ const InteractiveMap = ({
       <EuropeMap
         selectedRegion={selectedRegion}
         onRegionClick={handleRegionSelect}
+        availableCountries={availableCountries}
       />
 
       {selectedRegion && clickPosition && (

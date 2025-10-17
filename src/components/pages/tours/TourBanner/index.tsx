@@ -124,7 +124,7 @@ const TourBanner = ({
 
           {!isLoading && !hasError && tours && tours.length === 0 && (
             <div className='w-full h-full bg-gray-100 rounded-2xl flex items-center justify-center'>
-              <div className='text-gray-500 text-lg'>暫無行程資料</div>
+              <div className='text-gray-500 text-lg'>暫無主打商品</div>
             </div>
           )}
 

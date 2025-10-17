@@ -15,7 +15,10 @@ type TFeedBack = {
   order: number
   createdAt: string
   updatedAt: string
-  color: string
+  color: {
+    bg: string
+    text: string
+  }
 }
 
 export const feedbacksApiMock: TApiResponse<TFeedBack> = {
@@ -34,7 +37,10 @@ export const feedbacksApiMock: TApiResponse<TFeedBack> = {
       order: 0,
       createdAt: '2025-09-11T06:51:53.052Z',
       updatedAt: '2025-09-11T06:51:53.052Z',
-      color: '#FBBF24',
+      color: {
+        bg: '#F87171',
+        text: '#B91C1C',
+      },
     },
     {
       id: '68c271c3ea9b6c997ca4e34e',
@@ -48,7 +54,10 @@ export const feedbacksApiMock: TApiResponse<TFeedBack> = {
       order: 1,
       createdAt: '2025-09-11T06:52:50.562Z',
       updatedAt: '2025-09-11T06:52:50.562Z',
-      color: '#10B981',
+      color: {
+        bg: '#FBBF24',
+        text: '#B45309',
+      },
     },
     {
       id: '68c69bc65a243c8f10da1a5e',
@@ -63,7 +72,10 @@ export const feedbacksApiMock: TApiResponse<TFeedBack> = {
       order: 2,
       createdAt: '2025-09-14T10:41:10.833Z',
       updatedAt: '2025-09-14T10:41:57.211Z',
-      color: '#FBBF24',
+      color: {
+        bg: '#34D399',
+        text: '#065F46',
+      },
     },
     {
       id: '68c69c1c5a243c8f10da1a5f',
@@ -77,7 +89,10 @@ export const feedbacksApiMock: TApiResponse<TFeedBack> = {
       order: 3,
       createdAt: '2025-09-14T10:42:36.866Z',
       updatedAt: '2025-09-14T10:42:36.866Z',
-      color: '#60A5FA',
+      color: {
+        bg: '#60A5FA',
+        text: '#1D4ED8',
+      },
     },
   ],
   pagination: null,

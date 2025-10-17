@@ -14,6 +14,10 @@ type TFeedbackCardItemProps = {
   order: number
   stars?: number
   imageUrl?: string
+  color?: {
+    bg: string
+    text: string
+  }
 }
 
 const FeedbackCardItem = ({
@@ -25,6 +29,7 @@ const FeedbackCardItem = ({
   order,
   stars,
   imageUrl,
+  color,
 }: TFeedbackCardItemProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [showButton, setShowButton] = useState(true)
@@ -107,28 +112,15 @@ const FeedbackCardItem = ({
     )
   }
 
-  if (mode === 'VIRTUAL') {
-    const hasImage = !!imageUrl
+  if (mode === 'MARKETING' && imageUrl) {
     return (
       <div
         id={id}
         data-order={order}
-        className={`w-[320px] h-[323px] p-[24px] rounded-[16px] ${
-          hasImage
-            ? 'text-white bg-cover bg-center'
-            : 'text-figma-accent-blue-normal bg-figma-accent-blue-light'
-        }`}
-        style={
-          hasImage && imageUrl
-            ? { backgroundImage: `url(${imageUrl})` }
-            : undefined
-        }
+        className='w-[320px] h-[323px] p-[24px] rounded-[16px] text-white bg-cover bg-center'
+        style={{ backgroundImage: `url(${imageUrl})` }}
       >
-        <div
-          className={`inline-block p-[20px] mb-[24px] rounded-[64px] border ${
-            hasImage ? 'border-white' : 'border-figma-accent-blue-normal'
-          }`}
-        >
+        <div className='inline-block p-[20px] mb-[24px] rounded-[64px] border border-white'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='48'
@@ -138,7 +130,7 @@ const FeedbackCardItem = ({
           >
             <path
               d='M34.2101 28.0139C29.9269 28.0139 26.4545 24.517 26.4545 20.2035C26.4545 15.8909 29.9269 12.394 34.2101 12.394C38.4933 12.394 41.9656 15.8909 41.9656 20.2035L42 21.3195C42 29.9465 35.0553 36.9395 26.4889 36.9395V32.4763C29.4483 32.4763 32.2309 31.3161 34.323 29.2085C34.7264 28.8035 35.0937 28.3715 35.4251 27.9182C35.0291 27.9812 34.6233 28.0139 34.2101 28.0139ZM13.7555 28.0139C9.47237 28.0139 6 24.517 6 20.2035C6 15.8909 9.47237 12.394 13.7555 12.394C18.0387 12.394 21.5111 15.8909 21.5111 20.2035L21.5455 21.3195C21.5455 29.9465 14.6007 36.9395 6.03437 36.9395V32.4763C8.99373 32.4763 11.7764 31.3161 13.8685 29.2085C14.2718 28.8035 14.6392 28.3715 14.9705 27.9182C14.5745 27.9812 14.1687 28.0139 13.7555 28.0139Z'
-              fill={hasImage ? '#FFFFFF' : '#8BC3DE'}
+              fill='#FFFFFF'
             />
           </svg>
         </div>
@@ -165,9 +157,16 @@ const FeedbackCardItem = ({
     <div
       id={id}
       data-order={order}
-      className='w-[320px] h-[475px] p-[24px] rounded-[16px] text-figma-primary-0 bg-figma-primary-950'
+      className='w-[320px] h-[475px] p-[24px] rounded-[16px]'
+      style={{
+        backgroundColor: color?.bg,
+        color: color?.text,
+      }}
     >
-      <div className='inline-block p-[20px] mb-[24px] rounded-[64px] border border-figma-primary-0'>
+      <div
+        className='inline-block p-[20px] mb-[24px] rounded-[64px] border'
+        style={{ borderColor: color?.text }}
+      >
         <svg
           xmlns='http://www.w3.org/2000/svg'
           width='48'
@@ -177,7 +176,7 @@ const FeedbackCardItem = ({
         >
           <path
             d='M34.2101 28.0139C29.9269 28.0139 26.4545 24.517 26.4545 20.2035C26.4545 15.8909 29.9269 12.394 34.2101 12.394C38.4933 12.394 41.9656 15.8909 41.9656 20.2035L42 21.3195C42 29.9465 35.0553 36.9395 26.4889 36.9395V32.4763C29.4483 32.4763 32.2309 31.3161 34.323 29.2085C34.7264 28.8035 35.0937 28.3715 35.4251 27.9182C35.0291 27.9812 34.6233 28.0139 34.2101 28.0139ZM13.7555 28.0139C9.47237 28.0139 6 24.517 6 20.2035C6 15.8909 9.47237 12.394 13.7555 12.394C18.0387 12.394 21.5111 15.8909 21.5111 20.2035L21.5455 21.3195C21.5455 29.9465 14.6007 36.9395 6.03437 36.9395V32.4763C8.99373 32.4763 11.7764 31.3161 13.8685 29.2085C14.2718 28.8035 14.6392 28.3715 14.9705 27.9182C14.5745 27.9812 14.1687 28.0139 13.7555 28.0139Z'
-            fill='#FFFFFF'
+            fill={color?.text}
           />
         </svg>
       </div>
