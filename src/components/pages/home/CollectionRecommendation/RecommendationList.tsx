@@ -15,9 +15,10 @@ const RecommendationList = ({ className }: TRecommendationListProps) => {
   const { query: mapQuery, mock: mapMock } = useMap()
 
   const recommendationData = useMemo(() => {
-    const data = mapQuery.error && process.env.NODE_ENV !== 'production'
-      ? mapMock.rows
-      : mapQuery.data || []
+    const data =
+      mapQuery.error && process.env.NODE_ENV !== 'production'
+        ? mapMock.rows
+        : mapQuery.data || []
 
     return (data || []).slice(0, 5).map((article) => ({
       id: article.id,

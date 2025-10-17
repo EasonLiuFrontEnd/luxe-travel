@@ -29,10 +29,7 @@ type TFeedbackCardProps = {
   onApiChange?: (api: CarouselApi | undefined) => void
 }
 
-const FeedbackCard = ({
-  cardData,
-  onApiChange,
-}: TFeedbackCardProps) => {
+const FeedbackCard = ({ cardData, onApiChange }: TFeedbackCardProps) => {
   const [api, setApi] = useState<CarouselApi>()
   const { isMobile } = useMediaQuery()
 

@@ -38,8 +38,8 @@ export const feedbacksApiMock: TApiResponse<TFeedBack> = {
       createdAt: '2025-09-11T06:51:53.052Z',
       updatedAt: '2025-09-11T06:51:53.052Z',
       color: {
-        'bg': '#F87171',
-        'text': '#B91C1C',
+        bg: '#F87171',
+        text: '#B91C1C',
       },
     },
     {
@@ -55,8 +55,8 @@ export const feedbacksApiMock: TApiResponse<TFeedBack> = {
       createdAt: '2025-09-11T06:52:50.562Z',
       updatedAt: '2025-09-11T06:52:50.562Z',
       color: {
-        'bg': '#FBBF24',
-        'text': '#B45309',
+        bg: '#FBBF24',
+        text: '#B45309',
       },
     },
     {
@@ -73,8 +73,8 @@ export const feedbacksApiMock: TApiResponse<TFeedBack> = {
       createdAt: '2025-09-14T10:41:10.833Z',
       updatedAt: '2025-09-14T10:41:57.211Z',
       color: {
-        'bg': '#34D399',
-        'text': '#065F46',
+        bg: '#34D399',
+        text: '#065F46',
       },
     },
     {
@@ -90,8 +90,8 @@ export const feedbacksApiMock: TApiResponse<TFeedBack> = {
       createdAt: '2025-09-14T10:42:36.866Z',
       updatedAt: '2025-09-14T10:42:36.866Z',
       color: {
-        'bg': '#60A5FA',
-        'text': '#1D4ED8',
+        bg: '#60A5FA',
+        text: '#1D4ED8',
       },
     },
   ],
