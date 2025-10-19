@@ -16,7 +16,7 @@ const Tours = ({ tours = [], tourType, className }: TToursProps) => {
   const router = useRouter()
 
   const handleDetailsClick = (tourId: string) => {
-    router.push(`/${tourType}/${tourId}`)
+    router.push(`/tour-content/${tourId}`)
   }
 
   const handleReviewClick = () => {}

@@ -1,6 +1,6 @@
-import { useRef, useState, useCallback } from 'react'
+import { useRef, useState, useCallback, useMemo } from 'react'
 import RecommendationItem from './RecommendationItem'
-import { recommendationData } from './config'
+import { useMap } from '@/api/home/useMap'
 
 type TRecommendationListProps = {
   className?: string
@@ -12,7 +12,29 @@ const RecommendationList = ({ className }: TRecommendationListProps) => {
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
 
-  const handleRecommendationClick = () => {}
+  const { query: mapQuery, mock: mapMock } = useMap()
+
+  const recommendationData = useMemo(() => {
+    const data =
+      mapQuery.error && process.env.NODE_ENV !== 'production'
+        ? mapMock.rows
+        : mapQuery.data || []
+
+    return (data || []).slice(0, 5).map((article) => ({
+      id: article.id,
+      title: article.title,
+      country: article.subtitle,
+      imageSrc: article.imageUrl,
+      imageAlt: `${article.title} ${article.subtitle}`,
+      linkUrl: article.linkUrl,
+    }))
+  }, [mapQuery.data, mapQuery.error, mapMock.rows])
+
+  const handleRecommendationClick = (linkUrl: string) => {
+    if (linkUrl) {
+      window.open(linkUrl, '_blank', 'noopener,noreferrer')
+    }
+  }
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     if (!scrollRef.current) return
@@ -62,7 +84,7 @@ const RecommendationList = ({ className }: TRecommendationListProps) => {
             key={item.id}
             item={item}
             onClick={handleRecommendationClick}
-            className={`min-w-[290px] xl:min-w-0 flex-shrink-0 xl:flex-shrink flex gap-4 items-center p-[10px] xl:p-4 bg-figma-neutral-0 rounded-[16px] hover:bg-figma-secondary-300 transition-colors duration-300 ${
+            className={`min-w-[290px] xl:min-w-0 flex-shrink-0 xl:flex-shrink flex gap-4 items-start p-[10px] xl:p-4 bg-figma-neutral-0 rounded-[16px] hover:bg-figma-secondary-300 transition-colors duration-300 ${
               index === 0 ? 'bg-figma-secondary-300' : ''
             }`}
             style={{ scrollSnapAlign: 'start' }}

@@ -1,11 +1,3 @@
-.goldGradientBackground {
-  background-image:
-    linear-gradient(219.25deg, rgba(189, 160, 94, 0.6) 0%, #bda05e 66.69%),
-    url('/shared/icons/background-plus.svg');
-  background-repeat: repeat;
-  background-color: #bda05e;
-}
-
 .serviceProcessBackgroundColor {
   background: linear-gradient(
     180deg,
@@ -36,6 +28,17 @@
   color: #ffffff;
 }
 
+@media (max-width: 1279px) {
+  .books {
+    background-image:
+      linear-gradient(219.25deg, rgba(189, 160, 94, 0.6) 0%, #bda05e 66.69%),
+      url('/shared/icons/background-plus.svg');
+    background-repeat: repeat;
+    background-color: #bda05e;
+    color: #ffffff;
+  }
+}
+
 .descriptionText {
   font-size: 20px;
   line-height: 1.5;
@@ -45,4 +48,10 @@
 
 .books:hover .descriptionText {
   color: #ffffff;
+}
+
+@media (max-width: 1279px) {
+  .descriptionText {
+    color: #ffffff;
+  }
 }

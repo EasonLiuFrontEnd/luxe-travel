@@ -38,7 +38,7 @@ export type TBook = {
 export const bookShelfStyleConfig: TBookStyleConfig[] = [
   {
     size: {
-      mobileClassName: 'w-[112px] h-[394px]',
+      mobileClassName: 'w-auto min-w-[112px] h-auto min-h-[394px]',
       web: { width: '152px', height: '458px' },
     },
     rotation: 'rotate-0',
@@ -47,7 +47,7 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
   },
   {
     size: {
-      mobileClassName: 'w-[64px] h-[334px]',
+      mobileClassName: 'w-auto min-w-[64px] h-auto min-h-[334px]',
       web: { width: '80px', height: '398px' },
     },
     rotation: 'rotate-0',
@@ -56,7 +56,7 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
   },
   {
     size: {
-      mobileClassName: 'w-[80px] h-[360px]',
+      mobileClassName: 'w-auto min-w-[80px] h-auto min-h-[360px]',
       web: { width: '104px', height: '424px' },
     },
     rotation: 'rotate-0',
@@ -65,7 +65,7 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
   },
   {
     size: {
-      mobileClassName: 'w-[86.87px] h-[269.72px]',
+      mobileClassName: 'w-auto min-w-[86.87px] h-auto min-h-[269.72px]',
       web: { width: '108.37px', height: '334.72px' },
     },
     rotation: '-rotate-5',
@@ -74,7 +74,7 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
   },
   {
     size: {
-      mobileClassName: 'w-[80px] h-[326px]',
+      mobileClassName: 'w-auto min-w-[80px] h-auto min-h-[326px]',
       web: { width: '104px', height: '390px' },
     },
     rotation: 'rotate-0',
@@ -83,7 +83,7 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
   },
   {
     size: {
-      mobileClassName: 'w-[64px] h-[394px]',
+      mobileClassName: 'w-auto min-w-[64px] h-auto min-h-[394px]',
       web: { width: '80px', height: '458px' },
     },
     rotation: 'rotate-0',
@@ -92,7 +92,7 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
   },
   {
     size: {
-      mobileClassName: 'w-[108.27px] h-[333.58px]',
+      mobileClassName: 'w-auto min-w-[108.27px] h-auto min-h-[333.58px]',
       web: { width: '137.6px', height: '397.58px' },
     },
     rotation: 'rotate-5',
@@ -101,7 +101,7 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
   },
   {
     size: {
-      mobileClassName: 'w-[80px] h-[261px]',
+      mobileClassName: 'w-auto min-w-[80px] h-auto min-h-[261px]',
       web: { width: '104px', height: '325px' },
     },
     rotation: 'rotate-0',
@@ -110,7 +110,7 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
   },
   {
     size: {
-      mobileClassName: 'w-[64px] h-[378px]',
+      mobileClassName: 'w-auto min-w-[64px] h-auto min-h-[378px]',
       web: { width: '80px', height: '442px' },
     },
     rotation: 'rotate-0',
@@ -119,7 +119,7 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
   },
   {
     size: {
-      mobileClassName: 'w-[80px] h-[344px]',
+      mobileClassName: 'w-auto min-w-[80px] h-auto min-h-[344px]',
       web: { width: '104px', height: '408px' },
     },
     rotation: 'rotate-0',
@@ -128,7 +128,7 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
   },
   {
     size: {
-      mobileClassName: 'w-[107.05px] h-[319.63px]',
+      mobileClassName: 'w-auto min-w-[107.05px] h-auto min-h-[319.63px]',
       web: { width: '136.38px', height: '383.63px' },
     },
     rotation: '-rotate-5',
@@ -137,7 +137,7 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
   },
   {
     size: {
-      mobileClassName: 'w-[89.09px] h-[264.43px]',
+      mobileClassName: 'w-auto min-w-[89.09px] h-auto min-h-[264.43px]',
       web: { width: '115.28px', height: '328.43px' },
     },
     rotation: 'rotate-2',
@@ -146,7 +146,7 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
   },
   {
     size: {
-      mobileClassName: 'w-[64px] h-[394px]',
+      mobileClassName: 'w-auto min-w-[64px] h-auto min-h-[394px]',
       web: { width: '80px', height: '458px' },
     },
     rotation: 'rotate-0',
@@ -155,7 +155,7 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
   },
   {
     size: {
-      mobileClassName: 'w-[75.98px] h-[346.54px]',
+      mobileClassName: 'w-auto min-w-[75.98px] h-auto min-h-[346.54px]',
       web: { width: '94.19px', height: '410.54px' },
     },
     rotation: '-rotate-2',
@@ -164,7 +164,7 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
   },
   {
     size: {
-      mobileClassName: 'w-[144px] h-[304px]',
+      mobileClassName: 'w-auto min-w-[144px] h-auto min-h-[304px]',
       web: { width: '200px', height: '368px' },
     },
     rotation: 'rotate-0',
@@ -173,7 +173,7 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
   },
   {
     size: {
-      mobileClassName: 'w-[64px] h-[354px]',
+      mobileClassName: 'w-auto min-w-[64px] h-auto min-h-[354px]',
       web: { width: '80px', height: '418px' },
     },
     rotation: 'rotate-0',
@@ -182,7 +182,7 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
   },
   {
     size: {
-      mobileClassName: 'w-[86.95px] h-[270.72px]',
+      mobileClassName: 'w-auto min-w-[86.95px] h-auto min-h-[270.72px]',
       web: { width: '108.37px', height: '334.72px' },
     },
     rotation: '-rotate-5',
@@ -191,7 +191,7 @@ export const bookShelfStyleConfig: TBookStyleConfig[] = [
   },
   {
     size: {
-      mobileClassName: 'w-[80px] h-[378px]',
+      mobileClassName: 'w-auto min-w-[80px] h-auto min-h-[378px]',
       web: { width: '104px', height: '442px' },
     },
     rotation: 'rotate-0',
