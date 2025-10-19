@@ -10,8 +10,8 @@ import TitleIcon from '../Featured/icons/TitleIcon'
 
 const TourInfo = () => {
   return (
-    <div id='tour-info' className='flex pb-7 px-9'>
-      <div className='box-content flex flex-col gap-y-5 pt-3.5 px-7 pb-7 w-[914px]'>
+    <div id='tour-info' className='flex flex-col xl:flex-row  pb-7 px-4 xl:pb-7 xl:px-9'>
+      <div className='order-2 xl:order-1 w-full xl:max-w-[48.7vw] box-content flex flex-col gap-y-5 xl:pt-3.5 xl:px-7 xl:pb-7'>
         <DepartureDate />
         <Flight />
         <Image
@@ -20,9 +20,9 @@ const TourInfo = () => {
           alt='flight-map'
           width={866}
           height={644}
-          className='box-content p-7 rounded-2xl bg-figma-neutral-0'
+          className='w-full object-cover py-5 px-7 xl:p-7 rounded-2xl bg-figma-neutral-0'
         />
-        <div className='flex flex-col gap-y-2.5 p-7 rounded-2xl bg-figma-secondary-150'>
+        <div className='flex flex-col gap-y-2.5 p-5 xl:p-7 rounded-2xl bg-figma-secondary-150'>
           <div className='flex items-center'>
             <TitleIcon
               topColor='#926D3C'
@@ -50,7 +50,7 @@ const TourInfo = () => {
           >
             貼心安排
           </h5>
-          <ul className='box-content h-[289px] list-disc font-genseki-h6-regular text-figma-primary-950 pt-9 px-9 pb-11 ml-6'>
+          <ul className='box-content xl:h-[289px] list-disc font-family-genseki text-[16px] xl:text-[20px] leading-[1.5] text-figma-primary-950 pt-7 px-4 pb-10 xl:pt-9 xl:px-9 xl:pb-11 ml-6'>
             <li>提供【隨身無線導覽耳機】每人一台。</li>
             <li>贈送每人一張【歐洲網路卡】。</li>
             <li>贈送每位旅客行李綁帶及歐洲轉換插頭各乙只。</li>
@@ -61,17 +61,17 @@ const TourInfo = () => {
               萬元、意外醫療保額新臺幣 20 萬,有額外需要敬請自行加購旅平】。
             </li>
           </ul>
-          <div className='absolute left-[-10px] bottom-[-22px] flex items-center gap-x-5'>
-            <p className='font-noto-serif-h2-regular text-figma-secondary-100'>
+          <div className='absolute left-[-5px] bottom-[-10px] xl:left-[-10px] xl:bottom-[-22px] flex items-center gap-x-5'>
+            <p className='font-family-noto-serif text-[32px] xl:text-[64px] max-xl:font-medium leading-[1.2] text-figma-secondary-100'>
               Made to
             </p>
-            <p className='font-luxurious-deco-l-regular text-figma-secondary-100'>
+            <p className='font-family-luxurious text-[64px] xl:text-[96px] leading-[1.2] text-figma-secondary-100'>
               measyre
             </p>
           </div>
         </div>
       </div>
-      <Registration />
+      <Registration className="order-1 xl:order-2" />
     </div>
   )
 }

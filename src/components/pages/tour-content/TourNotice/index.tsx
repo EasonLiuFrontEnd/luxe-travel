@@ -1,8 +1,15 @@
+import { useMediaQuery } from "@/hooks/useMediaQuery"
+import { useState } from 'react'
+import { cn } from "@/lib/utils"
+
 type TTourNoticeProps = {
   itemCount: number
 }
 
 const TourNotice = ({ itemCount }: TTourNoticeProps) => {
+  const { isMobile } = useMediaQuery()
+  const [isExpanded, setIsExpanded] = useState(false)
+
   return (
     <div
       id='tour-notice'
@@ -13,12 +20,12 @@ const TourNotice = ({ itemCount }: TTourNoticeProps) => {
       }}
     >
       <div className='flex flex-col border-t border-figma-secondary-500 bg-figma-secondary-100'>
-        <h2 className='mx-auto font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-4 mt-13 mb-12 gradient-title-border'>
+        <h2 className='mx-auto font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-4 my-10 xl:mt-13 xl:mb-12 gradient-title-border'>
           貼心提醒與參團須知
         </h2>
-        <div className='flex flex-col gap-y-5 mt-9 mb-11'>
-          <div className='pt-8 px-8 pb-10 mx-[240px] rounded-2xl bg-figma-neutral-0'>
-            <div className='flex items-center mb-8'>
+        <div className='flex flex-col gap-y-5 xl:mt-9 mb-[44px] xl:mb-11'>
+          <div className='flex flex-col gap-y-8 pt-5 px-5 pb-[30px] mx-4 xl:pt-8 xl:px-8 xl:pb-10 xl:mx-[240px] rounded-2xl bg-figma-neutral-0'>
+            <div className='flex items-center'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 width='22'
@@ -40,7 +47,7 @@ const TourNotice = ({ itemCount }: TTourNoticeProps) => {
                 旅客篇
               </p>
             </div>
-            <ol className='font-family-genseki leading-[1.5] text-figma-primary-950 list-decimal list-outside ml-6 space-y-4'>
+            <ol className={cn('font-family-genseki leading-[1.5] text-figma-primary-950 list-decimal list-outside ml-6 space-y-4', isMobile && !isExpanded ? 'max-h-80 overflow-hidden' : '')}>
               <li>
                 本行程最低出團人數為 16 人;最多為 26
                 人(含機票自理之貴賓),台灣地區將派遣合格領隊隨行服務。
@@ -101,8 +108,16 @@ const TourNotice = ({ itemCount }: TTourNoticeProps) => {
                 以上表列行程,是為了讓您在出發前,能初步了解整個行程操作的情形,我們將以此為操作標準,但若遇特殊情況,在考慮行程的順暢度下,若當地導遊及領隊稍作更改,也請您見諒。
               </li>
             </ol>
+            {isMobile && (
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="self-center font-genseki-body-s-regular text-figma-secondary-500 py-2 px-4 border border-figma-secondary-500 rounded-[18px]"
+              >
+                {isExpanded ? 'Show less' : 'Show more'}
+              </button>
+            )}
           </div>
-          <div className='pt-8 px-8 pb-10 mx-[240px] rounded-2xl bg-figma-neutral-0'>
+          <div className='pt-5 px-5 pb-[30px] mx-4 xl:pt-8 xl:px-8 xl:pb-10 xl:mx-[240px] rounded-2xl bg-figma-neutral-0'>
             <div className='flex items-center mb-8'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'

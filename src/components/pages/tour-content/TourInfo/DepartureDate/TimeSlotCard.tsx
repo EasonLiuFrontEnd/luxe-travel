@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { type TTimeSlot } from '../config'
+import { type TTimeSlot } from '../../config'
 
 const TimeSlotCard = ({ slot }: { slot: TTimeSlot }) => {
   const isDisabled = slot.status !== '熱銷中'
@@ -18,14 +18,12 @@ const TimeSlotCard = ({ slot }: { slot: TTimeSlot }) => {
   return (
     <Link href={slot.href} className={isDisabled ? 'pointer-events-none' : ''}>
       <div
-        className={`flex flex-col items-center rounded-[4px] w-[84px] ${
-          isDisabled ? disabledStyles.container : activeStyles.container
-        }`}
+        className={`flex flex-col items-center rounded-[4px] w-[84px] ${isDisabled ? disabledStyles.container : activeStyles.container
+          }`}
       >
         <p
-          className={`w-full font-noto-serif-body-m-medium text-center py-2 border-b ${
-            isDisabled ? disabledStyles.border : activeStyles.border
-          }`}
+          className={`w-full font-noto-serif-body-m-medium text-center py-2 border-b ${isDisabled ? disabledStyles.border : activeStyles.border
+            }`}
         >
           {slot.date}
         </p>

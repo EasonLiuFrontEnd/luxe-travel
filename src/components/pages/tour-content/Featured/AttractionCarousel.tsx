@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import TitleIcon from './icons/TitleIcon'
@@ -98,6 +99,21 @@ const cityCards = [
     cityZh: '格拉納達',
     cityEn: 'Grabada',
   },
+  {
+    id: 41,
+    number: '04',
+    subtitle: '摩爾文化的瑰寶,石榴之城',
+    cityZh: '格拉納達',
+    cityEn: 'Grabada',
+  },
+  {
+    id: 42,
+    number: '04',
+    subtitle: '摩爾文化的瑰寶,石榴之城',
+    cityZh: '格拉納達',
+    cityEn: 'Grabada',
+  },
+
 ]
 
 const AttractionCarousel = () => {
@@ -124,6 +140,8 @@ const AttractionCarousel = () => {
     }
   }, [api])
 
+  const { isMobile } = useMediaQuery()
+
   return (
     <>
       <Carousel
@@ -135,7 +153,7 @@ const AttractionCarousel = () => {
             stopOnMouseEnter: false,
           }),
         ]}
-        className='mt-[112px]'
+        className='w-full mt-[41px] xl:mt-[112px]'
       >
         <CarouselContent className='flex'>
           {sceneImages.map((image, index) => (
@@ -146,8 +164,8 @@ const AttractionCarousel = () => {
                 width={428}
                 height={664}
                 className={cn(
-                  'mr-10 rounded-2xl object-cover',
-                  index % 2 === 0 ? 'mt-[190px]' : 'mb-[190px]',
+                  'w-[clamp(215px,30vw,428px)] h-[clamp(334px,46vw,664px)] mr-7 xl:mr-10 rounded-2xl object-cover',
+                  index % 2 === 0 ? 'mt-[95px] xl:mt-[190px]' : 'mb-[95px] xl:mb-[190px]',
                 )}
               />
             </CarouselItem>
@@ -155,10 +173,10 @@ const AttractionCarousel = () => {
         </CarouselContent>
       </Carousel>
       <div className='bg-figma-secondary-100'>
-        <div className='flex flex-col ml-12 rounded-es-2xl bg-figma-neutral-50'>
-          <div className='flex items-end gap-x-5 pt-12 pl-[105px] pb-[72px]'>
-            <div className='w-[520px] pb-6'>
-              <h3 className='font-noto-serif-h3-bold mb-[148px]'>
+        <div className='flex flex-col ml-4 xl:ml-12 rounded-es-2xl bg-figma-neutral-50'>
+          <div className='flex max-xl:flex-col xl:items-end gap-x-5 pt-[40px] pl-4 pb-[36px] xl:pt-12 xl:pl-[105px] xl:pb-[72px]'>
+            <div className='xl:min-w-[520px] pb-6'>
+              <h3 className='font-family-noto-serif text-[24px] xl:text-[40px] font-bold leading-[1.2] mb-[40px] xl:mb-[148px]'>
                 <div className='text-figma-secondary-500'>西葡名城——</div>
                 <div className='text-figma-primary-950'>
                   一次走訪,經典必訪無一遺漏
@@ -181,7 +199,7 @@ const AttractionCarousel = () => {
                       bottomColor='#C4A980'
                       className='mr-4'
                     />
-                    <p className='font-noto-serif-h5-bold'>{item.text}</p>
+                    <p className='font-family-noto-serif text-[18px] xl:text-[24px] font-semibold xl:font-bold leading-[1.5] xl:leading-[1.2]'>{item.text}</p>
                   </button>
                 ))}
               </div>
@@ -189,13 +207,13 @@ const AttractionCarousel = () => {
             <Carousel
               setApi={setApi}
               opts={{ watchDrag: false }}
-              className='w-full'
+              className='w-full overflow-hidden'
             >
               <CarouselContent className='-ml-0'>
                 {cityCards.map((city) => (
                   <CarouselItem
                     key={city.id}
-                    className='box-content pl-0 basis-auto overflow-hidden'
+                    className='box-content pl-0 basis-auto'
                   >
                     <div className='p-7 border-r border-figma-secondary-500'>
                       <div className='font-noto-serif-title-medium text-figma-secondary-500'>
@@ -218,42 +236,51 @@ const AttractionCarousel = () => {
               </CarouselContent>
             </Carousel>
           </div>
-          <div className='ml-auto mr-[240px] mb-[117px]'>
+          <div className='ml-auto mr-8 xl:mr-[240px] mb-[58px] xl:mb-[117px]'>
             <button
               onClick={() => api?.scrollPrev()}
               disabled={!canScrollPrev}
               className={cn(
-                'group pt-[14px] pl-[24px] pr-[20px] pb-[18px] mr-7 border rounded-[41px] transition-colors',
+                'group pt-3 px-4 pb-4 xl:pt-[14px] xl:pl-7 xl:pr-[20px] xl:pb-[18px] mr-4 xl:mr-7 border rounded-[41px] transition-colors',
                 canScrollPrev
                   ? 'border-figma-secondary-950 text-[#926D3C] cursor-pointer'
                   : 'border-figma-secondary-300 text-[#E5D9BF] cursor-not-allowed',
               )}
             >
-              <div
-                className={cn(
-                  'transition-transform duration-200 origin-right',
-                  canScrollPrev && 'group-hover:scale-x-[1.186]',
-                )}
-              >
+              {isMobile ? (
                 <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='43'
-                  height='12'
-                  viewBox='0 0 48 12'
-                  fill='none'
-                >
-                  <path
-                    d='M47 9.14258H48V11.1426H47V10.1426V9.14258ZM4 10.1426V11.1426H0.7311L3.4405 9.31373L4 10.1426ZM47 10.1426V11.1426H4V10.1426V9.14258H47V10.1426ZM4 10.1426L3.4405 9.31373L16.7739 0.313729L17.3333 1.14258L17.8928 1.97143L4.5595 10.9714L4 10.1426Z'
-                    fill='currentColor'
-                  />
+                  xmlns="http://www.w3.org/2000/svg" width="25" height="9" viewBox="0 0 25 9" fill="none">
+                  <path d="M24 6.375H25V8.375H24V7.375V6.375ZM4 7.375V8.375H0.317585L3.49418 6.51236L4 7.375ZM24 7.375V8.375H4V7.375V6.375H24V7.375ZM4 7.375L3.49418 6.51236L13.7267 0.512361L14.2326 1.375L14.7384 2.23764L4.50582 8.23764L4 7.375Z" fill="currentColor" />
                 </svg>
-              </div>
+              ) : (
+                <div
+                  className={cn(
+                    'transition-transform duration-200 origin-right',
+                    canScrollPrev && 'group-hover:scale-x-[1.186]',
+                  )}
+                >
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='43'
+                    height='12'
+                    viewBox='0 0 48 12'
+                    fill='none'
+                  >
+                    <path
+                      d='M47 9.14258H48V11.1426H47V10.1426V9.14258ZM4 10.1426V11.1426H0.7311L3.4405 9.31373L4 10.1426ZM47 10.1426V11.1426H4V10.1426V9.14258H47V10.1426ZM4 10.1426L3.4405 9.31373L16.7739 0.313729L17.3333 1.14258L17.8928 1.97143L4.5595 10.9714L4 10.1426Z'
+                      fill='currentColor'
+                    />
+                  </svg>
+                </div>
+              )
+              }
+
             </button>
             <button
               onClick={() => api?.scrollNext()}
               disabled={!canScrollNext}
               className={cn(
-                'group pt-[14px] pl-[20px] pr-[24px] pb-[18px] mr-7 border rounded-[41px] transition-colors',
+                'group pt-3 px-4 pb-4 xl:pt-[14px] xl:pl-7 xl:pr-[20px] xl:pb-[18px] xl:mr-7 border rounded-[41px] transition-colors',
                 canScrollNext
                   ? 'border-figma-secondary-950 text-[#926D3C] cursor-pointer'
                   : 'border-figma-secondary-300 text-[#E5D9BF] cursor-not-allowed',
@@ -265,18 +292,24 @@ const AttractionCarousel = () => {
                   canScrollNext && 'group-hover:scale-x-[1.186]',
                 )}
               >
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='43'
-                  height='12'
-                  viewBox='0 0 48 12'
-                  fill='none'
-                >
-                  <path
-                    d='M1 9.14258H0V11.1426H1V10.1426V9.14258ZM44 10.1426V11.1426H47.2689L44.5595 9.31373L44 10.1426ZM1 10.1426V11.1426H44V10.1426V9.14258H1V10.1426ZM44 10.1426L44.5595 9.31373L31.2261 0.313729L30.6667 1.14258L30.1072 1.97143L43.4405 10.9714L44 10.1426Z'
-                    fill='currentColor'
-                  />
-                </svg>
+                {isMobile ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="9" viewBox="0 0 25 9" fill="none">
+                    <path d="M1 6.375H0V8.375H1V7.375V6.375ZM21 7.375V8.375H24.6824L21.5058 6.51236L21 7.375ZM1 7.375V8.375H21V7.375V6.375H1V7.375ZM21 7.375L21.5058 6.51236L11.2733 0.512361L10.7674 1.375L10.2616 2.23764L20.4942 8.23764L21 7.375Z" fill="#926D3C" />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='43'
+                    height='12'
+                    viewBox='0 0 48 12'
+                    fill='none'
+                  >
+                    <path
+                      d='M1 9.14258H0V11.1426H1V10.1426V9.14258ZM44 10.1426V11.1426H47.2689L44.5595 9.31373L44 10.1426ZM1 10.1426V11.1426H44V10.1426V9.14258H1V10.1426ZM44 10.1426L44.5595 9.31373L31.2261 0.313729L30.6667 1.14258L30.1072 1.97143L43.4405 10.9714L44 10.1426Z'
+                      fill='currentColor'
+                    />
+                  </svg>
+                )}
               </div>
             </button>
           </div>

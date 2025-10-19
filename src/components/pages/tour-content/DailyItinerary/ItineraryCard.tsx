@@ -49,22 +49,22 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
   }
 
   return (
-    <div className='min-h-[700px] mt-12 ml-[152px] mr-9 rounded-2xl bg-figma-neutral-0'>
+    <div className='min-h-[700px] mx-4 xl:mt-12 xl:ml-[152px] xl:mr-9 rounded-2xl bg-figma-neutral-0'>
       <div className='flex justify-between'>
         <h3
           className={cn(
-            'relative px-7 rounded-ee-2xl bg-figma-secondary-100',
+            'max-xl:max-w-[312px] relative flex items-center max-xl:flex-wrap pl-4 pr-7 xl:px-7 rounded-ee-2xl bg-figma-secondary-100',
             styles['concave-border'],
           )}
         >
-          <span className='font-luxurious-deco-l-regular text-figma-secondary-500 mr-6'>
+          <span className='font-family-luxurious text-5xl xl:text-8xl xl:leading-[1.2] max-xl:tracking-[4.8px] text-figma-secondary-500 mr-4 xl:mr-6'>
             {itinerary.day}
           </span>
-          <span className='font-noto-serif-h3-bold text-figma-primary-500'>
+          <span className='font-family-noto-serif text-[18px] xl:text-[40px] font-semibold xl:font-bold leading-[1.5] xl:leading-[1.2] text-figma-primary-500'>
             {itinerary.destination}
           </span>
         </h3>
-        <div className='flex items-center space-x-4 pr-7'>
+        {/* <div className='flex items-center space-x-4 pr-7'>
           <button
             onClick={handlePrevious}
             className={cn(
@@ -120,12 +120,12 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
               />
             </svg>
           </button>
-        </div>
+        </div> */}
       </div>
-      <div className='box-content flex pt-[28px] px-7 pb-9'>
-        <div className='flex flex-col w-[541px] justify-between mr-9'>
+      <div className='box-content flex max-xl:flex-col pt-[28px] px-5 pb-9 xl:px-7'>
+        <div className='flex flex-col xl:w-[541px] justify-between max-xl:mb-[40px] xl:mr-9'>
           {itinerary.route.length > 0 && (
-            <div>
+            <div className='max-xl:mb-[40px]'>
               <div className='flex items-center mb-8'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
@@ -148,7 +148,7 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
                   參考行車時間距離
                 </p>
               </div>
-              <div className='flex flex-col gap-y-7 font-noto-serif-title-medium text-figma-primary-950 whitespace-nowrap'>
+              <div className='flex flex-col gap-y-8 xl:gap-y-7 font-family-noto-serif text-[18px] xl:text-[20px] font-semibold xl:font-medium leading-[1.5] xl:leading-[1.2] text-figma-primary-950 whitespace-nowrap'>
                 {itinerary.route.map((route, index) => (
                   <div key={index} className='flex items-center gap-x-4'>
                     <p>{route.start}</p>
@@ -165,12 +165,12 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
           )}
           <div>
             <div className='w-7 h-[3px] bg-figma-secondary-950 mt-[27px] mb-5'></div>
-            <p className='font-genseki-h6-regular text-figma-primary-950'>
+            <p className='font-family-genseki text-[16px] xl:text-[20px] leading-[1.5] text-figma-primary-950'>
               {itinerary.routeDescription}
             </p>
           </div>
         </div>
-        <div className='relative w-full max-w-[calc(100%-577px)]'>
+        <div className='relative flex xl:flex-col w-full max-w-[calc(100%-577px)]'>
           <div className='flex items-center mb-5'>
             <svg
               xmlns='http://www.w3.org/2000/svg'

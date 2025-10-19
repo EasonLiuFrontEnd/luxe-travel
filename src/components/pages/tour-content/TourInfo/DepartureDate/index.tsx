@@ -44,9 +44,9 @@ const DepartureDate = () => {
           出發日期
         </p>
       </div>
-      <div className='p-7 rounded-2xl bg-figma-neutral-0'>
-        <div className='flex items-center gap-x-4'>
-          <div className='flex-1 relative min-w-0 overflow-hidden'>
+      <div className='p-4 xl:p-7 rounded-2xl bg-figma-neutral-0'>
+        <div className='flex items-center gap-x-3 xl:gap-x-4'>
+          <div className='relative flex-1 overflow-hidden'>
             <Carousel
               opts={{
                 slidesToScroll: 1,
