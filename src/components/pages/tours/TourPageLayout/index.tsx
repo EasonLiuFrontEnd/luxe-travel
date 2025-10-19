@@ -81,30 +81,20 @@ const TourPageLayout = ({
   const tourConfig = getTourTypeConfig(tourType)
   const slideConfig = getSlideConfig(tourType)
 
-  const sortProducts = (
-    products: TProduct[],
-    params: TProductSearchParams,
-  ): TProduct[] => {
-    const sorted = [...products].sort((a, b) => {
-      if (a.isFeatured && !b.isFeatured) return -1
-      if (!a.isFeatured && b.isFeatured) return 1
-
-      if (params.sort === 'priceMin') {
-        const priceCompare = a.priceMin - b.priceMin
-        return params.order === 'asc' ? priceCompare : -priceCompare
-      }
-
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    })
-
-    return sorted
-  }
+  const featuredTours = useMemo(() => {
+    if (searchQuery.isSuccess && searchQuery.data) {
+      return searchQuery.data.filter((product) => product.isFeatured)
+    }
+    return []
+  }, [searchQuery.isSuccess, searchQuery.data])
 
   useEffect(() => {
     if (searchQuery.isSuccess) {
       let dataSource = searchQuery.data || []
 
       if (dataSource.length > 0) {
+        dataSource = dataSource.filter((product) => !product.isFeatured)
+
         const destinationCodes = searchParams.destination?.split(',') || []
         if (destinationCodes.length > 0) {
           dataSource = dataSource.filter((product) =>
@@ -137,8 +127,7 @@ const TourPageLayout = ({
           }
         }
 
-        const sortedProducts = sortProducts(dataSource, searchParams)
-        const convertedTours = sortedProducts.map((product) =>
+        const convertedTours = dataSource.map((product) =>
           convertProductToTourData(product, tourType),
         )
         setTours(convertedTours)
@@ -147,9 +136,9 @@ const TourPageLayout = ({
       }
     } else if (searchQuery.isError) {
       if (process.env.NODE_ENV !== 'production') {
-        const dataSource = searchMock.data || []
-        const sortedProducts = sortProducts(dataSource, searchParams)
-        const convertedTours = sortedProducts.map((product) =>
+        let dataSource = searchMock.data || []
+        dataSource = dataSource.filter((product) => !product.isFeatured)
+        const convertedTours = dataSource.map((product) =>
           convertProductToTourData(product, tourType),
         )
         setTours(convertedTours)
@@ -308,7 +297,7 @@ const TourPageLayout = ({
       <TourBanner
         tourType={tourType}
         slideContent={slideConfig.content}
-        tours={searchQuery.data}
+        tours={featuredTours}
         isLoading={searchQuery.isLoading}
         hasError={!!searchQuery.error}
         altTextPrefix={tourConfig.altTextPrefix}
