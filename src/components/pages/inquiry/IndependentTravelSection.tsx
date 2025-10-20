@@ -11,6 +11,7 @@ import styles from './styles.module.css'
 import { TTravelInquiryFormData } from './TravelInquiryForm'
 import { CalendarIcon } from '@/components/ui/CalendarIcon'
 import { formatDateForDisplay } from '@/lib/dateUtils'
+import { cn } from '@/lib/utils'
 export type TIndependentTravelSectionProps = {
   control: Control<TTravelInquiryFormData>
   isLoading?: boolean
@@ -217,11 +218,11 @@ export const IndependentTravelSection = ({
           <button
             type='submit'
             disabled={isLoading}
-            className='
-            flex items-center gap-5 text-figma-secondary-950 tracking-[0.5px]
-            font-family-noto-serif xl:font-family-genseki text-[24px] xl:text-[20px] font-bold xl:font-medium leading-[1.2]
-            cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed
-          '
+            className={cn(styles.buttonFontFamily,
+              'flex items-center gap-5 text-figma-secondary-950 tracking-[0.5px]',
+              'text-[24px] xl:text-[20px] font-bold xl:font-medium leading-[1.2]',
+              'cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed',
+            )}
           >
             <span>送出諮詢</span>
             <div className='h-1.5 w-5 shrink-0'>
