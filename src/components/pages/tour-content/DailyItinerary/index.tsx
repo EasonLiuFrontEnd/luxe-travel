@@ -1,5 +1,7 @@
 import Image from 'next/image'
+import { cn } from '@/lib/utils'
 import { useState, type ReactNode } from 'react'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import ItineraryCard from './ItineraryCard'
 import ItineraryActivity from './ItineraryActivity'
 import { itineraryData, type TItinerary } from '../config'
@@ -12,6 +14,7 @@ const DailyItinerary = ({ children }: TDailyItineraryProps) => {
   const [openPlace, setOpenPlace] = useState<
     TItinerary['activity'][0]['place'][0] | null
   >(null)
+  const { isMobile } = useMediaQuery()
   const parseHotelString = (hotelStr: string) => {
     const parts = hotelStr.split(' 或 ')
     const options = parts.slice(0, -1)
@@ -35,23 +38,23 @@ const DailyItinerary = ({ children }: TDailyItineraryProps) => {
         return (
           <div
             key={index}
-          // style={{
-          //   position: 'sticky',
-          //   top: `${60 + index * 10}px`,
-          //   zIndex: index,
-          // }}
+            style={{
+              position: isMobile ? 'relative' : 'sticky',
+              top: isMobile ? undefined : `${60 + index * 10}px`,
+              zIndex: isMobile ? undefined : index,
+            }}
           >
             <div
-              className='border-t border-figma-secondary-950 bg-figma-secondary-100'
-            // style={{
-            //   height: '100vh',
-            //   overflow: 'auto',
-            //   scrollbarWidth: 'none',
-            //   msOverflowStyle: 'none',
-            // }}
+              className={cn(isMobile && index === 0 ? '' : 'border-t pt-10', 'border-figma-secondary-950 xl:pt-12 bg-figma-secondary-100')}
+              style={{
+                height: isMobile ? 'auto' : '100vh',
+                overflow: isMobile ? 'visible' : 'auto',
+                scrollbarWidth: isMobile ? undefined : 'none',
+                msOverflowStyle: isMobile ? undefined : 'none',
+              }}
             >
               <ItineraryCard itinerary={itinerary} />
-              {/* {itinerary.activity.length > 0 &&
+              {itinerary.activity.length > 0 &&
                 itinerary.activity.map((activityGroup, activityIndex) => (
                   <ItineraryActivity
                     key={activityIndex}
@@ -60,7 +63,7 @@ const DailyItinerary = ({ children }: TDailyItineraryProps) => {
                     openPlace={openPlace}
                     setOpenPlace={setOpenPlace}
                   />
-                ))} */}
+                ))}
               <div className='mt-10 mx-4 mb-[30px] xl:mt-12 xl:mx-[152px] xl:mb-10'>
                 <div className='flex max-xl:flex-col max-xl:gap-y-[40px] pt-6 border-t border-figma-secondary-500'>
                   <div className='w-full flex flex-col gap-y-[40px] px-5 xl:px-[40px] xl:border-r xl:border-figma-secondary-500'>

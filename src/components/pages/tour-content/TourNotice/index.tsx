@@ -47,7 +47,7 @@ const TourNotice = ({ itemCount }: TTourNoticeProps) => {
                 旅客篇
               </p>
             </div>
-            <ol className={cn('font-family-genseki leading-[1.5] text-figma-primary-950 list-decimal list-outside ml-6 space-y-4', isMobile && !isExpanded ? 'max-h-80 overflow-hidden' : '')}>
+            <ol className={cn('font-family-genseki leading-[1.5] text-figma-primary-950 list-decimal list-inside space-y-4', isMobile && !isExpanded ? 'max-h-80 overflow-hidden' : '')}>
               <li>
                 本行程最低出團人數為 16 人;最多為 26
                 人(含機票自理之貴賓),台灣地區將派遣合格領隊隨行服務。

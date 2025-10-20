@@ -23,7 +23,7 @@ const NavigationSidebar = () => {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-20% 0px -70% 0px',
+      rootMargin: '-100px 0px -400px 0px',
       threshold: 0,
     }
 
@@ -80,15 +80,15 @@ const NavigationSidebar = () => {
   }
 
   return (
-    <div className='fixed top-0 right-5 flex gap-x-4 font-noto-serif-body-m-semibold text-figma-primary-300 [writing-mode:vertical-rl] pt-13 z-99'>
+    <div className='fixed top-0 right-0 xl:right-5 flex gap-x-4 font-family-noto-serif text-[14px] xl:text-[16px] font-semibold leading-[1.5] text-figma-primary-300 [writing-mode:vertical-rl] pt-13 z-99'>
       {navigationItems.map((item) => (
         <button
           key={item.id}
           onClick={() => handleScrollTo(item.targetId)}
           className={cn(
-            '[letter-spacing:4px] pt-[3px] pr-[12.5px] pl-[12.5px] pb-1 tracking-wider cursor-pointer transition-colors hover:text-figma-secondary-950 hover:bg-figma-accent-yellow-light',
+            '[letter-spacing:4px] pr-[7.5px] pl-[6.5px] xl:pt-[3px] xl:pr-[12.5px] xl:pl-[12.5px] xl:pb-1 tracking-wider cursor-pointer transition-colors hover:text-figma-secondary-950 hover:bg-figma-accent-yellow-light',
             activeSection === item.targetId &&
-              'text-figma-secondary-950 bg-figma-accent-yellow-light'
+            'text-figma-secondary-950 bg-figma-accent-yellow-light'
           )}
         >
           {item.label}

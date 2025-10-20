@@ -106,19 +106,21 @@ const Registration = ({ className }: { className?: string }) => {
 
   return (
     <div className={cn('xl:box-content xl:w-[45.9vw] xl:h-[590px] xl:sticky xl:top-12 flex flex-col gap-y-[30px] p-5 xl:p-7 xl:mt-[49px] xl:mr-7 mb-5 xl:mb-7 rounded-2xl bg-figma-neutral-0 font-family-genseki text-[16px] xl:text-[20px] leading-[1.2] xl:leading-[1.5] text-figma-primary-950', className)}>
-      <button
-        className={cn(
-          'absolute top-0 right-0 pl-3 pb-3 rounded-bl-2xl bg-figma-neutral-50 cursor-pointer',
-          styles['concave-border'],
-        )}
-      >
-        <Image
-          src='/tour-content/link.svg'
-          alt='link'
-          width={40}
-          height={40}
-        />
-      </button>
+      {!isMobile && (
+        <button
+          className={cn(
+            'absolute top-0 right-0 pl-3 pb-3 rounded-bl-2xl bg-figma-neutral-50 cursor-pointer',
+            styles['concave-border'],
+          )}
+        >
+          <Image
+            src='/tour-content/link.svg'
+            alt='link'
+            width={40}
+            height={40}
+          />
+        </button>
+      )}
       <div className='flex max-xl:flex-col max-xl:gap-y-7 xl:gap-x-7'>
         <div className='xl:min-w-[328px] mr-[50px]'>
           <div className='flex justify-between'>
@@ -139,7 +141,10 @@ const Registration = ({ className }: { className?: string }) => {
         <div className='min-w-[328px]'>
           <p className='font-genseki-body-m-medium'>訂金</p>
           <p
-            className={`font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2] tracking-[1.6px] ${depositClass}`}
+            className={cn(
+              'font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2] tracking-[1.6px]',
+              depositClass,
+            )}
           >
             {depositDisplay}
           </p>
@@ -152,7 +157,10 @@ const Registration = ({ className }: { className?: string }) => {
           <span>
             每位
             <span
-              className={`font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2] tracking-[1.6px] mx-2 ${adultPriceClass}`}
+              className={cn(
+                'font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2] tracking-[1.6px] mx-2',
+                adultPriceClass,
+              )}
             >
               {adultPriceDisplay}
             </span>
@@ -205,7 +213,7 @@ const Registration = ({ className }: { className?: string }) => {
       </div>
       {!isMobile && (
         <div className='flex justify-between'>
-          <h3 className={`font-noto-serif-h3-bold ${mainPriceClass}`}>
+          <h3 className={cn('font-noto-serif-h3-bold', mainPriceClass)}>
             {mainPriceDisplay}
             {mockTourData.adult !== null && mockTourData.adult > 0 && (
               <span className='font-genseki-h6-regular ml-2'>起</span>
