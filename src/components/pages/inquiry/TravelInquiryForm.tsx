@@ -88,7 +88,7 @@ export type TIndependentTravel = {
 export type TGroupTravel = {
   adultCount: number
   childCount: number
-  tourProgram: string
+  tourProgram?: string
   departureDate: string
 }
 
@@ -209,7 +209,7 @@ const groupTravelSchema = z.object({
     .number()
     .min(0, '孩童數量不能為負數')
     .max(20, '孩童數量不能超過 20'),
-  tourProgram: z.string().min(1, '請選擇團體行程'),
+  tourProgram: z.string().optional(),
   departureDate: z.string().min(1, '請選擇出發日期'),
 })
 
@@ -261,17 +261,6 @@ export const TRAVEL_TYPE_OPTIONS = [
   { value: 'deluxe-group', label: '精緻團體行' },
   { value: 'theme', label: '主題旅遊' },
   { value: 'mitsui-cruise', label: '三井郵輪' },
-]
-
-export const GROUP_TOUR_PROGRAMS = [
-  { value: 'italy-classic-8days', label: '義大利經典8日遊' },
-  { value: 'france-romantic-10days', label: '法國浪漫10日遊' },
-  { value: 'spain-portugal-12days', label: '西葡雙國12日遊' },
-  { value: 'germany-austria-9days', label: '德奧風情9日遊' },
-  { value: 'uk-scotland-10days', label: '英國蘇格蘭10日遊' },
-  { value: 'greece-islands-8days', label: '希臘愛琴海島嶼8日遊' },
-  { value: 'nordic-aurora-11days', label: '北歐極光11日遊' },
-  { value: 'eastern-europe-14days', label: '東歐四國14日遊' },
 ]
 
 export const GENDER_OPTIONS = [

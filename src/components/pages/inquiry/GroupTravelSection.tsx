@@ -1,6 +1,6 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
 import { Control } from 'react-hook-form'
+import Link from 'next/link'
 import {
   FormField,
   FormItem,
@@ -11,7 +11,7 @@ import {
   RequiredLabel,
 } from '@/components/ui'
 import styles from './styles.module.css'
-import { TTravelInquiryFormData, GROUP_TOUR_PROGRAMS } from './TravelInquiryForm'
+import type { TTravelInquiryFormData } from './TravelInquiryForm'
 import { CalendarIcon } from '@/components/ui/CalendarIcon'
 import { formatDateForDisplay } from '@/lib/dateUtils'
 
@@ -24,24 +24,6 @@ export const GroupTravelSection = ({
   control,
   isLoading = false,
 }: TGroupTravelSectionProps) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const dropdownRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsDropdownOpen(false)
-      }
-    }
-
-    if (isDropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [isDropdownOpen])
 
   return (
     <div className='bg-white flex flex-col gap-8 pb-[60px] pt-5 xl:pt-8 px-4 xl:px-8 relative rounded-2xl rounded-br-0 w-full'>
@@ -97,55 +79,28 @@ export const GroupTravelSection = ({
               name='groupTravel.tourProgram'
               render={({ field }) => (
                 <FormItem className='w-full'>
-                  <RequiredLabel
-                    required
-                    className='font-noto-serif-body-l-semibold mb-[-1px]'
-                  >
+                  <label className='font-noto-serif-body-l-semibold'>
                     您想詢問的團體行程
-                  </RequiredLabel>
-                  <div className='relative' ref={dropdownRef}>
-                    <div className='flex items-center justify-between px-0 py-[8px] border-b border-[rgba(56,56,65,0.7)] w-full hover:border-figma-primary-950 transition-colors duration-200'>
-                      <span
-                        className={`font-genseki-body-m-regular text-[16px] leading-[1.2] ${field.value
-                          ? 'text-figma-primary-950'
-                          : 'text-figma-primary-300'
-                          }`}
-                      >
-                        {field.value ? GROUP_TOUR_PROGRAMS.find(program => program.value === field.value)?.label : '請選擇行程名稱'}
-                      </span>
-                      <button
-                        type='button'
-                        className='px-4 py-1 border border-figma-secondary-500 rounded-[18px] shrink-0 hover:border-figma-secondary-950 cursor-pointer'
-                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  </label>
+                  <div className='relative'>
+                    <div className='flex items-center justify-between px-0 py-3 border-b border-figma-primary-950-70 w-full hover:border-figma-primary-950 transition-colors duration-200'>
+                      <input
+                        type='text'
+                        placeholder='請輸入行程名稱'
+                        className='flex-1 bg-transparent outline-none font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950 placeholder:text-figma-primary-300'
+                        {...field}
+                      />
+                      <Link
+                        href='/group-tours'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='px-4 py-1 border border-figma-secondary-500 rounded-[18px] shrink-0 hover:border-figma-secondary-950 cursor-pointer transition-colors duration-200'
                       >
                         <span className='font-genseki-body-s-regular text-figma-secondary-500 hover:text-figma-secondary-950'>
                           查看團型
                         </span>
-                      </button>
+                      </Link>
                     </div>
-                    {isDropdownOpen && (
-                      <div className='absolute top-full left-0 w-full bg-white border border-figma-primary-950-70 rounded-md shadow-lg z-10 mt-1'>
-                        <div className='max-h-60 overflow-y-auto'>
-                          {GROUP_TOUR_PROGRAMS.map((program) => (
-                            <button
-                              key={program.value}
-                              type='button'
-                              className='w-full px-4 py-2 text-left hover:bg-figma-primary-50 font-genseki-body-m-regular text-[16px] leading-[1.2] text-figma-primary-950'
-                              onClick={() => {
-                                field.onChange(program.value)
-                                setIsDropdownOpen(false)
-                              }}
-                            >
-                              {program.label}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    <input
-                      type='hidden'
-                      {...field}
-                    />
                   </div>
                   <FormMessage />
                 </FormItem>
