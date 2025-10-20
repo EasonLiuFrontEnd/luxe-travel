@@ -88,7 +88,7 @@ export type TIndependentTravel = {
 export type TGroupTravel = {
   adultCount: number
   childCount: number
-  tourProgram: string
+  tourProgram?: string
   departureDate: string
 }
 
@@ -122,9 +122,12 @@ const contactSourceSchema = z.enum(
   },
 )
 
-const budgetRangeSchema = z.enum(['10~12萬', '12~15萬', '15~20萬', '20萬以上'], {
-  error: '請選擇每人預算',
-})
+const budgetRangeSchema = z.enum(
+  ['10~12萬', '12~15萬', '15~20萬', '20萬以上'],
+  {
+    error: '請選擇每人預算',
+  },
+)
 
 const countrySchema = z.enum(
   [
@@ -152,30 +155,32 @@ const countrySchema = z.enum(
   },
 )
 
-const basicInfoSchema = z.object({
-  travelType: travelTypeSchema,
-  contactName: z.string().min(1, '請輸入聯絡人姓名'),
-  gender: genderSchema,
-  phoneNumber: z
-    .string()
-    .regex(/^09\d{8}$/, '請輸入有效的台灣手機號碼格式 (09xxxxxxxx)'),
-  lineId: z.string().optional(),
-  contactMethod: contactMethodSchema,
-  contactTime: z.string().min(1, '請填入您方便的聯繫時段'),
-  contactSource: contactSourceSchema,
-  otherSource: z.string().optional(),
-}).refine(
-  (data) => {
-    if (data.contactSource === '其他' && !data.otherSource?.trim()) {
-      return false
-    }
-    return true
-  },
-  {
-    message: '請填寫其他管道',
-    path: ['otherSource'],
-  },
-)
+const basicInfoSchema = z
+  .object({
+    travelType: travelTypeSchema,
+    contactName: z.string().min(1, '請輸入聯絡人姓名'),
+    gender: genderSchema,
+    phoneNumber: z
+      .string()
+      .regex(/^09\d{8}$/, '請輸入有效的台灣手機號碼格式 (09xxxxxxxx)'),
+    lineId: z.string().optional(),
+    contactMethod: contactMethodSchema,
+    contactTime: z.string().min(1, '請填入您方便的聯繫時段'),
+    contactSource: contactSourceSchema,
+    otherSource: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.contactSource === '其他' && !data.otherSource?.trim()) {
+        return false
+      }
+      return true
+    },
+    {
+      message: '請填寫其他管道',
+      path: ['otherSource'],
+    },
+  )
 
 const budgetSchema = z.object({
   budget: budgetRangeSchema,
@@ -209,7 +214,7 @@ const groupTravelSchema = z.object({
     .number()
     .min(0, '孩童數量不能為負數')
     .max(20, '孩童數量不能超過 20'),
-  tourProgram: z.string().min(1, '請選擇團體行程'),
+  tourProgram: z.string().optional(),
   departureDate: z.string().min(1, '請選擇出發日期'),
 })
 
@@ -222,38 +227,38 @@ export const travelInquiryFormSchema = z.object({
 })
 
 export const defaultTravelInquiryFormData: DeepPartial<TTravelInquiryFormData> =
-{
-  basicInfo: {
-    travelType: 'europe-free',
-    contactName: '',
-    gender: undefined,
-    phoneNumber: '',
-    lineId: '',
-    contactMethod: undefined,
-    contactTime: '',
-    contactSource: undefined,
-    otherSource: '',
-  },
-  budget: {
-    budget: undefined,
-    countries: [],
-  },
-  independentTravel: {
-    adultCount: 1,
-    childCount: 0,
-    travelDays: 1,
-    departureDate: '',
-    wishlist: '',
-    specialRequirements: '',
-  },
-  groupTravel: {
-    adultCount: 1,
-    childCount: 0,
-    tourProgram: '',
-    departureDate: '',
-  },
-  requirementsDescription: '',
-}
+  {
+    basicInfo: {
+      travelType: 'europe-free',
+      contactName: '',
+      gender: undefined,
+      phoneNumber: '',
+      lineId: '',
+      contactMethod: undefined,
+      contactTime: '',
+      contactSource: undefined,
+      otherSource: '',
+    },
+    budget: {
+      budget: undefined,
+      countries: [],
+    },
+    independentTravel: {
+      adultCount: 1,
+      childCount: 0,
+      travelDays: 1,
+      departureDate: '',
+      wishlist: '',
+      specialRequirements: '',
+    },
+    groupTravel: {
+      adultCount: 1,
+      childCount: 0,
+      tourProgram: '',
+      departureDate: '',
+    },
+    requirementsDescription: '',
+  }
 
 export const TRAVEL_TYPE_OPTIONS = [
   { value: 'europe-free', label: '歐洲自由行' },
@@ -261,17 +266,6 @@ export const TRAVEL_TYPE_OPTIONS = [
   { value: 'deluxe-group', label: '精緻團體行' },
   { value: 'theme', label: '主題旅遊' },
   { value: 'mitsui-cruise', label: '三井郵輪' },
-]
-
-export const GROUP_TOUR_PROGRAMS = [
-  { value: 'italy-classic-8days', label: '義大利經典8日遊' },
-  { value: 'france-romantic-10days', label: '法國浪漫10日遊' },
-  { value: 'spain-portugal-12days', label: '西葡雙國12日遊' },
-  { value: 'germany-austria-9days', label: '德奧風情9日遊' },
-  { value: 'uk-scotland-10days', label: '英國蘇格蘭10日遊' },
-  { value: 'greece-islands-8days', label: '希臘愛琴海島嶼8日遊' },
-  { value: 'nordic-aurora-11days', label: '北歐極光11日遊' },
-  { value: 'eastern-europe-14days', label: '東歐四國14日遊' },
 ]
 
 export const GENDER_OPTIONS = [
@@ -381,7 +375,10 @@ export const TravelInquiryForm = ({
       return null
     }
 
-    if (selectedTravelType === 'europe-free' || selectedTravelType === 'chartered') {
+    if (
+      selectedTravelType === 'europe-free' ||
+      selectedTravelType === 'chartered'
+    ) {
       return (
         <>
           <BudgetSection control={form.control} />
@@ -393,14 +390,15 @@ export const TravelInquiryForm = ({
       )
     }
 
-    if (selectedTravelType === 'deluxe-group' || selectedTravelType === 'theme' || selectedTravelType === 'mitsui-cruise') {
+    if (
+      selectedTravelType === 'deluxe-group' ||
+      selectedTravelType === 'theme' ||
+      selectedTravelType === 'mitsui-cruise'
+    ) {
       return (
         <>
           <RequirementsSection control={form.control} />
-          <GroupTravelSection
-            control={form.control}
-            isLoading={isLoading}
-          />
+          <GroupTravelSection control={form.control} isLoading={isLoading} />
         </>
       )
     }

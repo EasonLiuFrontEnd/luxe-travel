@@ -6,14 +6,12 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/Form'
-import {
-  CounterInput,
-  RequiredLabel,
-} from '@/components/ui'
+import { CounterInput, RequiredLabel } from '@/components/ui'
 import styles from './styles.module.css'
 import { TTravelInquiryFormData } from './TravelInquiryForm'
 import { CalendarIcon } from '@/components/ui/CalendarIcon'
 import { formatDateForDisplay } from '@/lib/dateUtils'
+import { cn } from '@/lib/utils'
 export type TIndependentTravelSectionProps = {
   control: Control<TTravelInquiryFormData>
   isLoading?: boolean
@@ -119,14 +117,15 @@ export const IndependentTravelSection = ({
                     </RequiredLabel>
                     <div className='flex items-center justify-between px-0 py-3 border-b border-figma-primary-950-70 w-full hover:border-figma-primary-950 transition-colors duration-200'>
                       <span
-                        className={`font-genseki-body-m-regular text-[16px] leading-[1.2] ${field.value
-                          ? 'text-figma-primary-950'
-                          : 'text-figma-primary-300'
-                          }`}
+                        className={`font-genseki-body-m-regular text-[16px] leading-[1.2] ${
+                          field.value
+                            ? 'text-figma-primary-950'
+                            : 'text-figma-primary-300'
+                        }`}
                       >
                         {field.value
                           ? formatDateForDisplay(field.value)
-                          : '輸入日期  範例：2025/08/25'}
+                          : '選擇日期'}
                       </span>
                       <div className='shrink-0 size-5 text-figma-primary-950 pointer-events-none'>
                         <CalendarIcon className='w-full h-full' />
@@ -219,11 +218,11 @@ export const IndependentTravelSection = ({
           <button
             type='submit'
             disabled={isLoading}
-            className='
-            flex items-center gap-5 text-figma-secondary-950 tracking-[0.5px]
-            font-family-noto-serif xl:font-family-genseki text-[24px] xl:text-[20px] font-bold xl:font-medium leading-[1.2]
-            cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed
-          '
+            className={cn(styles.buttonFontFamily,
+              'flex items-center gap-5 text-figma-secondary-950 tracking-[0.5px]',
+              'text-[24px] xl:text-[20px] font-bold xl:font-medium leading-[1.2]',
+              'cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed',
+            )}
           >
             <span>送出諮詢</span>
             <div className='h-1.5 w-5 shrink-0'>

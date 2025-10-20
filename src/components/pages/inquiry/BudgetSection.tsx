@@ -22,9 +22,7 @@ import {
 export type TBudgetSectionProps = {
   control: Control<TTravelInquiryFormData>
 }
-export const BudgetSection = ({
-  control,
-}: TBudgetSectionProps) => {
+export const BudgetSection = ({ control }: TBudgetSectionProps) => {
   return (
     <FormSection title='' hasBorder>
       <div className='space-y-8'>

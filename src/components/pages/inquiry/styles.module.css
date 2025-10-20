@@ -220,3 +220,13 @@
     mask-composite: intersect;
   }
 }
+
+.buttonFontFamily {
+  font-family: var(--font-genseki-gothic);
+}
+
+@media (max-width: 1279px) {
+  .buttonFontFamily {
+    font-family: var(--font-noto-serif-tc);
+  }
+}

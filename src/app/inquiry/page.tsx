@@ -28,9 +28,10 @@ const TravelInquiryPage = () => {
         contactMethod.push(basicInfo.contactMethod)
       }
 
-      const source = basicInfo.contactSource === '其他' && basicInfo.otherSource
-        ? basicInfo.otherSource
-        : basicInfo.contactSource
+      const source =
+        basicInfo.contactSource === '其他' && basicInfo.otherSource
+          ? basicInfo.otherSource
+          : basicInfo.contactSource
 
       const regions = budget.countries.map((countryValue) => {
         const country = ALL_COUNTRIES.find((c) => c.value === countryValue)
