@@ -1,8 +1,9 @@
-export { TravelInquiryForm } from './TravelInquiryForm'
+export { TravelInquiryForm, ALL_COUNTRIES } from './TravelInquiryForm'
 export { HeroSection } from './HeroSection'
 export { BasicInfoSection } from './BasicInfoSection'
-export { BudgetDestinationSection } from './BudgetDestinationSection'
-export { DetailRequirementsSection } from './DetailRequirementsSection'
+export { BudgetSection } from './BudgetSection'
+export { IndependentTravelSection } from './IndependentTravelSection'
+export { GroupTravelSection } from './GroupTravelSection'
 
 export type {
   TTravelInquiryFormProps,
@@ -10,7 +11,8 @@ export type {
 } from './TravelInquiryForm'
 export type { THeroSectionProps } from './HeroSection'
 export type { TBasicInfoSectionProps } from './BasicInfoSection'
-export type { TBudgetDestinationSectionProps } from './BudgetDestinationSection'
-export type { TDetailRequirementsSectionProps } from './DetailRequirementsSection'
+export type { TBudgetSectionProps } from './BudgetSection'
+export type { TIndependentTravelSectionProps } from './IndependentTravelSection'
+export type { TGroupTravelSectionProps } from './GroupTravelSection'
 
 export { TravelInquiryForm as default } from './TravelInquiryForm'

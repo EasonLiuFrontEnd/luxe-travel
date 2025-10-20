@@ -249,8 +249,10 @@ type THeader = TBaseComponent & {
 ```typescript
 type TTravelInquiryFormData = {
   basicInfo: TBasicInfo
-  budgetDestination: TBudgetDestination
-  detailedRequirements: TDetailedRequirements
+  budget: TBudget
+  independentTravel: TIndependentTravel
+  groupTravel: TGroupTravel
+  requirementsDescription?: string
 }
 ```
 
