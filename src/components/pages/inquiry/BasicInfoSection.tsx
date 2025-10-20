@@ -165,9 +165,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
           name='basicInfo.contactMethod'
           render={({ field }) => (
             <FormItem className='w-full'>
-              <RequiredLabel
-                className='font-noto-serif-body-l-semibold'
-              >
+              <RequiredLabel className='font-noto-serif-body-l-semibold'>
                 請選擇偏好的聯絡方式
               </RequiredLabel>
               <FormControl>
@@ -226,9 +224,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
           name='basicInfo.contactSource'
           render={({ field }) => (
             <FormItem className='w-full'>
-              <RequiredLabel
-                className='font-noto-serif-body-l-semibold'
-              >
+              <RequiredLabel className='font-noto-serif-body-l-semibold'>
                 您是從何管道得知典藏旅遊？
               </RequiredLabel>
               <FormControl>

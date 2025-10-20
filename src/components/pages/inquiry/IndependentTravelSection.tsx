@@ -6,10 +6,7 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/Form'
-import {
-  CounterInput,
-  RequiredLabel,
-} from '@/components/ui'
+import { CounterInput, RequiredLabel } from '@/components/ui'
 import styles from './styles.module.css'
 import { TTravelInquiryFormData } from './TravelInquiryForm'
 import { CalendarIcon } from '@/components/ui/CalendarIcon'
@@ -119,10 +116,11 @@ export const IndependentTravelSection = ({
                     </RequiredLabel>
                     <div className='flex items-center justify-between px-0 py-3 border-b border-figma-primary-950-70 w-full hover:border-figma-primary-950 transition-colors duration-200'>
                       <span
-                        className={`font-genseki-body-m-regular text-[16px] leading-[1.2] ${field.value
-                          ? 'text-figma-primary-950'
-                          : 'text-figma-primary-300'
-                          }`}
+                        className={`font-genseki-body-m-regular text-[16px] leading-[1.2] ${
+                          field.value
+                            ? 'text-figma-primary-950'
+                            : 'text-figma-primary-300'
+                        }`}
                       >
                         {field.value
                           ? formatDateForDisplay(field.value)

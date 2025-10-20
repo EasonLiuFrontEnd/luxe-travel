@@ -122,9 +122,12 @@ const contactSourceSchema = z.enum(
   },
 )
 
-const budgetRangeSchema = z.enum(['10~12萬', '12~15萬', '15~20萬', '20萬以上'], {
-  error: '請選擇每人預算',
-})
+const budgetRangeSchema = z.enum(
+  ['10~12萬', '12~15萬', '15~20萬', '20萬以上'],
+  {
+    error: '請選擇每人預算',
+  },
+)
 
 const countrySchema = z.enum(
   [
@@ -152,30 +155,32 @@ const countrySchema = z.enum(
   },
 )
 
-const basicInfoSchema = z.object({
-  travelType: travelTypeSchema,
-  contactName: z.string().min(1, '請輸入聯絡人姓名'),
-  gender: genderSchema,
-  phoneNumber: z
-    .string()
-    .regex(/^09\d{8}$/, '請輸入有效的台灣手機號碼格式 (09xxxxxxxx)'),
-  lineId: z.string().optional(),
-  contactMethod: contactMethodSchema,
-  contactTime: z.string().min(1, '請填入您方便的聯繫時段'),
-  contactSource: contactSourceSchema,
-  otherSource: z.string().optional(),
-}).refine(
-  (data) => {
-    if (data.contactSource === '其他' && !data.otherSource?.trim()) {
-      return false
-    }
-    return true
-  },
-  {
-    message: '請填寫其他管道',
-    path: ['otherSource'],
-  },
-)
+const basicInfoSchema = z
+  .object({
+    travelType: travelTypeSchema,
+    contactName: z.string().min(1, '請輸入聯絡人姓名'),
+    gender: genderSchema,
+    phoneNumber: z
+      .string()
+      .regex(/^09\d{8}$/, '請輸入有效的台灣手機號碼格式 (09xxxxxxxx)'),
+    lineId: z.string().optional(),
+    contactMethod: contactMethodSchema,
+    contactTime: z.string().min(1, '請填入您方便的聯繫時段'),
+    contactSource: contactSourceSchema,
+    otherSource: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.contactSource === '其他' && !data.otherSource?.trim()) {
+        return false
+      }
+      return true
+    },
+    {
+      message: '請填寫其他管道',
+      path: ['otherSource'],
+    },
+  )
 
 const budgetSchema = z.object({
   budget: budgetRangeSchema,
@@ -222,38 +227,38 @@ export const travelInquiryFormSchema = z.object({
 })
 
 export const defaultTravelInquiryFormData: DeepPartial<TTravelInquiryFormData> =
-{
-  basicInfo: {
-    travelType: 'europe-free',
-    contactName: '',
-    gender: undefined,
-    phoneNumber: '',
-    lineId: '',
-    contactMethod: undefined,
-    contactTime: '',
-    contactSource: undefined,
-    otherSource: '',
-  },
-  budget: {
-    budget: undefined,
-    countries: [],
-  },
-  independentTravel: {
-    adultCount: 1,
-    childCount: 0,
-    travelDays: 1,
-    departureDate: '',
-    wishlist: '',
-    specialRequirements: '',
-  },
-  groupTravel: {
-    adultCount: 1,
-    childCount: 0,
-    tourProgram: '',
-    departureDate: '',
-  },
-  requirementsDescription: '',
-}
+  {
+    basicInfo: {
+      travelType: 'europe-free',
+      contactName: '',
+      gender: undefined,
+      phoneNumber: '',
+      lineId: '',
+      contactMethod: undefined,
+      contactTime: '',
+      contactSource: undefined,
+      otherSource: '',
+    },
+    budget: {
+      budget: undefined,
+      countries: [],
+    },
+    independentTravel: {
+      adultCount: 1,
+      childCount: 0,
+      travelDays: 1,
+      departureDate: '',
+      wishlist: '',
+      specialRequirements: '',
+    },
+    groupTravel: {
+      adultCount: 1,
+      childCount: 0,
+      tourProgram: '',
+      departureDate: '',
+    },
+    requirementsDescription: '',
+  }
 
 export const TRAVEL_TYPE_OPTIONS = [
   { value: 'europe-free', label: '歐洲自由行' },
@@ -370,7 +375,10 @@ export const TravelInquiryForm = ({
       return null
     }
 
-    if (selectedTravelType === 'europe-free' || selectedTravelType === 'chartered') {
+    if (
+      selectedTravelType === 'europe-free' ||
+      selectedTravelType === 'chartered'
+    ) {
       return (
         <>
           <BudgetSection control={form.control} />
@@ -382,14 +390,15 @@ export const TravelInquiryForm = ({
       )
     }
 
-    if (selectedTravelType === 'deluxe-group' || selectedTravelType === 'theme' || selectedTravelType === 'mitsui-cruise') {
+    if (
+      selectedTravelType === 'deluxe-group' ||
+      selectedTravelType === 'theme' ||
+      selectedTravelType === 'mitsui-cruise'
+    ) {
       return (
         <>
           <RequirementsSection control={form.control} />
-          <GroupTravelSection
-            control={form.control}
-            isLoading={isLoading}
-          />
+          <GroupTravelSection control={form.control} isLoading={isLoading} />
         </>
       )
     }

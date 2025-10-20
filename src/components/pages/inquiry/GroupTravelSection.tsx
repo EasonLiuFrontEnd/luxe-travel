@@ -1,15 +1,8 @@
 'use client'
 import { Control } from 'react-hook-form'
 import Link from 'next/link'
-import {
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/Form'
-import {
-  CounterInput,
-  RequiredLabel,
-} from '@/components/ui'
+import { FormField, FormItem, FormMessage } from '@/components/ui/Form'
+import { CounterInput, RequiredLabel } from '@/components/ui'
 import styles from './styles.module.css'
 import type { TTravelInquiryFormData } from './TravelInquiryForm'
 import { CalendarIcon } from '@/components/ui/CalendarIcon'
@@ -24,7 +17,6 @@ export const GroupTravelSection = ({
   control,
   isLoading = false,
 }: TGroupTravelSectionProps) => {
-
   return (
     <div className='bg-white flex flex-col gap-8 pb-[60px] pt-5 xl:pt-8 px-4 xl:px-8 relative rounded-2xl rounded-br-0 w-full'>
       <div className='flex flex-col gap-7 xl:pb-7 w-full'>
@@ -133,10 +125,11 @@ export const GroupTravelSection = ({
                   >
                     <div className='flex items-center justify-between px-0 py-4 border-b border-figma-primary-950-70 w-full hover:border-figma-primary-950 transition-colors duration-200'>
                       <span
-                        className={`font-genseki-body-m-regular text-[16px] leading-[1.2] ${field.value
-                          ? 'text-figma-primary-950'
-                          : 'text-figma-primary-300'
-                          }`}
+                        className={`font-genseki-body-m-regular text-[16px] leading-[1.2] ${
+                          field.value
+                            ? 'text-figma-primary-950'
+                            : 'text-figma-primary-300'
+                        }`}
                       >
                         {field.value
                           ? formatDateForDisplay(field.value)
