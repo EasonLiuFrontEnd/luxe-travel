@@ -38,10 +38,10 @@ export const booksApiMock: TBooksResponse = {
           mainImageUrl:
             'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/NGxRiFY-fOnYe6AU3r2ORYUAbq4xWDjbQAWTDR.jpeg',
           code: 'LLWCX1270419BRU',
-          namePrefix: '限量兩團．限時甄藏',
+          namePrefix: '限量甄藏',
           name: '花開國王節 春遊荷比雙慶典12天',
           summary:
-            '拒統荷比法快閃玩法！除了親訪荷蘭最重要的兩大年度盛事－每年僅舉辦一天的【荷蘭國王節】及春天限定【庫肯霍夫鬱金香花季】的百萬花海，我們還想邀請您一起走訪荷比大城小鎮：傳統與現代兼容的大都會，或典雅、或古樸的特色小鎮－荷蘭與比利時的美，很多元，值得您慢慢探索、細細品味！\n',
+            '拒絕傳統荷比法快閃玩法！除了親訪荷蘭最重要的兩大年度盛事－每年僅舉辦一天的【荷蘭國王節】及春天限定【庫肯霍夫鬱金香花季】的百萬花海，我們還想邀請您一起走訪荷比大城小鎮：傳統與現代兼容的大都會，或典雅、或古樸的特色小鎮－荷蘭與比利時的美，很多元，值得您慢慢探索、細細品味！\n',
           tags: [
             '荷蘭國王節',
             '庫肯霍夫鬱金香花季',
@@ -57,6 +57,24 @@ export const booksApiMock: TBooksResponse = {
           priceMax: 178000,
           status: 1,
         },
+        {
+          id: '68d7e47e087da9aeb1dad29b',
+          mainImageUrl:
+            'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/DfzGML3-4b5AmC0YRC8rgFQp7ENKmZxdyJNcRb.jpeg',
+          code: 'LLWCX1550927CDG',
+          namePrefix: '法國',
+          name: '醉美蔚藍海岸 浪漫璀璨巴黎 南北法15天',
+          summary: '{{行程簡述}}',
+          tags: ['高性價比飯店', '深度體驗'],
+          countries: ['法國'],
+          category: 'GROUP',
+          arriveCountry: '法國',
+          days: 15,
+          nights: 13,
+          priceMin: 199000,
+          priceMax: 200000,
+          status: 1,
+        },
       ],
       freeProducts: [
         {
@@ -65,7 +83,7 @@ export const booksApiMock: TBooksResponse = {
             'https://okm2to3vnqmhjqm9.public.blob.vercel-storage.com/JoHSetL-hoIPnvvDIoaKbpSqmfOX9h84pMhuEg.jpeg',
           code: 'LLWBR1860618MXP',
           namePrefix: '蜜月精選',
-          name: '義法五大名城 經典巴黎18天',
+          name: '義大利四大名城 經典巴黎18天',
           summary:
             '義大利四大名城羅馬．威尼斯．佛羅倫斯．米蘭精華快覽Ｘ巴黎經典全覽，最適合想規劃豐富蜜月行或首遊義法的您！',
           tags: ['蜜月精選', '義大利四大名城', '巴黎經典全覽', '卡端午連休'],
@@ -79,7 +97,6 @@ export const booksApiMock: TBooksResponse = {
           status: 1,
         },
       ],
-      recoProducts: [],
     },
     {
       id: '68b05382564da72a7ab17537',
@@ -96,7 +113,6 @@ export const booksApiMock: TBooksResponse = {
       updatedAt: '2025-08-28T13:02:58.975Z',
       groupProducts: [],
       freeProducts: [],
-      recoProducts: [],
     },
     {
       id: '68b05391564da72a7ab17538',
@@ -113,7 +129,6 @@ export const booksApiMock: TBooksResponse = {
       updatedAt: '2025-08-28T13:03:13.127Z',
       groupProducts: [],
       freeProducts: [],
-      recoProducts: [],
     },
     {
       id: '68b0539e564da72a7ab17539',
@@ -130,7 +145,6 @@ export const booksApiMock: TBooksResponse = {
       updatedAt: '2025-08-28T13:03:26.187Z',
       groupProducts: [],
       freeProducts: [],
-      recoProducts: [],
     },
     {
       id: '68b053ad564da72a7ab1753a',
@@ -147,7 +161,6 @@ export const booksApiMock: TBooksResponse = {
       updatedAt: '2025-08-28T13:03:41.930Z',
       groupProducts: [],
       freeProducts: [],
-      recoProducts: [],
     },
     {
       id: '68b053ba564da72a7ab1753b',
@@ -164,7 +177,6 @@ export const booksApiMock: TBooksResponse = {
       updatedAt: '2025-08-28T13:03:54.312Z',
       groupProducts: [],
       freeProducts: [],
-      recoProducts: [],
     },
     {
       id: '68b053c6564da72a7ab1753c',
@@ -180,7 +192,6 @@ export const booksApiMock: TBooksResponse = {
       updatedAt: '2025-08-28T13:04:06.694Z',
       groupProducts: [],
       freeProducts: [],
-      recoProducts: [],
     },
     {
       id: '68b053d4564da72a7ab1753d',
@@ -196,7 +207,6 @@ export const booksApiMock: TBooksResponse = {
       updatedAt: '2025-08-28T13:04:20.726Z',
       groupProducts: [],
       freeProducts: [],
-      recoProducts: [],
     },
     {
       id: '68b053e0564da72a7ab1753e',
@@ -212,7 +222,6 @@ export const booksApiMock: TBooksResponse = {
       updatedAt: '2025-08-28T13:04:32.030Z',
       groupProducts: [],
       freeProducts: [],
-      recoProducts: [],
     },
     {
       id: '68b053f0564da72a7ab1753f',
@@ -228,7 +237,6 @@ export const booksApiMock: TBooksResponse = {
       updatedAt: '2025-08-28T13:04:48.257Z',
       groupProducts: [],
       freeProducts: [],
-      recoProducts: [],
     },
   ],
   pagination: {

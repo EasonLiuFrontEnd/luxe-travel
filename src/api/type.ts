@@ -105,7 +105,6 @@ export type TBooks = {
   updatedAt: string
   groupProducts: TProduct[]
   freeProducts: TProduct[]
-  recoProducts: TProduct[]
 }
 
 export type TAdvantagesResponse = TApiResponse<TAdvantages> & {
