@@ -30,7 +30,10 @@ const ItineraryActivity = ({
   return (
     <div
       key={activityIndex}
-      className={cn('flex max-xl:flex-col justify-between items-center max-xl:gap-y-[30px] xl:gap-x-[42px] py-[30px] px-4 xl:pt-12 xl:px-[152px] xl:pb-10', styles.gridBackground)}
+      className={cn(
+        'flex max-xl:flex-col justify-between items-center max-xl:gap-y-[30px] xl:gap-x-[42px] py-[30px] px-4 xl:pt-12 xl:px-[152px] xl:pb-10',
+        styles.gridBackground,
+      )}
     >
       <h4 className='xl:w-[571px] font-family-noto-serif text-2xl xl:text-[32px] font-bold leading-[1.2] xl:leading-[1.5] text-figma-secondary-500 text-center'>
         {activityGroup.title}
@@ -63,8 +66,12 @@ const ItineraryActivity = ({
                 <div
                   className='flex items-end my-[8px] ml-[18px] mr-[5px] cursor-pointer group'
                   onClick={isMobile ? () => handleToggle(place) : undefined}
-                  onMouseEnter={!isMobile ? () => setOpenPlace(place) : undefined}
-                  onMouseLeave={!isMobile ? () => setOpenPlace(null) : undefined}
+                  onMouseEnter={
+                    !isMobile ? () => setOpenPlace(place) : undefined
+                  }
+                  onMouseLeave={
+                    !isMobile ? () => setOpenPlace(null) : undefined
+                  }
                 >
                   <Image
                     src='/shared/icons/CTA-default.svg'

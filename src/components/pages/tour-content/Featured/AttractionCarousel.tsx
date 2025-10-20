@@ -113,7 +113,6 @@ const cityCards = [
     cityZh: '格拉納達',
     cityEn: 'Grabada',
   },
-
 ]
 
 const AttractionCarousel = () => {
@@ -165,7 +164,9 @@ const AttractionCarousel = () => {
                 height={664}
                 className={cn(
                   'w-[clamp(215px,30vw,428px)] h-[clamp(334px,46vw,664px)] mr-7 xl:mr-10 rounded-2xl object-cover',
-                  index % 2 === 0 ? 'mt-[95px] xl:mt-[190px]' : 'mb-[95px] xl:mb-[190px]',
+                  index % 2 === 0
+                    ? 'mt-[95px] xl:mt-[190px]'
+                    : 'mb-[95px] xl:mb-[190px]',
                 )}
               />
             </CarouselItem>
@@ -199,7 +200,9 @@ const AttractionCarousel = () => {
                       bottomColor='#C4A980'
                       className='mr-4'
                     />
-                    <p className='font-family-noto-serif text-[18px] xl:text-[24px] font-semibold xl:font-bold leading-[1.5] xl:leading-[1.2]'>{item.text}</p>
+                    <p className='font-family-noto-serif text-[18px] xl:text-[24px] font-semibold xl:font-bold leading-[1.5] xl:leading-[1.2]'>
+                      {item.text}
+                    </p>
                   </button>
                 ))}
               </div>
@@ -249,8 +252,16 @@ const AttractionCarousel = () => {
             >
               {isMobile ? (
                 <svg
-                  xmlns="http://www.w3.org/2000/svg" width="25" height="9" viewBox="0 0 25 9" fill="none">
-                  <path d="M24 6.375H25V8.375H24V7.375V6.375ZM4 7.375V8.375H0.317585L3.49418 6.51236L4 7.375ZM24 7.375V8.375H4V7.375V6.375H24V7.375ZM4 7.375L3.49418 6.51236L13.7267 0.512361L14.2326 1.375L14.7384 2.23764L4.50582 8.23764L4 7.375Z" fill="currentColor" />
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='25'
+                  height='9'
+                  viewBox='0 0 25 9'
+                  fill='none'
+                >
+                  <path
+                    d='M24 6.375H25V8.375H24V7.375V6.375ZM4 7.375V8.375H0.317585L3.49418 6.51236L4 7.375ZM24 7.375V8.375H4V7.375V6.375H24V7.375ZM4 7.375L3.49418 6.51236L13.7267 0.512361L14.2326 1.375L14.7384 2.23764L4.50582 8.23764L4 7.375Z'
+                    fill='currentColor'
+                  />
                 </svg>
               ) : (
                 <div
@@ -272,9 +283,7 @@ const AttractionCarousel = () => {
                     />
                   </svg>
                 </div>
-              )
-              }
-
+              )}
             </button>
             <button
               onClick={() => api?.scrollNext()}
@@ -293,8 +302,17 @@ const AttractionCarousel = () => {
                 )}
               >
                 {isMobile ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="9" viewBox="0 0 25 9" fill="none">
-                    <path d="M1 6.375H0V8.375H1V7.375V6.375ZM21 7.375V8.375H24.6824L21.5058 6.51236L21 7.375ZM1 7.375V8.375H21V7.375V6.375H1V7.375ZM21 7.375L21.5058 6.51236L11.2733 0.512361L10.7674 1.375L10.2616 2.23764L20.4942 8.23764L21 7.375Z" fill="#926D3C" />
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='25'
+                    height='9'
+                    viewBox='0 0 25 9'
+                    fill='none'
+                  >
+                    <path
+                      d='M1 6.375H0V8.375H1V7.375V6.375ZM21 7.375V8.375H24.6824L21.5058 6.51236L21 7.375ZM1 7.375V8.375H21V7.375V6.375H1V7.375ZM21 7.375L21.5058 6.51236L11.2733 0.512361L10.7674 1.375L10.2616 2.23764L20.4942 8.23764L21 7.375Z'
+                      fill='#926D3C'
+                    />
                   </svg>
                 ) : (
                   <svg

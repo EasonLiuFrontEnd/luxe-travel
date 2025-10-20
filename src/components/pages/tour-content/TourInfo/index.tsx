@@ -10,7 +10,10 @@ import TitleIcon from '../Featured/icons/TitleIcon'
 
 const TourInfo = () => {
   return (
-    <div id='tour-info' className='flex flex-col xl:flex-row  pb-7 px-4 xl:pb-7 xl:px-9'>
+    <div
+      id='tour-info'
+      className='flex flex-col xl:flex-row  pb-7 px-4 xl:pb-7 xl:px-9'
+    >
       <div className='order-2 xl:order-1 w-full xl:max-w-[48.7vw] box-content flex flex-col gap-y-5 xl:pt-3.5 xl:px-7 xl:pb-7'>
         <DepartureDate />
         <Flight />
@@ -45,7 +48,7 @@ const TourInfo = () => {
           <h5
             className={cn(
               'relative mx-auto font-noto-serif-h5-bold text-figma-secondary-500 py-4 px-7 rounded-b-2xl bg-figma-primary-50',
-              styles['concave-border']
+              styles['concave-border'],
             )}
           >
             貼心安排
@@ -56,9 +59,8 @@ const TourInfo = () => {
             <li>贈送每位旅客行李綁帶及歐洲轉換插頭各乙只。</li>
             <li>為每位旅客提高投保履約責任險500萬/醫療20萬。</li>
             <li>
-              旅客未滿 15 歲或 70
-              歲以上,依保險規定最高上限【意外死殘保額新臺幣 200
-              萬元、意外醫療保額新臺幣 20 萬,有額外需要敬請自行加購旅平】。
+              旅客未滿 15 歲或 70 歲以上,依保險規定最高上限【意外死殘保額新臺幣
+              200 萬元、意外醫療保額新臺幣 20 萬,有額外需要敬請自行加購旅平】。
             </li>
           </ul>
           <div className='absolute left-[-5px] bottom-[-10px] xl:left-[-10px] xl:bottom-[-22px] flex items-center gap-x-5'>
@@ -71,7 +73,7 @@ const TourInfo = () => {
           </div>
         </div>
       </div>
-      <Registration className="order-1 xl:order-2" />
+      <Registration className='order-1 xl:order-2' />
     </div>
   )
 }

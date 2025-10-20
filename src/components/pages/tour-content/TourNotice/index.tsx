@@ -1,6 +1,6 @@
-import { useMediaQuery } from "@/hooks/useMediaQuery"
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useState } from 'react'
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils'
 
 type TTourNoticeProps = {
   itemCount: number
@@ -47,7 +47,12 @@ const TourNotice = ({ itemCount }: TTourNoticeProps) => {
                 旅客篇
               </p>
             </div>
-            <ol className={cn('font-family-genseki leading-[1.5] text-figma-primary-950 list-decimal list-inside space-y-4', isMobile && !isExpanded ? 'max-h-80 overflow-hidden' : '')}>
+            <ol
+              className={cn(
+                'font-family-genseki leading-[1.5] text-figma-primary-950 list-decimal list-inside space-y-4',
+                isMobile && !isExpanded ? 'max-h-80 overflow-hidden' : '',
+              )}
+            >
               <li>
                 本行程最低出團人數為 16 人;最多為 26
                 人(含機票自理之貴賓),台灣地區將派遣合格領隊隨行服務。
@@ -111,7 +116,7 @@ const TourNotice = ({ itemCount }: TTourNoticeProps) => {
             {isMobile && (
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="self-center font-genseki-body-s-regular text-figma-secondary-500 py-2 px-4 border border-figma-secondary-500 rounded-[18px]"
+                className='self-center font-genseki-body-s-regular text-figma-secondary-500 py-2 px-4 border border-figma-secondary-500 rounded-[18px]'
               >
                 {isExpanded ? 'Show less' : 'Show more'}
               </button>

@@ -5,9 +5,9 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 const Banner = () => {
   const { isMobile } = useMediaQuery()
-  const iconSize = isMobile ? 16 : 24;
-  const iconPath = isMobile ? 'M6 12L10 8L6 4' : 'M9 18L15 12L9 6';
-  const strokeWidth = isMobile ? 1.33 : 2;
+  const iconSize = isMobile ? 16 : 24
+  const iconPath = isMobile ? 'M6 12L10 8L6 4' : 'M9 18L15 12L9 6'
+  const strokeWidth = isMobile ? 1.33 : 2
   return (
     <div className='flex flex-col gap-y-5 xl:gap-y-8 py-8 px-4 xl:pt-10 xl:px-9'>
       <div className='flex items-center xl:gap-x-2 font-family-genseki text-[12px] xl:text-[16px] xl:font-medium leading-[1.5] text-figma-primary-500'>

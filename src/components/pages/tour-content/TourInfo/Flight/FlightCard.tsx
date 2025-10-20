@@ -9,7 +9,9 @@ type TFlightCardProps = {
 
 const FlightCard = ({ flight, className = '' }: TFlightCardProps) => {
   return (
-    <div className={`xl:w-[90%] flex max-xl:flex-col max-xl:gap-y-3.5 xl:gap-x-3.5 ${className}`}>
+    <div
+      className={`xl:w-[90%] flex max-xl:flex-col max-xl:gap-y-3.5 xl:gap-x-3.5 ${className}`}
+    >
       <p className='font-family-luxurious text-4xl tracking-[3.6px] text-figma-secondary-500'>
         Day {flight.day}
       </p>

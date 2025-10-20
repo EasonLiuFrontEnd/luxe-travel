@@ -45,7 +45,10 @@ const DailyItinerary = ({ children }: TDailyItineraryProps) => {
             }}
           >
             <div
-              className={cn(isMobile && index === 0 ? '' : 'border-t pt-10', 'border-figma-secondary-950 xl:pt-12 bg-figma-secondary-100')}
+              className={cn(
+                isMobile && index === 0 ? '' : 'border-t pt-10',
+                'border-figma-secondary-950 xl:pt-12 bg-figma-secondary-100',
+              )}
               style={{
                 height: isMobile ? 'auto' : '100vh',
                 overflow: isMobile ? 'visible' : 'auto',

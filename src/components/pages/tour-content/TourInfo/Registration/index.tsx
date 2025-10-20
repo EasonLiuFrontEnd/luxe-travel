@@ -105,7 +105,12 @@ const Registration = ({ className }: { className?: string }) => {
         : 'text-figma-primary-950'
 
   return (
-    <div className={cn('xl:box-content xl:w-[45.9vw] xl:h-[590px] xl:sticky xl:top-12 flex flex-col gap-y-[30px] p-5 xl:p-7 xl:mt-[49px] xl:mr-7 mb-5 xl:mb-7 rounded-2xl bg-figma-neutral-0 font-family-genseki text-[16px] xl:text-[20px] leading-[1.2] xl:leading-[1.5] text-figma-primary-950', className)}>
+    <div
+      className={cn(
+        'xl:box-content xl:w-[45.9vw] xl:h-[590px] xl:sticky xl:top-12 flex flex-col gap-y-[30px] p-5 xl:p-7 xl:mt-[49px] xl:mr-7 mb-5 xl:mb-7 rounded-2xl bg-figma-neutral-0 font-family-genseki text-[16px] xl:text-[20px] leading-[1.2] xl:leading-[1.5] text-figma-primary-950',
+        className,
+      )}
+    >
       {!isMobile && (
         <button
           className={cn(
@@ -124,7 +129,9 @@ const Registration = ({ className }: { className?: string }) => {
       <div className='flex max-xl:flex-col max-xl:gap-y-7 xl:gap-x-7'>
         <div className='xl:min-w-[328px] mr-[50px]'>
           <div className='flex justify-between'>
-            <p className='font-genseki-body-m-medium max-xl:mr-[10px]'>出發日期</p>
+            <p className='font-genseki-body-m-medium max-xl:mr-[10px]'>
+              出發日期
+            </p>
             <button className='font-genseki-body-s-regular text-figma-secondary-950 underline cursor-pointer'>
               更改出發日
             </button>
@@ -134,7 +141,11 @@ const Registration = ({ className }: { className?: string }) => {
               2025/07/08 - 2025/07/20
             </span>
             <span>
-              共<span className='font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2]'>12</span>天
+              共
+              <span className='font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2]'>
+                12
+              </span>
+              天
             </span>
           </div>
         </div>
