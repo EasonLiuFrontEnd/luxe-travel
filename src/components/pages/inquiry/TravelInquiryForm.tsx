@@ -6,14 +6,14 @@ import { z } from 'zod'
 
 import { HeroSection } from './HeroSection'
 import { BasicInfoSection } from './BasicInfoSection'
-import { BudgetDestinationSection } from './BudgetDestinationSection'
-import { DetailRequirementsSection } from './DetailRequirementsSection'
+import { BudgetSection } from './BudgetSection'
+import { IndependentTravelSection } from './IndependentTravelSection'
 import { Form } from '../../../components/ui/Form'
+import RequirementsSection from './RequirementsSection'
+import GroupTravelSection from './GroupTravelSection'
 
 type DeepPartial<T> = T extends object
-  ? {
-      [P in keyof T]?: DeepPartial<T[P]>
-    }
+  ? { [P in keyof T]?: DeepPartial<T[P]> }
   : T
 
 export type TTravelType =
@@ -23,19 +23,19 @@ export type TTravelType =
   | 'theme'
   | 'mitsui-cruise'
 
-export type TGender = 'ms' | 'mr'
+export type TGender = '小姐' | '先生'
 
-export type TContactMethod = 'any' | 'phone' | 'line'
+export type TContactMethod = '手機' | 'LINE' | '都可以'
 
 export type TContactSource =
-  | 'triumph-member'
-  | 'line'
-  | 'facebook'
-  | 'search'
-  | 'media'
-  | 'other'
+  | '我是凱旋集團會員'
+  | 'LINE訊息'
+  | 'FB訊息'
+  | '網路搜尋'
+  | '廣告'
+  | '其他'
 
-export type TBudgetRange = '10-12' | '12-15' | '15-20' | '20+'
+export type TBudgetRange = '10~12萬' | '12~15萬' | '15~20萬' | '20萬以上'
 
 export type TEuropeanRegion = 'western' | 'central' | 'southern' | 'northern'
 
@@ -71,12 +71,12 @@ export type TBasicInfo = {
   otherSource?: string
 }
 
-export type TBudgetDestination = {
+export type TBudget = {
   budget: TBudgetRange
   countries: TCountry[]
 }
 
-export type TDetailedRequirements = {
+export type TIndependentTravel = {
   adultCount: number
   childCount: number
   travelDays: number
@@ -85,10 +85,19 @@ export type TDetailedRequirements = {
   specialRequirements?: string
 }
 
+export type TGroupTravel = {
+  adultCount: number
+  childCount: number
+  tourProgram: string
+  departureDate: string
+}
+
 export type TTravelInquiryFormData = {
   basicInfo: TBasicInfo
-  budgetDestination: TBudgetDestination
-  detailedRequirements: TDetailedRequirements
+  budget: TBudget
+  independentTravel: TIndependentTravel
+  groupTravel: TGroupTravel
+  requirementsDescription?: string
 }
 
 const travelTypeSchema = z.enum(
@@ -98,22 +107,22 @@ const travelTypeSchema = z.enum(
   },
 )
 
-const genderSchema = z.enum(['ms', 'mr'], {
+const genderSchema = z.enum(['小姐', '先生'], {
   error: '請選擇稱謂',
 })
 
-const contactMethodSchema = z.enum(['any', 'phone', 'line'], {
+const contactMethodSchema = z.enum(['手機', 'LINE', '都可以'], {
   error: '請選擇偏好聯絡方式',
 })
 
 const contactSourceSchema = z.enum(
-  ['triumph-member', 'line', 'facebook', 'search', 'media', 'other'],
+  ['我是凱旋集團會員', 'LINE訊息', 'FB訊息', '網路搜尋', '廣告', '其他'],
   {
     error: '請選擇得知管道',
   },
 )
 
-const budgetRangeSchema = z.enum(['10-12', '12-15', '15-20', '20+'], {
+const budgetRangeSchema = z.enum(['10~12萬', '12~15萬', '15~20萬', '20萬以上'], {
   error: '請選擇每人預算',
 })
 
@@ -155,14 +164,25 @@ const basicInfoSchema = z.object({
   contactTime: z.string().min(1, '請填入您方便的聯繫時段'),
   contactSource: contactSourceSchema,
   otherSource: z.string().optional(),
-})
+}).refine(
+  (data) => {
+    if (data.contactSource === '其他' && !data.otherSource?.trim()) {
+      return false
+    }
+    return true
+  },
+  {
+    message: '請填寫其他管道',
+    path: ['otherSource'],
+  },
+)
 
-const budgetDestinationSchema = z.object({
+const budgetSchema = z.object({
   budget: budgetRangeSchema,
   countries: z.array(countrySchema).min(1, '請至少選擇一個國家'),
 })
 
-const detailedRequirementsSchema = z.object({
+const independentTravelSchema = z.object({
   adultCount: z
     .number()
     .min(1, '大人數量必須至少為 1')
@@ -180,38 +200,60 @@ const detailedRequirementsSchema = z.object({
   specialRequirements: z.string().optional(),
 })
 
+const groupTravelSchema = z.object({
+  adultCount: z
+    .number()
+    .min(1, '大人數量必須至少為 1')
+    .max(20, '大人數量不能超過 20'),
+  childCount: z
+    .number()
+    .min(0, '孩童數量不能為負數')
+    .max(20, '孩童數量不能超過 20'),
+  tourProgram: z.string().min(1, '請選擇團體行程'),
+  departureDate: z.string().min(1, '請選擇出發日期'),
+})
+
 export const travelInquiryFormSchema = z.object({
   basicInfo: basicInfoSchema,
-  budgetDestination: budgetDestinationSchema,
-  detailedRequirements: detailedRequirementsSchema,
+  budget: budgetSchema,
+  independentTravel: independentTravelSchema,
+  groupTravel: groupTravelSchema,
+  requirementsDescription: z.string().optional(),
 })
 
 export const defaultTravelInquiryFormData: DeepPartial<TTravelInquiryFormData> =
-  {
-    basicInfo: {
-      travelType: undefined,
-      contactName: '',
-      gender: undefined,
-      phoneNumber: '',
-      lineId: '',
-      contactMethod: undefined,
-      contactTime: '',
-      contactSource: undefined,
-      otherSource: '',
-    },
-    budgetDestination: {
-      budget: undefined,
-      countries: [],
-    },
-    detailedRequirements: {
-      adultCount: 1,
-      childCount: 0,
-      travelDays: 1,
-      departureDate: '',
-      wishlist: '',
-      specialRequirements: '',
-    },
-  }
+{
+  basicInfo: {
+    travelType: 'europe-free',
+    contactName: '',
+    gender: undefined,
+    phoneNumber: '',
+    lineId: '',
+    contactMethod: undefined,
+    contactTime: '',
+    contactSource: undefined,
+    otherSource: '',
+  },
+  budget: {
+    budget: undefined,
+    countries: [],
+  },
+  independentTravel: {
+    adultCount: 1,
+    childCount: 0,
+    travelDays: 1,
+    departureDate: '',
+    wishlist: '',
+    specialRequirements: '',
+  },
+  groupTravel: {
+    adultCount: 1,
+    childCount: 0,
+    tourProgram: '',
+    departureDate: '',
+  },
+  requirementsDescription: '',
+}
 
 export const TRAVEL_TYPE_OPTIONS = [
   { value: 'europe-free', label: '歐洲自由行' },
@@ -221,31 +263,42 @@ export const TRAVEL_TYPE_OPTIONS = [
   { value: 'mitsui-cruise', label: '三井郵輪' },
 ]
 
+export const GROUP_TOUR_PROGRAMS = [
+  { value: 'italy-classic-8days', label: '義大利經典8日遊' },
+  { value: 'france-romantic-10days', label: '法國浪漫10日遊' },
+  { value: 'spain-portugal-12days', label: '西葡雙國12日遊' },
+  { value: 'germany-austria-9days', label: '德奧風情9日遊' },
+  { value: 'uk-scotland-10days', label: '英國蘇格蘭10日遊' },
+  { value: 'greece-islands-8days', label: '希臘愛琴海島嶼8日遊' },
+  { value: 'nordic-aurora-11days', label: '北歐極光11日遊' },
+  { value: 'eastern-europe-14days', label: '東歐四國14日遊' },
+]
+
 export const GENDER_OPTIONS = [
-  { value: 'ms', label: '小姐' },
-  { value: 'mr', label: '先生' },
+  { value: '小姐', label: '小姐' },
+  { value: '先生', label: '先生' },
 ]
 
 export const CONTACT_METHOD_OPTIONS = [
-  { value: 'any', label: '都可以' },
-  { value: 'phone', label: '手機' },
-  { value: 'line', label: 'LINE' },
+  { value: '都可以', label: '都可以' },
+  { value: '手機', label: '手機' },
+  { value: 'LINE', label: 'LINE' },
 ]
 
 export const CONTACT_SOURCE_OPTIONS = [
-  { value: 'triumph-member', label: '我是凱旋集團會員' },
-  { value: 'line', label: 'LINE訊息' },
-  { value: 'facebook', label: 'FB訊息' },
-  { value: 'search', label: '網路搜尋' },
-  { value: 'media', label: '廣告' },
-  { value: 'other', label: '其他' },
+  { value: '我是凱旋集團會員', label: '我是凱旋集團會員' },
+  { value: 'LINE訊息', label: 'LINE訊息' },
+  { value: 'FB訊息', label: 'FB訊息' },
+  { value: '網路搜尋', label: '網路搜尋' },
+  { value: '廣告', label: '廣告' },
+  { value: '其他', label: '其他' },
 ]
 
 export const BUDGET_OPTIONS = [
-  { value: '10-12', label: '10-12萬' },
-  { value: '12-15', label: '12-15萬' },
-  { value: '15-20', label: '15-20萬' },
-  { value: '20+', label: '20萬以上' },
+  { value: '10~12萬', label: '10~12萬' },
+  { value: '12~15萬', label: '12~15萬' },
+  { value: '15~20萬', label: '15~20萬' },
+  { value: '20萬以上', label: '20萬以上' },
 ]
 
 export const WESTERN_EUROPE_COUNTRIES = [
@@ -321,6 +374,40 @@ export const TravelInquiryForm = ({
     mode: 'onChange',
   })
 
+  const selectedTravelType = form.watch('basicInfo.travelType')
+
+  const renderConditionalSections = () => {
+    if (!selectedTravelType) {
+      return null
+    }
+
+    if (selectedTravelType === 'europe-free' || selectedTravelType === 'chartered') {
+      return (
+        <>
+          <BudgetSection control={form.control} />
+          <IndependentTravelSection
+            control={form.control}
+            isLoading={isLoading}
+          />
+        </>
+      )
+    }
+
+    if (selectedTravelType === 'deluxe-group' || selectedTravelType === 'theme' || selectedTravelType === 'mitsui-cruise') {
+      return (
+        <>
+          <RequirementsSection control={form.control} />
+          <GroupTravelSection
+            control={form.control}
+            isLoading={isLoading}
+          />
+        </>
+      )
+    }
+
+    return null
+  }
+
   const handleSubmit = async (data: TTravelInquiryFormData) => {
     try {
       await onSubmit?.(data)
@@ -363,13 +450,7 @@ export const TravelInquiryForm = ({
 
               <div className='flex flex-col gap-4 pb-8 rounded-b-[16px] w-full'>
                 <BasicInfoSection control={form.control} />
-
-                <BudgetDestinationSection control={form.control} />
-
-                <DetailRequirementsSection
-                  control={form.control}
-                  isLoading={isLoading}
-                />
+                {renderConditionalSections()}
               </div>
             </form>
           </Form>

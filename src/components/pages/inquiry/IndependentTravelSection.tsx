@@ -4,41 +4,41 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/Form'
-import { CounterInput } from '@/components/ui'
+import {
+  CounterInput,
+  RequiredLabel,
+} from '@/components/ui'
 import styles from './styles.module.css'
 import { TTravelInquiryFormData } from './TravelInquiryForm'
 import { CalendarIcon } from '@/components/ui/CalendarIcon'
 import { formatDateForDisplay } from '@/lib/dateUtils'
-export type TDetailRequirementsSectionProps = {
+export type TIndependentTravelSectionProps = {
   control: Control<TTravelInquiryFormData>
   isLoading?: boolean
 }
-export const DetailRequirementsSection = ({
+export const IndependentTravelSection = ({
   control,
   isLoading = false,
-}: TDetailRequirementsSectionProps) => {
+}: TIndependentTravelSectionProps) => {
   return (
     <div className='bg-white flex flex-col gap-8 pb-[60px] pt-5 xl:pt-8 px-4 xl:px-8 relative rounded-2xl rounded-br-0 w-full'>
       <div className='flex flex-col gap-7 xl:pb-7 w-full'>
         <div className='flex flex-col xl:flex-row gap-6 xl:items-end w-full'>
           <div className='flex flex-col gap-1'>
-            <div className='flex gap-1 items-center mb-2'>
-              <div className='font-noto-serif-body-l-semibold text-figma-primary-950'>
-                預計人數
-              </div>
-              <div className='font-genseki-body-l-regular text-figma-function-alert'>
-                *
-              </div>
-            </div>
-            <div className='flex flex-col xl:flex-row gap-6 xl:gap-7'>
+            <div className='flex flex-col xl:flex-row xl:items-end gap-6 xl:gap-7'>
               <FormField
                 control={control}
-                name='detailedRequirements.adultCount'
+                name='independentTravel.adultCount'
                 render={({ field }) => (
                   <FormItem className='w-full xl:w-[218px]'>
+                    <RequiredLabel
+                      required
+                      className='font-noto-serif-body-l-semibold'
+                    >
+                      預計人數
+                    </RequiredLabel>
                     <CounterInput
                       label='大人'
                       value={field.value}
@@ -52,7 +52,7 @@ export const DetailRequirementsSection = ({
               />
               <FormField
                 control={control}
-                name='detailedRequirements.childCount'
+                name='independentTravel.childCount'
                 render={({ field }) => (
                   <FormItem className='w-full xl:w-[249px]'>
                     <CounterInput
@@ -69,19 +69,17 @@ export const DetailRequirementsSection = ({
             </div>
           </div>
           <div className='w-full xl:flex-1 flex flex-col gap-1 xl:min-w-0'>
-            <div className='flex gap-1 items-center mb-2'>
-              <div className='font-noto-serif-body-l-semibold text-figma-primary-950'>
-                預計旅遊天數
-              </div>
-              <div className='font-genseki-body-l-regular text-figma-function-alert'>
-                *
-              </div>
-            </div>
             <FormField
               control={control}
-              name='detailedRequirements.travelDays'
+              name='independentTravel.travelDays'
               render={({ field }) => (
                 <FormItem className='w-full'>
+                  <RequiredLabel
+                    required
+                    className='font-noto-serif-body-l-semibold'
+                  >
+                    預計旅遊天數
+                  </RequiredLabel>
                   <CounterInput
                     label='旅遊天數'
                     value={field.value}
@@ -96,17 +94,9 @@ export const DetailRequirementsSection = ({
             />
           </div>
           <div className='w-full xl:flex-1 flex flex-col gap-1 xl:min-w-0'>
-            <div className='flex gap-1 items-center mb-2'>
-              <div className='font-noto-serif-body-l-semibold text-figma-primary-950'>
-                預計出發日
-              </div>
-              <div className='font-genseki-body-l-regular text-figma-function-alert'>
-                *
-              </div>
-            </div>
             <FormField
               control={control}
-              name='detailedRequirements.departureDate'
+              name='independentTravel.departureDate'
               render={({ field }) => (
                 <FormItem className='w-full'>
                   <div
@@ -121,13 +111,18 @@ export const DetailRequirementsSection = ({
                       }
                     }}
                   >
+                    <RequiredLabel
+                      required
+                      className='font-noto-serif-body-l-semibold mb-2'
+                    >
+                      預計出發日
+                    </RequiredLabel>
                     <div className='flex items-center justify-between px-0 py-3 border-b border-figma-primary-950-70 w-full hover:border-figma-primary-950 transition-colors duration-200'>
                       <span
-                        className={`font-genseki-body-m-regular text-[16px] leading-[1.2] ${
-                          field.value
-                            ? 'text-figma-primary-950'
-                            : 'text-figma-primary-300'
-                        }`}
+                        className={`font-genseki-body-m-regular text-[16px] leading-[1.2] ${field.value
+                          ? 'text-figma-primary-950'
+                          : 'text-figma-primary-300'
+                          }`}
                       >
                         {field.value
                           ? formatDateForDisplay(field.value)
@@ -152,17 +147,15 @@ export const DetailRequirementsSection = ({
         </div>
         <FormField
           control={control}
-          name='detailedRequirements.wishlist'
+          name='independentTravel.wishlist'
           render={({ field }) => (
             <FormItem className='w-full'>
-              <div className='flex gap-0.5 items-center mb-2'>
-                <FormLabel className='font-noto-serif-body-l-semibold text-figma-primary-950'>
-                  心願清單
-                </FormLabel>
-                <span className='font-genseki-body-s-regular text-figma-primary-950'>
-                  （希望必造訪的景點、城市等）
-                </span>
-              </div>
+              <RequiredLabel
+                subText='（希望必造訪的景點、城市等）'
+                className='font-noto-serif-body-l-semibold mb-2'
+              >
+                心願清單
+              </RequiredLabel>
               <FormControl>
                 <div className='flex gap-2.5 items-center px-0 py-3 w-full border-b border-[rgba(56,56,65,0.7)]'>
                   <input
@@ -184,17 +177,15 @@ export const DetailRequirementsSection = ({
         />
         <FormField
           control={control}
-          name='detailedRequirements.specialRequirements'
+          name='independentTravel.specialRequirements'
           render={({ field }) => (
             <FormItem className='w-full'>
-              <div className='flex gap-0.5 items-center mb-2'>
-                <FormLabel className='font-noto-serif-body-l-semibold text-figma-primary-950'>
-                  其他特別需求
-                </FormLabel>
-                <span className='font-genseki-body-s-regular text-figma-primary-950'>
-                  （如交通、接送、特別活動等）
-                </span>
-              </div>
+              <RequiredLabel
+                subText='（如交通、接送、特別活動等）'
+                className='font-noto-serif-body-l-semibold mb-2'
+              >
+                其他特別需求
+              </RequiredLabel>
               <FormControl>
                 <div className='flex gap-2.5 items-center px-0 py-3 w-full border-b border-[rgba(56,56,65,0.7)]'>
                   <input
@@ -255,4 +246,4 @@ export const DetailRequirementsSection = ({
     </div>
   )
 }
-export default DetailRequirementsSection
+export default IndependentTravelSection

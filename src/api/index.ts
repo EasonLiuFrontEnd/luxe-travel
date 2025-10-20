@@ -8,6 +8,8 @@ export {
 
 export { useProductsSearch, useProductCountries } from './group-tours'
 
+export { submitInquiry } from './inquiry'
+
 export type {
   TAdvantages,
   TConcern,
@@ -31,5 +33,7 @@ export type {
   TRegionData,
   TCountriesResponse,
 } from './group-tours'
+
+export type { TInquiryRequest } from './inquiry'
 
 export { default as apiClient } from './client'
