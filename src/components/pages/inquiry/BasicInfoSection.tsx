@@ -4,7 +4,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/Form'
 import { Input } from '@/components/ui/Input'
@@ -14,6 +13,7 @@ import {
   RadioFieldGroup,
   RadioGroup,
   RadioGroupItem,
+  RequiredLabel,
 } from '@/components/ui'
 import {
   TTravelInquiryFormData,
@@ -34,12 +34,12 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
           name='basicInfo.travelType'
           render={({ field }) => (
             <FormItem className='w-full'>
-              <FormLabel className='font-noto-serif-body-l-semibold text-figma-primary-950'>
-                旅遊形式{' '}
-                <span className='font-genseki-body-l-regular text-figma-function-alert'>
-                  *
-                </span>
-              </FormLabel>
+              <RequiredLabel
+                required
+                className='font-noto-serif-body-l-semibold'
+              >
+                旅遊形式
+              </RequiredLabel>
               <FormControl>
                 <RadioFieldGroup
                   options={TRAVEL_TYPE_OPTIONS}
@@ -54,28 +54,24 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
           )}
         />
         <div className='w-full'>
-          <div className='flex flex-wrap gap-0.5 items-center mb-2'>
-            <div className='flex gap-1 items-center justify-start'>
-              <div className='font-noto-serif-body-l-semibold text-figma-primary-950'>
-                聯絡人
-              </div>
-              <div className='font-genseki-body-s-regular text-figma-function-alert'>
-                <span className='font-genseki-body-l-regular'>*</span>
-                此為必填資訊
-              </div>
-            </div>
-          </div>
           <div className='w-full relative'>
-            <div className='flex gap-2.5 items-center px-0 py-4 w-full border-b border-figma-primary-950-70'>
+            <div className='flex gap-2.5 items-end px-0 w-full border-b border-figma-primary-950-70'>
               <FormField
                 control={control}
                 name='basicInfo.contactName'
                 render={({ field }) => (
                   <FormItem className='flex-1'>
+                    <RequiredLabel
+                      required
+                      requiredText='此為必填資訊'
+                      className='font-noto-serif-body-l-semibold'
+                    >
+                      聯絡人
+                    </RequiredLabel>
                     <FormControl>
                       <input
                         placeholder='請填姓名'
-                        className='font-genseki-body-m-regular text-figma-primary-950 bg-transparent border-none outline-none placeholder:text-figma-primary-300 w-full'
+                        className='font-genseki-body-m-regular text-figma-primary-950 py-4 bg-transparent border-none outline-none placeholder:text-figma-primary-300 w-full'
                         {...field}
                       />
                     </FormControl>
@@ -122,12 +118,12 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
             name='basicInfo.phoneNumber'
             render={({ field }) => (
               <FormItem className='w-full mb-6 xl:mb-0'>
-                <FormLabel className='font-noto-serif-body-l-semibold text-figma-primary-950 mb-2'>
-                  手機號碼{' '}
-                  <span className='font-genseki-body-l-regular text-figma-function-alert'>
-                    *
-                  </span>
-                </FormLabel>
+                <RequiredLabel
+                  required
+                  className='font-noto-serif-body-l-semibold'
+                >
+                  手機號碼
+                </RequiredLabel>
                 <FormControl>
                   <Input
                     type='tel'
@@ -146,12 +142,12 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
             name='basicInfo.lineId'
             render={({ field }) => (
               <FormItem className='w-full'>
-                <FormLabel className='font-noto-serif-body-l-semibold text-figma-primary-950 mb-2'>
+                <RequiredLabel
+                  subText='（較建議，最方便專員聯繫討論）'
+                  className='font-noto-serif-body-l-semibold'
+                >
                   LINE ID
-                  <span className='font-genseki-body-s-regular text-figma-primary-950'>
-                    （較建議，最方便專員聯繫討論）
-                  </span>
-                </FormLabel>
+                </RequiredLabel>
                 <FormControl>
                   <Input
                     placeholder='請輸入LINE ID'
@@ -169,9 +165,9 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
           name='basicInfo.contactMethod'
           render={({ field }) => (
             <FormItem className='w-full'>
-              <FormLabel className='font-noto-serif-body-l-semibold text-figma-primary-950 mb-2'>
+              <RequiredLabel className='font-noto-serif-body-l-semibold'>
                 請選擇偏好的聯絡方式
-              </FormLabel>
+              </RequiredLabel>
               <FormControl>
                 <RadioGroup
                   onValueChange={field.onChange}
@@ -202,17 +198,13 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
           name='basicInfo.contactTime'
           render={({ field }) => (
             <FormItem className='w-full'>
-              <div className='flex flex-wrap gap-0.5 items-center mb-2'>
-                <div className='flex gap-1 items-center'>
-                  <div className='font-noto-serif-body-l-semibold text-figma-primary-950'>
-                    聯絡時間
-                  </div>
-                  <div className='font-genseki-body-s-regular text-figma-function-alert'>
-                    <span className='font-genseki-body-l-regular'>*</span>
-                    此為必填資訊
-                  </div>
-                </div>
-              </div>
+              <RequiredLabel
+                required
+                requiredText='此為必填資訊'
+                className='font-noto-serif-body-l-semibold'
+              >
+                聯絡時間
+              </RequiredLabel>
               <FormControl>
                 <div className='relative w-full xl:w-[180px]'>
                   <input
@@ -232,9 +224,9 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
           name='basicInfo.contactSource'
           render={({ field }) => (
             <FormItem className='w-full'>
-              <FormLabel className='font-noto-serif-body-l-semibold text-figma-primary-950 mb-2'>
+              <RequiredLabel className='font-noto-serif-body-l-semibold'>
                 您是從何管道得知典藏旅遊？
-              </FormLabel>
+              </RequiredLabel>
               <FormControl>
                 <div className='flex gap-4 items-center px-0 py-3'>
                   <RadioGroup
@@ -246,7 +238,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
                       <div
                         key={source.value}
                         className={
-                          source.value === 'other'
+                          source.value === '其他'
                             ? 'flex gap-1.5 items-center'
                             : 'flex gap-1 items-center'
                         }
@@ -259,9 +251,9 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
                             value={source.value}
                             id={`contact-source-${source.value}`}
                           />
-                          {source.value === 'other' ? '其他：' : source.label}
+                          {source.value === '其他' ? '其他：' : source.label}
                         </Label>
-                        {source.value === 'other' && (
+                        {source.value === '其他' && (
                           <FormField
                             control={control}
                             name='basicInfo.otherSource'

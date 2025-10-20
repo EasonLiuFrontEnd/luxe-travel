@@ -30,7 +30,7 @@ const BookShelf = ({ trackRef, isMobile = false }: TBookShelfProps) => {
     isLoading: isBooksLoading,
     error: booksError,
   } = booksQuery
-  const { setSelectedCountryId } = useSelectedCountry()
+  const { selectedCountryId, setSelectedCountryId } = useSelectedCountry()
 
   const displayData = useMemo(() => {
     if (booksError && process.env.NODE_ENV !== 'production') {
@@ -76,6 +76,16 @@ const BookShelf = ({ trackRef, isMobile = false }: TBookShelfProps) => {
     },
     [isDragging, isMobile, startX, scrollLeft, trackRef],
   )
+
+  useEffect(() => {
+    if (!selectedCountryId && displayData.length > 0) {
+      const firstBookId = displayData[0]?.id
+      if (firstBookId) {
+        setActiveCardId(firstBookId)
+        setSelectedCountryId(firstBookId)
+      }
+    }
+  }, [displayData, selectedCountryId, setSelectedCountryId])
 
   useEffect(() => {
     const checkLayout = () => {
