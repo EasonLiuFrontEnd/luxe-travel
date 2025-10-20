@@ -131,7 +131,7 @@ export const DetailRequirementsSection = ({
                       >
                         {field.value
                           ? formatDateForDisplay(field.value)
-                          : '輸入日期  範例：2025/08/25'}
+                          : '選擇日期'}
                       </span>
                       <div className='shrink-0 size-5 text-figma-primary-950 pointer-events-none'>
                         <CalendarIcon className='w-full h-full' />

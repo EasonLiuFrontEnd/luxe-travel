@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import TourCard from './TourCard'
 import GroupTourCard from './GroupTourCard'
 import type { TTourData, TTourType } from './config'
@@ -14,8 +14,18 @@ type TToursProps = {
 
 const Tours = ({ tours = [], tourType, className }: TToursProps) => {
   const router = useRouter()
+  const [refreshKey, setRefreshKey] = useState(0)
+
+  useEffect(() => {
+    const needsRefresh = sessionStorage.getItem('tour-needs-refresh')
+    if (needsRefresh === 'true') {
+      sessionStorage.removeItem('tour-needs-refresh')
+      setRefreshKey((prev) => prev + 1)
+    }
+  }, [])
 
   const handleDetailsClick = (tourId: string) => {
+    sessionStorage.setItem('tour-needs-refresh', 'true')
     router.push(`/tour-content/${tourId}`)
   }
 
@@ -33,12 +43,18 @@ const Tours = ({ tours = [], tourType, className }: TToursProps) => {
     }
 
     if (tourType === 'group-tours') {
-      return <GroupTourCard key={tour.id} {...commonProps} dates={tour.dates} />
+      return (
+        <GroupTourCard
+          key={`${tour.id}-${refreshKey}`}
+          {...commonProps}
+          dates={tour.dates}
+        />
+      )
     }
 
     return (
       <TourCard
-        key={tour.id}
+        key={`${tour.id}-${refreshKey}`}
         {...commonProps}
         travelerReview={tour.travelerReview}
         note={tour.note}
