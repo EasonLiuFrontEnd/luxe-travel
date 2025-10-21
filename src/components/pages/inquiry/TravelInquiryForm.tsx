@@ -62,34 +62,34 @@ export type TCountry =
 export type TBasicInfo = {
   travelType: TTravelType
   contactName: string
-  gender: TGender
+  gender?: TGender
   phoneNumber: string
   lineId?: string
-  contactMethod: TContactMethod
-  contactTime: string
-  contactSource: TContactSource
+  contactMethod?: TContactMethod
+  contactTime?: string
+  contactSource?: TContactSource
   otherSource?: string
 }
 
 export type TBudget = {
-  budget: TBudgetRange
-  countries: TCountry[]
+  budget?: TBudgetRange
+  countries?: TCountry[]
 }
 
 export type TIndependentTravel = {
-  adultCount: number
+  adultCount?: number
   childCount: number
-  travelDays: number
-  departureDate: string
+  travelDays?: number
+  departureDate?: string
   wishlist?: string
   specialRequirements?: string
 }
 
 export type TGroupTravel = {
-  adultCount: number
+  adultCount?: number
   childCount: number
-  tourProgram?: string
-  departureDate: string
+  itinerary?: string
+  departureDate?: string
 }
 
 export type TTravelInquiryFormData = {
@@ -159,14 +159,14 @@ const basicInfoSchema = z
   .object({
     travelType: travelTypeSchema,
     contactName: z.string().min(1, '請輸入聯絡人姓名'),
-    gender: genderSchema,
+    gender: genderSchema.optional(),
     phoneNumber: z
       .string()
       .regex(/^09\d{8}$/, '請輸入有效的台灣手機號碼格式 (09xxxxxxxx)'),
     lineId: z.string().optional(),
-    contactMethod: contactMethodSchema,
-    contactTime: z.string().min(1, '請填入您方便的聯繫時段'),
-    contactSource: contactSourceSchema,
+    contactMethod: contactMethodSchema.optional(),
+    contactTime: z.string().optional(),
+    contactSource: contactSourceSchema.optional(),
     otherSource: z.string().optional(),
   })
   .refine(
@@ -183,15 +183,16 @@ const basicInfoSchema = z
   )
 
 const budgetSchema = z.object({
-  budget: budgetRangeSchema,
-  countries: z.array(countrySchema).min(1, '請至少選擇一個國家'),
+  budget: budgetRangeSchema.optional(),
+  countries: z.array(countrySchema).optional(),
 })
 
 const independentTravelSchema = z.object({
   adultCount: z
     .number()
     .min(1, '大人數量必須至少為 1')
-    .max(20, '大人數量不能超過 20'),
+    .max(20, '大人數量不能超過 20')
+    .optional(),
   childCount: z
     .number()
     .min(0, '孩童數量不能為負數')
@@ -199,8 +200,9 @@ const independentTravelSchema = z.object({
   travelDays: z
     .number()
     .min(1, '旅遊天數必須至少為 1')
-    .max(60, '旅遊天數不能超過 60'),
-  departureDate: z.string().min(1, '請選擇預計出發日期'),
+    .max(60, '旅遊天數不能超過 60')
+    .optional(),
+  departureDate: z.string().optional(),
   wishlist: z.string().optional(),
   specialRequirements: z.string().optional(),
 })
@@ -209,13 +211,14 @@ const groupTravelSchema = z.object({
   adultCount: z
     .number()
     .min(1, '大人數量必須至少為 1')
-    .max(20, '大人數量不能超過 20'),
+    .max(20, '大人數量不能超過 20')
+    .optional(),
   childCount: z
     .number()
     .min(0, '孩童數量不能為負數')
     .max(20, '孩童數量不能超過 20'),
-  tourProgram: z.string().optional(),
-  departureDate: z.string().min(1, '請選擇出發日期'),
+  itinerary: z.string().optional(),
+  departureDate: z.string().optional(),
 })
 
 export const travelInquiryFormSchema = z.object({
@@ -254,7 +257,7 @@ export const defaultTravelInquiryFormData: DeepPartial<TTravelInquiryFormData> =
     groupTravel: {
       adultCount: 1,
       childCount: 0,
-      tourProgram: '',
+      itinerary: '',
       departureDate: '',
     },
     requirementsDescription: '',
@@ -352,14 +355,12 @@ export const ALL_COUNTRIES = [
 export type TTravelInquiryFormProps = {
   onSubmit?: (data: TTravelInquiryFormData) => void | Promise<void>
   className?: string
-  isLoading?: boolean
   heroTopPosition?: string
 }
 
 export const TravelInquiryForm = ({
   onSubmit,
   className = '',
-  isLoading = false,
   heroTopPosition,
 }: TTravelInquiryFormProps) => {
   const form = useForm<TTravelInquiryFormData>({
@@ -381,11 +382,8 @@ export const TravelInquiryForm = ({
     ) {
       return (
         <>
-          <BudgetSection control={form.control} />
-          <IndependentTravelSection
-            control={form.control}
-            isLoading={isLoading}
-          />
+          <BudgetSection />
+          <IndependentTravelSection />
         </>
       )
     }
@@ -397,8 +395,8 @@ export const TravelInquiryForm = ({
     ) {
       return (
         <>
-          <RequirementsSection control={form.control} />
-          <GroupTravelSection control={form.control} isLoading={isLoading} />
+          <RequirementsSection />
+          <GroupTravelSection />
         </>
       )
     }
@@ -447,7 +445,7 @@ export const TravelInquiryForm = ({
               </div>
 
               <div className='flex flex-col gap-4 pb-8 rounded-b-[16px] w-full'>
-                <BasicInfoSection control={form.control} />
+                <BasicInfoSection />
                 {renderConditionalSections()}
               </div>
             </form>

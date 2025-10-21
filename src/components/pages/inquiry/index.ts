@@ -10,9 +10,5 @@ export type {
   TTravelInquiryFormData,
 } from './TravelInquiryForm'
 export type { THeroSectionProps } from './HeroSection'
-export type { TBasicInfoSectionProps } from './BasicInfoSection'
-export type { TBudgetSectionProps } from './BudgetSection'
-export type { TIndependentTravelSectionProps } from './IndependentTravelSection'
-export type { TGroupTravelSectionProps } from './GroupTravelSection'
 
 export { TravelInquiryForm as default } from './TravelInquiryForm'

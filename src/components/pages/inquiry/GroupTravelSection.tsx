@@ -1,5 +1,5 @@
 'use client'
-import { Control } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 import Link from 'next/link'
 import { FormField, FormItem, FormMessage } from '@/components/ui/Form'
 import { CounterInput, RequiredLabel } from '@/components/ui'
@@ -8,15 +8,10 @@ import type { TTravelInquiryFormData } from './TravelInquiryForm'
 import { CalendarIcon } from '@/components/ui/CalendarIcon'
 import { formatDateForDisplay } from '@/lib/dateUtils'
 import { cn } from '@/lib/utils'
-export type TGroupTravelSectionProps = {
-  control: Control<TTravelInquiryFormData>
-  isLoading?: boolean
-}
 
-export const GroupTravelSection = ({
-  control,
-  isLoading = false,
-}: TGroupTravelSectionProps) => {
+export const GroupTravelSection = () => {
+  const { control, formState } = useFormContext<TTravelInquiryFormData>()
+  const isLoading = formState.isSubmitting
   return (
     <div className='bg-white flex flex-col gap-8 pb-[60px] pt-5 xl:pt-8 px-4 xl:px-8 relative rounded-2xl rounded-br-0 w-full'>
       <div className='flex flex-col gap-7 xl:pb-7 w-full'>
@@ -28,10 +23,7 @@ export const GroupTravelSection = ({
                 name='groupTravel.adultCount'
                 render={({ field }) => (
                   <FormItem className='w-full xl:w-[218px]'>
-                    <RequiredLabel
-                      required
-                      className='font-noto-serif-body-l-semibold'
-                    >
+                    <RequiredLabel className='font-noto-serif-body-l-semibold'>
                       預計人數
                     </RequiredLabel>
                     <CounterInput
@@ -68,7 +60,7 @@ export const GroupTravelSection = ({
           <div className='w-full xl:flex-1 flex flex-col gap-1 xl:min-w-0'>
             <FormField
               control={control}
-              name='groupTravel.tourProgram'
+              name='groupTravel.itinerary'
               render={({ field }) => (
                 <FormItem className='w-full'>
                   <label className='font-noto-serif-body-l-semibold'>
@@ -105,10 +97,7 @@ export const GroupTravelSection = ({
               name='groupTravel.departureDate'
               render={({ field }) => (
                 <FormItem className='w-full'>
-                  <RequiredLabel
-                    required
-                    className='font-noto-serif-body-l-semibold'
-                  >
+                  <RequiredLabel className='font-noto-serif-body-l-semibold'>
                     出發日期
                   </RequiredLabel>
                   <div
@@ -166,7 +155,8 @@ export const GroupTravelSection = ({
           <button
             type='submit'
             disabled={isLoading}
-            className={cn(styles.buttonFontFamily, 
+            className={cn(
+              styles.buttonFontFamily,
               'flex items-center gap-5 text-figma-secondary-950 tracking-[0.5px]',
               'text-[24px] xl:text-[20px] font-bold xl:font-medium leading-[1.2]',
               'cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed',
