@@ -22,9 +22,11 @@ import {
   CONTACT_METHOD_OPTIONS,
   CONTACT_SOURCE_OPTIONS,
 } from './TravelInquiryForm'
+import { cn } from '@/lib/utils'
 
 export const BasicInfoSection = () => {
-  const { control } = useFormContext<TTravelInquiryFormData>()
+  const { control, formState } = useFormContext<TTravelInquiryFormData>()
+  const hasContactNameError = !!formState.errors.basicInfo?.contactName
   return (
     <FormSection title='' className='rounded-t-none pt-0'>
       <div className='flex flex-col gap-8 xl:gap-7 w-full'>
@@ -54,7 +56,14 @@ export const BasicInfoSection = () => {
         />
         <div className='w-full'>
           <div className='w-full relative'>
-            <div className='flex gap-2.5 items-end px-0 w-full'>
+            <div
+              className={cn(
+                'flex gap-2.5 items-end px-0 w-full border-b',
+                hasContactNameError
+                  ? 'border-figma-function-alert'
+                  : 'border-figma-primary-950-70',
+              )}
+            >
               <FormField
                 control={control}
                 name='basicInfo.contactName'
@@ -70,11 +79,11 @@ export const BasicInfoSection = () => {
                     <FormControl>
                       <input
                         placeholder='請填姓名'
-                        className='font-genseki-body-m-regular text-figma-primary-950 py-4 bg-transparent border-0 border-b border-figma-primary-950-70 outline-none placeholder:text-figma-primary-300 w-full aria-invalid:border-figma-function-alert'
+                        className='font-genseki-body-m-regular text-figma-primary-950 py-4 bg-transparent border-none outline-none placeholder:text-figma-primary-300 w-full'
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage className='mt-4' />
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -104,7 +113,7 @@ export const BasicInfoSection = () => {
                         ))}
                       </RadioGroup>
                     </FormControl>
-                    <FormMessage className='mt-4' />
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -119,6 +128,7 @@ export const BasicInfoSection = () => {
               <FormItem className='w-full mb-6 xl:mb-0'>
                 <RequiredLabel
                   required
+                  requiredText='此為必填資訊'
                   className='font-noto-serif-body-l-semibold'
                 >
                   手機號碼
