@@ -152,7 +152,11 @@ export const useMap = (): TUseMapQueryResult => {
     queryKey: ['map'],
     queryFn: fetchMapData,
     retry: (failureCount, error) => {
-      if (error.response?.status && error.response.status >= 400 && error.response.status < 500) {
+      if (
+        error.response?.status &&
+        error.response.status >= 400 &&
+        error.response.status < 500
+      ) {
         return false
       }
       return failureCount < 2

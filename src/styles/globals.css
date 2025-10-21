@@ -246,7 +246,7 @@ input[type='range']::-moz-range-thumb {
   pointer-events: auto;
 }
 
-[data-sonner-toast][data-styled=true] [data-title] {
+[data-sonner-toast][data-styled='true'] [data-title] {
   font-weight: 400 !important;
 }
 

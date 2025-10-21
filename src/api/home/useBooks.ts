@@ -252,7 +252,11 @@ export const useBooks = (): TUseHomeQueryResult<TBooks[], TBooksResponse> => {
     queryKey: ['books'],
     queryFn: fetchBooksData,
     retry: (failureCount, error) => {
-      if (error.response?.status && error.response.status >= 400 && error.response.status < 500) {
+      if (
+        error.response?.status &&
+        error.response.status >= 400 &&
+        error.response.status < 500
+      ) {
         return false
       }
       return failureCount < 2
