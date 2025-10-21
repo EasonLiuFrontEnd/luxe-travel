@@ -218,7 +218,8 @@ export const IndependentTravelSection = ({
           <button
             type='submit'
             disabled={isLoading}
-            className={cn(styles.buttonFontFamily,
+            className={cn(
+              styles.buttonFontFamily,
               'flex items-center gap-5 text-figma-secondary-950 tracking-[0.5px]',
               'text-[24px] xl:text-[20px] font-bold xl:font-medium leading-[1.2]',
               'cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed',
