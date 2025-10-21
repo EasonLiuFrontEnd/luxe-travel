@@ -11,7 +11,7 @@ type TNavigationItem = {
 
 const navigationItems: TNavigationItem[] = [
   { id: 'nav-tour-info', label: '行程資訊', targetId: 'tour-info' },
-  { id: 'nav-featured', label: '焦點特色', targetId: 'featured' },
+  { id: 'nav-highlight', label: '焦點特色', targetId: 'highlight' },
   { id: 'nav-daily-itinerary', label: '每日行程', targetId: 'daily-itinerary' },
   { id: 'nav-tour-notice', label: '參團須知', targetId: 'tour-notice' },
 ]
@@ -90,7 +90,7 @@ const NavigationSidebar = () => {
           className={cn(
             '[letter-spacing:4px] pr-[7.5px] pl-[6.5px] xl:pt-[3px] xl:pr-[12.5px] xl:pl-[12.5px] xl:pb-1 tracking-wider cursor-pointer transition-colors hover:text-figma-secondary-950 hover:bg-figma-accent-yellow-light',
             activeSection === item.targetId &&
-              'text-figma-secondary-950 bg-figma-accent-yellow-light',
+            'text-figma-secondary-950 bg-figma-accent-yellow-light',
           )}
         >
           {item.label}

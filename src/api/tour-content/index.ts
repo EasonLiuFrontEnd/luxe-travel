@@ -145,7 +145,7 @@ export type TTourProduct = {
   updatedAt: string
   tour: TTour[]
   flights: TFlight[]
-  map: unknown
+  map: string | null
   highlights: THighlight[]
   itineraries: TItinerary[]
   feedback: unknown

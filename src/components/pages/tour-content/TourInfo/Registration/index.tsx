@@ -1,108 +1,65 @@
 import Image from 'next/image'
-import { mockTourData, formatNumber } from '../../config'
 import { cn } from '@/lib/utils'
 import styles from './styles.module.css'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import PriceDisplay from './PriceDisplay'
+import type { TTour } from '@/api/tour-content'
 
-const Registration = ({ className }: { className?: string }) => {
+type TRegistrarionProps = {
+  tours: TTour[]
+  selectedTourId?: string
+  className?: string
+}
+
+const calculateDays = (departDate: string, returnDate: string): number => {
+  const depart = new Date(departDate)
+  const ret = new Date(returnDate)
+  const diffTime = Math.abs(ret.getTime() - depart.getTime())
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1
+  return diffDays
+}
+
+const Registration = ({
+  tours,
+  selectedTourId,
+  className,
+}: TRegistrarionProps) => {
   const { isMobile } = useMediaQuery()
-  const depositDisplay =
-    mockTourData.deposit === null
-      ? '無此報價'
-      : mockTourData.deposit === 0
-        ? '敬請電洽'
-        : `$${formatNumber(mockTourData.deposit)}/每人`
 
-  const adultPriceDisplay =
-    mockTourData.adult === null
-      ? '無此報價'
-      : mockTourData.adult === 0
-        ? '敬請電洽'
-        : `$${formatNumber(mockTourData.adult)}`
+  if (!tours || tours.length === 0) {
+    return null
+  }
 
-  const mainPriceDisplay =
-    mockTourData.adult === null
-      ? '無此報價'
-      : mockTourData.adult === 0
-        ? '敬請電洽'
-        : `＄${formatNumber(mockTourData.adult)}`
+  const tour = selectedTourId
+    ? tours.find((t) => t.id === selectedTourId) || tours[0]
+    : tours[0]
 
-  const childWithBedDisplay =
-    mockTourData.childWithBed === null
-      ? '無此報價'
-      : mockTourData.childWithBed === 0
-        ? '敬請電洽'
-        : `$${formatNumber(mockTourData.childWithBed)}`
+  if (!tour) {
+    return null
+  }
 
-  const childExtraBedDisplay =
-    mockTourData.childExtraBed === null
-      ? '無此報價'
-      : mockTourData.childExtraBed === 0
-        ? '敬請電洽'
-        : `$${formatNumber(mockTourData.childExtraBed)}`
+  const days = calculateDays(tour.departDate, tour.returnDate)
 
-  const childNoBedDisplay =
-    mockTourData.childNoBed === null
-      ? '無此報價'
-      : mockTourData.childNoBed === 0
-        ? '敬請電洽'
-        : `$${formatNumber(mockTourData.childNoBed)}`
+  const getColorClass = (value: string): string => {
+    if (value === 'NIL') {
+      return 'text-figma-primary-300'
+    }
+    const numValue = parseInt(value, 10)
+    if (Number.isNaN(numValue) || numValue === 0) {
+      return 'text-figma-secondary-950'
+    }
+    return 'text-figma-primary-950'
+  }
 
-  const infantDisplay =
-    mockTourData.infant === null
-      ? '無此報價'
-      : mockTourData.infant === 0
-        ? '敬請電洽'
-        : `$${formatNumber(mockTourData.infant)}`
+  const depositColor = getColorClass(tour.deposit)
+  const adultColor = getColorClass(tour.adult)
+  const childWithBedColor = getColorClass(tour.childWithBed)
+  const childExtraBedColor = getColorClass(tour.childExtraBed)
+  const childNoBedColor = getColorClass(tour.childNoBed)
+  const infantColor = getColorClass(tour.infant)
 
-  const depositClass =
-    mockTourData.deposit === null
-      ? 'text-figma-primary-300'
-      : mockTourData.deposit === 0
-        ? 'text-figma-secondary-950'
-        : 'text-figma-primary-950'
-
-  const adultPriceClass =
-    mockTourData.adult === null
-      ? 'text-figma-primary-300'
-      : mockTourData.adult === 0
-        ? 'text-figma-secondary-950'
-        : 'text-figma-primary-950'
-
-  const mainPriceClass =
-    mockTourData.adult === null
-      ? 'text-figma-primary-300'
-      : mockTourData.adult === 0
-        ? 'text-figma-secondary-950'
-        : 'text-figma-secondary-500'
-
-  const childWithBedClass =
-    mockTourData.childWithBed === null
-      ? 'ml-2 text-figma-primary-300'
-      : mockTourData.childWithBed === 0
-        ? 'ml-2 text-figma-secondary-950'
-        : 'ml-2 text-figma-primary-950'
-
-  const childExtraBedClass =
-    mockTourData.childExtraBed === null
-      ? 'ml-2 text-figma-primary-300'
-      : mockTourData.childExtraBed === 0
-        ? 'ml-2 text-figma-secondary-950'
-        : 'ml-2 text-figma-primary-950'
-
-  const childNoBedClass =
-    mockTourData.childNoBed === null
-      ? 'ml-2 text-figma-primary-300'
-      : mockTourData.childNoBed === 0
-        ? 'ml-2 text-figma-secondary-950'
-        : 'ml-2 text-figma-primary-950'
-
-  const infantClass =
-    mockTourData.infant === null
-      ? 'text-figma-primary-300'
-      : mockTourData.infant === 0
-        ? 'text-figma-secondary-950'
-        : 'text-figma-primary-950'
+  const priceValueClassName =
+    'font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2] tracking-[1.6px]'
 
   return (
     <div
@@ -138,12 +95,12 @@ const Registration = ({ className }: { className?: string }) => {
           </div>
           <div>
             <span className='font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2] tracking-[1.6px] mr-3'>
-              2025/07/08 - 2025/07/20
+              {tour.departDate} - {tour.returnDate}
             </span>
             <span>
               共
               <span className='font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2]'>
-                12
+                {days}
               </span>
               天
             </span>
@@ -151,13 +108,14 @@ const Registration = ({ className }: { className?: string }) => {
         </div>
         <div className='min-w-[328px]'>
           <p className='font-genseki-body-m-medium'>訂金</p>
-          <p
-            className={cn(
-              'font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2] tracking-[1.6px]',
-              depositClass,
-            )}
-          >
-            {depositDisplay}
+          <p>
+            <PriceDisplay
+              value={tour.deposit}
+              suffix='/每人'
+              valueClassName={priceValueClassName}
+              applyStyleOnAllText={true}
+              className={depositColor}
+            />
           </p>
         </div>
       </div>
@@ -166,33 +124,54 @@ const Registration = ({ className }: { className?: string }) => {
         <div className='grid grid-cols-[auto_1fr] xl:grid-cols-[184px_1fr] gap-x-5 xl:gap-x-7 gap-y-2.5 items-center'>
           <span>大人（年滿12歲）</span>
           <span>
-            每位
-            <span
-              className={cn(
-                'font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2] tracking-[1.6px] mx-2',
-                adultPriceClass,
+            <PriceDisplay
+              value={tour.adult}
+              prefix='每位'
+              suffix='起'
+              valueClassName={cn(
+                priceValueClassName,
+                'mx-2',
               )}
-            >
-              {adultPriceDisplay}
-            </span>
-            {mockTourData.adult !== null && mockTourData.adult > 0 && '起'}
+              className={adultColor}
+            />
           </span>
           <span className='max-xl:col-span-2'>小孩（2-未滿12歲）</span>
           <div className='max-xl:col-span-2 flex flex-wrap gap-x-5 max-xl:gap-y-3 xl:gap-x-[30px]'>
             <p>
               佔床
-              <span className={childWithBedClass}>{childWithBedDisplay}</span>
+              <PriceDisplay
+                value={tour.childWithBed}
+                suffix='起'
+                valueClassName={priceValueClassName}
+                className={cn(childWithBedColor, 'ml-2')}
+              />
             </p>
             <p>
               加床
-              <span className={childExtraBedClass}>{childExtraBedDisplay}</span>
+              <PriceDisplay
+                value={tour.childExtraBed}
+                suffix='起'
+                valueClassName={priceValueClassName}
+                className={cn(childExtraBedColor, 'ml-2')}
+              />
             </p>
             <p>
-              不佔床<span className={childNoBedClass}>{childNoBedDisplay}</span>
+              不佔床
+              <PriceDisplay
+                value={tour.childNoBed}
+                suffix='起'
+                valueClassName={priceValueClassName}
+                className={cn(childNoBedColor, 'ml-2')}
+              />
             </p>
           </div>
           <span>嬰兒（未滿2歲）</span>
-          <span className={infantClass}>{infantDisplay}</span>
+          <PriceDisplay
+            value={tour.infant}
+            suffix='起'
+            valueClassName={priceValueClassName}
+            className={infantColor}
+          />
         </div>
       </div>
       <div className='xl:pb-[30px] xl:border-b xl:border-figma-secondary-500'>
@@ -206,27 +185,28 @@ const Registration = ({ className }: { className?: string }) => {
           <p className='font-genseki-body-m-medium'>備註</p>
         </div>
         <div className='font-genseki-body-m-regular text-figma-primary-400'>
-          <p>年齡說明：年齡「團體回國日」計算。</p>
-          <p>
-            費用不包括：機場來回接送、護照工本費、床頭與行李等禮貌性質小費、私人費用等。
-          </p>
-          <p>
-            團費報價以雙人房（2人一室）為主，歡迎您結伴參加。若單數報名，須酌收全程單人房差額，或由本公司協助安排同社團友共用一室，若能順利調整，則免收單人房差額。
-          </p>
-          <p>
-            單人房為一人房（Single for Single use），非雙人房供一人使用（Double
-            for Single use），單人房空間通常較雙人房。
-          </p>
-          <p>
-            三人房通常為雙人房加一床，只接受一大二小或二大一小合住，加床大多為摺疊床、沙發床或行軍彈簧床，加上三人份的行李，勢必影響住宿品質，故建議避免住宿三人房。
-          </p>
+          {!tour.note ? (
+            '無'
+          ) : (
+            tour.note
+          )}
         </div>
       </div>
       {!isMobile && (
         <div className='flex justify-between'>
-          <h3 className={cn('font-noto-serif-h3-bold', mainPriceClass)}>
-            {mainPriceDisplay}
-            {mockTourData.adult !== null && mockTourData.adult > 0 && (
+          <h3
+            className={cn(
+              'font-noto-serif-h3-bold',
+              adultColor === 'text-figma-primary-300'
+                ? 'text-figma-primary-300'
+                : 'text-figma-secondary-500',
+            )}
+          >
+            <PriceDisplay
+              value={tour.adult}
+              className={adultColor}
+            />
+            {adultColor === 'text-figma-primary-950' && (
               <span className='font-genseki-h6-regular ml-2'>起</span>
             )}
           </h3>

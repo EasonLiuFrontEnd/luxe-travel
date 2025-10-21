@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 type TTimeSlotData = {
   id: string
   date: string
@@ -7,7 +5,17 @@ type TTimeSlotData = {
   href: string
 }
 
-const TimeSlotCard = ({ slot }: { slot: TTimeSlotData }) => {
+type TTimeSlotCardProps = {
+  slot: TTimeSlotData
+  onSelect: (id: string) => void
+  isActive?: boolean
+}
+
+const TimeSlotCard = ({
+  slot,
+  onSelect,
+  isActive = false,
+}: TTimeSlotCardProps) => {
   const isDisabled = slot.status !== '熱銷中' && slot.status !== '已成團'
 
   const disabledStyles = {
@@ -17,27 +25,39 @@ const TimeSlotCard = ({ slot }: { slot: TTimeSlotData }) => {
 
   const activeStyles = {
     container:
+      'text-figma-function-available-normal bg-[#00D4751A] border border-figma-function-available-light cursor-pointer',
+    border: 'border-figma-function-available-light',
+  }
+
+  const hoverStyles = {
+    container:
       'text-figma-function-available-normal bg-[#00D4751A] border border-transparent hover:border-figma-function-available-light hover:bg-[#ccf6e3] cursor-pointer',
     border: 'border-figma-function-available-light',
   }
 
+  const getContainerStyles = () => {
+    if (isDisabled) return disabledStyles.container
+    if (isActive) return activeStyles.container
+    return hoverStyles.container
+  }
+
   return (
-    <Link href={slot.href} className={isDisabled ? 'pointer-events-none' : ''}>
-      <div
-        className={`flex flex-col items-center rounded-[4px] w-[84px] ${
-          isDisabled ? disabledStyles.container : activeStyles.container
+    <button
+      onClick={() => onSelect(slot.id)}
+      disabled={isDisabled}
+      className={`flex flex-col items-center rounded-[4px] w-[84px] ${getContainerStyles()}`}
+    >
+      <p
+        className={`w-full font-noto-serif-body-m-medium text-center py-2 border-b ${
+          isDisabled
+            ? disabledStyles.border
+            : activeStyles.border
         }`}
       >
-        <p
-          className={`w-full font-noto-serif-body-m-medium text-center py-2 border-b ${
-            isDisabled ? disabledStyles.border : activeStyles.border
-          }`}
-        >
-          {slot.date}
-        </p>
-        <p className='font-genseki-body-s-regular pt-1 pb-2'>{slot.status}</p>
-      </div>
-    </Link>
+        {slot.date}
+      </p>
+      <p className='font-genseki-body-s-regular pt-1 pb-2'>{slot.status}</p>
+    </button>
   )
 }
 

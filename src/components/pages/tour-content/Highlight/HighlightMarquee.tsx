@@ -115,7 +115,7 @@ const cityCards = [
   },
 ]
 
-const AttractionCarousel = () => {
+const HighlightMarquee = () => {
   const [activeId, setActiveId] = useState(1)
   const [api, setApi] = useState<CarouselApi>()
   const [canScrollPrev, setCanScrollPrev] = useState(false)
@@ -337,4 +337,4 @@ const AttractionCarousel = () => {
   )
 }
 
-export default AttractionCarousel
+export default HighlightMarquee

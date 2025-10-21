@@ -7,7 +7,7 @@ import {
 import type { CarouselApi } from '@/components/ui/Carousel'
 import type { TTour } from '@/api/tour-content'
 import TimeSlotCard from './TimeSlotCard'
-import TitleIcon from '../../Featured/icons/TitleIcon'
+import TitleIcon from '../../Highlight/icons/TitleIcon'
 
 type TTimeSlotData = {
   id: string
@@ -18,11 +18,13 @@ type TTimeSlotData = {
 
 type TDepartureDateProps = {
   tours: TTour[]
+  onTourSelect?: (id: string) => void
 }
 
-const DepartureDate = ({ tours }: TDepartureDateProps) => {
+const DepartureDate = ({ tours, onTourSelect }: TDepartureDateProps) => {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>()
   const [canScrollNext, setCanScrollNext] = useState(false)
+  const [selectedTourId, setSelectedTourId] = useState<string>(tours[0]?.id || '')
 
   const timeSlots: TTimeSlotData[] = useMemo(() => {
     return tours.map((tour) => {
@@ -53,6 +55,11 @@ const DepartureDate = ({ tours }: TDepartureDateProps) => {
       }
     })
   }, [tours])
+
+  const handleSelectTour = (id: string) => {
+    setSelectedTourId(id)
+    onTourSelect?.(id)
+  }
 
   useEffect(() => {
     if (!carouselApi) return
@@ -100,7 +107,11 @@ const DepartureDate = ({ tours }: TDepartureDateProps) => {
               <CarouselContent className='gap-x-3 -ml-0'>
                 {timeSlots.map((slot) => (
                   <CarouselItem key={slot.id} className='basis-auto pl-0'>
-                    <TimeSlotCard slot={slot} />
+                    <TimeSlotCard
+                      slot={slot}
+                      onSelect={handleSelectTour}
+                      isActive={selectedTourId === slot.id}
+                    />
                   </CarouselItem>
                 ))}
               </CarouselContent>

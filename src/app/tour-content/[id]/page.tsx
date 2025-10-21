@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import NavigationSidebar from '@/components/pages/tour-content/NavigationSidebar'
 import Banner from '@/components/pages/tour-content/Banner'
 import TourInfo from '@/components/pages/tour-content/TourInfo'
-import Featured from '@/components/pages/tour-content/Featured'
+import Highlight from '@/components/pages/tour-content/Highlight'
 import DailyItinerary from '@/components/pages/tour-content/DailyItinerary'
 import TourNotice from '@/components/pages/tour-content/TourNotice'
 import { itineraryData } from '@/components/pages/tour-content/config'
@@ -48,10 +48,22 @@ const TourContentPage = ({ params }: TPageProps) => {
         name={tourProduct.name}
         mainImageUrl={tourProduct.mainImageUrl}
       />
-      <TourInfo tours={tourProduct.tour} flights={tourProduct.flights} />
-      <Featured />
+      <TourInfo
+        tours={tourProduct.tour}
+        flights={tourProduct.flights}
+        mapUrl={tourProduct.map || undefined}
+        note={tourProduct.note}
+      />
+      <Highlight
+        highlights={tourProduct.highlights}
+        productId={id}
+      />
       <DailyItinerary>
-        <TourNotice itemCount={itineraryData.length} />
+        <TourNotice
+          itemCount={itineraryData.length}
+          reminder={tourProduct.reminder}
+          policy={tourProduct.policy}
+        />
       </DailyItinerary>
       {isMobile && (
         <div className='flex justify-between items-end p-7'>
