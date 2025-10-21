@@ -22,6 +22,20 @@ const Tours = ({ tours = [], tourType, className }: TToursProps) => {
       sessionStorage.removeItem('tour-needs-refresh')
       setRefreshKey((prev) => prev + 1)
     }
+
+    const handlePopState = () => {
+      const needsRefresh = sessionStorage.getItem('tour-needs-refresh')
+      if (needsRefresh === 'true') {
+        sessionStorage.removeItem('tour-needs-refresh')
+        setRefreshKey((prev) => prev + 1)
+      }
+    }
+
+    window.addEventListener('popstate', handlePopState)
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState)
+    }
   }, [])
 
   const handleDetailsClick = (tourId: string) => {

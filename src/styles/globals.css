@@ -245,3 +245,11 @@ input[type='range']::-moz-range-thumb {
   position: relative;
   pointer-events: auto;
 }
+
+[data-sonner-toast][data-styled='true'] [data-title] {
+  font-weight: 400 !important;
+}
+
+/* [data-sonner-toast] {
+  border: none !important;
+} */

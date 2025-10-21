@@ -341,6 +341,26 @@
     color: var(--color-figma-accent-brown);
   }
 
+  .text-figma-function-alert {
+    color: var(--color-figma-function-alert);
+  }
+  .text-figma-function-available-normal {
+    color: var(--color-figma-function-available-normal);
+  }
+  .text-figma-function-available-light {
+    color: var(--color-figma-function-available-light);
+  }
+
+  .bg-figma-function-alert {
+    background-color: var(--color-figma-function-alert);
+  }
+  .bg-figma-function-available-normal {
+    background-color: var(--color-figma-function-available-normal);
+  }
+  .bg-figma-function-available-light {
+    background-color: var(--color-figma-function-available-light);
+  }
+
   .bg-figma-primary-0 {
     background-color: var(--color-figma-primary-0);
   }

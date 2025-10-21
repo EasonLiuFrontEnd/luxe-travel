@@ -1,5 +1,5 @@
 'use client'
-import { Control } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 import {
   FormControl,
   FormField,
@@ -12,14 +12,11 @@ import { TTravelInquiryFormData } from './TravelInquiryForm'
 import { CalendarIcon } from '@/components/ui/CalendarIcon'
 import { formatDateForDisplay } from '@/lib/dateUtils'
 import { cn } from '@/lib/utils'
-export type TIndependentTravelSectionProps = {
-  control: Control<TTravelInquiryFormData>
-  isLoading?: boolean
-}
-export const IndependentTravelSection = ({
-  control,
-  isLoading = false,
-}: TIndependentTravelSectionProps) => {
+
+export const IndependentTravelSection = () => {
+  const { control, formState } = useFormContext<TTravelInquiryFormData>()
+  const isLoading = formState.isSubmitting
+
   return (
     <div className='bg-white flex flex-col gap-8 pb-[60px] pt-5 xl:pt-8 px-4 xl:px-8 relative rounded-2xl rounded-br-0 w-full'>
       <div className='flex flex-col gap-7 xl:pb-7 w-full'>
@@ -31,10 +28,7 @@ export const IndependentTravelSection = ({
                 name='independentTravel.adultCount'
                 render={({ field }) => (
                   <FormItem className='w-full xl:w-[218px]'>
-                    <RequiredLabel
-                      required
-                      className='font-noto-serif-body-l-semibold'
-                    >
+                    <RequiredLabel className='font-noto-serif-body-l-semibold'>
                       預計人數
                     </RequiredLabel>
                     <CounterInput
@@ -72,10 +66,7 @@ export const IndependentTravelSection = ({
               name='independentTravel.travelDays'
               render={({ field }) => (
                 <FormItem className='w-full'>
-                  <RequiredLabel
-                    required
-                    className='font-noto-serif-body-l-semibold'
-                  >
+                  <RequiredLabel className='font-noto-serif-body-l-semibold'>
                     預計旅遊天數
                   </RequiredLabel>
                   <CounterInput
@@ -109,10 +100,7 @@ export const IndependentTravelSection = ({
                       }
                     }}
                   >
-                    <RequiredLabel
-                      required
-                      className='font-noto-serif-body-l-semibold mb-2'
-                    >
+                    <RequiredLabel className='font-noto-serif-body-l-semibold mb-2'>
                       預計出發日
                     </RequiredLabel>
                     <div className='flex items-center justify-between px-0 py-3 border-b border-figma-primary-950-70 w-full hover:border-figma-primary-950 transition-colors duration-200'>
@@ -218,7 +206,8 @@ export const IndependentTravelSection = ({
           <button
             type='submit'
             disabled={isLoading}
-            className={cn(styles.buttonFontFamily,
+            className={cn(
+              styles.buttonFontFamily,
               'flex items-center gap-5 text-figma-secondary-950 tracking-[0.5px]',
               'text-[24px] xl:text-[20px] font-bold xl:font-medium leading-[1.2]',
               'cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed',

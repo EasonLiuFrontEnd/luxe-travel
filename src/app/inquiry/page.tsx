@@ -1,82 +1,151 @@
 'use client'
 
-import { useState } from 'react'
+import { toast } from 'sonner'
 import {
   TravelInquiryForm,
   TTravelInquiryFormData,
   ALL_COUNTRIES,
 } from '@/components/pages/inquiry'
-import { submitInquiry, type TInquiryRequest } from '@/api/inquiry'
+import {
+  submitInquiry,
+  submitTravelInquiry,
+  homeInquiryApiMock,
+  travelInquiryApiMock,
+  getTravelTypeLabel,
+  type TInquiryRequest,
+  type TTravelInquiryRequest,
+} from '@/api/inquiry'
 
 const TravelInquiryPage = () => {
-  const [isLoading, setIsLoading] = useState(false)
-
   const handleFormSubmit = async (data: TTravelInquiryFormData) => {
-    setIsLoading(true)
+    const { basicInfo, budget, independentTravel, groupTravel } = data
+    const isGroupTravel =
+      basicInfo.travelType === 'deluxe-group' ||
+      basicInfo.travelType === 'theme' ||
+      basicInfo.travelType === 'mitsui-cruise'
 
     try {
-      const { basicInfo, budget, independentTravel, groupTravel } = data
-      const isGroupTravel =
-        basicInfo.travelType === 'deluxe-group' ||
-        basicInfo.travelType === 'theme' ||
-        basicInfo.travelType === 'mitsui-cruise'
-
       const contactMethod: string[] = []
-      if (basicInfo.contactMethod === '都可以') {
-        contactMethod.push('手機', 'LINE')
-      } else {
-        contactMethod.push(basicInfo.contactMethod)
+      if (basicInfo.contactMethod) {
+        if (basicInfo.contactMethod === '都可以') {
+          contactMethod.push('手機', 'LINE')
+        } else {
+          contactMethod.push(basicInfo.contactMethod)
+        }
       }
 
       const source =
         basicInfo.contactSource === '其他' && basicInfo.otherSource
           ? basicInfo.otherSource
-          : basicInfo.contactSource
-
-      const regions = budget.countries.map((countryValue) => {
-        const country = ALL_COUNTRIES.find((c) => c.value === countryValue)
-        return country?.label || countryValue
-      })
-
-      const payload: TInquiryRequest = {
-        contactName: basicInfo.contactName,
-        gender: basicInfo.gender,
-        phone: basicInfo.phoneNumber,
-        lineId: basicInfo.lineId || undefined,
-        contactMethod,
-        contactTime: basicInfo.contactTime,
-        source,
-      }
+          : basicInfo.contactSource || ''
 
       if (isGroupTravel) {
-        payload.tourProgram = groupTravel.tourProgram
-        payload.adults = groupTravel.adultCount
-        payload.children = groupTravel.childCount
-        payload.departDate = groupTravel.departureDate
-        payload.note = data.requirementsDescription || undefined
+        const payload: TTravelInquiryRequest = {
+          contactName: basicInfo.contactName,
+          gender: basicInfo.gender || undefined,
+          phone: basicInfo.phoneNumber,
+          lineId: basicInfo.lineId || undefined,
+          travelType: getTravelTypeLabel(basicInfo.travelType),
+          contactMethod: contactMethod.length > 0 ? contactMethod : undefined,
+          contactTime: basicInfo.contactTime || undefined,
+          source: source || undefined,
+          note: data.requirementsDescription || undefined,
+          adults: groupTravel.adultCount,
+          children: groupTravel.childCount,
+          itinerary: groupTravel.itinerary || undefined,
+          departDate: groupTravel.departureDate || undefined,
+        }
+        await submitTravelInquiry(payload)
       } else {
-        payload.budget = budget.budget
-        payload.regions = regions
-        payload.adults = independentTravel.adultCount
-        payload.children = independentTravel.childCount
-        payload.days = independentTravel.travelDays
-        payload.departDate = independentTravel.departureDate
-        payload.wishlist = independentTravel.wishlist || undefined
-        payload.note = independentTravel.specialRequirements || undefined
+        const regions = budget.countries
+          ? budget.countries.map((countryValue) => {
+              const country = ALL_COUNTRIES.find(
+                (c) => c.value === countryValue,
+              )
+              return country?.label || countryValue
+            })
+          : undefined
+
+        const payload: TInquiryRequest = {
+          contactName: basicInfo.contactName,
+          gender: basicInfo.gender || undefined,
+          phone: basicInfo.phoneNumber,
+          lineId: basicInfo.lineId || undefined,
+          contactMethod: contactMethod.length > 0 ? contactMethod : undefined,
+          contactTime: basicInfo.contactTime || undefined,
+          source: source || undefined,
+          budget: budget.budget || undefined,
+          regions,
+          adults: independentTravel.adultCount,
+          children: independentTravel.childCount,
+          days: independentTravel.travelDays,
+          departDate: independentTravel.departureDate || undefined,
+          wishlist: independentTravel.wishlist || undefined,
+          note: independentTravel.specialRequirements || undefined,
+        }
+        await submitInquiry(payload)
       }
-      await submitInquiry(payload)
-      alert('諮詢表單提交成功！我們會在 24 小時內與您聯繫。')
+
+      toast('提交成功', {
+        style: {
+          fontFamily: 'var(--font-genseki-gothic)',
+          fontWeight: 400,
+          fontSize: '16px',
+          letterSpacing: '0px',
+          padding: '4px 8px',
+          width: 'fit-content',
+          color: 'var(--color-figma-function-available-normal)',
+          backgroundColor: '#00D47533',
+          borderRadius: 0,
+          boxShadow: 'none',
+          border: 'none',
+        },
+      })
     } catch (error) {
-      console.error('提交表單時發生錯誤:', error)
-      alert('提交失敗，請稍後再試或直接聯絡我們的客服。')
-    } finally {
-      setIsLoading(false)
+      if (process.env.NODE_ENV !== 'production') {
+        const mockResponse = isGroupTravel
+          ? travelInquiryApiMock
+          : homeInquiryApiMock
+        console.warn('開發環境：API 錯誤，使用 mock 資料', mockResponse)
+        toast('提交成功（開發模式：使用 mock 資料）', {
+          style: {
+            fontFamily: 'var(--font-genseki-gothic)',
+            fontWeight: 400,
+            fontSize: '16px',
+            letterSpacing: '0px',
+            padding: '4px 8px',
+            width: 'fit-content',
+            color: 'var(--color-figma-function-available-normal)',
+            backgroundColor: '#00D47533',
+            borderRadius: 0,
+            boxShadow: 'none',
+            border: 'none',
+          },
+        })
+      } else {
+        console.error('提交表單時發生錯誤:', error)
+        toast('提交失敗', {
+          style: {
+            fontFamily: 'var(--font-genseki-gothic)',
+            fontWeight: 400,
+            fontSize: '16px',
+            letterSpacing: '0px',
+            padding: '4px 8px',
+            width: 'fit-content',
+            color: 'var(--color-figma-function-alert)',
+            backgroundColor: '#D6111A33',
+            borderRadius: 0,
+            boxShadow: 'none',
+            border: 'none',
+          },
+        })
+      }
     }
   }
 
   return (
     <main className='min-h-screen pt-10 bg-[var(--Secondary-100,#F7F4EC)]'>
-      <TravelInquiryForm onSubmit={handleFormSubmit} isLoading={isLoading} />
+      <TravelInquiryForm onSubmit={handleFormSubmit} />
     </main>
   )
 }
