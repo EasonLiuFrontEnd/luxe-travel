@@ -112,6 +112,13 @@ export const useFeedBack = (): TUseHomeQueryResult<
   const query = useQuery<TFeedBack[], AxiosError<TApiResponse<TFeedBack[]>>>({
     queryKey: ['feedbacks'],
     queryFn: fetchFeedBacks,
+    retry: (failureCount, error) => {
+      if (error.response?.status && error.response.status >= 400 && error.response.status < 500) {
+        return false
+      }
+      return failureCount < 2
+    },
+    retryDelay: 1000,
     staleTime: 15 * 60 * 1000,
   })
 

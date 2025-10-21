@@ -1,4 +1,4 @@
-import { Control } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 import {
   FormControl,
   FormField,
@@ -8,11 +8,8 @@ import {
 import { RequiredLabel } from '@/components/ui'
 import { TTravelInquiryFormData } from './TravelInquiryForm'
 
-export type TRequirementsSectionProps = {
-  control: Control<TTravelInquiryFormData>
-}
-
-const RequirementsSection = ({ control }: TRequirementsSectionProps) => {
+const RequirementsSection = () => {
+  const { control } = useFormContext<TTravelInquiryFormData>()
   return (
     <div className='relative flex flex-col w-full gap-8 py-5 px-4 xl:p-8 border border-figma-secondary-500 rounded-2xl bg-white'>
       <FormField

@@ -1,5 +1,5 @@
 'use client'
-import { Control } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 import {
   FormControl,
   FormField,
@@ -19,10 +19,9 @@ import {
   EUROPEAN_REGIONS,
   TCountry,
 } from './TravelInquiryForm'
-export type TBudgetSectionProps = {
-  control: Control<TTravelInquiryFormData>
-}
-export const BudgetSection = ({ control }: TBudgetSectionProps) => {
+
+export const BudgetSection = () => {
+  const { control } = useFormContext<TTravelInquiryFormData>()
   return (
     <FormSection title='' hasBorder>
       <div className='space-y-8'>
@@ -32,9 +31,7 @@ export const BudgetSection = ({ control }: TBudgetSectionProps) => {
           render={({ field }) => (
             <FormItem>
               <RequiredLabel
-                required
                 subText='（不含午晚餐及部分自理當地城市內交通費用）'
-                requiredText='此為必填資訊'
                 className='font-noto-serif-body-l-semibold'
               >
                 每人預算
@@ -59,7 +56,6 @@ export const BudgetSection = ({ control }: TBudgetSectionProps) => {
           render={({ field }) => (
             <FormItem>
               <RequiredLabel
-                required
                 subText='可複選'
                 className='font-noto-serif-body-l-semibold'
               >
@@ -91,7 +87,7 @@ export const BudgetSection = ({ control }: TBudgetSectionProps) => {
                                 onCheckedChange={(checked) => {
                                   if (checked) {
                                     field.onChange([
-                                      ...field.value,
+                                      ...(field.value || []),
                                       country.value as TCountry,
                                     ])
                                   } else {
@@ -99,7 +95,7 @@ export const BudgetSection = ({ control }: TBudgetSectionProps) => {
                                       field.value?.filter(
                                         (item) =>
                                           item !== (country.value as TCountry),
-                                      ),
+                                      ) || [],
                                     )
                                   }
                                 }}

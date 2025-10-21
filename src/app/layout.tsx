@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import ClientLayout from './ClientLayout'
 import { Noto_Serif_TC, Luxurious_Script } from 'next/font/google'
 import styles from './style.module.css'
+import { Toaster } from '@/components/ui/sonner'
 
 const notoSerifTC = Noto_Serif_TC({
   subsets: ['latin'],
@@ -34,6 +35,7 @@ const RootLayout = ({ children }: TRootLayout) => {
         <ClientLayout className={styles['auto-text-space']}>
           {children}
         </ClientLayout>
+        <Toaster />
       </body>
     </html>
   )

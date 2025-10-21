@@ -45,7 +45,7 @@ const GroupTourCard = ({
     return {
       bgColor: 'bg-[rgba(0,212,117,0.1)]',
       borderColor: 'border-[#0cf38b]',
-      textColor: 'text-[#00d475]',
+      textColor: 'text-figma-function-available-normal',
       hoverBg: 'group-hover/date:bg-[rgba(0,212,117,0.2)]',
       cardHoverBorder:
         'group-hover/date:border group-hover/date:border-[rgba(12,243,139,1)]',

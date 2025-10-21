@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils'
 
 type TCounterInputProps = {
   label: string
-  value: number
+  value: number | undefined
   onChange: (value: number) => void
   min?: number
   max?: number
@@ -13,7 +13,7 @@ type TCounterInputProps = {
 
 export const CounterInput = ({
   label,
-  value,
+  value: valueProp,
   onChange,
   min = 0,
   max = 99,
@@ -21,6 +21,7 @@ export const CounterInput = ({
   className,
   disabled = false,
 }: TCounterInputProps) => {
+  const value = valueProp ?? min
   const handleDecrement = () => {
     if (!disabled && value > min) {
       onChange(Math.max(min, value - 1))

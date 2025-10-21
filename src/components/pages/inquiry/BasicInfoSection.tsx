@@ -1,5 +1,5 @@
 'use client'
-import { Control } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 import {
   FormControl,
   FormField,
@@ -22,10 +22,9 @@ import {
   CONTACT_METHOD_OPTIONS,
   CONTACT_SOURCE_OPTIONS,
 } from './TravelInquiryForm'
-export type TBasicInfoSectionProps = {
-  control: Control<TTravelInquiryFormData>
-}
-export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
+
+export const BasicInfoSection = () => {
+  const { control } = useFormContext<TTravelInquiryFormData>()
   return (
     <FormSection title='' className='rounded-t-none pt-0'>
       <div className='flex flex-col gap-8 xl:gap-7 w-full'>
@@ -55,7 +54,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
         />
         <div className='w-full'>
           <div className='w-full relative'>
-            <div className='flex gap-2.5 items-end px-0 w-full border-b border-figma-primary-950-70'>
+            <div className='flex gap-2.5 items-end px-0 w-full'>
               <FormField
                 control={control}
                 name='basicInfo.contactName'
@@ -71,7 +70,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
                     <FormControl>
                       <input
                         placeholder='請填姓名'
-                        className='font-genseki-body-m-regular text-figma-primary-950 py-4 bg-transparent border-none outline-none placeholder:text-figma-primary-300 w-full'
+                        className='font-genseki-body-m-regular text-figma-primary-950 py-4 bg-transparent border-0 border-b border-figma-primary-950-70 outline-none placeholder:text-figma-primary-300 w-full aria-invalid:border-figma-function-alert'
                         {...field}
                       />
                     </FormControl>
@@ -198,11 +197,7 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
           name='basicInfo.contactTime'
           render={({ field }) => (
             <FormItem className='w-full'>
-              <RequiredLabel
-                required
-                requiredText='此為必填資訊'
-                className='font-noto-serif-body-l-semibold'
-              >
+              <RequiredLabel className='font-noto-serif-body-l-semibold'>
                 聯絡時間
               </RequiredLabel>
               <FormControl>
@@ -260,14 +255,12 @@ export const BasicInfoSection = ({ control }: TBasicInfoSectionProps) => {
                             render={({ field: otherField }) => (
                               <FormItem>
                                 <FormControl>
-                                  <div className='h-full w-[120px] relative'>
-                                    <input
-                                      className='w-full bg-transparent border-none outline-none text-figma-primary-950 text-[16px] leading-[1.2] py-1'
-                                      {...otherField}
-                                    />
-                                    <div className='absolute border-b border-figma-primary-950-70 inset-0 pointer-events-none' />
-                                  </div>
+                                  <input
+                                    className='w-[120px] bg-transparent border-0 border-b border-figma-primary-950-70 outline-none text-figma-primary-950 text-[16px] leading-[1.2] py-1 aria-invalid:border-figma-function-alert'
+                                    {...otherField}
+                                  />
                                 </FormControl>
+                                <FormMessage />
                               </FormItem>
                             )}
                           />
