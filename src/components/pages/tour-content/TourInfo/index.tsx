@@ -7,16 +7,22 @@ import DepartureDate from './DepartureDate'
 import Flight from './Flight'
 import Registration from './Registration'
 import TitleIcon from '../Featured/icons/TitleIcon'
+import type { TTour, TFlight } from '@/api/tour-content'
 
-const TourInfo = () => {
+type TTourInfoProps = {
+  tours: TTour[]
+  flights: TFlight[]
+}
+
+const TourInfo = ({ tours, flights }: TTourInfoProps) => {
   return (
     <div
       id='tour-info'
       className='flex flex-col xl:flex-row  pb-7 px-4 xl:pb-7 xl:px-9'
     >
       <div className='order-2 xl:order-1 w-full xl:max-w-[48.7vw] box-content flex flex-col gap-y-5 xl:pt-3.5 xl:px-7 xl:pb-7'>
-        <DepartureDate />
-        <Flight />
+        <DepartureDate tours={tours} />
+        <Flight flights={flights} />
         <Image
           key='flight-map'
           src='/tour-content/flight-map.jpg'

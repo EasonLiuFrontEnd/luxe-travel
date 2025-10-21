@@ -72,7 +72,7 @@ const DailyItinerary = ({ children }: TDailyItineraryProps) => {
                   <div className='w-full flex flex-col gap-y-[40px] px-5 xl:px-[40px] xl:border-r xl:border-figma-secondary-500'>
                     <h4 className='flex justify-center items-center'>
                       <Image
-                        src='tour-content/restaurant.svg'
+                        src='/tour-content/restaurant.svg'
                         alt='restaurant'
                         width={36}
                         height={36}
@@ -106,7 +106,7 @@ const DailyItinerary = ({ children }: TDailyItineraryProps) => {
                   <div className='w-full flex flex-col gap-y-[40px] px-5 xl:px-[40px]'>
                     <h4 className='flex justify-center items-center'>
                       <Image
-                        src='tour-content/hotel.svg'
+                        src='/tour-content/hotel.svg'
                         alt='hotel'
                         width={36}
                         height={36}

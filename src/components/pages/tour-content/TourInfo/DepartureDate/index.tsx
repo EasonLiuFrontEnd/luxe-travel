@@ -1,17 +1,58 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/Carousel'
 import type { CarouselApi } from '@/components/ui/Carousel'
-import { mockTimeSlots } from '../../config'
+import type { TTour } from '@/api/tour-content'
 import TimeSlotCard from './TimeSlotCard'
 import TitleIcon from '../../Featured/icons/TitleIcon'
 
-const DepartureDate = () => {
+type TTimeSlotData = {
+  id: string
+  date: string
+  status: '已成團' | '熱銷中' | '已滿團' | '取消'
+  href: string
+}
+
+type TDepartureDateProps = {
+  tours: TTour[]
+}
+
+const DepartureDate = ({ tours }: TDepartureDateProps) => {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>()
   const [canScrollNext, setCanScrollNext] = useState(false)
+
+  const timeSlots: TTimeSlotData[] = useMemo(() => {
+    return tours.map((tour) => {
+      const departDate = new Date(tour.departDate)
+      const month = departDate.getMonth() + 1
+      const day = departDate.getDate()
+      const weekday = ['日', '一', '二', '三', '四', '五', '六'][
+        departDate.getDay()
+      ]
+      const formattedDate = `${month}/${day}(${weekday})`
+
+      let status: TTimeSlotData['status']
+      if (tour.status === 1) {
+        status = '熱銷中'
+      } else if (tour.status === 2) {
+        status = '已成團'
+      } else if (tour.status === 3) {
+        status = '已滿團'
+      } else {
+        status = '取消'
+      }
+
+      return {
+        id: tour.id,
+        date: formattedDate,
+        status,
+        href: '#',
+      }
+    })
+  }, [tours])
 
   useEffect(() => {
     if (!carouselApi) return
@@ -57,7 +98,7 @@ const DepartureDate = () => {
               setApi={setCarouselApi}
             >
               <CarouselContent className='gap-x-3 -ml-0'>
-                {mockTimeSlots.map((slot) => (
+                {timeSlots.map((slot) => (
                   <CarouselItem key={slot.id} className='basis-auto pl-0'>
                     <TimeSlotCard slot={slot} />
                   </CarouselItem>

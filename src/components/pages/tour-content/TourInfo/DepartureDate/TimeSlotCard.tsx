@@ -1,8 +1,14 @@
 import Link from 'next/link'
-import { type TTimeSlot } from '../../config'
 
-const TimeSlotCard = ({ slot }: { slot: TTimeSlot }) => {
-  const isDisabled = slot.status !== '熱銷中'
+type TTimeSlotData = {
+  id: string
+  date: string
+  status: '已成團' | '熱銷中' | '已滿團' | '取消'
+  href: string
+}
+
+const TimeSlotCard = ({ slot }: { slot: TTimeSlotData }) => {
+  const isDisabled = slot.status !== '熱銷中' && slot.status !== '已成團'
 
   const disabledStyles = {
     container: 'text-figma-primary-500 bg-figma-primary-100 cursor-not-allowed',

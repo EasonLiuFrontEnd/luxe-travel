@@ -78,7 +78,7 @@ const ItineraryCarousel = forwardRef<
               />
               <div className='absolute left-4 bottom-4 flex gap-x-2 p-2 rounded-[4px] bg-figma-secondary-200'>
                 <Image
-                  src='tour-content/flag.svg'
+                  src='/tour-content/flag.svg'
                   alt='flag'
                   width={20}
                   height={20}

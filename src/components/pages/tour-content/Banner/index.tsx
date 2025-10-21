@@ -3,7 +3,13 @@ import { cn } from '@/lib/utils'
 import styles from './styles.module.css'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 
-const Banner = () => {
+type TBannerProps = {
+  namePrefix: string
+  name: string
+  mainImageUrl: string
+}
+
+const Banner = ({ namePrefix, name, mainImageUrl }: TBannerProps) => {
   const { isMobile } = useMediaQuery()
   const iconSize = isMobile ? 16 : 24
   const iconPath = isMobile ? 'M6 12L10 8L6 4' : 'M9 18L15 12L9 6'
@@ -27,7 +33,7 @@ const Banner = () => {
             strokeLinejoin='round'
           />
         </svg>
-        <p>航向伊比利亞——西葡珍寶探尋16天</p>
+        <p>{namePrefix}——{name}</p>
       </div>
       <div className='relative'>
         {isMobile && (
@@ -47,8 +53,8 @@ const Banner = () => {
         )}
         <Image
           key='tour-content-theme-banner'
-          src='/tour-content/theme.jpg'
-          alt='theme-banner'
+          src={mainImageUrl}
+          alt={`${namePrefix} ${name}`}
           width={1824}
           height={670}
           className='h-[460px] xl:h-[670px] object-cover rounded-2xl'
@@ -61,7 +67,7 @@ const Banner = () => {
           )}
         >
           <h2 className='font-family-noto-serif font-bold text-[32px] xl:text-[64px] leading-[1.5] xl:leading-[1.2] text-figma-secondary-500'>
-            航向伊比利亞
+            {namePrefix}
           </h2>
 
           {!isMobile && (
@@ -76,7 +82,7 @@ const Banner = () => {
             </svg>
           )}
           <h3 className='font-family-noto-serif text-[16px] xl:text-[40px] font-semibold xl:font-bold leading-[1.5] xl:leading-[1.2] text-figma-primary-500'>
-            西葡珍寶探尋16天
+            {name}
           </h3>
         </div>
       </div>

@@ -1,9 +1,29 @@
+import { useMemo } from 'react'
 import Image from 'next/image'
 import FlightCard from './FlightCard'
-import { flightData } from '../../config'
+import type { TFlight } from '@/api/tour-content'
 import TitleIcon from '../../Featured/icons/TitleIcon'
 
-const Flight = () => {
+type TFlightProps = {
+  flights: TFlight[]
+}
+
+const Flight = ({ flights }: TFlightProps) => {
+  const outboundFlights = useMemo(
+    () =>
+      flights
+        .filter((f) => f.direction === 'OUTBOUND')
+        .sort((a, b) => a.day - b.day),
+    [flights],
+  )
+  const returnFlights = useMemo(
+    () =>
+      flights
+        .filter((f) => f.direction === 'RETURN')
+        .sort((a, b) => a.day - b.day),
+    [flights],
+  )
+
   return (
     <div>
       <div className='flex items-center mb-3'>
@@ -20,26 +40,22 @@ const Flight = () => {
       <div className='flex flex-col gap-y-5 py-5 px-4 xl:p-7 rounded-2xl bg-figma-neutral-0'>
         <div className='flex max-xl:flex-col items-center max-xl:gap-y-4 xl:gap-x-4'>
           <div className='box-content w-[32px] text-center font-genseki-body-s-bold text-figma-secondary-950 py-2 px-[10px] rounded-[40px] border border-figma-secondary-950'>
-            去程
+            {outboundFlights.length > 0 && outboundFlights[0].direction === 'OUTBOUND' ? '去程' : '去程'}
           </div>
           <div className='w-full flex flex-col gap-y-6 py-7 max-xl:px-5 xl:pt-7 xl:pl-8 xl:pb-[40px] rounded-[8px] bg-figma-secondary-50'>
-            {flightData.map((flight) =>
-              flight.direction === '去程' ? (
-                <FlightCard key={flight.day} flight={flight} />
-              ) : null,
-            )}
+            {outboundFlights.map((flight) => (
+              <FlightCard key={flight.id} flight={flight} />
+            ))}
           </div>
         </div>
         <div className='flex max-xl:flex-col items-center max-xl:gap-y-4 xl:gap-x-4'>
           <div className='box-content w-[32px] text-center font-genseki-body-s-bold text-figma-secondary-950 py-2 px-[10px] rounded-[40px] border border-figma-secondary-950'>
-            回程
+            {returnFlights.length > 0 && returnFlights[0].direction === 'RETURN' ? '回程' : '回程'}
           </div>
           <div className='w-full flex flex-col gap-y-6 py-7 max-xl:px-5 xl:pt-7 xl:pl-8 xl:pb-[40px] rounded-[8px] bg-figma-secondary-50'>
-            {flightData.map((flight) =>
-              flight.direction === '回程' ? (
-                <FlightCard key={flight.day} flight={flight} />
-              ) : null,
-            )}
+            {returnFlights.map((flight) => (
+              <FlightCard key={flight.id} flight={flight} />
+            ))}
           </div>
         </div>
 

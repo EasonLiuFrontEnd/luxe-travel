@@ -1,5 +1,7 @@
 'use client'
 
+import React from 'react'
+import { notFound } from 'next/navigation'
 import NavigationSidebar from '@/components/pages/tour-content/NavigationSidebar'
 import Banner from '@/components/pages/tour-content/Banner'
 import TourInfo from '@/components/pages/tour-content/TourInfo'
@@ -8,14 +10,45 @@ import DailyItinerary from '@/components/pages/tour-content/DailyItinerary'
 import TourNotice from '@/components/pages/tour-content/TourNotice'
 import { itineraryData } from '@/components/pages/tour-content/config'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { useTourProduct } from '@/api/tour-content/useTourProduct'
 
-const TourContentPage = () => {
+type TPageProps = {
+  params: Promise<{ id: string }>
+}
+
+const TourContentPage = ({ params }: TPageProps) => {
   const { isMobile } = useMediaQuery()
+  const resolvedParams = React.use(params)
+  const { id } = resolvedParams
+
+  const { data: tourProduct, isLoading, error } = useTourProduct(id)
+
+  if (isLoading) {
+    return (
+      <div className='flex min-h-screen items-center justify-center bg-figma-neutral-50'>
+        <div className='text-center'>
+          <div className='mb-4 h-12 w-12 animate-spin rounded-full border-4 border-figma-secondary-200 border-t-figma-secondary-500 mx-auto'></div>
+          <p className='font-genseki-body-l-regular text-figma-secondary-700'>
+            載入中...
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error || !tourProduct) {
+    notFound()
+  }
+
   return (
     <div className='relative bg-figma-neutral-50'>
       <NavigationSidebar />
-      <Banner />
-      <TourInfo />
+      <Banner
+        namePrefix={tourProduct.namePrefix}
+        name={tourProduct.name}
+        mainImageUrl={tourProduct.mainImageUrl}
+      />
+      <TourInfo tours={tourProduct.tour} flights={tourProduct.flights} />
       <Featured />
       <DailyItinerary>
         <TourNotice itemCount={itineraryData.length} />
