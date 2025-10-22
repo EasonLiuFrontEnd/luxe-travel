@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useMemo } from 'react'
 import { cn } from '@/lib/utils'
 
 type TNavigationItem = {
@@ -9,14 +9,34 @@ type TNavigationItem = {
   targetId: string
 }
 
-const navigationItems: TNavigationItem[] = [
-  { id: 'nav-tour-info', label: '行程資訊', targetId: 'tour-info' },
-  { id: 'nav-highlight', label: '焦點特色', targetId: 'highlight' },
-  { id: 'nav-daily-itinerary', label: '每日行程', targetId: 'daily-itinerary' },
-  { id: 'nav-tour-notice', label: '參團須知', targetId: 'tour-notice' },
-]
+type TNavigationSidebarProps = {
+  category: 'GROUP' | 'FREE'
+  hasHighlights: boolean
+}
 
-const NavigationSidebar = () => {
+const NavigationSidebar = ({
+  category,
+  hasHighlights,
+}: TNavigationSidebarProps) => {
+  const navigationItems = useMemo<TNavigationItem[]>(
+    () => [
+      { id: 'nav-tour-info', label: '行程資訊', targetId: 'tour-info' },
+      ...(hasHighlights
+        ? [{ id: 'nav-highlight', label: '焦點特色', targetId: 'highlight' }]
+        : []),
+      {
+        id: 'nav-daily-itinerary',
+        label: '每日行程',
+        targetId: 'daily-itinerary',
+      },
+      {
+        id: 'nav-tour-notice',
+        label: category === 'GROUP' ? '參團須知' : '服務流程',
+        targetId: 'tour-notice',
+      },
+    ],
+    [category, hasHighlights],
+  )
   const [activeSection, setActiveSection] = useState<string>('tour-info')
   const intersectingMap = useRef<Map<string, boolean>>(new Map())
 
@@ -72,7 +92,7 @@ const NavigationSidebar = () => {
     return () => {
       observer.disconnect()
     }
-  }, [])
+  }, [navigationItems])
 
   const handleScrollTo = (targetId: string) => {
     const element = document.getElementById(targetId)

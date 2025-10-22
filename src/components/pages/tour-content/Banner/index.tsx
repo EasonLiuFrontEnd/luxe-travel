@@ -4,12 +4,13 @@ import styles from './styles.module.css'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 type TBannerProps = {
+  category: 'GROUP' | 'FREE'
   namePrefix: string
   name: string
   mainImageUrl: string
 }
 
-const Banner = ({ namePrefix, name, mainImageUrl }: TBannerProps) => {
+const Banner = ({ category, namePrefix, name, mainImageUrl }: TBannerProps) => {
   const { isMobile } = useMediaQuery()
   const iconSize = isMobile ? 16 : 24
   const iconPath = isMobile ? 'M6 12L10 8L6 4' : 'M9 18L15 12L9 6'
@@ -17,7 +18,7 @@ const Banner = ({ namePrefix, name, mainImageUrl }: TBannerProps) => {
   return (
     <div className='flex flex-col gap-y-5 xl:gap-y-8 py-8 px-4 xl:pt-10 xl:px-9'>
       <div className='flex items-center xl:gap-x-2 font-family-genseki text-[12px] xl:text-[16px] xl:font-medium leading-[1.5] text-figma-primary-500'>
-        <p>精緻團體行</p>
+        <p>{category === 'GROUP' ? '精緻團體行' : '歐洲自由行'}</p>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           width={iconSize}

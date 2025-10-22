@@ -38,29 +38,44 @@ const TourContentPage = ({ params }: TPageProps) => {
   if (error || !tourProduct) {
     notFound()
   }
+  const hasHighlights =
+    tourProduct.highlights && tourProduct.highlights.length > 0
 
   return (
     <div className='relative bg-figma-neutral-50'>
-      <NavigationSidebar />
+      <NavigationSidebar
+        category={tourProduct.category as 'GROUP' | 'FREE'}
+        hasHighlights={hasHighlights}
+      />
       <Banner
+        category={tourProduct.category as 'GROUP' | 'FREE'}
         namePrefix={tourProduct.namePrefix}
         name={tourProduct.name}
         mainImageUrl={tourProduct.mainImageUrl}
       />
       <TourInfo
+        category={tourProduct.category as 'GROUP' | 'FREE'}
         tours={tourProduct.tour}
         flights={tourProduct.flights}
         mapUrl={tourProduct.map || undefined}
         note={tourProduct.note}
+        deposit={tourProduct.deposit || undefined}
+        feedback={tourProduct.feedback}
+        description={tourProduct.description}
       />
-      <Highlight highlights={tourProduct.highlights} productId={id} />
-      <DailyItinerary itineraries={tourProduct.itineraries}>
-        <TourNotice
-          itemCount={tourProduct.itineraries.length}
-          reminder={tourProduct.reminder}
-          policy={tourProduct.policy}
-        />
-      </DailyItinerary>
+      {hasHighlights && (
+        <Highlight highlights={tourProduct.highlights} productId={id} />
+      )}
+      {tourProduct.itineraries && tourProduct.itineraries.length > 0 && (
+        <DailyItinerary itineraries={tourProduct.itineraries}>
+          <TourNotice
+            category={tourProduct.category as 'GROUP' | 'FREE'}
+            itemCount={tourProduct.itineraries.length}
+            reminder={tourProduct.reminder}
+            policy={tourProduct.policy}
+          />
+        </DailyItinerary>
+      )}
       {isMobile && (
         <div className='flex justify-between items-end p-7'>
           <div className='flex flex-col'>

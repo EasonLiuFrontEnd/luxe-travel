@@ -6,7 +6,9 @@ import PriceDisplay from './PriceDisplay'
 import type { TTour } from '@/api/tour-content'
 
 type TRegistrarionProps = {
+  category: 'GROUP' | 'FREE'
   tours: TTour[]
+  deposit?: string
   selectedTourId?: string
   className?: string
 }
@@ -20,25 +22,33 @@ const calculateDays = (departDate: string, returnDate: string): number => {
 }
 
 const Registration = ({
+  category,
   tours,
+  deposit,
   selectedTourId,
   className,
 }: TRegistrarionProps) => {
   const { isMobile } = useMediaQuery()
 
-  if (!tours || tours.length === 0) {
-    return null
+  let tour: (typeof tours)[0] | undefined
+  if (category === 'GROUP') {
+    if (!tours || tours.length === 0) {
+      return null
+    }
+
+    tour = selectedTourId
+      ? tours.find((t) => t.id === selectedTourId) || tours[0]
+      : tours[0]
+
+    if (!tour) {
+      return null
+    }
   }
 
-  const tour = selectedTourId
-    ? tours.find((t) => t.id === selectedTourId) || tours[0]
-    : tours[0]
-
-  if (!tour) {
-    return null
-  }
-
-  const days = calculateDays(tour.departDate, tour.returnDate)
+  const days =
+    category === 'GROUP' && tour
+      ? calculateDays(tour.departDate, tour.returnDate)
+      : 0
 
   const getColorClass = (value: string): string => {
     if (value === 'NIL') {
@@ -51,12 +61,29 @@ const Registration = ({
     return 'text-figma-primary-950'
   }
 
-  const depositColor = getColorClass(tour.deposit)
-  const adultColor = getColorClass(tour.adult)
-  const childWithBedColor = getColorClass(tour.childWithBed)
-  const childExtraBedColor = getColorClass(tour.childExtraBed)
-  const childNoBedColor = getColorClass(tour.childNoBed)
-  const infantColor = getColorClass(tour.infant)
+  const depositColor = getColorClass(
+    category === 'FREE' && deposit ? deposit : tour?.deposit || '',
+  )
+  const adultColor =
+    category === 'GROUP' && tour
+      ? getColorClass(tour.adult)
+      : 'text-figma-primary-300'
+  const childWithBedColor =
+    category === 'GROUP' && tour
+      ? getColorClass(tour.childWithBed)
+      : 'text-figma-primary-300'
+  const childExtraBedColor =
+    category === 'GROUP' && tour
+      ? getColorClass(tour.childExtraBed)
+      : 'text-figma-primary-300'
+  const childNoBedColor =
+    category === 'GROUP' && tour
+      ? getColorClass(tour.childNoBed)
+      : 'text-figma-primary-300'
+  const infantColor =
+    category === 'GROUP' && tour
+      ? getColorClass(tour.infant)
+      : 'text-figma-primary-300'
 
   const priceValueClassName =
     'font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2] tracking-[1.6px]'
@@ -84,33 +111,35 @@ const Registration = ({
         </button>
       )}
       <div className='flex max-xl:flex-col max-xl:gap-y-7 xl:gap-x-7'>
-        <div className='xl:min-w-[328px] mr-[50px]'>
-          <div className='flex justify-between'>
-            <p className='font-genseki-body-m-medium max-xl:mr-[10px]'>
-              出發日期
-            </p>
-            <button className='font-genseki-body-s-regular text-figma-secondary-950 underline cursor-pointer'>
-              更改出發日
-            </button>
-          </div>
-          <div>
-            <span className='font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2] tracking-[1.6px] mr-3'>
-              {tour.departDate} - {tour.returnDate}
-            </span>
-            <span>
-              共
-              <span className='font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2]'>
-                {days}
+        {category === 'GROUP' && (
+          <div className='xl:min-w-[328px] mr-[50px]'>
+            <div className='flex justify-between'>
+              <p className='font-genseki-body-m-medium max-xl:mr-[10px]'>
+                出發日期
+              </p>
+              <button className='font-genseki-body-s-regular text-figma-secondary-950 underline cursor-pointer'>
+                更改出發日
+              </button>
+            </div>
+            <div>
+              <span className='font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2] tracking-[1.6px] mr-3'>
+                {tour!.departDate} - {tour!.returnDate}
               </span>
-              天
-            </span>
+              <span>
+                共
+                <span className='font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2]'>
+                  {days}
+                </span>
+                天
+              </span>
+            </div>
           </div>
-        </div>
+        )}
         <div className='min-w-[328px]'>
           <p className='font-genseki-body-m-medium'>訂金</p>
           <p>
             <PriceDisplay
-              value={tour.deposit}
+              value={category === 'GROUP' ? tour!.deposit : deposit || ''}
               suffix='/每人'
               valueClassName={priceValueClassName}
               applyStyleOnAllText={true}
@@ -119,58 +148,60 @@ const Registration = ({
           </p>
         </div>
       </div>
-      <div>
-        <p className='font-genseki-body-m-medium mb-3'>團費說明</p>
-        <div className='grid grid-cols-[auto_1fr] xl:grid-cols-[184px_1fr] gap-x-5 xl:gap-x-7 gap-y-2.5 items-center'>
-          <span>大人（年滿12歲）</span>
-          <span>
+      {category === 'GROUP' && (
+        <div>
+          <p className='font-genseki-body-m-medium mb-3'>團費說明</p>
+          <div className='grid grid-cols-[auto_1fr] xl:grid-cols-[184px_1fr] gap-x-5 xl:gap-x-7 gap-y-2.5 items-center'>
+            <span>大人（年滿12歲）</span>
+            <span>
+              <PriceDisplay
+                value={tour!.adult || ''}
+                prefix='每位'
+                suffix='起'
+                valueClassName={cn(priceValueClassName, 'mx-2')}
+                className={adultColor}
+              />
+            </span>
+            <span className='max-xl:col-span-2'>小孩（2-未滿12歲）</span>
+            <div className='max-xl:col-span-2 flex flex-wrap gap-x-5 max-xl:gap-y-3 xl:gap-x-[30px]'>
+              <p>
+                佔床
+                <PriceDisplay
+                  value={tour!.childWithBed}
+                  suffix='起'
+                  valueClassName={priceValueClassName}
+                  className={cn(childWithBedColor, 'ml-2')}
+                />
+              </p>
+              <p>
+                加床
+                <PriceDisplay
+                  value={tour!.childExtraBed}
+                  suffix='起'
+                  valueClassName={priceValueClassName}
+                  className={cn(childExtraBedColor, 'ml-2')}
+                />
+              </p>
+              <p>
+                不佔床
+                <PriceDisplay
+                  value={tour!.childNoBed}
+                  suffix='起'
+                  valueClassName={priceValueClassName}
+                  className={cn(childNoBedColor, 'ml-2')}
+                />
+              </p>
+            </div>
+            <span>嬰兒（未滿2歲）</span>
             <PriceDisplay
-              value={tour.adult}
-              prefix='每位'
+              value={tour!.infant}
               suffix='起'
-              valueClassName={cn(priceValueClassName, 'mx-2')}
-              className={adultColor}
+              valueClassName={priceValueClassName}
+              className={infantColor}
             />
-          </span>
-          <span className='max-xl:col-span-2'>小孩（2-未滿12歲）</span>
-          <div className='max-xl:col-span-2 flex flex-wrap gap-x-5 max-xl:gap-y-3 xl:gap-x-[30px]'>
-            <p>
-              佔床
-              <PriceDisplay
-                value={tour.childWithBed}
-                suffix='起'
-                valueClassName={priceValueClassName}
-                className={cn(childWithBedColor, 'ml-2')}
-              />
-            </p>
-            <p>
-              加床
-              <PriceDisplay
-                value={tour.childExtraBed}
-                suffix='起'
-                valueClassName={priceValueClassName}
-                className={cn(childExtraBedColor, 'ml-2')}
-              />
-            </p>
-            <p>
-              不佔床
-              <PriceDisplay
-                value={tour.childNoBed}
-                suffix='起'
-                valueClassName={priceValueClassName}
-                className={cn(childNoBedColor, 'ml-2')}
-              />
-            </p>
           </div>
-          <span>嬰兒（未滿2歲）</span>
-          <PriceDisplay
-            value={tour.infant}
-            suffix='起'
-            valueClassName={priceValueClassName}
-            className={infantColor}
-          />
         </div>
-      </div>
+      )}
       <div className='xl:pb-[30px] xl:border-b xl:border-figma-secondary-500'>
         <div className='flex items-center gap-x-[10px] mb-3'>
           <Image
@@ -182,7 +213,7 @@ const Registration = ({
           <p className='font-genseki-body-m-medium'>備註</p>
         </div>
         <div className='font-genseki-body-m-regular text-figma-primary-400'>
-          {!tour.note ? '無' : tour.note}
+          無
         </div>
       </div>
       {!isMobile && (
@@ -190,13 +221,21 @@ const Registration = ({
           <h3
             className={cn(
               'font-noto-serif-h3-bold',
-              adultColor === 'text-figma-primary-300'
-                ? 'text-figma-primary-300'
-                : 'text-figma-secondary-500',
+              category === 'FREE'
+                ? depositColor === 'text-figma-primary-300'
+                  ? 'text-figma-primary-300'
+                  : 'text-figma-secondary-500'
+                : adultColor === 'text-figma-primary-300'
+                  ? 'text-figma-primary-300'
+                  : 'text-figma-secondary-500',
             )}
           >
-            <PriceDisplay value={tour.adult} className={adultColor} />
-            {adultColor === 'text-figma-primary-950' && (
+            <PriceDisplay
+              value={category === 'FREE' ? deposit || '' : tour!.adult}
+              className={category === 'FREE' ? depositColor : adultColor}
+            />
+            {(category === 'FREE' ? depositColor : adultColor) ===
+              'text-figma-primary-950' && (
               <span className='font-genseki-h6-regular ml-2'>起</span>
             )}
           </h3>

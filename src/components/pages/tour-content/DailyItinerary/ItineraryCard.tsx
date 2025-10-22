@@ -4,7 +4,7 @@ import ItineraryCarousel, {
 import CarouselControls from './CarouselControls'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import styles from './styles.module.css'
 import { TBaseComponent } from '@/types'
@@ -24,24 +24,25 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
     return `Day${String(day).padStart(2, '0')}`
   }
 
+  const handleCarouselStateUpdate = useCallback(() => {
+    const api = carouselRef.current?.api
+    if (!api) return
+    setCurrent(api.selectedScrollSnap())
+    setCount(api.scrollSnapList().length)
+  }, [])
+
   useEffect(() => {
     const api = carouselRef.current?.api
     if (!api) return
-
-    const updateState = () => {
-      setCurrent(api.selectedScrollSnap())
-      setCount(api.scrollSnapList().length)
-    }
-
-    updateState()
-    api.on('select', updateState)
-    api.on('reInit', updateState)
+    handleCarouselStateUpdate()
+    api.on('select', handleCarouselStateUpdate)
+    api.on('reInit', handleCarouselStateUpdate)
 
     return () => {
-      api.off('select', updateState)
-      api.off('reInit', updateState)
+      api.off('select', handleCarouselStateUpdate)
+      api.off('reInit', handleCarouselStateUpdate)
     }
-  }, [carouselRef.current?.api])
+  }, [handleCarouselStateUpdate])
 
   const handlePrevious = () => {
     carouselRef.current?.api?.scrollPrev()

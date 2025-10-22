@@ -111,6 +111,17 @@ export type TItinerary = {
   attractions: TItineraryAttraction[]
 }
 
+export type TFeedback = {
+  id: string
+  title: string
+  nickname: string
+  content: string
+  imageUrl: string
+  linkUrl: string
+  createdAt: string
+  updatedAt: string
+} | null
+
 export type TTourProduct = {
   id: string
   code: string
@@ -148,7 +159,7 @@ export type TTourProduct = {
   map: string | null
   highlights: THighlight[]
   itineraries: TItinerary[]
-  feedback: unknown
+  feedback: TFeedback
 }
 
 export type TTourProductApiResponse = {

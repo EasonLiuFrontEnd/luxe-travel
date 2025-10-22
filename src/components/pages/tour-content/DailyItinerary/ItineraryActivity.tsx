@@ -30,10 +30,7 @@ const ItineraryActivity = ({
   }
 
   const visitType = attractions[0].visitType
-  const visitTypeLabel =
-    visitType === 'INSIDE'
-      ? '入內參觀'
-      : '下車參觀'
+  const visitTypeLabel = visitType === 'INSIDE' ? '入內參觀' : '下車參觀'
 
   return (
     <div

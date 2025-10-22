@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import ItineraryCard from './ItineraryCard'
 import ItineraryActivity from './ItineraryActivity'
@@ -15,6 +15,37 @@ const DailyItinerary = ({ children, itineraries }: TDailyItineraryProps) => {
   const [openPlace, setOpenPlace] = useState<TItineraryAttraction | null>(null)
   const { isMobile } = useMediaQuery()
 
+  const groupAttractionsByVisitType = useCallback(
+    (
+      attractions: TItineraryAttraction[],
+    ): { visitType: string; attractions: TItineraryAttraction[] }[] => {
+      const groupMap = new Map<
+        string,
+        { visitType: string; attractions: TItineraryAttraction[] }
+      >()
+      const visitTypeOrder = ['INSIDE', 'PHOTO', 'OUTSIDE']
+
+      attractions.forEach((attraction) => {
+        if (!groupMap.has(attraction.visitType)) {
+          groupMap.set(attraction.visitType, {
+            visitType: attraction.visitType,
+            attractions: [],
+          })
+        }
+        groupMap.get(attraction.visitType)!.attractions.push(attraction)
+      })
+
+      return visitTypeOrder
+        .filter((type) => groupMap.has(type))
+        .map((type) => groupMap.get(type)!)
+    },
+    [],
+  )
+
+  if (!itineraries || itineraries.length === 0) {
+    return null
+  }
+
   const parseHotelString = (hotelStr: string | null) => {
     if (!hotelStr) {
       return { options: [], fallback: '' }
@@ -24,30 +55,6 @@ const DailyItinerary = ({ children, itineraries }: TDailyItineraryProps) => {
     const fallback =
       parts.length === 1 ? parts[0] : `或${parts[parts.length - 1]}`
     return { options, fallback }
-  }
-
-  const groupAttractionsByVisitType = (
-    attractions: TItineraryAttraction[],
-  ): { visitType: string; attractions: TItineraryAttraction[] }[] => {
-    const groupMap = new Map<
-      string,
-      { visitType: string; attractions: TItineraryAttraction[] }
-    >()
-    const visitTypeOrder = ['INSIDE', 'PHOTO', 'OUTSIDE']
-
-    attractions.forEach((attraction) => {
-      if (!groupMap.has(attraction.visitType)) {
-        groupMap.set(attraction.visitType, {
-          visitType: attraction.visitType,
-          attractions: [],
-        })
-      }
-      groupMap.get(attraction.visitType)!.attractions.push(attraction)
-    })
-
-    return visitTypeOrder
-      .filter((type) => groupMap.has(type))
-      .map((type) => groupMap.get(type)!)
   }
 
   return (

@@ -29,13 +29,18 @@ const ItineraryCarousel = forwardRef<
 
   useEffect(() => {
     if (!api) return
-
     setCount(api.scrollSnapList().length)
     setCurrent(api.selectedScrollSnap())
 
-    api.on('select', () => {
+    const handleSelect = () => {
       setCurrent(api.selectedScrollSnap())
-    })
+    }
+
+    api.on('select', handleSelect)
+
+    return () => {
+      api.off('select', handleSelect)
+    }
   }, [api])
 
   useImperativeHandle(

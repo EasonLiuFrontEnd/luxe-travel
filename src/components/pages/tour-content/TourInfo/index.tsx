@@ -7,17 +7,37 @@ import styles from './styles.module.css'
 import DepartureDate from './DepartureDate'
 import Flight from './Flight'
 import Registration from './Registration'
+import Feedback from './Feedback'
+import PriceIncludes from './PriceIncludes'
 import TitleIcon from '../Highlight/icons/TitleIcon'
-import type { TTour, TFlight, TTourProduct } from '@/api/tour-content'
+import type {
+  TTour,
+  TFlight,
+  TTourProduct,
+  TFeedback,
+} from '@/api/tour-content'
 
 type TTourInfoProps = {
+  category: 'GROUP' | 'FREE'
   tours: TTour[]
   flights: TFlight[]
   mapUrl?: TTourProduct['map']
   note: string
+  deposit?: string
+  feedback?: TFeedback
+  description?: string
 }
 
-const TourInfo = ({ tours, flights, mapUrl, note }: TTourInfoProps) => {
+const TourInfo = ({
+  category,
+  tours,
+  flights,
+  mapUrl,
+  note,
+  deposit,
+  feedback,
+  description,
+}: TTourInfoProps) => {
   const [selectedTourId, setSelectedTourId] = useState<string>(
     tours[0]?.id || '',
   )
@@ -33,7 +53,13 @@ const TourInfo = ({ tours, flights, mapUrl, note }: TTourInfoProps) => {
       className='flex flex-col xl:flex-row  pb-7 px-4 xl:pb-7 xl:px-9'
     >
       <div className='order-2 xl:order-1 w-full xl:max-w-[48.7vw] box-content flex flex-col gap-y-5 xl:pt-3.5 xl:px-7 xl:pb-7'>
-        <DepartureDate tours={tours} onTourSelect={handleTourSelect} />
+        {category === 'GROUP' && (
+          <DepartureDate tours={tours} onTourSelect={handleTourSelect} />
+        )}
+        {category === 'FREE' && feedback && <Feedback feedback={feedback} />}
+        {category === 'FREE' && description && (
+          <PriceIncludes description={description} />
+        )}
         <Flight flights={flights} />
         {mapUrl && (
           <Image
@@ -66,37 +92,42 @@ const TourInfo = ({ tours, flights, mapUrl, note }: TTourInfoProps) => {
             ))}
           </p>
         </div>
-        <div className='relative flex flex-col bg-figma-neutral-0 rounded-2xl'>
-          <h5
-            className={cn(
-              'relative mx-auto font-noto-serif-h5-bold text-figma-secondary-500 py-4 px-7 rounded-b-2xl bg-figma-primary-50',
-              styles['concave-border'],
-            )}
-          >
-            貼心安排
-          </h5>
-          <ul className='box-content xl:h-[289px] list-disc font-family-genseki text-[16px] xl:text-[20px] leading-[1.5] text-figma-primary-950 pt-7 px-4 pb-10 xl:pt-9 xl:px-9 xl:pb-11 ml-6'>
-            <li>提供【隨身無線導覽耳機】每人一台。</li>
-            <li>贈送每人一張【歐洲網路卡】。</li>
-            <li>贈送每位旅客行李綁帶及歐洲轉換插頭各乙只。</li>
-            <li>為每位旅客提高投保履約責任險500萬/醫療20萬。</li>
-            <li>
-              旅客未滿 15 歲或 70 歲以上,依保險規定最高上限【意外死殘保額新臺幣
-              200 萬元、意外醫療保額新臺幣 20 萬,有額外需要敬請自行加購旅平】。
-            </li>
-          </ul>
-          <div className='absolute left-[-5px] bottom-[-10px] xl:left-[-10px] xl:bottom-[-22px] flex items-center gap-x-5'>
-            <p className='font-family-noto-serif text-[32px] xl:text-[64px] max-xl:font-medium leading-[1.2] text-figma-secondary-100'>
-              Made to
-            </p>
-            <p className='font-family-luxurious text-[64px] xl:text-[96px] leading-[1.2] text-figma-secondary-100'>
-              measyre
-            </p>
+        {category === 'GROUP' && (
+          <div className='relative flex flex-col bg-figma-neutral-0 rounded-2xl'>
+            <h5
+              className={cn(
+                'relative mx-auto font-noto-serif-h5-bold text-figma-secondary-500 py-4 px-7 rounded-b-2xl bg-figma-primary-50',
+                styles['concave-border'],
+              )}
+            >
+              貼心安排
+            </h5>
+            <ul className='box-content xl:h-[289px] list-disc font-family-genseki text-[16px] xl:text-[20px] leading-[1.5] text-figma-primary-950 pt-7 px-4 pb-10 xl:pt-9 xl:px-9 xl:pb-11 ml-6'>
+              <li>提供【隨身無線導覽耳機】每人一台。</li>
+              <li>贈送每人一張【歐洲網路卡】。</li>
+              <li>贈送每位旅客行李綁帶及歐洲轉換插頭各乙只。</li>
+              <li>為每位旅客提高投保履約責任險500萬/醫療20萬。</li>
+              <li>
+                旅客未滿 15 歲或 70
+                歲以上,依保險規定最高上限【意外死殘保額新臺幣 200
+                萬元、意外醫療保額新臺幣 20 萬,有額外需要敬請自行加購旅平】。
+              </li>
+            </ul>
+            <div className='absolute left-[-5px] bottom-[-10px] xl:left-[-10px] xl:bottom-[-22px] flex items-center gap-x-5'>
+              <p className='font-family-noto-serif text-[32px] xl:text-[64px] max-xl:font-medium leading-[1.2] text-figma-secondary-100'>
+                Made to
+              </p>
+              <p className='font-family-luxurious text-[64px] xl:text-[96px] leading-[1.2] text-figma-secondary-100'>
+                measyre
+              </p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <Registration
+        category={category}
         tours={tours}
+        deposit={deposit}
         selectedTourId={selectedTourId}
         className='order-1 xl:order-2'
       />
