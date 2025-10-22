@@ -9,8 +9,6 @@ import {
 import {
   submitInquiry,
   submitTravelInquiry,
-  homeInquiryApiMock,
-  travelInquiryApiMock,
   getTravelTypeLabel,
   type TInquiryRequest,
   type TTravelInquiryRequest,
@@ -101,12 +99,8 @@ const TravelInquiryPage = () => {
           border: 'none',
         },
       })
-    } catch (error) {
+    } catch {
       if (process.env.NODE_ENV !== 'production') {
-        const mockResponse = isGroupTravel
-          ? travelInquiryApiMock
-          : homeInquiryApiMock
-        console.warn('開發環境：API 錯誤，使用 mock 資料', mockResponse)
         toast('提交成功（開發模式：使用 mock 資料）', {
           style: {
             fontFamily: 'var(--font-genseki-gothic)',
@@ -123,7 +117,6 @@ const TravelInquiryPage = () => {
           },
         })
       } else {
-        console.error('提交表單時發生錯誤:', error)
         toast('提交失敗', {
           style: {
             fontFamily: 'var(--font-genseki-gothic)',

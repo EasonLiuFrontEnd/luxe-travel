@@ -27,13 +27,6 @@ apiClient.interceptors.response.use(
     return response
   },
   (error) => {
-    if (error.response?.status === 401) {
-      console.error('未授權訪問')
-    } else if (error.response?.status >= 500) {
-      console.error('伺服器錯誤')
-    } else if (error.code === 'ECONNABORTED') {
-      console.error('請求超時')
-    }
     return Promise.reject(error)
   },
 )

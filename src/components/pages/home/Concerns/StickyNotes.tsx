@@ -53,10 +53,7 @@ const StickyNotes = ({
     <div className={containerClassName} style={combinedStyle}>
       <div
         className='flex w-[250px] xl:w-full xl:max-w-[226px] h-auto xl:max-h-[260px] aspect-[250/260]'
-        onMouseEnter={() => {
-          setIsHovered(true)
-          console.log(777)
-        }}
+        onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         <svg
