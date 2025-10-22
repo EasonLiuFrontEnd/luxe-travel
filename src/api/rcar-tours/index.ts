@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
 import apiClient from '../client'
 import type { TApiResponse, TUseHomeQueryResult } from '../type'
@@ -255,16 +255,16 @@ export const productsSearchApiMock: TProductSearchResponse = {
   ],
 }
 
-export const useProductsSearch = (
-  params: TProductSearchParams,
-): TUseHomeQueryResult<TProduct[], TProductSearchResponse> => {
-  const query = useQuery<TProduct[], AxiosError<TApiResponse<TProduct[]>>>({
-    queryKey: ['rcar-tours-products-search', params],
-    queryFn: () => fetchProductsSearch(params),
-    enabled: true,
+export const useProductsSearch = () => {
+  const mutation = useMutation<
+    TProduct[],
+    AxiosError<TApiResponse<TProduct[]>>,
+    TProductSearchParams
+  >({
+    mutationFn: (params: TProductSearchParams) => fetchProductsSearch(params),
   })
 
-  return { query, mock: productsSearchApiMock }
+  return { mutation, mock: productsSearchApiMock }
 }
 
 const fetchProductCountries = async (): Promise<TRegionData[]> => {

@@ -17,26 +17,35 @@ const Tours = ({ tours = [], tourType, className }: TToursProps) => {
   const [refreshKey, setRefreshKey] = useState(0)
 
   useEffect(() => {
-    const needsRefresh = sessionStorage.getItem('tour-needs-refresh')
-    if (needsRefresh === 'true') {
-      sessionStorage.removeItem('tour-needs-refresh')
-      setRefreshKey((prev) => prev + 1)
-    }
-
-    const handlePopState = () => {
+    const checkAndRefresh = () => {
       const needsRefresh = sessionStorage.getItem('tour-needs-refresh')
       if (needsRefresh === 'true') {
         sessionStorage.removeItem('tour-needs-refresh')
         setRefreshKey((prev) => prev + 1)
+        router.refresh()
       }
     }
 
+    checkAndRefresh()
+
+    const handlePopState = () => {
+      checkAndRefresh()
+    }
+
+    const handlePageShow = () => {
+      checkAndRefresh()
+    }
+
     window.addEventListener('popstate', handlePopState)
+    window.addEventListener('pageshow', handlePageShow)
+    window.addEventListener('focus', checkAndRefresh)
 
     return () => {
       window.removeEventListener('popstate', handlePopState)
+      window.removeEventListener('pageshow', handlePageShow)
+      window.removeEventListener('focus', checkAndRefresh)
     }
-  }, [])
+  }, [router])
 
   const handleDetailsClick = (tourId: string) => {
     sessionStorage.setItem('tour-needs-refresh', 'true')

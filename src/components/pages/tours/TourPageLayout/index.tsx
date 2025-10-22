@@ -1,7 +1,8 @@
 'use client'
+export const dynamic = 'force-dynamic'
 
 import { useState, useCallback, useEffect, useMemo } from 'react'
-import type { UseQueryResult } from '@tanstack/react-query'
+import type { UseQueryResult, UseMutationResult } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
 import TourBanner from '../TourBanner'
 import DestinationFilter from '../DestinationFilter'
@@ -28,7 +29,11 @@ import type {
 import type { TApiResponse } from '@/api/type'
 
 type TUseProductsSearchResult = {
-  query: UseQueryResult<TProduct[], AxiosError<TApiResponse<TProduct[]>>>
+  mutation: UseMutationResult<
+    TProduct[],
+    AxiosError<TApiResponse<TProduct[]>>,
+    TProductSearchParams
+  >
   mock: TProductSearchResponse
 }
 
@@ -39,7 +44,7 @@ type TUseProductCountriesResult = {
 
 type TTourPageLayoutProps = {
   tourType: TTourType
-  useProductsSearch: (params: TProductSearchParams) => TUseProductsSearchResult
+  useProductsSearch: () => TUseProductsSearchResult
   useProductCountries: () => TUseProductCountriesResult
   apiModule: Record<string, unknown>
 }
@@ -67,8 +72,9 @@ const TourPageLayout = ({
   const [tours, setTours] = useState<TTourData[]>([])
   const [hasSearched, setHasSearched] = useState(false)
 
-  const { query: searchQuery, mock: searchMock } =
-    useProductsSearch(searchParams)
+  const [featuredTours, setFeaturedTours] = useState<TProduct[]>([])
+
+  const { mutation: searchMutation, mock: searchMock } = useProductsSearch()
   const { query: countriesQuery, mock: countriesMock } = useProductCountries()
 
   const regionsData = useMemo(() => {
@@ -81,79 +87,74 @@ const TourPageLayout = ({
   const tourConfig = getTourTypeConfig(tourType)
   const slideConfig = getSlideConfig(tourType)
 
-  const featuredTours = useMemo(() => {
-    if (searchQuery.isSuccess && searchQuery.data) {
-      return searchQuery.data.filter((product) => product.isFeatured)
-    }
-    return []
-  }, [searchQuery.isSuccess, searchQuery.data])
+  const processResults = useCallback(
+    (data: TProduct[], params: TProductSearchParams) => {
+      let dataSource = [...data]
+      const featured = dataSource.filter((product) => product.isFeatured)
+      setFeaturedTours(featured)
 
-  useEffect(() => {
-    if (searchQuery.isSuccess) {
-      let dataSource = searchQuery.data || []
+      dataSource = dataSource.filter((product) => !product.isFeatured)
 
-      if (dataSource.length > 0) {
-        dataSource = dataSource.filter((product) => !product.isFeatured)
+      const destinationCodes = params.destination?.split(',') || []
+      if (destinationCodes.length > 0) {
+        dataSource = dataSource.filter((product) =>
+          destinationCodes.some((code) => product.countries?.includes(code)),
+        )
+      }
 
-        const destinationCodes = searchParams.destination?.split(',') || []
-        if (destinationCodes.length > 0) {
-          dataSource = dataSource.filter((product) =>
-            destinationCodes.some((code) => product.countries?.includes(code)),
+      if (tourType !== 'group-tours') {
+        if (params.budgetMin !== undefined || params.budgetMax !== undefined) {
+          const minBudget = params.budgetMin ?? 0
+          const maxBudget = params.budgetMax ?? Infinity
+          dataSource = dataSource.filter(
+            (product) =>
+              product.priceMin >= minBudget && product.priceMin <= maxBudget,
           )
         }
 
-        if (tourType !== 'group-tours') {
-          if (
-            searchParams.budgetMin !== undefined ||
-            searchParams.budgetMax !== undefined
-          ) {
-            const minBudget = searchParams.budgetMin ?? 0
-            const maxBudget = searchParams.budgetMax ?? Infinity
+        if (params.daysRange) {
+          const daysRangeMatch = params.daysRange.match(/(\d+)-(\d+)/)
+          if (daysRangeMatch) {
+            const minDays = parseInt(daysRangeMatch[1])
+            const maxDays = parseInt(daysRangeMatch[2])
             dataSource = dataSource.filter(
-              (product) =>
-                product.priceMin >= minBudget && product.priceMin <= maxBudget,
+              (product) => product.days >= minDays && product.days <= maxDays,
             )
           }
-
-          if (searchParams.daysRange) {
-            const daysRangeMatch = searchParams.daysRange.match(/(\d+)-(\d+)/)
-            if (daysRangeMatch) {
-              const minDays = parseInt(daysRangeMatch[1])
-              const maxDays = parseInt(daysRangeMatch[2])
-              dataSource = dataSource.filter(
-                (product) => product.days >= minDays && product.days <= maxDays,
-              )
-            }
-          }
         }
+      }
 
-        const convertedTours = dataSource.map((product) =>
-          convertProductToTourData(product, tourType),
-        )
-        setTours(convertedTours)
-      } else {
-        setTours([])
-      }
-    } else if (searchQuery.isError) {
-      if (process.env.NODE_ENV !== 'production') {
-        let dataSource = searchMock.data || []
-        dataSource = dataSource.filter((product) => !product.isFeatured)
-        const convertedTours = dataSource.map((product) =>
-          convertProductToTourData(product, tourType),
-        )
-        setTours(convertedTours)
-      } else {
-        setTours([])
-      }
-    }
-  }, [
-    searchQuery.isSuccess,
-    searchQuery.isError,
-    searchQuery.data,
-    searchMock.data,
-    searchParams,
-    tourType,
-  ])
+      const convertedTours = dataSource.map((product) =>
+        convertProductToTourData(product, tourType),
+      )
+      setTours(convertedTours)
+    },
+    [tourType],
+  )
+
+  const executeSearch = useCallback(
+    (params: TProductSearchParams) => {
+      searchMutation.mutate(params, {
+        onSuccess: (data) => {
+          processResults(data, params)
+        },
+        onError: () => {
+          if (process.env.NODE_ENV !== 'production') {
+            processResults(searchMock.data, params)
+          } else {
+            setTours([])
+            setFeaturedTours([])
+          }
+        },
+      })
+    },
+    [searchMutation, processResults, searchMock.data],
+  )
+
+  useEffect(() => {
+    executeSearch(searchParams)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleSearch = useCallback(
     (
@@ -227,8 +228,9 @@ const TourPageLayout = ({
       }
 
       setSearchParams(newParams)
+      executeSearch(newParams)
     },
-    [regionsData, tourType],
+    [regionsData, tourType, executeSearch],
   )
 
   const handleRemoveFilter = useCallback(
@@ -260,8 +262,9 @@ const TourPageLayout = ({
       }
 
       setSearchParams(newParams)
+      executeSearch(newParams)
     },
-    [searchedCountries, searchParams],
+    [searchedCountries, searchParams, executeSearch],
   )
 
   const handleSort = useCallback(
@@ -283,8 +286,9 @@ const TourPageLayout = ({
       }
 
       setSearchParams(newParams)
+      executeSearch(newParams)
     },
-    [searchParams],
+    [searchParams, executeSearch],
   )
 
   return (
@@ -298,8 +302,8 @@ const TourPageLayout = ({
         tourType={tourType}
         slideContent={slideConfig.content}
         tours={featuredTours}
-        isLoading={searchQuery.isLoading}
-        hasError={!!searchQuery.error}
+        isLoading={searchMutation.isPending}
+        hasError={!!searchMutation.error}
         altTextPrefix={tourConfig.altTextPrefix}
       />
       <DestinationFilter
