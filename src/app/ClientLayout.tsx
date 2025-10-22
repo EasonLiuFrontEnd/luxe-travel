@@ -7,11 +7,13 @@ import { ScrollProvider } from '@/context/ScrollContext'
 import { ClientProvider } from '@/providers'
 import Header from '@/components/shared/layout/header/Header'
 import Footer from '@/components/shared/layout/Footer'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { getPageConfig, calculateLogoAnimation } from '@/lib/page-config'
 import type { TBaseComponent } from '@/types'
 
 const ClientLayout = ({ children }: TBaseComponent) => {
   const pathname = usePathname()
+  const { isMobile } = useMediaQuery()
   const { scrollY } = useScroll()
 
   const pageConfig = useMemo(() => getPageConfig(pathname), [pathname])
@@ -43,7 +45,9 @@ const ClientLayout = ({ children }: TBaseComponent) => {
           hasTransparentHeader={pageConfig.hasTransparentHeader}
         />
         <main>{children}</main>
-        <Footer scrollToTopBg={pageConfig.scrollToTopBg} />
+        {!(pageConfig.type === 'tour-content' && isMobile) && (
+          <Footer scrollToTopBg={pageConfig.scrollToTopBg} />
+        )}
       </ScrollProvider>
     </ClientProvider>
   )

@@ -107,7 +107,15 @@ export const DEFAULT_PAGE_CONFIG: TPageConfig = {
 }
 
 export const getPageConfig = (pathname: string): TPageConfig => {
-  return PAGE_CONFIGS[pathname] || DEFAULT_PAGE_CONFIG
+  if (PAGE_CONFIGS[pathname]) {
+    return PAGE_CONFIGS[pathname]
+  }
+
+  if (pathname.startsWith('/tour-content/')) {
+    return PAGE_CONFIGS['/tour-content']
+  }
+
+  return DEFAULT_PAGE_CONFIG
 }
 
 type TLogoAnimation = {
