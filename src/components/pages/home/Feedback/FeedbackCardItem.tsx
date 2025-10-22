@@ -157,7 +157,7 @@ const FeedbackCardItem = ({
     <div
       id={id}
       data-order={order}
-      className='w-[320px] h-[475px] p-[24px] rounded-[16px]'
+      className='w-[320px] p-[24px] rounded-[16px]'
       style={{
         backgroundColor: color?.bg,
         color: color?.text,
@@ -180,7 +180,7 @@ const FeedbackCardItem = ({
           />
         </svg>
       </div>
-      <p className='w-[272px] h-[266px] font-noto-serif-h4-medium mb-[20px]'>
+      <p className='w-[272px] font-noto-serif-h4-medium mb-[20px]'>
         {content}
       </p>
       {linkUrl && (
