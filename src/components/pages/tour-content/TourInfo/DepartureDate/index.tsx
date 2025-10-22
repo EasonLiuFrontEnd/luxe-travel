@@ -1,16 +1,67 @@
+import { useState, useEffect, useMemo } from 'react'
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/Carousel'
 import type { CarouselApi } from '@/components/ui/Carousel'
-import { mockTimeSlots } from '../config'
+import type { TTour } from '@/api/tour-content'
 import TimeSlotCard from './TimeSlotCard'
-import { useState, useEffect } from 'react'
+import TitleIcon from '../../Highlight/icons/TitleIcon'
 
-const DepartureDate = () => {
+type TTimeSlotData = {
+  id: string
+  date: string
+  status: '已成團' | '熱銷中' | '已滿團' | '取消'
+  href: string
+}
+
+type TDepartureDateProps = {
+  tours: TTour[]
+  onTourSelect?: (id: string) => void
+}
+
+const DepartureDate = ({ tours, onTourSelect }: TDepartureDateProps) => {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>()
   const [canScrollNext, setCanScrollNext] = useState(false)
+  const [selectedTourId, setSelectedTourId] = useState<string>(
+    tours[0]?.id || '',
+  )
+
+  const timeSlots: TTimeSlotData[] = useMemo(() => {
+    return tours.map((tour) => {
+      const departDate = new Date(tour.departDate)
+      const month = departDate.getMonth() + 1
+      const day = departDate.getDate()
+      const weekday = ['日', '一', '二', '三', '四', '五', '六'][
+        departDate.getDay()
+      ]
+      const formattedDate = `${month}/${day}(${weekday})`
+
+      let status: TTimeSlotData['status']
+      if (tour.status === 1) {
+        status = '熱銷中'
+      } else if (tour.status === 2) {
+        status = '已成團'
+      } else if (tour.status === 3) {
+        status = '已滿團'
+      } else {
+        status = '取消'
+      }
+
+      return {
+        id: tour.id,
+        date: formattedDate,
+        status,
+        href: '#',
+      }
+    })
+  }, [tours])
+
+  const handleSelectTour = (id: string) => {
+    setSelectedTourId(id)
+    onTourSelect?.(id)
+  }
 
   useEffect(() => {
     if (!carouselApi) return
@@ -33,30 +84,19 @@ const DepartureDate = () => {
   return (
     <div>
       <div className='flex items-center mb-3'>
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          width='22'
-          height='22'
-          viewBox='0 0 22 22'
-          fill='none'
-          className='p-1 mr-2'
-        >
-          <path
-            d='M13.0283 10.9922H0.984375V13.0372H8.97126V21.0155H10.9503V13.0372H13.0283V10.9922Z'
-            fill='#926D3C'
-          />
-          <path
-            d='M8.97266 10.9923H21.0166V8.96283H13.0297V0.984497H11.0648V8.96283H8.97266V10.9923Z'
-            fill='#926D3C'
-          />
-        </svg>
+        <TitleIcon
+          topColor='#926D3C'
+          bottomColor='#926D3C'
+          scale={0.9}
+          className='mr-2'
+        />
         <p className='font-noto-serif-body-l-semibold text-figma-secondary-950'>
           出發日期
         </p>
       </div>
-      <div className='p-7 rounded-2xl bg-figma-neutral-0'>
-        <div className='flex items-center gap-x-4'>
-          <div className='flex-1 relative min-w-0 overflow-hidden'>
+      <div className='p-4 xl:p-7 rounded-2xl bg-figma-neutral-0'>
+        <div className='flex items-center gap-x-3 xl:gap-x-4'>
+          <div className='relative flex-1 overflow-hidden'>
             <Carousel
               opts={{
                 slidesToScroll: 1,
@@ -67,9 +107,13 @@ const DepartureDate = () => {
               setApi={setCarouselApi}
             >
               <CarouselContent className='gap-x-3 -ml-0'>
-                {mockTimeSlots.map((slot) => (
+                {timeSlots.map((slot) => (
                   <CarouselItem key={slot.id} className='basis-auto pl-0'>
-                    <TimeSlotCard slot={slot} />
+                    <TimeSlotCard
+                      slot={slot}
+                      onSelect={handleSelectTour}
+                      isActive={selectedTourId === slot.id}
+                    />
                   </CarouselItem>
                 ))}
               </CarouselContent>

@@ -1,0 +1,27 @@
+.concave-border {
+  position: relative;
+}
+
+.concave-border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -20px;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle at 0 100%, transparent 20px, #f5f5f5 20px);
+}
+
+.concave-border::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -20px;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(
+    circle at 100% 100%,
+    transparent 20px,
+    #f5f5f5 20px
+  );
+}
