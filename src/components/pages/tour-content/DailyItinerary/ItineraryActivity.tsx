@@ -1,73 +1,77 @@
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
-import type { TItinerary } from '../config'
+import type { TItineraryAttraction } from '@/api/tour-content'
 import styles from './styles.module.css'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 type TItineraryActivityProps = {
-  activityGroup: TItinerary['activity'][0]
-  activityIndex: number
-  openPlace: TItinerary['activity'][0]['place'][0] | null
-  setOpenPlace: (place: TItinerary['activity'][0]['place'][0] | null) => void
+  attractions: TItineraryAttraction[]
+  openPlace: TItineraryAttraction | null
+  setOpenPlace: (place: TItineraryAttraction | null) => void
 }
 
 const ItineraryActivity = ({
-  activityGroup,
-  activityIndex,
+  attractions,
   openPlace,
   setOpenPlace,
 }: TItineraryActivityProps) => {
   const { isMobile } = useMediaQuery()
 
-  const handleToggle = (place: TItinerary['activity'][0]['place'][0]) => {
-    if (openPlace === place) {
+  const handleToggle = (attraction: TItineraryAttraction) => {
+    if (openPlace?.id === attraction.id) {
       setOpenPlace(null)
     } else {
-      setOpenPlace(place)
+      setOpenPlace(attraction)
     }
   }
 
+  if (!attractions || attractions.length === 0) {
+    return null
+  }
+
+  const visitType = attractions[0].visitType
+  const visitTypeLabel =
+    visitType === 'INSIDE'
+      ? '入內參觀'
+      : '下車參觀'
+
   return (
     <div
-      key={activityIndex}
       className={cn(
         'flex max-xl:flex-col justify-between items-center max-xl:gap-y-[30px] xl:gap-x-[42px] py-[30px] px-4 xl:pt-12 xl:px-[152px] xl:pb-10',
         styles.gridBackground,
       )}
     >
       <h4 className='xl:w-[571px] font-family-noto-serif text-2xl xl:text-[32px] font-bold leading-[1.2] xl:leading-[1.5] text-figma-secondary-500 text-center'>
-        {activityGroup.title}
+        {visitTypeLabel}
       </h4>
       <div className='w-full text-figma-primary-950 border-t border-b border-figma-secondary-500'>
-        {activityGroup.place.map((place, placeIndex) => {
-          const isLast = placeIndex === activityGroup.place.length - 1
-          const hasContent = place.picture || place.intro
-
+        {attractions.map((attraction) => {
+          const hasContent =
+            attraction.attraction.imageUrl || attraction.attraction.content
           return (
             <div
-              key={placeIndex}
-              className={`grid grid-cols-[273px_auto] xl:grid-cols-[530px_auto] p-2.5 ${!isLast ? 'border-b border-figma-secondary-500' : ''}`}
+              key={attraction.id}
+              className='grid grid-cols-[273px_auto] xl:grid-cols-[530px_auto] p-2.5 border-b border-figma-secondary-500 last:border-b-0'
             >
               <div className='min-h-[30px] xl:min-h-9 flex items-center'>
-                {place['zh-TW'] && (
-                  <span className='font-family-genseki text-[20px] xl:text-2xl xl:font-medium leading-[1.5] xl:leading-[1.2]'>
-                    {place['zh-TW']}
-                  </span>
-                )}
-                {place.en && (
-                  <span
-                    className={`font-family-luxurious text-2xl xl:text-5xl tracking-[2.4px] xl:tracking-[4.8px] ${place['zh-TW'] ? 'ml-4' : ''}`}
-                  >
-                    {place.en}
+                <span className='font-family-genseki text-[20px] xl:text-2xl xl:font-medium leading-[1.5] xl:leading-[1.2]'>
+                  {attraction.attraction.nameZh}
+                </span>
+                {attraction.attraction.nameEn && (
+                  <span className='font-family-luxurious text-2xl xl:text-5xl tracking-[2.4px] xl:tracking-[4.8px] ml-4'>
+                    {attraction.attraction.nameEn}
                   </span>
                 )}
               </div>
               {hasContent && (
                 <div
                   className='flex items-end my-[8px] ml-[18px] mr-[5px] cursor-pointer group'
-                  onClick={isMobile ? () => handleToggle(place) : undefined}
+                  onClick={
+                    isMobile ? () => handleToggle(attraction) : undefined
+                  }
                   onMouseEnter={
-                    !isMobile ? () => setOpenPlace(place) : undefined
+                    !isMobile ? () => setOpenPlace(attraction) : undefined
                   }
                   onMouseLeave={
                     !isMobile ? () => setOpenPlace(null) : undefined
@@ -89,7 +93,7 @@ const ItineraryActivity = ({
                   />
                 </div>
               )}
-              {openPlace === place && (
+              {openPlace?.id === attraction.id && (
                 <div
                   className={cn(
                     'bg-figma-secondary-100 z-10',
@@ -98,18 +102,18 @@ const ItineraryActivity = ({
                       : 'absolute w-[397px] top-[50%] right-[51px] translate-y-[-50%]',
                   )}
                 >
-                  {place.picture && (
+                  {attraction.attraction.imageUrl && (
                     <Image
-                      src={place.picture}
-                      alt={place['zh-TW'] || place.en}
+                      src={attraction.attraction.imageUrl}
+                      alt={attraction.attraction.nameZh}
                       width={isMobile ? 351 : 397}
                       height={isMobile ? 205 : 231}
                       className='object-cover rounded-2xl mb-7'
                     />
                   )}
-                  {place.intro && (
+                  {attraction.attraction.content && (
                     <p className='font-family-genseki leading-[1.5] mx-2 max-xl:mb-[6px]'>
-                      {place.intro}
+                      {attraction.attraction.content}
                     </p>
                   )}
                 </div>

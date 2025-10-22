@@ -8,7 +8,7 @@ import { useRef, useState, useEffect } from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import styles from './styles.module.css'
 import { TBaseComponent } from '@/types'
-import type { TItinerary } from '../config'
+import type { TItinerary } from '@/api/tour-content'
 
 type TItineraryCardProps = TBaseComponent & {
   itinerary: TItinerary
@@ -17,8 +17,12 @@ type TItineraryCardProps = TBaseComponent & {
 const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
   const carouselRef = useRef<TItineraryCarouselRef>(null)
   const [current, setCurrent] = useState(0)
-  const [count, setCount] = useState(itinerary.attractions.length)
+  const [count, setCount] = useState(0)
   const { isMobile } = useMediaQuery()
+
+  const formatDayNumber = (day: number): string => {
+    return `Day${String(day).padStart(2, '0')}`
+  }
 
   useEffect(() => {
     const api = carouselRef.current?.api
@@ -57,13 +61,13 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
           )}
         >
           <span className='font-family-luxurious text-5xl xl:text-8xl xl:leading-[1.2] max-xl:tracking-[4.8px] text-figma-secondary-500 mr-4 xl:mr-6'>
-            {itinerary.day}
+            {formatDayNumber(itinerary.day)}
           </span>
           <span className='font-family-noto-serif text-[18px] xl:text-[40px] font-semibold xl:font-bold leading-[1.5] xl:leading-[1.2] text-figma-primary-500'>
-            {itinerary.destination}
+            {itinerary.title}
           </span>
         </h3>
-        {!isMobile && (
+        {!isMobile && count > 0 && (
           <CarouselControls
             current={current}
             count={count}
@@ -75,7 +79,7 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
       </div>
       <div className='box-content flex max-xl:flex-col pt-[28px] px-5 pb-9 xl:px-7'>
         <div className='flex flex-col xl:w-[541px] justify-between max-xl:mb-[40px] xl:mr-9'>
-          {itinerary.route.length > 0 && (
+          {itinerary.routes && itinerary.routes.length > 0 && (
             <div className='max-xl:mb-[40px]'>
               <div className='flex items-center mb-8'>
                 <svg
@@ -100,15 +104,15 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
                 </p>
               </div>
               <div className='flex flex-col gap-y-8 xl:gap-y-7 font-family-noto-serif text-[18px] xl:text-[20px] font-semibold xl:font-medium leading-[1.5] xl:leading-[1.2] text-figma-primary-950 whitespace-nowrap'>
-                {itinerary.route.map((route, index) => (
-                  <div key={index} className='flex items-center gap-x-4'>
-                    <p>{route.start}</p>
+                {itinerary.routes.map((route) => (
+                  <div key={route.id} className='flex items-center gap-x-4'>
+                    <p>{route.depart}</p>
                     <div className='w-full text-center font-genseki-body-m-medium text-figma-primary-500'>
-                      <p>{route.time}</p>
+                      <p>{route.duration}</p>
                       <div className={styles['horizontal-line']}></div>
                       <p>{route.distance}</p>
                     </div>
-                    <p>{route.end}</p>
+                    <p>{route.arrive}</p>
                   </div>
                 ))}
               </div>
@@ -117,7 +121,7 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
           <div>
             <div className='w-7 h-[3px] bg-figma-secondary-950 mt-[27px] mb-5'></div>
             <p className='font-family-genseki text-[16px] xl:text-[20px] leading-[1.5] text-figma-primary-950'>
-              {itinerary.routeDescription}
+              {itinerary.content}
             </p>
           </div>
         </div>
@@ -145,7 +149,7 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
                 精選行程
               </p>
             </div>
-            {isMobile && (
+            {isMobile && count > 0 && (
               <CarouselControls
                 current={current}
                 count={count}
@@ -155,10 +159,7 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
             )}
           </div>
           <div className='overflow-hidden z-1'>
-            <ItineraryCarousel
-              ref={carouselRef}
-              attractions={itinerary.attractions}
-            />
+            <ItineraryCarousel ref={carouselRef} attractions={[]} />
           </div>
           <div className='absolute top-[56px] right-0 w-[82px] xl:h-[calc(100%-56px)] xl:bg-gradient-to-r xl:from-transparent xl:to-[rgba(255,255,255,0.8)] pointer-events-none z-10'></div>
           {isMobile ? (

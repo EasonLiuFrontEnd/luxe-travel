@@ -49,9 +49,7 @@ const TimeSlotCard = ({
     >
       <p
         className={`w-full font-noto-serif-body-m-medium text-center py-2 border-b ${
-          isDisabled
-            ? disabledStyles.border
-            : activeStyles.border
+          isDisabled ? disabledStyles.border : activeStyles.border
         }`}
       >
         {slot.date}

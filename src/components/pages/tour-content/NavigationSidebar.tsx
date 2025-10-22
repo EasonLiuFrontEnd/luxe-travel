@@ -90,7 +90,7 @@ const NavigationSidebar = () => {
           className={cn(
             '[letter-spacing:4px] pr-[7.5px] pl-[6.5px] xl:pt-[3px] xl:pr-[12.5px] xl:pl-[12.5px] xl:pb-1 tracking-wider cursor-pointer transition-colors hover:text-figma-secondary-950 hover:bg-figma-accent-yellow-light',
             activeSection === item.targetId &&
-            'text-figma-secondary-950 bg-figma-accent-yellow-light',
+              'text-figma-secondary-950 bg-figma-accent-yellow-light',
           )}
         >
           {item.label}

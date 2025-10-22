@@ -17,7 +17,11 @@ type TPriceState = {
 
 const getPriceState = (value: string): TPriceState => {
   if (value === 'NIL') {
-    return { display: '無此報價', color: 'text-figma-primary-300', isValid: false }
+    return {
+      display: '無此報價',
+      color: 'text-figma-primary-300',
+      isValid: false,
+    }
   }
 
   const numValue = parseInt(value, 10)
@@ -29,7 +33,11 @@ const getPriceState = (value: string): TPriceState => {
     }
   }
 
-  return { display: `$${value}`, color: 'text-figma-primary-950', isValid: true }
+  return {
+    display: `$${value}`,
+    color: 'text-figma-primary-950',
+    isValid: true,
+  }
 }
 
 const PriceDisplay = ({

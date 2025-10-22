@@ -24,7 +24,9 @@ type TDepartureDateProps = {
 const DepartureDate = ({ tours, onTourSelect }: TDepartureDateProps) => {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>()
   const [canScrollNext, setCanScrollNext] = useState(false)
-  const [selectedTourId, setSelectedTourId] = useState<string>(tours[0]?.id || '')
+  const [selectedTourId, setSelectedTourId] = useState<string>(
+    tours[0]?.id || '',
+  )
 
   const timeSlots: TTimeSlotData[] = useMemo(() => {
     return tours.map((tour) => {

@@ -128,10 +128,7 @@ const Registration = ({
               value={tour.adult}
               prefix='每位'
               suffix='起'
-              valueClassName={cn(
-                priceValueClassName,
-                'mx-2',
-              )}
+              valueClassName={cn(priceValueClassName, 'mx-2')}
               className={adultColor}
             />
           </span>
@@ -185,11 +182,7 @@ const Registration = ({
           <p className='font-genseki-body-m-medium'>備註</p>
         </div>
         <div className='font-genseki-body-m-regular text-figma-primary-400'>
-          {!tour.note ? (
-            '無'
-          ) : (
-            tour.note
-          )}
+          {!tour.note ? '無' : tour.note}
         </div>
       </div>
       {!isMobile && (
@@ -202,10 +195,7 @@ const Registration = ({
                 : 'text-figma-secondary-500',
             )}
           >
-            <PriceDisplay
-              value={tour.adult}
-              className={adultColor}
-            />
+            <PriceDisplay value={tour.adult} className={adultColor} />
             {adultColor === 'text-figma-primary-950' && (
               <span className='font-genseki-h6-regular ml-2'>起</span>
             )}

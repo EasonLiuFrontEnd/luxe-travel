@@ -1,26 +1,53 @@
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
-import { useState, type ReactNode } from 'react'
+import { useState } from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import ItineraryCard from './ItineraryCard'
 import ItineraryActivity from './ItineraryActivity'
-import { itineraryData, type TItinerary } from '../config'
+import type { TItinerary, TItineraryAttraction } from '@/api/tour-content'
+import type { TBaseComponent } from '@/types'
 
-type TDailyItineraryProps = {
-  children?: ReactNode
+type TDailyItineraryProps = TBaseComponent & {
+  itineraries: TItinerary[]
 }
 
-const DailyItinerary = ({ children }: TDailyItineraryProps) => {
-  const [openPlace, setOpenPlace] = useState<
-    TItinerary['activity'][0]['place'][0] | null
-  >(null)
+const DailyItinerary = ({ children, itineraries }: TDailyItineraryProps) => {
+  const [openPlace, setOpenPlace] = useState<TItineraryAttraction | null>(null)
   const { isMobile } = useMediaQuery()
-  const parseHotelString = (hotelStr: string) => {
+
+  const parseHotelString = (hotelStr: string | null) => {
+    if (!hotelStr) {
+      return { options: [], fallback: '' }
+    }
     const parts = hotelStr.split(' 或 ')
     const options = parts.slice(0, -1)
     const fallback =
       parts.length === 1 ? parts[0] : `或${parts[parts.length - 1]}`
     return { options, fallback }
+  }
+
+  const groupAttractionsByVisitType = (
+    attractions: TItineraryAttraction[],
+  ): { visitType: string; attractions: TItineraryAttraction[] }[] => {
+    const groupMap = new Map<
+      string,
+      { visitType: string; attractions: TItineraryAttraction[] }
+    >()
+    const visitTypeOrder = ['INSIDE', 'PHOTO', 'OUTSIDE']
+
+    attractions.forEach((attraction) => {
+      if (!groupMap.has(attraction.visitType)) {
+        groupMap.set(attraction.visitType, {
+          visitType: attraction.visitType,
+          attractions: [],
+        })
+      }
+      groupMap.get(attraction.visitType)!.attractions.push(attraction)
+    })
+
+    return visitTypeOrder
+      .filter((type) => groupMap.has(type))
+      .map((type) => groupMap.get(type)!)
   }
 
   return (
@@ -31,13 +58,13 @@ const DailyItinerary = ({ children }: TDailyItineraryProps) => {
       <h2 className='mx-auto font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-4 my-10 xl:mt-13 xl:mb-12 gradient-title-border'>
         每日行程
       </h2>
-      {itineraryData.map((itinerary, index) => {
+      {itineraries.map((itinerary, index) => {
         const { options: hotelOptions, fallback: hotelFallback } =
           parseHotelString(itinerary.hotel)
 
         return (
           <div
-            key={index}
+            key={itinerary.id}
             style={{
               position: isMobile ? 'relative' : 'sticky',
               top: isMobile ? undefined : `${60 + index * 10}px`,
@@ -57,16 +84,20 @@ const DailyItinerary = ({ children }: TDailyItineraryProps) => {
               }}
             >
               <ItineraryCard itinerary={itinerary} />
-              {itinerary.activity.length > 0 &&
-                itinerary.activity.map((activityGroup, activityIndex) => (
-                  <ItineraryActivity
-                    key={activityIndex}
-                    activityGroup={activityGroup}
-                    activityIndex={activityIndex}
-                    openPlace={openPlace}
-                    setOpenPlace={setOpenPlace}
-                  />
-                ))}
+              {itinerary.attractions && itinerary.attractions.length > 0 && (
+                <>
+                  {groupAttractionsByVisitType(itinerary.attractions).map(
+                    (group, groupIndex) => (
+                      <ItineraryActivity
+                        key={`${group.visitType}-${groupIndex}`}
+                        attractions={group.attractions}
+                        openPlace={openPlace}
+                        setOpenPlace={setOpenPlace}
+                      />
+                    ),
+                  )}
+                </>
+              )}
               <div className='mt-10 mx-4 mb-[30px] xl:mt-12 xl:mx-[152px] xl:mb-10'>
                 <div className='flex max-xl:flex-col max-xl:gap-y-[40px] pt-6 border-t border-figma-secondary-500'>
                   <div className='w-full flex flex-col gap-y-[40px] px-5 xl:px-[40px] xl:border-r xl:border-figma-secondary-500'>
@@ -87,19 +118,19 @@ const DailyItinerary = ({ children }: TDailyItineraryProps) => {
                         <span className='text-figma-secondary-950 mr-3'>
                           早
                         </span>
-                        {itinerary.diet.breakfast}
+                        {itinerary.breakfast}
                       </p>
                       <p>
                         <span className='text-figma-secondary-950 mr-3'>
                           午
                         </span>
-                        {itinerary.diet.lunch}
+                        {itinerary.lunch}
                       </p>
                       <p>
                         <span className='text-figma-secondary-950 mr-3'>
                           晚
                         </span>
-                        {itinerary.diet.dinner}
+                        {itinerary.dinner}
                       </p>
                     </div>
                   </div>

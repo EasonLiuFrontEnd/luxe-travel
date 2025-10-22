@@ -33,7 +33,9 @@ const Banner = ({ namePrefix, name, mainImageUrl }: TBannerProps) => {
             strokeLinejoin='round'
           />
         </svg>
-        <p>{namePrefix}——{name}</p>
+        <p>
+          {namePrefix}——{name}
+        </p>
       </div>
       <div className='relative'>
         {isMobile && (

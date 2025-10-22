@@ -8,7 +8,6 @@ import TourInfo from '@/components/pages/tour-content/TourInfo'
 import Highlight from '@/components/pages/tour-content/Highlight'
 import DailyItinerary from '@/components/pages/tour-content/DailyItinerary'
 import TourNotice from '@/components/pages/tour-content/TourNotice'
-import { itineraryData } from '@/components/pages/tour-content/config'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useTourProduct } from '@/api/tour-content/useTourProduct'
 
@@ -54,13 +53,10 @@ const TourContentPage = ({ params }: TPageProps) => {
         mapUrl={tourProduct.map || undefined}
         note={tourProduct.note}
       />
-      <Highlight
-        highlights={tourProduct.highlights}
-        productId={id}
-      />
-      <DailyItinerary>
+      <Highlight highlights={tourProduct.highlights} productId={id} />
+      <DailyItinerary itineraries={tourProduct.itineraries}>
         <TourNotice
-          itemCount={itineraryData.length}
+          itemCount={tourProduct.itineraries.length}
           reminder={tourProduct.reminder}
           policy={tourProduct.policy}
         />

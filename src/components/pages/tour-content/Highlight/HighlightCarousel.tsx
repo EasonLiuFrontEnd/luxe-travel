@@ -124,7 +124,8 @@ const HighlightCarousel = ({ highlight }: THighlightCarouselProps) => {
               </button>
 
               <div className='font-genseki-h5-medium text-figma-neutral-0'>
-                {formatNumber(current + 1)}/{formatNumber(highlight.imageUrls?.length || 0)}
+                {formatNumber(current + 1)}/
+                {formatNumber(highlight.imageUrls?.length || 0)}
               </div>
 
               <button

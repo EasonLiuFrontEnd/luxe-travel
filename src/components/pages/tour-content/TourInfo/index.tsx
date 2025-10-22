@@ -18,7 +18,9 @@ type TTourInfoProps = {
 }
 
 const TourInfo = ({ tours, flights, mapUrl, note }: TTourInfoProps) => {
-  const [selectedTourId, setSelectedTourId] = useState<string>(tours[0]?.id || '')
+  const [selectedTourId, setSelectedTourId] = useState<string>(
+    tours[0]?.id || '',
+  )
   const noteLines = note.split('\n')
 
   const handleTourSelect = (id: string) => {
