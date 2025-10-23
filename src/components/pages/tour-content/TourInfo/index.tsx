@@ -103,15 +103,7 @@ const TourInfo = ({
               貼心安排
             </h5>
             <ul className='box-content xl:h-[289px] list-disc font-family-genseki text-[16px] xl:text-[20px] leading-[1.5] text-figma-primary-950 pt-7 px-4 pb-10 xl:pt-9 xl:px-9 xl:pb-11 ml-6'>
-              <li>提供【隨身無線導覽耳機】每人一台。</li>
-              <li>贈送每人一張【歐洲網路卡】。</li>
-              <li>贈送每位旅客行李綁帶及歐洲轉換插頭各乙只。</li>
-              <li>為每位旅客提高投保履約責任險500萬/醫療20萬。</li>
-              <li>
-                旅客未滿 15 歲或 70
-                歲以上,依保險規定最高上限【意外死殘保額新臺幣 200
-                萬元、意外醫療保額新臺幣 20 萬,有額外需要敬請自行加購旅平】。
-              </li>
+              <li>需要從後端補資料</li>
             </ul>
             <div className='absolute left-[-5px] bottom-[-10px] xl:left-[-10px] xl:bottom-[-22px] flex items-center gap-x-5'>
               <p className='font-family-noto-serif text-[32px] xl:text-[64px] max-xl:font-medium leading-[1.2] text-figma-secondary-100'>
