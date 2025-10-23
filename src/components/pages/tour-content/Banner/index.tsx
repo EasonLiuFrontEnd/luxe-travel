@@ -2,13 +2,9 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import styles from './styles.module.css'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import type { TTourProduct } from '@/api/tour-content'
 
-type TBannerProps = {
-  category: 'GROUP' | 'FREE'
-  namePrefix: string
-  name: string
-  mainImageUrl: string
-}
+type TBannerProps = Pick<TTourProduct, 'category' | 'namePrefix' | 'name' | 'mainImageUrl'>
 
 const Banner = ({ category, namePrefix, name, mainImageUrl }: TBannerProps) => {
   const { isMobile } = useMediaQuery()

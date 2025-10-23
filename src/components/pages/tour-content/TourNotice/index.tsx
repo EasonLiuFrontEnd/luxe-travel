@@ -5,7 +5,6 @@ import { cn } from '@/lib/utils'
 
 type TTourNoticeProps = {
   category: 'GROUP' | 'FREE'
-  itemCount: number
   reminder: string
   policy: string
 }
@@ -24,7 +23,6 @@ const convertBrTagsToElements = (text: string) => {
 
 const TourNotice = ({
   category,
-  itemCount,
   reminder,
   policy,
 }: TTourNoticeProps) => {
@@ -34,18 +32,13 @@ const TourNotice = ({
   return (
     <div
       id='tour-notice'
-      style={{
-        position: 'sticky',
-        top: `${60 + itemCount * 10}px`,
-        zIndex: itemCount,
-      }}
+      className='flex flex-col border-t border-figma-secondary-500 bg-figma-secondary-100'
     >
-      <div className='flex flex-col border-t border-figma-secondary-500 bg-figma-secondary-100'>
-        <h2 className='mx-auto font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-4 my-10 xl:mt-13 xl:mb-12 gradient-title-border'>
-          貼心提醒與參團須知
-        </h2>
-        <div className='flex flex-col gap-y-5 xl:mt-9 mb-[44px] xl:mb-11'>
-          {reminder && (
+      <h2 className='mx-auto font-noto-serif-tc font-bold text-[32px] xl:text-[64px] xl:leading-[1.2] text-figma-primary-950 py-[6px] px-4 my-10 xl:mt-13 xl:mb-12 gradient-title-border'>
+        貼心提醒與參團須知
+      </h2>
+      <div className='flex flex-col gap-y-5 xl:mt-9 mb-[44px] xl:mb-11'>
+        {reminder && (
             <div className='flex flex-col gap-y-8 pt-5 px-5 pb-[30px] mx-4 xl:pt-8 xl:px-8 xl:pb-10 xl:mx-[240px] rounded-2xl bg-figma-neutral-0'>
               <div className='flex items-center'>
                 <svg
@@ -86,8 +79,8 @@ const TourNotice = ({
                 </button>
               )}
             </div>
-          )}
-          {policy && (
+        )}
+        {policy && (
             <div className='pt-5 px-5 pb-[30px] mx-4 xl:pt-8 xl:px-8 xl:pb-10 xl:mx-[240px] rounded-2xl bg-figma-neutral-0'>
               <div className='flex items-center mb-8'>
                 <svg
@@ -116,7 +109,6 @@ const TourNotice = ({
               </p>
             </div>
           )}
-        </div>
       </div>
     </div>
   )

@@ -160,7 +160,8 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
             )}
           </div>
           <div className='overflow-hidden z-1'>
-            <ItineraryCarousel ref={carouselRef} attractions={[]} />
+            需要後端補資料
+            {/* <ItineraryCarousel ref={carouselRef} attractions={[]} /> */}
           </div>
           <div className='absolute top-[56px] right-0 w-[82px] xl:h-[calc(100%-56px)] xl:bg-gradient-to-r xl:from-transparent xl:to-[rgba(255,255,255,0.8)] pointer-events-none z-10'></div>
           {isMobile ? (
