@@ -7,10 +7,10 @@ import {
 import Image from 'next/image'
 import { forwardRef, useImperativeHandle, useEffect, useState } from 'react'
 import { TBaseComponent } from '@/types'
-import type { TItinerary } from '../config'
+import type { TItinerary } from '@/api/tour-content'
 
 type TItineraryCarouselProps = TBaseComponent & {
-  attractions: TItinerary['attractions']
+  attractions: TItinerary['attractions'] | undefined
 }
 
 export type TItineraryCarouselRef = {
@@ -65,22 +65,24 @@ const ItineraryCarousel = forwardRef<
       }}
     >
       <CarouselContent>
-        {attractions.map((item, index) => (
+        {attractions?.map((item, index) => (
           <CarouselItem
             key={index}
             className='box-content basis-[319px] xl:basis-[526px] flex-shrink-0 pl-0 mr-7 xl:mr-[36px] last:mr-0'
           >
             <div className='relative'>
               <h5 className='absolute top-0 right-0 font-noto-serif-h5-bold text-figma-secondary-950 py-4 px-7 rounded-es-2xl bg-figma-neutral-0'>
-                {item.title}
+                {item.attraction.nameZh}
               </h5>
-              <Image
-                src={item.picture}
-                alt={item.title}
-                width={526}
-                height={280}
-                className='box-content w-full h-[170px] xl:h-[280px] object-cover rounded-2xl mb-7'
-              />
+              {item.attraction.imageUrl && (
+                <Image
+                  src={item.attraction.imageUrl}
+                  alt={item.attraction.nameZh}
+                  width={526}
+                  height={280}
+                  className='box-content w-full h-[170px] xl:h-[280px] object-cover rounded-2xl mb-7'
+                />
+              )}
               <div className='absolute left-4 bottom-4 flex gap-x-2 p-2 rounded-[4px] bg-figma-secondary-200'>
                 <Image
                   src='/tour-content/flag.svg'
@@ -89,15 +91,12 @@ const ItineraryCarousel = forwardRef<
                   height={20}
                 />
                 <p className='font-genseki-body-s-bold text-figma-primary-950'>
-                  入內參觀
+                  {item.visitType === 'INSIDE' ? '入內參觀' : '下車參觀'}
                 </p>
               </div>
             </div>
             <p className='font-family-genseki text-[16px] xl:text-[18px] leading-[1.5] text-figma-primary-950 mb-1'>
-              {item.intro}
-            </p>
-            <p className='font-genseki-body-m-medium text-figma-secondary-950'>
-              {item.note}
+              {item.attraction.content}
             </p>
           </CarouselItem>
         ))}
