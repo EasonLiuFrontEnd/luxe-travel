@@ -100,7 +100,7 @@ const HighlightCarousel = ({ highlight }: THighlightCarouselProps) => {
               <CarouselItem key={index}>
                 <Image
                   key={`highlight-${index}`}
-                  src='/tour-content/hotel-lobby.jpg'
+                  src={highlight.imageUrls[index]}
                   alt={`highlight-image-${index + 1}`}
                   width={1440}
                   height={530}
