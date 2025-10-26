@@ -30,7 +30,7 @@ const ItineraryActivity = ({
   }
 
   const visitType = attractions[0].visitType
-  const visitTypeLabel = visitType === 'INSIDE' ? '入內參觀' : '下車參觀'
+  const visitTypeLabel = visitType === 'INSIDE' ? '入內參觀' : visitType === 'OUTSIDE' ? '下車參觀' : '拍照打卡'
 
   return (
     <div
@@ -49,7 +49,16 @@ const ItineraryActivity = ({
           return (
             <div
               key={attraction.id}
-              className='grid grid-cols-[273px_auto] xl:grid-cols-[530px_auto] p-2.5 border-b border-figma-secondary-500 last:border-b-0'
+              className='group grid grid-cols-[minmax(0,1fr)_auto] xl:grid-cols-[530px_auto] p-2.5 border-b border-figma-secondary-500 last:border-b-0 cursor-pointer'
+              onClick={
+                isMobile ? () => handleToggle(attraction) : undefined
+              }
+              onMouseEnter={
+                !isMobile ? () => setOpenPlace(attraction) : undefined
+              }
+              onMouseLeave={
+                !isMobile ? () => setOpenPlace(null) : undefined
+              }
             >
               <div className='min-h-[30px] xl:min-h-9 flex items-center'>
                 <span className='font-family-genseki text-[20px] xl:text-2xl xl:font-medium leading-[1.5] xl:leading-[1.2]'>
@@ -63,16 +72,7 @@ const ItineraryActivity = ({
               </div>
               {hasContent && (
                 <div
-                  className='flex items-end my-[8px] ml-[18px] mr-[5px] cursor-pointer group'
-                  onClick={
-                    isMobile ? () => handleToggle(attraction) : undefined
-                  }
-                  onMouseEnter={
-                    !isMobile ? () => setOpenPlace(attraction) : undefined
-                  }
-                  onMouseLeave={
-                    !isMobile ? () => setOpenPlace(null) : undefined
-                  }
+                  className='flex items-end my-[8px] ml-[18px] mr-[5px]'
                 >
                   <Image
                     src='/shared/icons/CTA-default.svg'

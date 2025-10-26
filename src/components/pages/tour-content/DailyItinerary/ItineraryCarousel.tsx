@@ -91,7 +91,7 @@ const ItineraryCarousel = forwardRef<
                   height={20}
                 />
                 <p className='font-genseki-body-s-bold text-figma-primary-950'>
-                  {item.visitType === 'INSIDE' ? '入內參觀' : '下車參觀'}
+                  {item.visitType === 'INSIDE' ? '入內參觀' : item.visitType === 'OUTSIDE' ? '下車參觀' : '拍照打卡'}
                 </p>
               </div>
             </div>

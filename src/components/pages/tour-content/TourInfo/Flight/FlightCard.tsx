@@ -8,17 +8,17 @@ type TFlightCardProps = {
 }
 
 const FlightCard = ({ flight, className = '' }: TFlightCardProps) => {
-  const formattedDay = flight.day.toString().padStart(2, '0')
+  const formattedDay = flight?.day?.toString().padStart(2, '0') ?? '00'
 
   return (
     <div
       className={`xl:w-[90%] flex max-xl:flex-col max-xl:gap-y-3.5 xl:gap-x-3.5 ${className}`}
     >
-      <p className='font-family-luxurious text-4xl tracking-[3.6px] text-figma-secondary-500'>
+      <p className='min-w-[100px] font-family-luxurious text-4xl tracking-[3.6px] text-figma-secondary-500'>
         Day {formattedDay}
       </p>
       <div className='flex gap-x-3 xl:gap-x-3.5'>
-        <div className='flex flex-col gap-y-4'>
+        <div className='min-w-[80px] flex flex-col gap-y-4'>
           <div>
             <p className='font-family-noto-serif text-[16px] xl:text-[18px] font-semibold leading-[1.5] text-figma-primary-950'>
               {flight.departTime}

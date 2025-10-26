@@ -23,7 +23,6 @@ type TTourInfoProps = {
   flights: TFlight[]
   mapUrl?: TTourProduct['map']
   note: string
-  deposit?: string
   feedback?: TFeedback
   description?: string
 }
@@ -34,7 +33,6 @@ const TourInfo = ({
   flights,
   mapUrl,
   note,
-  deposit,
   feedback,
   description,
 }: TTourInfoProps) => {
@@ -96,7 +94,7 @@ const TourInfo = ({
           <div className='relative flex flex-col bg-figma-neutral-0 rounded-2xl'>
             <h5
               className={cn(
-                'relative mx-auto font-noto-serif-h5-bold text-figma-secondary-500 py-4 px-7 rounded-b-2xl bg-figma-primary-50',
+                'relative mx-auto font-noto-serif-h5-bold text-figma-secondary-500 py-4 px-7 rounded-b-2xl bg-figma-neutral-50',
                 styles['concave-border'],
               )}
             >
@@ -119,7 +117,6 @@ const TourInfo = ({
       <Registration
         category={category}
         tours={tours}
-        deposit={deposit}
         selectedTourId={selectedTourId}
         className='order-1 xl:order-2'
       />

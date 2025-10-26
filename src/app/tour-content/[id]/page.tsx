@@ -1,7 +1,7 @@
 'use client'
 
-import React from 'react'
-import { notFound } from 'next/navigation'
+import React, { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import NavigationSidebar from '@/components/pages/tour-content/NavigationSidebar'
 import Banner from '@/components/pages/tour-content/Banner'
 import TourInfo from '@/components/pages/tour-content/TourInfo'
@@ -17,10 +17,17 @@ type TPageProps = {
 
 const TourContentPage = ({ params }: TPageProps) => {
   const { isMobile } = useMediaQuery()
+  const router = useRouter()
   const resolvedParams = React.use(params)
   const { id } = resolvedParams
 
   const { data: tourProduct, isLoading, error } = useTourProduct(id)
+
+  useEffect(() => {
+    if (!isLoading && (error || !tourProduct)) {
+      router.push('/not-found')
+    }
+  }, [isLoading, error, tourProduct, router])
 
   if (isLoading) {
     return (
@@ -36,7 +43,7 @@ const TourContentPage = ({ params }: TPageProps) => {
   }
 
   if (error || !tourProduct) {
-    notFound()
+    return null
   }
   const hasHighlights =
     tourProduct.highlights && tourProduct.highlights.length > 0
@@ -59,7 +66,6 @@ const TourContentPage = ({ params }: TPageProps) => {
         flights={tourProduct.flights}
         mapUrl={tourProduct.map || undefined}
         note={tourProduct.note}
-        deposit={tourProduct.deposit || undefined}
         feedback={tourProduct.feedback}
         description={tourProduct.description}
       />
