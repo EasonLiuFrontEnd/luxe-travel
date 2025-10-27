@@ -67,15 +67,13 @@ const TourContentPage = ({ params }: TPageProps) => {
         <Highlight highlights={tourProduct.highlights} productId={id} />
       )}
       {tourProduct.itineraries && tourProduct.itineraries.length > 0 && (
-        <DailyItinerary itineraries={tourProduct.itineraries}>
-          <TourNotice
-            category={tourProduct.category as 'GROUP' | 'FREE'}
-            itemCount={tourProduct.itineraries.length}
-            reminder={tourProduct.reminder}
-            policy={tourProduct.policy}
-          />
-        </DailyItinerary>
+        <DailyItinerary itineraries={tourProduct.itineraries} />
       )}
+      <TourNotice
+        category={tourProduct.category as 'GROUP' | 'FREE'}
+        reminder={tourProduct.reminder}
+        policy={tourProduct.policy}
+      />
       {isMobile && (
         <div className='flex justify-between items-end p-7'>
           <div className='flex flex-col'>

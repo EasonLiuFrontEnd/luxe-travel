@@ -1,19 +1,16 @@
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { useState, useCallback } from 'react'
-import { useMediaQuery } from '@/hooks/useMediaQuery'
 import ItineraryCard from './ItineraryCard'
 import ItineraryActivity from './ItineraryActivity'
 import type { TItinerary, TItineraryAttraction } from '@/api/tour-content'
-import type { TBaseComponent } from '@/types'
 
-type TDailyItineraryProps = TBaseComponent & {
+type TDailyItineraryProps = {
   itineraries: TItinerary[]
 }
 
-const DailyItinerary = ({ children, itineraries }: TDailyItineraryProps) => {
+const DailyItinerary = ({ itineraries }: TDailyItineraryProps) => {
   const [openPlace, setOpenPlace] = useState<TItineraryAttraction | null>(null)
-  const { isMobile } = useMediaQuery()
 
   const groupAttractionsByVisitType = useCallback(
     (
@@ -72,100 +69,82 @@ const DailyItinerary = ({ children, itineraries }: TDailyItineraryProps) => {
         return (
           <div
             key={itinerary.id}
-            style={{
-              position: isMobile ? 'relative' : 'sticky',
-              top: isMobile ? undefined : `${60 + index * 10}px`,
-              zIndex: isMobile ? undefined : index,
-            }}
+            className={cn(
+              index === 0 ? '' : 'border-t pt-10',
+              'border-figma-secondary-950 xl:pt-12 bg-figma-secondary-100',
+            )}
           >
-            <div
-              className={cn(
-                isMobile && index === 0 ? '' : 'border-t pt-10',
-                'border-figma-secondary-950 xl:pt-12 bg-figma-secondary-100',
-              )}
-              style={{
-                height: isMobile ? 'auto' : '100vh',
-                overflow: isMobile ? 'visible' : 'auto',
-                scrollbarWidth: isMobile ? undefined : 'none',
-                msOverflowStyle: isMobile ? undefined : 'none',
-              }}
-            >
-              <ItineraryCard itinerary={itinerary} />
-              {itinerary.attractions && itinerary.attractions.length > 0 && (
-                <>
-                  {groupAttractionsByVisitType(itinerary.attractions).map(
-                    (group, groupIndex) => (
-                      <ItineraryActivity
-                        key={`${group.visitType}-${groupIndex}`}
-                        attractions={group.attractions}
-                        openPlace={openPlace}
-                        setOpenPlace={setOpenPlace}
-                      />
-                    ),
-                  )}
-                </>
-              )}
-              <div className='mt-10 mx-4 mb-[30px] xl:mt-12 xl:mx-[152px] xl:mb-10'>
-                <div className='flex max-xl:flex-col max-xl:gap-y-[40px] pt-6 border-t border-figma-secondary-500'>
-                  <div className='w-full flex flex-col gap-y-[40px] px-5 xl:px-[40px] xl:border-r xl:border-figma-secondary-500'>
-                    <h4 className='flex justify-center items-center'>
-                      <Image
-                        src='/tour-content/restaurant.svg'
-                        alt='restaurant'
-                        width={36}
-                        height={36}
-                        className='mr-3'
-                      />
-                      <span className='font-family-noto-serif text-2xl xl:text-[32px] font-bold leading-[1.2] xl:leading-[1.5] text-figma-primary-500'>
-                        食
-                      </span>
-                    </h4>
-                    <div className='flex flex-col gap-y-6 font-family-genseki text-[18px] xl:text-[20px] leading-[1.5] text-figma-primary-950'>
-                      <p>
-                        <span className='text-figma-secondary-950 mr-3'>
-                          早
-                        </span>
-                        {itinerary.breakfast}
-                      </p>
-                      <p>
-                        <span className='text-figma-secondary-950 mr-3'>
-                          午
-                        </span>
-                        {itinerary.lunch}
-                      </p>
-                      <p>
-                        <span className='text-figma-secondary-950 mr-3'>
-                          晚
-                        </span>
-                        {itinerary.dinner}
-                      </p>
-                    </div>
-                  </div>
-                  <div className='w-full flex flex-col gap-y-[40px] px-5 xl:px-[40px]'>
-                    <h4 className='flex justify-center items-center'>
-                      <Image
-                        src='/tour-content/hotel.svg'
-                        alt='hotel'
-                        width={36}
-                        height={36}
-                        className='mr-3'
-                      />
-                      <span className='font-family-noto-serif text-2xl xl:text-[32px] font-bold leading-[1.2] xl:leading-[1.5] text-figma-primary-500'>
-                        飯店
-                      </span>
-                    </h4>
-                    <div className='flex flex-col font-family-genseki text-[18px] xl:text-[20px] leading-[1.5] text-figma-secondary-500'>
-                      {hotelOptions.map((hotel, index) => (
-                        <p key={index} className='p-[10px] underline'>
-                          {hotel}
-                        </p>
-                      ))}
-                      <p className='p-[10px] text-figma-primary-950'>
-                        {hotelFallback}
-                      </p>
-                    </div>
+            <ItineraryCard itinerary={itinerary} />
+            {itinerary.attractions && itinerary.attractions.length > 0 && (
+              <>
+                {groupAttractionsByVisitType(itinerary.attractions).map(
+                  (group, groupIndex) => (
+                    <ItineraryActivity
+                      key={`${group.visitType}-${groupIndex}`}
+                      attractions={group.attractions}
+                      openPlace={openPlace}
+                      setOpenPlace={setOpenPlace}
+                    />
+                  ),
+                )}
+              </>
+            )}
+            <div className='mt-10 mx-4 mb-[30px] xl:mt-12 xl:mx-[152px] xl:mb-10'>
+              <div className='flex max-xl:flex-col max-xl:gap-y-[40px] pt-6 border-t border-figma-secondary-500'>
+                <div className='w-full flex flex-col gap-y-[40px] px-5 xl:px-[40px] xl:border-r xl:border-figma-secondary-500'>
+                  <h4 className='flex justify-center items-center'>
+                    <Image
+                      src='/tour-content/restaurant.svg'
+                      alt='restaurant'
+                      width={36}
+                      height={36}
+                      className='mr-3'
+                    />
+                    <span className='font-family-noto-serif text-2xl xl:text-[32px] font-bold leading-[1.2] xl:leading-[1.5] text-figma-primary-500'>
+                      食
+                    </span>
+                  </h4>
+                  <div className='flex flex-col gap-y-6 font-family-genseki text-[18px] xl:text-[20px] leading-[1.5] text-figma-primary-950'>
+                    <p>
+                      <span className='text-figma-secondary-950 mr-3'>早</span>
+                      {itinerary.breakfast}
+                    </p>
+                    <p>
+                      <span className='text-figma-secondary-950 mr-3'>午</span>
+                      {itinerary.lunch}
+                    </p>
+                    <p>
+                      <span className='text-figma-secondary-950 mr-3'>晚</span>
+                      {itinerary.dinner}
+                    </p>
                   </div>
                 </div>
+                <div className='w-full flex flex-col gap-y-[40px] px-5 xl:px-[40px]'>
+                  <h4 className='flex justify-center items-center'>
+                    <Image
+                      src='/tour-content/hotel.svg'
+                      alt='hotel'
+                      width={36}
+                      height={36}
+                      className='mr-3'
+                    />
+                    <span className='font-family-noto-serif text-2xl xl:text-[32px] font-bold leading-[1.2] xl:leading-[1.5] text-figma-primary-500'>
+                      飯店
+                    </span>
+                  </h4>
+                  <div className='flex flex-col font-family-genseki text-[18px] xl:text-[20px] leading-[1.5] text-figma-secondary-500'>
+                    {hotelOptions.map((hotel, index) => (
+                      <p key={index} className='p-[10px] underline'>
+                        {hotel}
+                      </p>
+                    ))}
+                    <p className='p-[10px] text-figma-primary-950'>
+                      {hotelFallback}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              {itinerary.note && (
                 <div className='w-full p-5 mt-[30px] mb-10 xl:p-7 xl:mt-10 xl:mb-12 rounded-2xl bg-figma-secondary-200'>
                   <div className='flex items-center mb-[10px]'>
                     <svg
@@ -190,16 +169,14 @@ const DailyItinerary = ({ children, itineraries }: TDailyItineraryProps) => {
                     </p>
                   </div>
                   <p className='font-family-genseki leading-[1.5] text-figma-primary-500'>
-                    上方為參考航班，實際航班時間以航空公司為最終確認。若因航空公司或不可抗力因素，變動航班時間或轉機點，造成團體行程變更、增加餐食，本公司將不另行加價。若行程變更、減少餐食，則酌於退費。幾乎所有外籍航空公司之團體機票(含燃油附加稅)一經開票後，均無退票價值，此點基於航空公司之規定，敬請見諒。因應航空公司開票及保險的需求，及為了提供您在旅途中更完善的服務，請務必在繳交訂金的時候填妥客戶基本資料表。
-                    旅客資料表下載
+                    {itinerary.note}
                   </p>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         )
       })}
-      {children}
     </div>
   )
 }
