@@ -21,8 +21,7 @@ type TTourInfoProps = {
   category: 'GROUP' | 'FREE'
   tours: TTour[]
   flights: TFlight[]
-  mapUrl?: TTourProduct['map']
-  note: string
+  map?: TTourProduct['map']
   feedback?: TFeedback
   description?: string
 }
@@ -31,15 +30,13 @@ const TourInfo = ({
   category,
   tours,
   flights,
-  mapUrl,
-  note,
+  map,
   feedback,
   description,
 }: TTourInfoProps) => {
   const [selectedTourId, setSelectedTourId] = useState<string>(
     tours[0]?.id || '',
   )
-  const noteLines = note.split('\n')
 
   const handleTourSelect = (id: string) => {
     setSelectedTourId(id)
@@ -59,37 +56,34 @@ const TourInfo = ({
           <PriceIncludes description={description} />
         )}
         <Flight flights={flights} />
-        {mapUrl && (
+        {map?.imageUrl && (
           <Image
             key='flight-map'
-            src={mapUrl}
+            src={map.imageUrl}
             alt='flight-map'
             width={866}
             height={644}
             className='w-full object-cover py-5 px-7 xl:p-7 rounded-2xl bg-figma-neutral-0'
           />
         )}
-        <div className='flex flex-col gap-y-2.5 p-5 xl:p-7 rounded-2xl bg-figma-secondary-150'>
-          <div className='flex items-center'>
-            <TitleIcon
-              topColor='#926D3C'
-              bottomColor='#926D3C'
-              scale={0.9}
-              className='mr-2'
-            />
-            <p className='font-noto-serif-body-l-semibold text-figma-secondary-950'>
-              NOTE
+        {map?.note && (
+          <div className='flex flex-col gap-y-2.5 p-5 xl:p-7 rounded-2xl bg-figma-secondary-150'>
+            <div className='flex items-center'>
+              <TitleIcon
+                topColor='#926D3C'
+                bottomColor='#926D3C'
+                scale={0.9}
+                className='mr-2'
+              />
+              <p className='font-noto-serif-body-l-semibold text-figma-secondary-950'>
+                NOTE
+              </p>
+            </div>
+            <p className='font-family-genseki leading-[1.5] text-figma-primary-500'>
+              {map.note}
             </p>
           </div>
-          <p className='font-family-genseki leading-[1.5] text-figma-primary-500'>
-            {noteLines.map((line, index) => (
-              <span key={index}>
-                {line}
-                {index < noteLines.length - 1 && <br />}
-              </span>
-            ))}
-          </p>
-        </div>
+        )}
         {category === 'GROUP' && (
           <div className='relative flex flex-col bg-figma-neutral-0 rounded-2xl'>
             <h5

@@ -30,7 +30,12 @@ const ItineraryActivity = ({
   }
 
   const visitType = attractions[0].visitType
-  const visitTypeLabel = visitType === 'INSIDE' ? '入內參觀' : visitType === 'OUTSIDE' ? '下車參觀' : '拍照打卡'
+  const visitTypeLabel =
+    visitType === 'INSIDE'
+      ? '入內參觀'
+      : visitType === 'OUTSIDE'
+        ? '下車參觀'
+        : '拍照打卡'
 
   return (
     <div
@@ -50,15 +55,11 @@ const ItineraryActivity = ({
             <div
               key={attraction.id}
               className='group grid grid-cols-[minmax(0,1fr)_auto] xl:grid-cols-[530px_auto] p-2.5 border-b border-figma-secondary-500 last:border-b-0 cursor-pointer'
-              onClick={
-                isMobile ? () => handleToggle(attraction) : undefined
-              }
+              onClick={isMobile ? () => handleToggle(attraction) : undefined}
               onMouseEnter={
                 !isMobile ? () => setOpenPlace(attraction) : undefined
               }
-              onMouseLeave={
-                !isMobile ? () => setOpenPlace(null) : undefined
-              }
+              onMouseLeave={!isMobile ? () => setOpenPlace(null) : undefined}
             >
               <div className='min-h-[30px] xl:min-h-9 flex items-center'>
                 <span className='font-family-genseki text-[20px] xl:text-2xl xl:font-medium leading-[1.5] xl:leading-[1.2]'>
@@ -71,9 +72,7 @@ const ItineraryActivity = ({
                 )}
               </div>
               {hasContent && (
-                <div
-                  className='flex items-end my-[8px] ml-[18px] mr-[5px]'
-                >
+                <div className='flex items-end my-[8px] ml-[18px] mr-[18px]'>
                   <Image
                     src='/shared/icons/CTA-default.svg'
                     alt='arrow'
@@ -103,9 +102,9 @@ const ItineraryActivity = ({
                     <Image
                       src={attraction.attraction.imageUrl}
                       alt={attraction.attraction.nameZh}
-                      width={isMobile ? 351 : 397}
-                      height={isMobile ? 205 : 231}
-                      className='object-cover rounded-2xl mb-7'
+                      width={397}
+                      height={231}
+                      className='box-content w-full h-[205px] xl:h-[231px] object-cover rounded-2xl mb-7'
                     />
                   )}
                   {attraction.attraction.content && (

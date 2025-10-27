@@ -35,7 +35,7 @@ const FlightCard = ({ flight, className = '' }: TFlightCardProps) => {
               {flight.arriveTime}
             </p>
             {flight.crossDay && (
-              <p className='absolute right-[10px] top-[-6px] font-noto-serif-body-m-semibold text-figma-accent-brown'>
+              <p className='absolute right-0 top-[-8px] font-noto-serif-body-m-semibold text-figma-accent-brown'>
                 +1
               </p>
             )}

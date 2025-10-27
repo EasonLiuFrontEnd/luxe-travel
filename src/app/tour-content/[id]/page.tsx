@@ -64,8 +64,7 @@ const TourContentPage = ({ params }: TPageProps) => {
         category={tourProduct.category as 'GROUP' | 'FREE'}
         tours={tourProduct.tour}
         flights={tourProduct.flights}
-        mapUrl={tourProduct.map || undefined}
-        note={tourProduct.note}
+        map={tourProduct.map || undefined}
         feedback={tourProduct.feedback}
         description={tourProduct.description}
       />

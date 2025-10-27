@@ -12,9 +12,10 @@ import type { TItinerary } from '@/api/tour-content'
 
 type TItineraryCardProps = TBaseComponent & {
   itinerary: TItinerary
+  attractions?: TItinerary['attractions']
 }
 
-const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
+const ItineraryCard = ({ itinerary, attractions }: TItineraryCardProps) => {
   const carouselRef = useRef<TItineraryCarouselRef>(null)
   const [current, setCurrent] = useState(0)
   const [count, setCount] = useState(0)
@@ -42,7 +43,7 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
       api.off('select', handleCarouselStateUpdate)
       api.off('reInit', handleCarouselStateUpdate)
     }
-  }, [handleCarouselStateUpdate])
+  }, [carouselRef, handleCarouselStateUpdate])
 
   const handlePrevious = () => {
     carouselRef.current?.api?.scrollPrev()
@@ -160,8 +161,7 @@ const ItineraryCard = ({ itinerary }: TItineraryCardProps) => {
             )}
           </div>
           <div className='overflow-hidden z-1'>
-            需要後端補資料
-            <ItineraryCarousel ref={carouselRef} attractions={[]} />
+            <ItineraryCarousel ref={carouselRef} attractions={attractions} />
           </div>
           <div className='absolute top-[56px] right-0 w-[82px] xl:h-[calc(100%-56px)] xl:bg-gradient-to-r xl:from-transparent xl:to-[rgba(255,255,255,0.8)] pointer-events-none z-10'></div>
           {isMobile ? (
