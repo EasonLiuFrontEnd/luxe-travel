@@ -19,7 +19,7 @@ const ImageGrid = ({ highlight }: TImageGridProps) => {
             alt={`${highlight.title}-1`}
             width={586}
             height={586}
-            className='w-[clamp(142px,33vw,586px)] h-[clamp(142px,33vw,586px)] rounded-2xl object-cover mt-10 ml-[27px] xl:mt-12 xl:ml-[301px]'
+            className='w-[clamp(142px,33vw,586px)] h-[clamp(142px,33vw,586px)] rounded-2xl object-cover mt-10 ml-[27px] sm:ml-12 lg:ml-13 xl:mt-12 2xl:ml-[301px]'
           />
         )}
         {highlight.imageUrls?.[1] && (
@@ -28,12 +28,12 @@ const ImageGrid = ({ highlight }: TImageGridProps) => {
             alt={`${highlight.title}-2`}
             width={610}
             height={610}
-            className='w-[clamp(148px,35vw,610px)] h-[clamp(148px,35vw,610px)] rounded-2xl object-cover mt-[140px] mr-7 ml-[34px] xl:mt-[280px] xl:mr-[288px] xl:ml-[135px]'
+            className='w-[clamp(148px,35vw,610px)] h-[clamp(148px,35vw,610px)] rounded-2xl object-cover mt-[140px] mr-7 ml-[34px] sm:mr-10 md:mr-12 lg:ml-10 xl:mt-[280px] 2xl:mr-[288px] 2xl:ml-[135px]'
           />
         )}
       </div>
       <div className='flex max-xl:flex-col'>
-        <div className='relative mt-5 ml-[61px] mb-[40px] xl:mt-[64px] xl:ml-[459px] xl:mb-[170px]'>
+        <div className='relative mt-5 ml-[61px] mb-[40px] sm:ml-12 md:ml-13 xl:mt-[64px] xl:mb-[170px] 2xl:ml-[459px]'>
           {isMobile ? (
             <Image
               src='/tour-content/plus-aggregate-small.svg'
@@ -62,11 +62,14 @@ const ImageGrid = ({ highlight }: TImageGridProps) => {
             />
           )}
         </div>
-        <div className='xl:w-[609px] max-xl:mx-[20px] max-xl:mb-10 xl:mt-[193px] ml-[135px]'>
+        <div className='xl:w-[609px] max-xl:mx-[20px] max-xl:mb-10 xl:mt-[193px] sm:ml-10 md:ml-[135px]'>
           <h3 className='font-family-noto-serif text-[24px] xl:text-[40px] font-bold leading-[1.2] text-figma-secondary-500 mb-[40px] xl:mb-[45px]'>
             {highlight.title}
-            <br />
-            {highlight.subtitle}
+            { highlight.subtitle && (
+              <>
+                <br />{highlight.subtitle}
+              </>
+            )}
           </h3>
           <p className='font-family-genseki text-[16px] xl:text-[20px] leading-[1.5] text-figma-primary-950'>
             {contentLines.map((line, index) => (
