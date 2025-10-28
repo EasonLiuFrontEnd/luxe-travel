@@ -74,7 +74,10 @@ const DailyItinerary = ({ itineraries }: TDailyItineraryProps) => {
               'border-figma-secondary-950 xl:pt-12 bg-figma-secondary-100',
             )}
           >
-            <ItineraryCard itinerary={itinerary} />
+            <ItineraryCard
+              itinerary={itinerary}
+              attractions={itinerary.attractions}
+            />
             {itinerary.attractions && itinerary.attractions.length > 0 && (
               <>
                 {groupAttractionsByVisitType(itinerary.attractions).map(

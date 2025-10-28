@@ -47,7 +47,7 @@ const Flight = ({ flights }: TFlightProps) => {
             key={key}
             className='flex max-xl:flex-col items-center max-xl:gap-y-4 xl:gap-x-4'
           >
-            <div className='box-content w-[32px] text-center font-genseki-body-s-bold text-figma-secondary-950 py-2 px-[10px] rounded-[40px] border border-figma-secondary-950'>
+            <div className='box-content min-w-[32px] text-center font-genseki-body-s-bold text-figma-secondary-950 py-2 px-[10px] rounded-[40px] border border-figma-secondary-950'>
               {label}
             </div>
             <div className='w-full flex flex-col gap-y-6 py-7 max-xl:px-5 xl:pt-7 xl:pl-8 xl:pb-[40px] rounded-[8px] bg-figma-secondary-50'>
