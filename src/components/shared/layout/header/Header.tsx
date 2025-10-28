@@ -5,7 +5,6 @@ import Logo from './Logo'
 import Navigation from './Navigation'
 import ConsultButton from '@/components/shared/layout/header/ConsultButton'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import { useScroll } from '@/hooks/useScroll'
 import { useScrollbarWidth } from '@/hooks/useScrollbarWidth'
 
 export type THeader = {
@@ -24,13 +23,13 @@ const Header = ({
   logoScale = 0.34,
   logoProgress = 0,
   headerBehavior = 'fixed',
+  isConsultButtonVisible = false,
 }: THeader) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { isMobile } = useMediaQuery()
-  const { scrollY } = useScroll()
   const { contentWidth } = useScrollbarWidth()
 
-  const showConsultButton = scrollY > 797
+  const showConsultButton = isConsultButtonVisible
 
   const baseClasses =
     'z-50 w-full flex items-center justify-between p-4 xl:py-0'

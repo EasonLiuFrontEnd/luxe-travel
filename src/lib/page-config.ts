@@ -67,6 +67,15 @@ export const PAGE_CONFIGS: Record<string, TPageConfig> = {
     footerStyle: 'default',
     scrollToTopBg: 'bg-figma-neutral-50',
   },
+  '/group-tours/theme': {
+    type: 'group-tours',
+    hasScrollAnimation: false,
+    hasTransparentHeader: false,
+    showConsultButton: true,
+    headerBehavior: 'sticky',
+    footerStyle: 'default',
+    scrollToTopBg: 'bg-figma-secondary-100',
+  },
   '/tour-content': {
     type: 'tour-content',
     hasScrollAnimation: false,
@@ -115,6 +124,18 @@ export const getPageConfig = (pathname: string): TPageConfig => {
     return PAGE_CONFIGS['/tour-content']
   }
 
+  if (pathname.startsWith('/group-tours/')) {
+    return PAGE_CONFIGS['/group-tours']
+  }
+
+  if (pathname.startsWith('/free-tours/')) {
+    return PAGE_CONFIGS['/free-tours']
+  }
+
+  if (pathname.startsWith('/rcar-tours/')) {
+    return PAGE_CONFIGS['/rcar-tours']
+  }
+
   return DEFAULT_PAGE_CONFIG
 }
 
@@ -134,7 +155,7 @@ export const calculateLogoAnimation = (
       logoProgress: 1,
       logoScale: APP_CONFIG.LOGO.MIN_SCALE,
       isNavbarVisible: true,
-      isConsultButtonVisible: false,
+      isConsultButtonVisible: pageConfig.showConsultButton,
     }
   }
 
