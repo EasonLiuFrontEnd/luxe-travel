@@ -65,9 +65,10 @@ const ImageGrid = ({ highlight }: TImageGridProps) => {
         <div className='xl:w-[609px] max-xl:mx-[20px] max-xl:mb-10 xl:mt-[193px] sm:ml-10 md:ml-[135px]'>
           <h3 className='font-family-noto-serif text-[24px] xl:text-[40px] font-bold leading-[1.2] text-figma-secondary-500 mb-[40px] xl:mb-[45px]'>
             {highlight.title}
-            { highlight.subtitle && (
+            {highlight.subtitle && (
               <>
-                <br />{highlight.subtitle}
+                <br />
+                {highlight.subtitle}
               </>
             )}
           </h3>
