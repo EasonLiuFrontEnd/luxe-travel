@@ -21,7 +21,14 @@ const Feedback = ({ feedback }: TFeedbackProps) => {
         alt='avatar'
         width={90}
         height={90}
-        className='absolute top-0 left-0 translate-y-[-50%]'
+        className='w-[90px] h-[90px] object-cover absolute top-[-34px] left-0 p-2 rounded-full bg-figma-neutral-0'
+      />
+      <Image
+        src='/tour-content/deco.svg'
+        alt='deco'
+        width={18}
+        height={18}
+        className='absolute top-[27px] left-[90px] translate-x-[-100%]'
       />
       <div className='flex max-xl:flex-col max-xl:gap-y-3 xl:gap-x-3 justify-between xl:items-center'>
         <h6 className='flex font-genseki-h6-bold ml-[74px]'>

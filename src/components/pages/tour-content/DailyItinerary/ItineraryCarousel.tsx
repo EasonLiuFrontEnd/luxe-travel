@@ -74,15 +74,17 @@ const ItineraryCarousel = forwardRef<
               <h5 className='absolute top-0 right-0 font-noto-serif-h5-bold text-figma-secondary-950 py-4 px-7 rounded-es-2xl bg-figma-neutral-0'>
                 {item.attraction.nameZh}
               </h5>
-              {item.attraction.imageUrl && (
-                <Image
-                  src={item.attraction.imageUrl}
-                  alt={item.attraction.nameZh}
-                  width={526}
-                  height={280}
-                  className='box-content w-full h-[170px] xl:h-[280px] object-cover rounded-2xl mb-7'
-                />
-              )}
+              <div className='box-content w-full h-[170px] xl:h-[280px] rounded-2xl mb-7 overflow-hidden'>
+                {item.attraction.imageUrl && (
+                  <Image
+                    src={item.attraction.imageUrl}
+                    alt={item.attraction.nameZh}
+                    width={526}
+                    height={280}
+                    className='w-full h-full object-cover'
+                  />
+                )}
+              </div>
               <div className='absolute left-4 bottom-4 flex gap-x-2 p-2 rounded-[4px] bg-figma-secondary-200'>
                 <Image
                   src='/tour-content/flag.svg'
@@ -91,7 +93,11 @@ const ItineraryCarousel = forwardRef<
                   height={20}
                 />
                 <p className='font-genseki-body-s-bold text-figma-primary-950'>
-                  {item.visitType === 'INSIDE' ? '入內參觀' : '下車參觀'}
+                  {item.visitType === 'INSIDE'
+                    ? '入內參觀'
+                    : item.visitType === 'OUTSIDE'
+                      ? '下車參觀'
+                      : '拍照打卡'}
                 </p>
               </div>
             </div>

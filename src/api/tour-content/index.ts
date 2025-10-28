@@ -55,6 +55,15 @@ export type THighlight = {
   updatedAt: string
 }
 
+export type TMap = {
+  id: string
+  productId: string
+  imageUrl: string
+  note: string
+  createdAt: string
+  updatedAt: string
+}
+
 export type TRoute = {
   id: string
   itineraryId: string
@@ -156,7 +165,7 @@ export type TTourProduct = {
   updatedAt: string
   tour: TTour[]
   flights: TFlight[]
-  map: string | null
+  map: TMap | null
   highlights: THighlight[]
   itineraries: TItinerary[]
   feedback: TFeedback

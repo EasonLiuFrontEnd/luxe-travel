@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState } from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { cn } from '@/lib/utils'
@@ -7,18 +6,6 @@ type TTourNoticeProps = {
   category: 'GROUP' | 'FREE'
   reminder: string
   policy: string
-}
-
-const convertBrTagsToElements = (text: string) => {
-  const parts = text.split('<br/>')
-  return parts.map((part, index) =>
-    React.createElement(
-      React.Fragment,
-      { key: index },
-      part,
-      index < parts.length - 1 ? React.createElement('br') : null,
-    ),
-  )
 }
 
 const TourNotice = ({ category, reminder, policy }: TTourNoticeProps) => {
@@ -58,14 +45,13 @@ const TourNotice = ({ category, reminder, policy }: TTourNoticeProps) => {
                 {category === 'GROUP' ? '旅客篇' : '服務流程'}
               </p>
             </div>
-            <p
+            <div
               className={cn(
                 'font-family-genseki leading-[1.5] text-figma-primary-950',
                 isMobile && !isExpanded ? 'max-h-80 overflow-hidden' : '',
               )}
-            >
-              {convertBrTagsToElements(reminder)}
-            </p>
+              dangerouslySetInnerHTML={{ __html: reminder }}
+            />
             {isMobile && (
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
@@ -100,9 +86,10 @@ const TourNotice = ({ category, reminder, policy }: TTourNoticeProps) => {
                 {category === 'GROUP' ? '航空篇' : '旅遊注意事項'}
               </p>
             </div>
-            <p className='font-family-genseki leading-[1.5] text-figma-primary-950'>
-              {convertBrTagsToElements(policy)}
-            </p>
+            <div
+              className='font-family-genseki leading-[1.5] text-figma-primary-950'
+              dangerouslySetInnerHTML={{ __html: policy }}
+            />
           </div>
         )}
       </div>

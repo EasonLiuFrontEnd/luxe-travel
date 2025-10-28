@@ -38,6 +38,7 @@ const NavigationSidebar = ({
     [category, hasHighlights],
   )
   const [activeSection, setActiveSection] = useState<string>('tour-info')
+  const [isBannerVisible, setIsBannerVisible] = useState(true)
   const intersectingMap = useRef<Map<string, boolean>>(new Map())
 
   useEffect(() => {
@@ -94,6 +95,24 @@ const NavigationSidebar = ({
     }
   }, [navigationItems])
 
+  useEffect(() => {
+    const bannerElement = document.getElementById('banner')
+    if (!bannerElement) return
+
+    const bannerObserver = new IntersectionObserver(
+      ([entry]) => {
+        setIsBannerVisible(entry.isIntersecting)
+      },
+      { root: null, threshold: 0 },
+    )
+
+    bannerObserver.observe(bannerElement)
+
+    return () => {
+      bannerObserver.disconnect()
+    }
+  }, [])
+
   const handleScrollTo = (targetId: string) => {
     const element = document.getElementById(targetId)
     if (element) {
@@ -102,7 +121,12 @@ const NavigationSidebar = ({
   }
 
   return (
-    <div className='fixed top-0 right-0 xl:right-5 flex gap-x-4 font-family-noto-serif text-[14px] xl:text-[16px] font-semibold leading-[1.5] text-figma-primary-300 [writing-mode:vertical-rl] pt-13 z-99'>
+    <div
+      className={cn(
+        'fixed top-0 right-0 xl:right-5 flex gap-x-4 font-family-noto-serif text-[14px] xl:text-[16px] font-semibold leading-[1.5] text-figma-primary-300 [writing-mode:vertical-rl] pt-13 z-99 transition-opacity duration-300',
+        isBannerVisible && 'opacity-0 pointer-events-none',
+      )}
+    >
       {navigationItems.map((item) => (
         <button
           key={item.id}
