@@ -87,44 +87,26 @@ const TourPageLayout = ({
   const tourConfig = getTourTypeConfig(tourType)
   const slideConfig = getSlideConfig(tourType)
 
-  const processResults = useCallback(
-    (data: TProduct[], params: TProductSearchParams) => {
-      let dataSource = [...data]
-      const featured = dataSource.filter((product) => product.isFeatured)
+  const processInitialData = useCallback(
+    (data: TProduct[]) => {
+      const featured = data.filter((product) => product.isFeatured)
       setFeaturedTours(featured)
 
-      dataSource = dataSource.filter((product) => !product.isFeatured)
+      const nonFeatured = data.filter((product) => !product.isFeatured)
 
-      const destinationCodes = params.destination?.split(',') || []
-      if (destinationCodes.length > 0) {
-        dataSource = dataSource.filter((product) =>
-          destinationCodes.some((code) => product.countries?.includes(code)),
-        )
-      }
+      const convertedTours = nonFeatured.map((product) =>
+        convertProductToTourData(product, tourType),
+      )
+      setTours(convertedTours)
+    },
+    [tourType],
+  )
 
-      if (tourType !== 'group-tours') {
-        if (params.budgetMin !== undefined || params.budgetMax !== undefined) {
-          const minBudget = params.budgetMin ?? 0
-          const maxBudget = params.budgetMax ?? Infinity
-          dataSource = dataSource.filter(
-            (product) =>
-              product.priceMin >= minBudget && product.priceMin <= maxBudget,
-          )
-        }
+  const processSearchResults = useCallback(
+    (data: TProduct[]) => {
+      const nonFeatured = data.filter((product) => !product.isFeatured)
 
-        if (params.daysRange) {
-          const daysRangeMatch = params.daysRange.match(/(\d+)-(\d+)/)
-          if (daysRangeMatch) {
-            const minDays = parseInt(daysRangeMatch[1])
-            const maxDays = parseInt(daysRangeMatch[2])
-            dataSource = dataSource.filter(
-              (product) => product.days >= minDays && product.days <= maxDays,
-            )
-          }
-        }
-      }
-
-      const convertedTours = dataSource.map((product) =>
+      const convertedTours = nonFeatured.map((product) =>
         convertProductToTourData(product, tourType),
       )
       setTours(convertedTours)
@@ -133,26 +115,36 @@ const TourPageLayout = ({
   )
 
   const executeSearch = useCallback(
-    (params: TProductSearchParams) => {
+    (params: TProductSearchParams, isInitialLoad = false) => {
       searchMutation.mutate(params, {
         onSuccess: (data) => {
-          processResults(data, params)
+          if (isInitialLoad) {
+            processInitialData(data)
+          } else {
+            processSearchResults(data)
+          }
         },
         onError: () => {
           if (process.env.NODE_ENV !== 'production') {
-            processResults(searchMock.data, params)
+            if (isInitialLoad) {
+              processInitialData(searchMock.data)
+            } else {
+              processSearchResults(searchMock.data)
+            }
           } else {
             setTours([])
-            setFeaturedTours([])
+            if (isInitialLoad) {
+              setFeaturedTours([])
+            }
           }
         },
       })
     },
-    [searchMutation, processResults, searchMock.data],
+    [searchMutation, processInitialData, processSearchResults, searchMock.data],
   )
 
   useEffect(() => {
-    executeSearch(searchParams)
+    executeSearch(searchParams, true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -160,7 +152,7 @@ const TourPageLayout = ({
     (
       selectedCountries: string[],
       budgetRange?: [number, number],
-      daysRange?: string | null,
+      daysRange?: string[],
     ) => {
       const filters: TSelectedFilters = []
 
@@ -185,12 +177,18 @@ const TourPageLayout = ({
           }
         }
 
-        const isDefaultDays = !daysRange || daysRange === '不限天數'
-        if (daysRange && !isDefaultDays) {
-          filters.push({
-            id: 'days',
-            label: daysRange,
-            type: 'other',
+        const hasUnlimited = daysRange?.includes('不限天數')
+        const otherDays = daysRange?.filter((d) => d !== '不限天數') || []
+        const isOnlyUnlimited =
+          hasUnlimited && otherDays.length === 0 && daysRange?.length === 1
+
+        if (!isOnlyUnlimited && daysRange && daysRange.length > 0) {
+          daysRange.forEach((range) => {
+            filters.push({
+              id: `days-${range}`,
+              label: range,
+              type: 'other',
+            })
           })
         }
       }
@@ -217,8 +215,15 @@ const TourPageLayout = ({
           newParams.budgetMax = budgetRange[1]
         }
 
-        if (daysRange && daysRange !== '不限天數') {
-          newParams.daysRange = daysRange.replace('天', '')
+        const hasUnlimited = daysRange?.includes('不限天數')
+        const otherDays = daysRange?.filter((d) => d !== '不限天數') || []
+
+        if (hasUnlimited) {
+          newParams.daysRange = 'all'
+        } else if (otherDays.length > 0) {
+          newParams.daysRange = otherDays.map((d) => d.replace('天', '')).join(',')
+        } else {
+          newParams.daysRange = 'all'
         }
       }
 
@@ -244,8 +249,28 @@ const TourPageLayout = ({
         newParams.budgetMin = 80000
         newParams.budgetMax = 600000
         setSearchedCountries(updatedFilters)
-      } else if (filterId === 'days') {
-        delete newParams.daysRange
+      } else if (filterId.startsWith('days-')) {
+        const remainingDaysFilters = updatedFilters.filter((f) =>
+          f.id.startsWith('days-'),
+        )
+
+        if (remainingDaysFilters.length === 0) {
+          newParams.daysRange = 'all'
+        } else {
+          const remainingDays = remainingDaysFilters.map((f) => f.label)
+          const hasUnlimited = remainingDays.includes('不限天數')
+          const otherDays = remainingDays.filter((d) => d !== '不限天數')
+
+          if (hasUnlimited) {
+            newParams.daysRange = 'all'
+          } else if (otherDays.length > 0) {
+            newParams.daysRange = otherDays
+              .map((d) => d.replace('天', ''))
+              .join(',')
+          } else {
+            newParams.daysRange = 'all'
+          }
+        }
         setSearchedCountries(updatedFilters)
       } else {
         const remainingCountryIds = updatedFilters

@@ -27,7 +27,7 @@ type TDestinationFilterProps = {
   onSearch?: (
     selectedCountries: string[],
     budgetRange?: [number, number],
-    daysRange?: string | null,
+    daysRange?: string[],
   ) => void
 }
 
@@ -46,9 +46,9 @@ const DestinationFilter = ({
   const [budgetRange, setBudgetRange] = useState<[number, number]>([
     80000, 600000,
   ])
-  const [selectedDaysRange, setSelectedDaysRange] = useState<string | null>(
+  const [selectedDaysRange, setSelectedDaysRange] = useState<string[]>([
     '不限天數',
-  )
+  ])
   const [regions, setRegions] = useState<TRegionData[]>([])
 
   const { query: countriesQuery, mock: countriesMock } =
@@ -158,7 +158,14 @@ const DestinationFilter = ({
   }
 
   const handleDaysRangeToggle = (range: string) => {
-    setSelectedDaysRange((prev) => (prev === range ? null : range))
+    setSelectedDaysRange((prev) => {
+      if (prev.includes(range)) {
+        const updated = prev.filter((r) => r !== range)
+        return updated.length === 0 ? ['不限天數'] : updated
+      } else {
+        return [...prev, range]
+      }
+    })
   }
 
   const handleSearch = () => {
@@ -329,7 +336,7 @@ const DestinationFilter = ({
                       key={range}
                       onClick={() => handleDaysRangeToggle(range)}
                       className={`px-4 py-3 border cursor-pointer transition-colors ${
-                        selectedDaysRange === range
+                        selectedDaysRange.includes(range)
                           ? 'border-figma-secondary-500 bg-figma-secondary-100 text-figma-secondary-950'
                           : 'border-figma-primary-500 text-figma-primary-500 hover:bg-figma-neutral-50'
                       }`}
