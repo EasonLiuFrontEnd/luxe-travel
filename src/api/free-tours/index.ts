@@ -113,7 +113,7 @@ export type TProduct = {
   priceMax: number
   tags: string[]
   countries: string[]
-  policy: string | null
+  memo: string | null
   status: number
   categoryId: string
   subCategoryId: string
@@ -189,7 +189,7 @@ export const productsSearchApiMock: TProductSearchResponse = {
       priceMax: 148000,
       tags: ['蜜月精選', '義大利四大名城', '巴黎經典全覽', '卡端午連休'],
       countries: ['IT', 'FR'],
-      policy: null,
+      memo: null,
       status: 1,
       categoryId: '68b0375597cf77dce8590407',
       subCategoryId: '68d3abd7d9e9051454d7f91a',

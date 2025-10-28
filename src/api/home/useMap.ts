@@ -33,7 +33,7 @@ type TUseMapQueryResult = {
 }
 
 const fetchMapData = async (): Promise<TArticle[]> => {
-  const response = await apiClient.get<TArticleResponse>('/api/admin/articles')
+  const response = await apiClient.get<TArticleResponse>('/api/admin/article')
   return response?.data?.rows || []
 }
 
