@@ -151,7 +151,7 @@ const HomePageClient = () => {
     <div className='min-h-screen bg-figma-neutral-50'>
       <Banner />
       <div className='relative bg-figma-neutral-50 isolate xl:isolate-auto'>
-        {/* <BookShelfSection /> */}
+        <BookShelfSection />
         <RecommendationSection />
         <Concerns />
       </div>

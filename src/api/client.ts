@@ -3,7 +3,7 @@ import axios, { AxiosInstance } from 'axios'
 const BASE_URL =
   process.env.NODE_ENV === 'production'
     ? 'https://luxetravel-peach.vercel.app'
-    : ''
+    : 'https://luxetravel-peach.vercel.app'
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: BASE_URL,
