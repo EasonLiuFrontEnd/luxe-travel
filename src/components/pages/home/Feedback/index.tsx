@@ -13,25 +13,16 @@ const Feedback = () => {
   const [canGoRight, setCanGoRight] = useState(false)
 
   const {
-    query: {
-      data: feedbacksData,
-      isLoading: isFeedbacksLoading,
-      error: feedbacksError,
-    },
-    mock,
+    query: { data: feedbacksData, isLoading: isFeedbacksLoading },
   } = useFeedBack()
 
   const effectiveData = useMemo(() => {
-    if (feedbacksError && process.env.NODE_ENV !== 'production') {
-      return mock.rows
-    }
-
     if (isFeedbacksLoading) {
       return []
     }
 
     return feedbacksData || []
-  }, [feedbacksError, feedbacksData, isFeedbacksLoading, mock.rows])
+  }, [feedbacksData, isFeedbacksLoading])
 
   const cardData: {
     id: string
