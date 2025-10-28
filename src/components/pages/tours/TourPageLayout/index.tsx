@@ -221,7 +221,9 @@ const TourPageLayout = ({
         if (hasUnlimited) {
           newParams.daysRange = 'all'
         } else if (otherDays.length > 0) {
-          newParams.daysRange = otherDays.map((d) => d.replace('天', '')).join(',')
+          newParams.daysRange = otherDays
+            .map((d) => d.replace('天', ''))
+            .join(',')
         } else {
           newParams.daysRange = 'all'
         }

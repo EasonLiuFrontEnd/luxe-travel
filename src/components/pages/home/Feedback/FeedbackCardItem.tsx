@@ -180,9 +180,7 @@ const FeedbackCardItem = ({
           />
         </svg>
       </div>
-      <p className='w-[272px] font-noto-serif-h4-medium mb-[20px]'>
-        {content}
-      </p>
+      <p className='w-[272px] font-noto-serif-h4-medium mb-[20px]'>{content}</p>
       {linkUrl && (
         <a
           href={linkUrl}
