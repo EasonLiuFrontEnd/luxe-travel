@@ -319,7 +319,6 @@ export const useProductCountries = (): TUseHomeQueryResult<
     queryKey: ['product-countries'],
     queryFn: fetchProductCountries,
     enabled: true,
-    staleTime: 1000 * 60 * 60,
   })
 
   return { query, mock: countriesApiMock }
