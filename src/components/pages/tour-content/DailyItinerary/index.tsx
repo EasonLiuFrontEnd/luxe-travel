@@ -43,17 +43,6 @@ const DailyItinerary = ({ itineraries }: TDailyItineraryProps) => {
     return null
   }
 
-  const parseHotelString = (hotelStr: string | null) => {
-    if (!hotelStr) {
-      return { options: [], fallback: '' }
-    }
-    const parts = hotelStr.split(' 或 ')
-    const options = parts.slice(0, -1)
-    const fallback =
-      parts.length === 1 ? parts[0] : `或${parts[parts.length - 1]}`
-    return { options, fallback }
-  }
-
   return (
     <div
       id='daily-itinerary'
@@ -63,9 +52,6 @@ const DailyItinerary = ({ itineraries }: TDailyItineraryProps) => {
         每日行程
       </h2>
       {itineraries.map((itinerary, index) => {
-        const { options: hotelOptions, fallback: hotelFallback } =
-          parseHotelString(itinerary.hotel)
-
         return (
           <div
             key={itinerary.id}
@@ -135,16 +121,10 @@ const DailyItinerary = ({ itineraries }: TDailyItineraryProps) => {
                       飯店
                     </span>
                   </h4>
-                  <div className='flex flex-col font-family-genseki text-[18px] xl:text-[20px] leading-[1.5] text-figma-secondary-500'>
-                    {hotelOptions.map((hotel, index) => (
-                      <p key={index} className='p-[10px] underline'>
-                        {hotel}
-                      </p>
-                    ))}
-                    <p className='p-[10px] text-figma-primary-950'>
-                      {hotelFallback}
-                    </p>
-                  </div>
+                  <div
+                    className='flex flex-col font-family-genseki text-[18px] xl:text-[20px] leading-[1.5] text-figma-secondary-500'
+                    dangerouslySetInnerHTML={{ __html: itinerary.hotel || '' }}
+                  />
                 </div>
               </div>
               {itinerary.note && (

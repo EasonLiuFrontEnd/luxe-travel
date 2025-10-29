@@ -12,13 +12,10 @@ const RecommendationList = ({ className }: TRecommendationListProps) => {
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
 
-  const { query: mapQuery, mock: mapMock } = useMap()
+  const { query: mapQuery } = useMap()
 
   const recommendationData = useMemo(() => {
-    const data =
-      mapQuery.error && process.env.NODE_ENV !== 'production'
-        ? mapMock.rows
-        : mapQuery.data || []
+    const data = mapQuery.data || []
 
     return (data || []).slice(0, 5).map((article) => ({
       id: article.id,
@@ -28,7 +25,7 @@ const RecommendationList = ({ className }: TRecommendationListProps) => {
       imageAlt: `${article.title} ${article.subtitle}`,
       linkUrl: article.linkUrl,
     }))
-  }, [mapQuery.data, mapQuery.error, mapMock.rows])
+  }, [mapQuery.data])
 
   const handleRecommendationClick = (linkUrl: string) => {
     if (linkUrl) {

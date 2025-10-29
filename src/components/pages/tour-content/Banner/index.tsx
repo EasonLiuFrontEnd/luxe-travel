@@ -20,7 +20,13 @@ const Banner = ({ category, namePrefix, name, mainImageUrl }: TBannerProps) => {
       className='flex flex-col gap-y-5 xl:gap-y-8 py-8 px-4 xl:pt-10 xl:px-9'
     >
       <div className='flex items-center xl:gap-x-2 font-family-genseki text-[12px] xl:text-[16px] xl:font-medium leading-[1.5] text-figma-primary-500'>
-        <p>{category === 'GROUP' ? '精緻團體行' : '歐洲自由行'}</p>
+        <p>
+          {category === 'GROUP'
+            ? '精緻團體行'
+            : category === 'FREE'
+              ? '歐洲自由行'
+              : '包車旅遊'}
+        </p>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           width={iconSize}

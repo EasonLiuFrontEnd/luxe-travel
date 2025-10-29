@@ -1,7 +1,5 @@
 'use client'
 
-import { booksApiMock } from '@/api/home/useBooks'
-
 export type TDestinationCard = {
   number: string
   destination: string
@@ -38,27 +36,19 @@ const DestinationCard = ({
   ...props
 }: TDestinationCard) => {
   const [isPatternVisible, setIsPatternVisible] = useState(false)
-  const [imageSrc, setImageSrc] = useState(
-    countryPattern || '/home/itinerary/hr-croatia/pattern.svg',
-  )
+  const [shouldRenderImage, setShouldRenderImage] = useState(false)
 
   useEffect(() => {
     setIsPatternVisible(isActive)
   }, [isActive])
 
   useEffect(() => {
-    setImageSrc(countryPattern || '/home/itinerary/hr-croatia/pattern.svg')
+    const isValidImage = Boolean(countryPattern?.startsWith('https://'))
+    setShouldRenderImage(isValidImage)
   }, [countryPattern])
 
   const handleImageError = () => {
-    if (imageSrc?.startsWith('http')) {
-      const mockBook = booksApiMock.rows.find(
-        (book) => book.title === destination,
-      )
-      if (mockBook?.landscapeImage) {
-        setImageSrc(mockBook.landscapeImage)
-      }
-    }
+    setShouldRenderImage(false)
   }
 
   const handleClick = () => {
@@ -101,20 +91,22 @@ const DestinationCard = ({
       onMouseLeave={handleMouseLeave}
       {...props}
     >
-      <Image
-        key={`${destination}-pattern`}
-        alt={`${destination} pattern`}
-        className={cn(
-          styles.pattern,
-          isPatternVisible ? styles.patternVisible : styles.patternHidden,
-          patternContainerClassName,
-        )}
-        style={imageStyle}
-        src={imageSrc}
-        width={182}
-        height={533}
-        onError={handleImageError}
-      />
+      {shouldRenderImage && countryPattern && (
+        <Image
+          key={`${destination}-pattern`}
+          alt={`${destination} pattern`}
+          className={cn(
+            styles.pattern,
+            isPatternVisible ? styles.patternVisible : styles.patternHidden,
+            patternContainerClassName,
+          )}
+          style={imageStyle}
+          src={countryPattern}
+          width={182}
+          height={533}
+          onError={handleImageError}
+        />
+      )}
 
       <div className='flex flex-col gap-3 items-center text-[var(--color-figma-primary-950)] pt-[16px]'>
         <p className='font-family-noto-serif font-medium text-[16px] xl:text-[20px] xl:leading-[120%] tracking-[0%] xl:tracking-[8%]'>

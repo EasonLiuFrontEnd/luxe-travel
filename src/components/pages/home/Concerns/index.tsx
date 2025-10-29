@@ -9,26 +9,18 @@ import '@/styles/components.css'
 
 const Concerns = () => {
   const { isMobile } = useMediaQuery()
-  const { query: concernsQuery, mock } = useConcerns()
+  const { query: concernsQuery } = useConcerns()
   const { containerRef, notePositions, getNoteTransformY } =
     useScrollDrivenAnimation()
-  const {
-    data: concernsData,
-    isLoading: isConcernsLoading,
-    error: concernsError,
-  } = concernsQuery
+  const { data: concernsData, isLoading: isConcernsLoading } = concernsQuery
 
   const effectiveData = useMemo(() => {
-    if (concernsError && process.env.NODE_ENV !== 'production') {
-      return mock.rows
-    }
-
     if (isConcernsLoading) {
       return []
     }
 
     return concernsData || []
-  }, [concernsError, concernsData, isConcernsLoading, mock.rows])
+  }, [concernsData, isConcernsLoading])
 
   const backgroundStyle = {
     background: 'linear-gradient(to bottom, #F2F2F2 0%, #F7F4EC 100%)',
