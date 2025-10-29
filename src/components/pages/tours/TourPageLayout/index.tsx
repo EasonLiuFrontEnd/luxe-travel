@@ -13,7 +13,6 @@ import {
   getCountryCodes,
   convertProductToTourData,
   SORT_OPTIONS,
-  getSlideConfig,
   getTourTypeConfig,
   type TTourData,
   type TSelectedFilters,
@@ -78,7 +77,6 @@ const TourPageLayout = ({
   }, [countriesQuery.data])
 
   const tourConfig = getTourTypeConfig(tourType)
-  const slideConfig = getSlideConfig(tourType)
 
   const processInitialData = useCallback(
     (data: TProduct[]) => {
@@ -312,10 +310,8 @@ const TourPageLayout = ({
       </div>
       <TourBanner
         tourType={tourType}
-        slideContent={slideConfig.content}
         tours={featuredTours}
         isLoading={searchMutation.isPending}
-        hasError={!!searchMutation.error}
         altTextPrefix={tourConfig.altTextPrefix}
       />
       <DestinationFilter
