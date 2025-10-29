@@ -6,7 +6,7 @@ import PriceDisplay from './PriceDisplay'
 import type { TTour } from '@/api/tour-content'
 
 type TRegistrarionProps = {
-  category: 'GROUP' | 'FREE'
+  category: 'GROUP' | 'FREE' | 'RCAR'
   tours: TTour[]
   selectedTourId?: string
   className?: string

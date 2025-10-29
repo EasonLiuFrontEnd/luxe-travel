@@ -145,7 +145,7 @@ export type TTourProduct = {
   arriveCountry: string
   arriveCity: string
   arriveAirport: string
-  category: string
+  category: 'GROUP' | 'FREE' | 'RCAR'
   priceMin: number
   priceMax: number
   tags: string[]
