@@ -11,7 +11,7 @@ const TextImages = ({ highlight }: TTextImagesProps) => {
   const contentLines = highlight.content.split('\n')
 
   return (
-    <div className='xl:min-h-[977px] flex max-xl:flex-col xl:justify-between max-xl:gap-y-9 pb-10 xl:py-10 mx-4 xl:mx-[240px]'>
+    <div className='xl:min-h-[977px] flex max-xl:flex-col xl:justify-between max-xl:gap-y-9 pb-10 xl:py-10 mx-4 xl:mx-10 2xl:mx-[240px]'>
       <div className='xl:w-[587px] mx-3 xl:mt-[76px]'>
         <h3 className='text-center font-family-noto-serif text-[24px] xl:text-[40px] font-bold leading-[1.2] text-figma-secondary-500'>
           {highlight.title}

@@ -5,8 +5,6 @@ type TPriceIncludesProps = {
 }
 
 const PriceIncludes = ({ description }: TPriceIncludesProps) => {
-  const descriptionLines = description.split('\n')
-
   return (
     <>
       <div className='flex items-center mb-3'>
@@ -20,11 +18,10 @@ const PriceIncludes = ({ description }: TPriceIncludesProps) => {
           售價包含
         </p>
       </div>
-      <div className='flex flex-col gap-y-2.5 font-family-genseki text-[18px] xl:text-[20px] text-figma-primary-950 leading-[1.5] py-5 px-4 xl:p-7 rounded-2xl bg-figma-neutral-0'>
-        {descriptionLines.map((line, index) => (
-          <p key={index}>{line}</p>
-        ))}
-      </div>
+      <div
+        className='flex flex-col gap-y-2.5 font-family-genseki text-[18px] xl:text-[20px] text-figma-primary-950 leading-[1.5] py-5 px-4 xl:p-7 rounded-2xl bg-figma-neutral-0'
+        dangerouslySetInnerHTML={{ __html: description }}
+      />
     </>
   )
 }

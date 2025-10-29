@@ -12,7 +12,7 @@ const ImagesText = ({ highlight }: TImagesTextProps) => {
 
   return (
     // order-2 xl:order-1 flex flex-col gap-y-9 xl:gap-y-12
-    <div className='flex max-xl:flex-col xl:justify-between max-xl:gap-y-9 pb-10 xl:py-10 mx-4 xl:mx-[240px]'>
+    <div className='flex max-xl:flex-col xl:justify-between max-xl:gap-y-9 pb-10 xl:py-10 mx-4 xl:mx-10 2xl:mx-[240px]'>
       {highlight.imageUrls && highlight.imageUrls.length > 0 && (
         <div className='order-2 xl:order-1 flex flex-col gap-y-9 xl:gap-y-12'>
           {highlight.imageUrls.map((imageUrl, index) => {
@@ -24,7 +24,7 @@ const ImagesText = ({ highlight }: TImagesTextProps) => {
                   alt={`${highlight.title}-1`}
                   width={732}
                   height={440}
-                  className='max-xl:self-start max-xl:pr-10 rounded-2xl object-cover'
+                  className='max-xl:self-end max-xl:pr-10 rounded-2xl object-cover'
                 />
               )
             } else if (index === 1) {

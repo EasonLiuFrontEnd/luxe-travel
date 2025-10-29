@@ -8,7 +8,6 @@ import type { TTour } from '@/api/tour-content'
 type TRegistrarionProps = {
   category: 'GROUP' | 'FREE'
   tours: TTour[]
-  deposit?: string
   selectedTourId?: string
   className?: string
 }
@@ -24,31 +23,24 @@ const calculateDays = (departDate: string, returnDate: string): number => {
 const Registration = ({
   category,
   tours,
-  deposit,
   selectedTourId,
   className,
 }: TRegistrarionProps) => {
   const { isMobile } = useMediaQuery()
 
-  let tour: (typeof tours)[0] | undefined
-  if (category === 'GROUP') {
-    if (!tours || tours.length === 0) {
-      return null
-    }
-
-    tour = selectedTourId
-      ? tours.find((t) => t.id === selectedTourId) || tours[0]
-      : tours[0]
-
-    if (!tour) {
-      return null
-    }
+  if (!tours || tours.length === 0) {
+    return null
   }
 
-  const days =
-    category === 'GROUP' && tour
-      ? calculateDays(tour.departDate, tour.returnDate)
-      : 0
+  const tour = selectedTourId
+    ? tours.find((t) => t.id === selectedTourId) || tours[0]
+    : tours[0]
+
+  if (!tour) {
+    return null
+  }
+
+  const days = calculateDays(tour.departDate, tour.returnDate)
 
   const getColorClass = (value: string): string => {
     if (value === 'NIL') {
@@ -61,29 +53,12 @@ const Registration = ({
     return 'text-figma-primary-950'
   }
 
-  const depositColor = getColorClass(
-    category === 'FREE' && deposit ? deposit : tour?.deposit || '',
-  )
-  const adultColor =
-    category === 'GROUP' && tour
-      ? getColorClass(tour.adult)
-      : 'text-figma-primary-300'
-  const childWithBedColor =
-    category === 'GROUP' && tour
-      ? getColorClass(tour.childWithBed)
-      : 'text-figma-primary-300'
-  const childExtraBedColor =
-    category === 'GROUP' && tour
-      ? getColorClass(tour.childExtraBed)
-      : 'text-figma-primary-300'
-  const childNoBedColor =
-    category === 'GROUP' && tour
-      ? getColorClass(tour.childNoBed)
-      : 'text-figma-primary-300'
-  const infantColor =
-    category === 'GROUP' && tour
-      ? getColorClass(tour.infant)
-      : 'text-figma-primary-300'
+  const depositColor = getColorClass(tour.deposit)
+  const adultColor = getColorClass(tour.adult)
+  const childWithBedColor = getColorClass(tour.childWithBed)
+  const childExtraBedColor = getColorClass(tour.childExtraBed)
+  const childNoBedColor = getColorClass(tour.childNoBed)
+  const infantColor = getColorClass(tour.infant)
 
   const priceValueClassName =
     'font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2] tracking-[1.6px]'
@@ -123,7 +98,7 @@ const Registration = ({
             </div>
             <div>
               <span className='font-family-noto-serif text-[16px] xl:text-[20px] font-medium leading-[1.5] xl:leading-[1.2] tracking-[1.6px] mr-3'>
-                {tour!.departDate} - {tour!.returnDate}
+                {tour.departDate} - {tour.returnDate}
               </span>
               <span>
                 共
@@ -139,7 +114,7 @@ const Registration = ({
           <p className='font-genseki-body-m-medium'>訂金</p>
           <p>
             <PriceDisplay
-              value={category === 'GROUP' ? tour!.deposit : deposit || ''}
+              value={tour.deposit}
               suffix='/每人'
               valueClassName={priceValueClassName}
               applyStyleOnAllText={true}
@@ -155,7 +130,7 @@ const Registration = ({
             <span>大人（年滿12歲）</span>
             <span>
               <PriceDisplay
-                value={tour!.adult || ''}
+                value={tour.adult}
                 prefix='每位'
                 suffix='起'
                 valueClassName={cn(priceValueClassName, 'mx-2')}
@@ -167,7 +142,7 @@ const Registration = ({
               <p>
                 佔床
                 <PriceDisplay
-                  value={tour!.childWithBed}
+                  value={tour.childWithBed}
                   suffix='起'
                   valueClassName={priceValueClassName}
                   className={cn(childWithBedColor, 'ml-2')}
@@ -176,7 +151,7 @@ const Registration = ({
               <p>
                 加床
                 <PriceDisplay
-                  value={tour!.childExtraBed}
+                  value={tour.childExtraBed}
                   suffix='起'
                   valueClassName={priceValueClassName}
                   className={cn(childExtraBedColor, 'ml-2')}
@@ -185,7 +160,7 @@ const Registration = ({
               <p>
                 不佔床
                 <PriceDisplay
-                  value={tour!.childNoBed}
+                  value={tour.childNoBed}
                   suffix='起'
                   valueClassName={priceValueClassName}
                   className={cn(childNoBedColor, 'ml-2')}
@@ -194,7 +169,7 @@ const Registration = ({
             </div>
             <span>嬰兒（未滿2歲）</span>
             <PriceDisplay
-              value={tour!.infant}
+              value={tour.infant}
               suffix='起'
               valueClassName={priceValueClassName}
               className={infantColor}
@@ -213,7 +188,7 @@ const Registration = ({
           <p className='font-genseki-body-m-medium'>備註</p>
         </div>
         <div className='font-genseki-body-m-regular text-figma-primary-400'>
-          無
+          {!tour.note ? '無' : tour.note}
         </div>
       </div>
       {!isMobile && (
@@ -221,21 +196,13 @@ const Registration = ({
           <h3
             className={cn(
               'font-noto-serif-h3-bold',
-              category === 'FREE'
-                ? depositColor === 'text-figma-primary-300'
-                  ? 'text-figma-primary-300'
-                  : 'text-figma-secondary-500'
-                : adultColor === 'text-figma-primary-300'
-                  ? 'text-figma-primary-300'
-                  : 'text-figma-secondary-500',
+              adultColor === 'text-figma-primary-300'
+                ? 'text-figma-primary-300'
+                : 'text-figma-secondary-500',
             )}
           >
-            <PriceDisplay
-              value={category === 'FREE' ? deposit || '' : tour!.adult}
-              className={category === 'FREE' ? depositColor : adultColor}
-            />
-            {(category === 'FREE' ? depositColor : adultColor) ===
-              'text-figma-primary-950' && (
+            <PriceDisplay value={tour.adult} className={adultColor} />
+            {adultColor === 'text-figma-primary-950' && (
               <span className='font-genseki-h6-regular ml-2'>起</span>
             )}
           </h3>
