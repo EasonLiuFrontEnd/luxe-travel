@@ -31,41 +31,35 @@ const Advantage = ({ className }: TAdvantageProps) => {
     return transformAdvantageData(advantagesData || [])
   }, [advantagesData, isAdvantagesLoading])
 
-  const handleMouseDown = useCallback(
-    (event: React.MouseEvent) => {
-      if (!trackRef.current) return
+  const handleMouseDown = useCallback((event: React.MouseEvent) => {
+    if (!trackRef.current) return
 
-      isDragging.current = true
-      setIsDragState(true)
-      dragStartX.current = event.clientX
-      dragStartScrollLeft.current = trackRef.current.scrollLeft
-      event.preventDefault()
-    },
-    [],
-  )
+    isDragging.current = true
+    setIsDragState(true)
+    dragStartX.current = event.clientX
+    dragStartScrollLeft.current = trackRef.current.scrollLeft
+    event.preventDefault()
+  }, [])
 
-  const handleMouseMove = useCallback(
-    (event: MouseEvent) => {
-      if (
-        typeof window === 'undefined' ||
-        !isDragging.current ||
-        !trackRef.current
-      )
-        return
+  const handleMouseMove = useCallback((event: MouseEvent) => {
+    if (
+      typeof window === 'undefined' ||
+      !isDragging.current ||
+      !trackRef.current
+    )
+      return
 
-      const deltaX = event.clientX - dragStartX.current
-      const newScrollLeft = dragStartScrollLeft.current - deltaX
+    const deltaX = event.clientX - dragStartX.current
+    const newScrollLeft = dragStartScrollLeft.current - deltaX
 
-      trackRef.current.scrollLeft = Math.max(
-        0,
-        Math.min(
-          trackRef.current.scrollWidth - trackRef.current.offsetWidth,
-          newScrollLeft,
-        ),
-      )
-    },
-    [],
-  )
+    trackRef.current.scrollLeft = Math.max(
+      0,
+      Math.min(
+        trackRef.current.scrollWidth - trackRef.current.offsetWidth,
+        newScrollLeft,
+      ),
+    )
+  }, [])
 
   const handleMouseUp = useCallback(() => {
     isDragging.current = false

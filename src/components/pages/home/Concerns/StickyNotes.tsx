@@ -9,12 +9,7 @@ type TStickyNotesProps = {
   offsetY: string
 }
 
-const StickyNotes = ({
-  data,
-  color,
-  rotation,
-  offsetY,
-}: TStickyNotesProps) => {
+const StickyNotes = ({ data, color, rotation, offsetY }: TStickyNotesProps) => {
   const [isHovered, setIsHovered] = useState(false)
   const { isMobile } = useMediaQuery()
 
