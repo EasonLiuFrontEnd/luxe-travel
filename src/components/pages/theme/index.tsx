@@ -147,8 +147,16 @@ const ThemePage = () => {
         </div>
 
         <div className='hidden xl:block w-full max-w-[256px] relative'>
-          <a href='#' className='absolute top-0 right-0 rounded-full overflow-hidden'>
-            <Image src='/theme/dropdown.svg' alt='dropdown' width={60} height={60} />
+          <a
+            href='#'
+            className='absolute top-0 right-0 rounded-full overflow-hidden'
+          >
+            <Image
+              src='/theme/dropdown.svg'
+              alt='dropdown'
+              width={60}
+              height={60}
+            />
           </a>
 
           <div className='rounded-2xl overflow-hidden aspect-[256/256] w-full h-full max-w-[256px] max-h-[256px] relative group/banner04 mt-[77px]'>

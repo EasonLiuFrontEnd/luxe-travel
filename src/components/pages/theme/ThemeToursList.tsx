@@ -10,7 +10,7 @@ import type { TTourData } from '@/components/pages/tours/config'
 const ThemeToursList = () => {
   const router = useRouter()
   const [tours, setTours] = useState<TTourData[]>([])
-  const { mutation, mock } = useThemeToursSearch()
+  const { mutation } = useThemeToursSearch()
 
   useEffect(() => {
     mutation.mutate(
@@ -29,10 +29,7 @@ const ThemeToursList = () => {
           setTours(convertedTours)
         },
         onError: () => {
-          const convertedTours = mock.data.map((product) =>
-            convertProductToTourData(product, 'group-tours'),
-          )
-          setTours(convertedTours)
+          setTours([])
         },
       },
     )
