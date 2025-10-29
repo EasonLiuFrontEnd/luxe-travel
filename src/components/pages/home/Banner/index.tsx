@@ -59,38 +59,27 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
 
   const logoProgress = propLogoProgress ?? contextLogoProgress
 
-  const { query: bannersQuery, mock } = useBanners()
-  const {
-    data: bannersData,
-    isLoading: isBannersLoading,
-    error: bannersError,
-  } = bannersQuery
+  const { query: bannersQuery } = useBanners()
+  const { data: bannersData, isLoading: isBannersLoading } = bannersQuery
 
   const effectiveData = useMemo(() => {
-    if (bannersError) {
-      return mock.rows
-    }
-
     if (isBannersLoading) {
       return []
     }
 
     return bannersData || []
-  }, [bannersError, bannersData, isBannersLoading, mock.rows])
+  }, [bannersData, isBannersLoading])
 
   const firstBanner = useMemo(() => {
-    return effectiveData[0] || mock.rows[0]
-  }, [effectiveData, mock.rows])
+    return effectiveData[0]
+  }, [effectiveData])
 
   const bannerImages = useMemo(() => {
-    if (bannersError) {
-      return ['/home/banners/banner.jpg']
-    }
     if (effectiveData && effectiveData.length > 0) {
       return effectiveData.map((banner) => banner.imageUrl)
     }
     return []
-  }, [bannersError, effectiveData])
+  }, [effectiveData])
 
   const dynamicPadding = useMemo(
     () =>
@@ -258,7 +247,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
                       'xl:self-end max-xl:self-start',
                       'text-figma-neutral-950 px-[14px]',
                       "before:content-[''] before:absolute before:z-[-1]",
-                      'before:left-0 before:right-0 before:right-[-8px] before:top-1/2 xl:before:top-[-18px]',
+                      'before:left-0 before:right-[-8px] before:top-1/2 xl:before:top-[-18px]',
                       'before:h-[2em] xl:before:h-[3em] before:translate-y-[-50%]',
                       'before:bg-figma-neutral-50',
                       'xl:before:rounded-bl-[50px] max-xl:before:rounded-r-[50px]',

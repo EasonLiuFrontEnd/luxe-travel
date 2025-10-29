@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react'
 
-export type TFeedbackMode = 'REAL' | 'VIRTUAL' | 'MARKETING'
+export type TFeedbackMode = 'REAL' | 'SOCIAL'
 
 type TFeedbackCardItemProps = {
   id: string
@@ -112,7 +112,7 @@ const FeedbackCardItem = ({
     )
   }
 
-  if (mode === 'MARKETING' && imageUrl) {
+  if (mode === 'SOCIAL' && imageUrl) {
     return (
       <div
         id={id}

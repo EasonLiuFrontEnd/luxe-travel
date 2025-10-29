@@ -19,7 +19,7 @@ export type TBook = {
   number: string
   destination: string
   english: string
-  pattern: string
+  pattern?: string
   size: {
     mobileClassName: string
     web: {
