@@ -5,15 +5,12 @@ import { useBooks } from '@/api/home/useBooks'
 
 const Introduction = () => {
   const { selectedCountryId } = useSelectedCountry()
-  const { query: booksQuery, mock } = useBooks()
+  const { query: booksQuery } = useBooks()
 
   const currentIntroduction = useMemo(() => {
-    const data =
-      booksQuery.error && process.env.NODE_ENV !== 'production'
-        ? mock.rows
-        : booksQuery.data || []
+    const data = booksQuery.data || []
     return data.find((book) => book.id === selectedCountryId) || data[0]
-  }, [booksQuery.data, booksQuery.error, mock.rows, selectedCountryId])
+  }, [booksQuery.data, selectedCountryId])
 
   if (!currentIntroduction) {
     return (

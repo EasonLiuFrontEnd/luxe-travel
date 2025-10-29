@@ -10,13 +10,6 @@ export type TCountry = {
   code?: string
 }
 
-export type TSlideContent = {
-  id: number
-  title: string
-  subtitle: string
-  description: string
-}
-
 export type TFilterType = 'country' | 'price' | 'other'
 
 export type TFilter = {

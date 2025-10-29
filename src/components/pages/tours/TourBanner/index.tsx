@@ -2,22 +2,15 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import styles from './styles.module.css'
 
-export type TSlideContent = {
-  id: number
-  title: string
-  subtitle: string
-  description: string
-}
-
 type TTourBannerProps = {
   className?: string
   tourType: 'free-tours' | 'group-tours' | 'rcar-tours'
-  slideContent: TSlideContent[]
-  tours?: Array<{
+  tours: Array<{
     id: string
     namePrefix: string
     name: string
@@ -25,42 +18,29 @@ type TTourBannerProps = {
     mainImageUrl: string
   }>
   isLoading?: boolean
-  hasError?: boolean
   altTextPrefix?: string
 }
 
 const TourBanner = ({
   className,
   tourType,
-  slideContent,
   tours = [],
   isLoading = false,
-  hasError = false,
   altTextPrefix = '精選行程',
 }: TTourBannerProps) => {
   const [currentSlide, setCurrentSlide] = useState(1)
 
-  const shouldShowDefault = hasError
-  const shouldShowApi = !isLoading && !hasError && tours && tours.length > 0
-  const totalSlides = shouldShowApi
-    ? tours.length
-    : shouldShowDefault
-      ? slideContent.length
-      : 1
+  const totalSlides = tours.length
 
-  const currentContent = shouldShowApi
+  const currentContent = tours[currentSlide - 1]
     ? {
-        title: tours[currentSlide - 1]?.namePrefix || '',
-        subtitle: tours[currentSlide - 1]?.name || '',
-        description: tours[currentSlide - 1]?.summary || '',
+        title: tours[currentSlide - 1].namePrefix || '',
+        subtitle: tours[currentSlide - 1].name || '',
+        description: tours[currentSlide - 1].summary || '',
       }
-    : shouldShowDefault
-      ? slideContent[currentSlide - 1]
-      : { title: '', subtitle: '', description: '' }
+    : { title: '', subtitle: '', description: '' }
 
-  const currentImageUrl = shouldShowApi
-    ? tours[currentSlide - 1]?.mainImageUrl
-    : undefined
+  const currentImageUrl = tours[currentSlide - 1]?.mainImageUrl
 
   const handlePrevSlide = () => {
     setCurrentSlide((prev) => (prev > 1 ? prev - 1 : totalSlides))
@@ -98,37 +78,34 @@ const TourBanner = ({
 
       <div className='xl:relative flex flex-col rounded-2xl xl:w-full xl:h-[670px]'>
         <div className='relative xl:absolute xl:inset-0 flex w-full h-[460px] xl:h-full'>
-          {shouldShowApi && (
-            <Image
-              key={`tour-banner-api-${currentSlide}`}
-              src={currentImageUrl || `/${tourType}/${currentSlide}.jpg`}
-              alt={`${altTextPrefix} ${currentSlide}`}
-              width={1824}
-              height={670}
-              className='object-cover transition-opacity duration-500 w-full h-full rounded-2xl'
-              priority={currentSlide === 1}
-            />
+          {tours.length > 0 && (
+            <Link
+              href={`/tour-content/${tours[currentSlide - 1]?.id}`}
+              onClick={() => {
+                sessionStorage.setItem('tour-needs-refresh', 'true')
+              }}
+              className='block w-full h-full'
+              aria-label={`查看 ${tours[currentSlide - 1]?.namePrefix || ''} ${tours[currentSlide - 1]?.name || ''} 詳情`}
+            >
+              <Image
+                key={`tour-banner-${currentSlide}`}
+                src={currentImageUrl || `/${tourType}/${currentSlide}.jpg`}
+                alt={`${altTextPrefix} ${currentSlide}`}
+                width={1824}
+                height={670}
+                className='object-cover transition-opacity duration-500 w-full h-full rounded-2xl'
+                priority={currentSlide === 1}
+              />
+            </Link>
           )}
 
-          {shouldShowDefault && (
-            <Image
-              key={`tour-banner-default-${currentSlide}`}
-              src={`/${tourType}/${currentSlide}.jpg`}
-              alt={`${altTextPrefix} ${currentSlide}`}
-              width={1824}
-              height={670}
-              className='object-cover transition-opacity duration-500 w-full h-full rounded-2xl'
-              priority={currentSlide === 1}
-            />
-          )}
-
-          {!isLoading && !hasError && tours && tours.length === 0 && (
+          {!isLoading && tours.length === 0 && (
             <div className='w-full h-full bg-gray-100 rounded-2xl flex items-center justify-center'>
               <div className='text-gray-500 text-lg'>暫無主打商品</div>
             </div>
           )}
 
-          {(shouldShowApi || shouldShowDefault) && (
+          {tours.length > 0 && (
             <div className={styles.controls}>
               <div
                 className={cn(

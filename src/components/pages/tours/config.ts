@@ -1,9 +1,4 @@
-import type {
-  TSlideContent,
-  TTourDate,
-  TTourData,
-  TTravelerReview,
-} from './types'
+import type { TTourDate, TTourData, TTravelerReview } from './types'
 import { REGIONS, SORT_OPTIONS } from './constants'
 import { getCountryCodes, convertCountriesToFilters } from './utils'
 
@@ -15,54 +10,7 @@ export type {
 } from './types'
 export { REGIONS, SORT_OPTIONS, getCountryCodes, convertCountriesToFilters }
 
-export const TOUR_SLIDE_CONFIGS = {
-  'free-tours': {
-    content: [
-      {
-        id: 1,
-        title: '荷蘭．比利時',
-        subtitle: '限量甄藏！春日雙慶典 荷比自由行12天',
-        description:
-          '限量兩團，手刀快搶！一年僅此一天的【荷蘭國王節】、聞名全球的【庫肯霍夫鬱金香花季】、雙國經典城鎮自由探索，荷蘭與比利時豐富多元的人文美景一次典藏！',
-      },
-    ],
-    totalSlides: 1,
-  },
-  'group-tours': {
-    content: [
-      {
-        id: 1,
-        title: '荷蘭．比利時',
-        subtitle: '限量甄藏！春日雙慶典 荷比雙國12天',
-        description:
-          '限量兩團，手刀快搶！一年僅此一天的【荷蘭國王節】、聞名全球的【庫肯霍夫鬱金香花季】、雙國經典城鎮一趟全覽，荷蘭與比利時豐富多元的人文美景一次典藏！',
-      },
-    ],
-    totalSlides: 6,
-  },
-  'rcar-tours': {
-    content: [
-      {
-        id: 1,
-        title: '荷蘭．比利時',
-        subtitle: '限量甄藏！春日雙慶典 荷比自由行12天',
-        description:
-          '限量兩團，手刀快搶！一年僅此一天的【荷蘭國王節】、聞名全球的【庫肯霍夫鬱金香花季】、雙國經典城鎮自由探索，荷蘭與比利時豐富多元的人文美景一次典藏！',
-      },
-    ],
-    totalSlides: 1,
-  },
-} as const
-
-export type TTourType = keyof typeof TOUR_SLIDE_CONFIGS
-
-export const getSlideConfig = (tourType: TTourType) => {
-  const config = TOUR_SLIDE_CONFIGS[tourType]
-  return {
-    ...config,
-    content: [...config.content] as TSlideContent[],
-  }
-}
+export type TTourType = 'free-tours' | 'group-tours' | 'rcar-tours'
 
 export const convertProductToTourData = (
   product: {

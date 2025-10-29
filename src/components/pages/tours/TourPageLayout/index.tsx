@@ -13,7 +13,6 @@ import {
   getCountryCodes,
   convertProductToTourData,
   SORT_OPTIONS,
-  getSlideConfig,
   getTourTypeConfig,
   type TTourData,
   type TSelectedFilters,
@@ -23,8 +22,6 @@ import type {
   TProduct,
   TProductSearchParams,
   TRegionData,
-  TProductSearchResponse,
-  TCountriesResponse,
 } from '@/api/free-tours'
 import type { TApiResponse } from '@/api/type'
 
@@ -34,12 +31,10 @@ type TUseProductsSearchResult = {
     AxiosError<TApiResponse<TProduct[]>>,
     TProductSearchParams
   >
-  mock: TProductSearchResponse
 }
 
 type TUseProductCountriesResult = {
   query: UseQueryResult<TRegionData[], AxiosError<TApiResponse<TRegionData[]>>>
-  mock: TCountriesResponse
 }
 
 type TTourPageLayoutProps = {
@@ -74,18 +69,14 @@ const TourPageLayout = ({
 
   const [featuredTours, setFeaturedTours] = useState<TProduct[]>([])
 
-  const { mutation: searchMutation, mock: searchMock } = useProductsSearch()
-  const { query: countriesQuery, mock: countriesMock } = useProductCountries()
+  const { mutation: searchMutation } = useProductsSearch()
+  const { query: countriesQuery } = useProductCountries()
 
   const regionsData = useMemo(() => {
-    if (countriesQuery.error && process.env.NODE_ENV !== 'production') {
-      return countriesMock.data || []
-    }
     return countriesQuery.data || []
-  }, [countriesQuery.data, countriesQuery.error, countriesMock.data])
+  }, [countriesQuery.data])
 
   const tourConfig = getTourTypeConfig(tourType)
-  const slideConfig = getSlideConfig(tourType)
 
   const processInitialData = useCallback(
     (data: TProduct[]) => {
@@ -125,22 +116,14 @@ const TourPageLayout = ({
           }
         },
         onError: () => {
-          if (process.env.NODE_ENV !== 'production') {
-            if (isInitialLoad) {
-              processInitialData(searchMock.data)
-            } else {
-              processSearchResults(searchMock.data)
-            }
-          } else {
-            setTours([])
-            if (isInitialLoad) {
-              setFeaturedTours([])
-            }
+          setTours([])
+          if (isInitialLoad) {
+            setFeaturedTours([])
           }
         },
       })
     },
-    [searchMutation, processInitialData, processSearchResults, searchMock.data],
+    [searchMutation, processInitialData, processSearchResults],
   )
 
   useEffect(() => {
@@ -327,10 +310,8 @@ const TourPageLayout = ({
       </div>
       <TourBanner
         tourType={tourType}
-        slideContent={slideConfig.content}
         tours={featuredTours}
         isLoading={searchMutation.isPending}
-        hasError={!!searchMutation.error}
         altTextPrefix={tourConfig.altTextPrefix}
       />
       <DestinationFilter

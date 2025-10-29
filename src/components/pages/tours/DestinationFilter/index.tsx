@@ -22,7 +22,6 @@ type TDestinationFilterProps = {
   maxWidth?: 'max-w-[1824px]' | 'xl:max-w-[740px]'
   useProductCountriesHook: () => {
     query: { isSuccess: boolean; data?: TRegionData[] }
-    mock: { data?: TRegionData[] }
   }
   onSearch?: (
     selectedCountries: string[],
@@ -51,8 +50,7 @@ const DestinationFilter = ({
   ])
   const [regions, setRegions] = useState<TRegionData[]>([])
 
-  const { query: countriesQuery, mock: countriesMock } =
-    useProductCountriesHook()
+  const { query: countriesQuery } = useProductCountriesHook()
   const daysRangeOptions = [
     '6-10天',
     '11-15天',
@@ -94,13 +92,10 @@ const DestinationFilter = ({
 
   useEffect(() => {
     if (countriesQuery.isSuccess) {
-      const dataSource =
-        countriesQuery.data && countriesQuery.data.length > 0
-          ? countriesQuery.data
-          : countriesMock.data || []
+      const dataSource = countriesQuery.data || []
       setRegions(dataSource)
     }
-  }, [countriesQuery.isSuccess, countriesQuery.data, countriesMock.data])
+  }, [countriesQuery.isSuccess, countriesQuery.data])
 
   const handleCloseDropdown = useCallback(() => {
     setIsOpen(false)

@@ -15,6 +15,5 @@ export const useTourProduct = (id: string) => {
     queryKey: ['tour-product', id],
     queryFn: () => fetchTourProduct(id),
     enabled: !!id,
-    staleTime: 5 * 60 * 1000,
   })
 }

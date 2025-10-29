@@ -56,41 +56,24 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
   const { isMobile } = useMediaQuery()
   const gooAreaRef = useRef<HTMLDivElement>(null)
   const fallbackRef = useRef<HTMLDivElement>(null)
+  const [currentBannerIndex, setCurrentBannerIndex] = useState(0)
 
   const logoProgress = propLogoProgress ?? contextLogoProgress
 
-  const { query: bannersQuery, mock } = useBanners()
-  const {
-    data: bannersData,
-    isLoading: isBannersLoading,
-    error: bannersError,
-  } = bannersQuery
+  const { query: bannersQuery } = useBanners()
+  const { data: bannersData, isLoading: isBannersLoading } = bannersQuery
 
   const effectiveData = useMemo(() => {
-    if (bannersError) {
-      return mock.rows
-    }
-
     if (isBannersLoading) {
       return []
     }
 
     return bannersData || []
-  }, [bannersError, bannersData, isBannersLoading, mock.rows])
+  }, [bannersData, isBannersLoading])
 
-  const firstBanner = useMemo(() => {
-    return effectiveData[0] || mock.rows[0]
-  }, [effectiveData, mock.rows])
-
-  const bannerImages = useMemo(() => {
-    if (bannersError) {
-      return ['/home/banners/banner.jpg']
-    }
-    if (effectiveData && effectiveData.length > 0) {
-      return effectiveData.map((banner) => banner.imageUrl)
-    }
-    return []
-  }, [bannersError, effectiveData])
+  const currentBanner = useMemo(() => {
+    return effectiveData[currentBannerIndex] || effectiveData[0]
+  }, [effectiveData, currentBannerIndex])
 
   const dynamicPadding = useMemo(
     () =>
@@ -203,7 +186,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
       clearTimeout(timer)
       window.removeEventListener('resize', handleResize)
     }
-  }, [firstBanner])
+  }, [currentBanner])
 
   return (
     <>
@@ -251,23 +234,23 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
                   'xl:text-right max-xl:text-left',
                 )}
               >
-                {firstBanner?.titleLine1 && (
+                {currentBanner?.titleLine1 && (
                   <div
                     className={cn(
                       'goo-text-row relative inline-block',
                       'xl:self-end max-xl:self-start',
                       'text-figma-neutral-950 px-[14px]',
                       "before:content-[''] before:absolute before:z-[-1]",
-                      'before:left-0 before:right-0 before:right-[-8px] before:top-1/2 xl:before:top-[-18px]',
+                      'before:left-0 before:right-[-8px] before:top-1/2 xl:before:top-[-18px]',
                       'before:h-[2em] xl:before:h-[3em] before:translate-y-[-50%]',
                       'before:bg-figma-neutral-50',
                       'xl:before:rounded-bl-[50px] max-xl:before:rounded-r-[50px]',
                     )}
                   >
-                    {firstBanner.titleLine1}
+                    {currentBanner.titleLine1}
                   </div>
                 )}
-                {firstBanner?.titleLine2 && (
+                {currentBanner?.titleLine2 && (
                   <div
                     className={cn(
                       'goo-text-row relative inline-block',
@@ -280,7 +263,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
                       'xl:before:rounded-l-[50px] max-xl:before:rounded-r-[50px]',
                     )}
                   >
-                    {firstBanner.titleLine2}
+                    {currentBanner.titleLine2}
                   </div>
                 )}
               </h1>
@@ -290,7 +273,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
                   'font-genseki-gothic font-medium xl:text-[24px] text-[16px]',
                 )}
               >
-                {firstBanner?.subtitleLine1 && (
+                {currentBanner?.subtitleLine1 && (
                   <p
                     className={cn(
                       'goo-text-row relative inline-block',
@@ -303,10 +286,10 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
                       'xl:before:rounded-l-[50px] max-xl:before:rounded-r-[50px]',
                     )}
                   >
-                    {firstBanner.subtitleLine1}
+                    {currentBanner.subtitleLine1}
                   </p>
                 )}
-                {firstBanner?.subtitleLine2 && (
+                {currentBanner?.subtitleLine2 && (
                   <p
                     className={cn(
                       'goo-text-row relative inline-block',
@@ -319,7 +302,7 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
                       'xl:before:rounded-l-[50px] max-xl:before:rounded-r-[50px]',
                     )}
                   >
-                    {firstBanner.subtitleLine2}
+                    {currentBanner.subtitleLine2}
                   </p>
                 )}
               </div>
@@ -333,7 +316,11 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
           </div>
         </div>
 
-        <BannerCarousel images={bannerImages} autoPlayInterval={10000} />
+        <BannerCarousel
+          banners={effectiveData}
+          autoPlayInterval={10000}
+          onSlideChange={setCurrentBannerIndex}
+        />
       </div>
 
       <div className='flex justify-center w-full xl:px-[48px] px-[12px] xl:min-h-[611px]'>
