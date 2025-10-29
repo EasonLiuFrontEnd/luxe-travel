@@ -7,8 +7,6 @@ type TStickyNotesProps = {
   color: string
   rotation: number
   offsetY: string
-  position: number
-  transformY: number
 }
 
 const StickyNotes = ({
@@ -16,8 +14,6 @@ const StickyNotes = ({
   color,
   rotation,
   offsetY,
-  position,
-  transformY,
 }: TStickyNotesProps) => {
   const [isHovered, setIsHovered] = useState(false)
   const { isMobile } = useMediaQuery()
@@ -39,15 +35,9 @@ const StickyNotes = ({
   const [firstLine, secondLine] = parseContent(data.content)
 
   const containerClassName = `relative z-20 ${isMobile ? '' : 'hover:-translate-y-5'}`
-  const combinedStyle = isMobile
-    ? {
-        transform: `rotate(${rotation}deg)`,
-        opacity: 1,
-      }
-    : {
-        transform: `rotate(${rotation}deg) translateY(calc(-${offsetY}px + ${transformY}px))`,
-        opacity: position > 0 ? 1 : 0,
-      }
+  const combinedStyle = {
+    transform: `rotate(${rotation}deg) translateY(-${offsetY}px)`,
+  }
 
   return (
     <div className={containerClassName} style={combinedStyle}>
