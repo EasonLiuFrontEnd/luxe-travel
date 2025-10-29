@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { useMediaQuery } from '@/hooks/useMediaQuery'
 import type { THighlight } from '@/api/tour-content'
 
 type TImagesTextProps = {
@@ -7,36 +6,36 @@ type TImagesTextProps = {
 }
 
 const ImagesText = ({ highlight }: TImagesTextProps) => {
-  const { isMobile } = useMediaQuery()
   const contentLines = highlight.content.split('\n')
 
   return (
-    // order-2 xl:order-1 flex flex-col gap-y-9 xl:gap-y-12
     <div className='flex max-xl:flex-col xl:justify-between max-xl:gap-y-9 pb-10 xl:py-10 mx-4 xl:mx-10 2xl:mx-[240px]'>
       {highlight.imageUrls && highlight.imageUrls.length > 0 && (
         <div className='order-2 xl:order-1 flex flex-col gap-y-9 xl:gap-y-12'>
           {highlight.imageUrls.map((imageUrl, index) => {
             if (index === 0) {
               return (
-                <Image
-                  key={imageUrl}
-                  src={imageUrl}
-                  alt={`${highlight.title}-1`}
-                  width={732}
-                  height={440}
-                  className='max-xl:self-end max-xl:pr-10 rounded-2xl object-cover'
-                />
+                <div key={imageUrl} className='max-xl:pr-[60px]'>
+                  <Image
+                    src={imageUrl}
+                    alt={`${highlight.title}-1`}
+                    width={732}
+                    height={440}
+                    className='rounded-2xl object-cover'
+                  />
+                </div>
               )
             } else if (index === 1) {
               return (
-                <Image
-                  key={imageUrl}
-                  src={imageUrl}
-                  alt={`${highlight.title}-2`}
-                  width={isMobile ? 732 : 490}
-                  height={isMobile ? 440 : 294}
-                  className='max-xl:pl-10 rounded-2xl object-cover'
-                />
+                <div key={imageUrl} className='max-xl:pl-[60px]'>
+                  <Image
+                    src={imageUrl}
+                    alt={`${highlight.title}-2`}
+                    width={732}
+                    height={440}
+                    className='rounded-2xl object-cover'
+                  />
+                </div>
               )
             }
             return null

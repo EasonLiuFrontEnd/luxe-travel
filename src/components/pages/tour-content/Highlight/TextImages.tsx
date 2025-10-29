@@ -49,25 +49,27 @@ const TextImages = ({ highlight }: TTextImagesProps) => {
           {highlight.imageUrls.map((imageUrl, index) => {
             if (index === 0) {
               return (
-                <Image
-                  key={imageUrl}
-                  src={imageUrl}
-                  alt={`${highlight.title}-1`}
-                  width={732}
-                  height={440}
-                  className='max-xl:self-start max-xl:pr-10 rounded-2xl object-cover'
-                />
+                <div key={imageUrl} className='max-xl:pr-[60px]'>
+                  <Image
+                    src={imageUrl}
+                    alt={`${highlight.title}-1`}
+                    width={732}
+                    height={440}
+                    className='max-xl:self-start rounded-2xl object-cover'
+                  />
+                </div>
               )
             } else if (index === 1) {
               return (
-                <Image
-                  key={imageUrl}
-                  src={imageUrl}
-                  alt={`${highlight.title}-2`}
-                  width={isMobile ? 732 : 490}
-                  height={isMobile ? 440 : 294}
-                  className='max-xl:pl-10 rounded-2xl object-cover'
-                />
+                <div key={imageUrl} className='max-xl:pl-[60px]'>
+                  <Image
+                    src={imageUrl}
+                    alt={`${highlight.title}-2`}
+                    width={isMobile ? 732 : 490}
+                    height={isMobile ? 440 : 294}
+                    className='rounded-2xl object-cover'
+                  />
+                </div>
               )
             }
             return null

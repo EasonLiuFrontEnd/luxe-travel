@@ -18,13 +18,10 @@ const CollectionRecommendation = ({
 }: TCollectionRecommendationProps) => {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null)
 
-  const { query: mapQuery, mock: mapMock } = useMap()
+  const { query: mapQuery } = useMap()
 
   const availableCountries = useMemo(() => {
-    const data =
-      mapQuery.error && process.env.NODE_ENV !== 'production'
-        ? mapMock.rows
-        : mapQuery.data || []
+    const data = mapQuery.data || []
 
     const codes = new Set<string>()
     if (data) {
@@ -35,28 +32,22 @@ const CollectionRecommendation = ({
       })
     }
     return codes
-  }, [mapQuery.data, mapQuery.error, mapMock.rows])
+  }, [mapQuery.data])
 
   const selectedArticle = useMemo(() => {
-    const data =
-      mapQuery.error && process.env.NODE_ENV !== 'production'
-        ? mapMock.rows
-        : mapQuery.data || []
+    const data = mapQuery.data || []
 
     if (!data || !selectedRegion) return null
 
     return data.find((item) =>
       item.countries?.some((country) => country.code === selectedRegion),
     )
-  }, [selectedRegion, mapQuery.data, mapQuery.error, mapMock.rows])
+  }, [selectedRegion, mapQuery.data])
 
   useEffect(() => {
     if (selectedRegion) return
 
-    const data =
-      mapQuery.error && process.env.NODE_ENV !== 'production'
-        ? mapMock.rows
-        : mapQuery.data || []
+    const data = mapQuery.data || []
 
     if (data && data.length > 0) {
       const firstArticle = data[0]
@@ -65,7 +56,7 @@ const CollectionRecommendation = ({
         setSelectedRegion(firstCountry.code)
       }
     }
-  }, [mapQuery.data, mapQuery.error, mapMock.rows, selectedRegion])
+  }, [mapQuery.data, selectedRegion])
 
   return (
     <section

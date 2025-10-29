@@ -18,12 +18,13 @@ import type {
 } from '@/api/tour-content'
 
 type TTourInfoProps = {
-  category: 'GROUP' | 'FREE'
+  category: 'GROUP' | 'FREE' | 'RCAR'
   tours: TTour[]
   flights: TFlight[]
   map?: TTourProduct['map']
   feedback?: TFeedback
   description?: string
+  priceMin: number
 }
 
 const TourInfo = ({
@@ -33,6 +34,7 @@ const TourInfo = ({
   map,
   feedback,
   description,
+  priceMin,
 }: TTourInfoProps) => {
   const [selectedTourId, setSelectedTourId] = useState<string>(
     tours[0]?.id || '',
@@ -51,8 +53,8 @@ const TourInfo = ({
         {category === 'GROUP' && (
           <DepartureDate tours={tours} onTourSelect={handleTourSelect} />
         )}
-        {category === 'FREE' && feedback && <Feedback feedback={feedback} />}
-        {category === 'FREE' && description && (
+        {category !== 'GROUP' && feedback && <Feedback feedback={feedback} />}
+        {category !== 'GROUP' && description && (
           <PriceIncludes description={description} />
         )}
         <Flight flights={flights} />
@@ -112,6 +114,7 @@ const TourInfo = ({
         category={category}
         tours={tours}
         selectedTourId={selectedTourId}
+        priceMin={priceMin}
         className='order-1 xl:order-2'
       />
     </div>

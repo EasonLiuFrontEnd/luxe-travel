@@ -9,14 +9,16 @@ import {
   type CarouselApi,
 } from '@/components/ui/Carousel'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-
-export type TBannerCarousel = {
-  images?: string[]
-  autoPlayInterval?: number
-  className?: string
-}
+import { TBanners } from '@/api/type'
 import styles from './styles.module.css'
 import Image from 'next/image'
+
+export type TBannerCarousel = {
+  banners?: TBanners[]
+  autoPlayInterval?: number
+  className?: string
+  onSlideChange?: (index: number) => void
+}
 
 const CAROUSEL_OPTS = {
   align: 'start' as const,
@@ -24,9 +26,10 @@ const CAROUSEL_OPTS = {
 }
 
 const BannerCarousel = ({
-  images = ['/home/banners/banner.jpg'],
+  banners = [],
   autoPlayInterval = 10000,
   className,
+  onSlideChange,
 }: TBannerCarousel) => {
   const [api, setApi] = useState<CarouselApi>()
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
@@ -35,10 +38,14 @@ const BannerCarousel = ({
   useEffect(() => {
     if (!api) return
 
-    setCurrent(api.selectedScrollSnap())
+    const initialIndex = api.selectedScrollSnap()
+    setCurrent(initialIndex)
+    onSlideChange?.(initialIndex)
 
     const handleSelect = () => {
-      setCurrent(api.selectedScrollSnap())
+      const newIndex = api.selectedScrollSnap()
+      setCurrent(newIndex)
+      onSlideChange?.(newIndex)
     }
 
     api.on('select', handleSelect)
@@ -46,7 +53,7 @@ const BannerCarousel = ({
     return () => {
       api.off('select', handleSelect)
     }
-  }, [api])
+  }, [api, onSlideChange])
 
   useEffect(() => {
     if (!api || !isAutoPlaying) return
@@ -65,6 +72,8 @@ const BannerCarousel = ({
     return String(num).padStart(2, '0')
   }
 
+  const currentBanner = banners[current] || banners[0]
+
   return (
     <Carousel
       setApi={setApi}
@@ -74,9 +83,9 @@ const BannerCarousel = ({
       onMouseLeave={handleMouseLeave}
     >
       <CarouselContent>
-        {images.length > 0 ? (
-          images.map((image, index) => (
-            <CarouselItem key={index}>
+        {banners.length > 0 ? (
+          banners.map((banner, index) => (
+            <CarouselItem key={banner.id || index}>
               <div
                 className={cn(
                   'h-[460px] xl:h-[662px] relative rounded-2xl overflow-hidden',
@@ -84,9 +93,9 @@ const BannerCarousel = ({
                 )}
               >
                 <Image
-                  key={`banner-${index}`}
-                  src={image}
-                  alt='BannerCarousel'
+                  key={`banner-${banner.id || index}`}
+                  src={banner.imageUrl}
+                  alt={banner.title || 'BannerCarousel'}
                   className='object-cover'
                   fill
                   priority={index === 0}
@@ -108,6 +117,15 @@ const BannerCarousel = ({
 
       <div className='absolute bottom-0 max-xl:right-0 xl:left-0 mb-[-1px]'>
         <button
+          onClick={() => {
+            if (currentBanner?.linkUrl) {
+              window.open(
+                currentBanner.linkUrl,
+                '_blank',
+                'noopener,noreferrer',
+              )
+            }
+          }}
           className={cn(
             'group flex items-center cursor-pointer',
             'bg-figma-neutral-50 text-figma-secondary-950',
@@ -119,7 +137,7 @@ const BannerCarousel = ({
             styles['concave-border-5'],
           )}
         >
-          即刻預約 · 輕鬆啟程
+          {currentBanner?.linkText || '即刻預約 · 輕鬆啟程'}
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='40'
@@ -162,7 +180,7 @@ const BannerCarousel = ({
         </button>
 
         <div className='max-xl:hidden font-genseki-h5-medium text-figma-neutral-0'>
-          {formatNumber(current + 1)}/{formatNumber(images.length)}
+          {formatNumber(current + 1)}/{formatNumber(banners.length)}
         </div>
 
         <button

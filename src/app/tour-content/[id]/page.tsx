@@ -49,24 +49,25 @@ const TourContentPage = ({ params }: TPageProps) => {
     tourProduct.highlights && tourProduct.highlights.length > 0
 
   return (
-    <div className='relative bg-figma-neutral-50'>
+    <div className='relative bg-figma-neutral-50 max-xl:pb-[100px]'>
       <NavigationSidebar
-        category={tourProduct.category as 'GROUP' | 'FREE'}
+        category={tourProduct.category}
         hasHighlights={hasHighlights}
       />
       <Banner
-        category={tourProduct.category as 'GROUP' | 'FREE'}
+        category={tourProduct.category}
         namePrefix={tourProduct.namePrefix}
         name={tourProduct.name}
         mainImageUrl={tourProduct.mainImageUrl}
       />
       <TourInfo
-        category={tourProduct.category as 'GROUP' | 'FREE'}
+        category={tourProduct.category}
         tours={tourProduct.tour}
         flights={tourProduct.flights}
         map={tourProduct.map || undefined}
         feedback={tourProduct.feedback}
         description={tourProduct.description}
+        priceMin={tourProduct.priceMin}
       />
       {hasHighlights && (
         <Highlight highlights={tourProduct.highlights} productId={id} />
@@ -75,12 +76,12 @@ const TourContentPage = ({ params }: TPageProps) => {
         <DailyItinerary itineraries={tourProduct.itineraries} />
       )}
       <TourNotice
-        category={tourProduct.category as 'GROUP' | 'FREE'}
+        category={tourProduct.category}
         reminder={tourProduct.reminder}
         policy={tourProduct.policy}
       />
       {isMobile && (
-        <div className='flex justify-between items-end p-7'>
+        <div className='fixed bottom-0 left-0 right-0 flex justify-between items-end p-7 bg-figma-neutral-50 shadow-[0_-4px_12px_rgba(0,0,0,0.1)] z-50'>
           <div className='flex flex-col'>
             <div className='flex justify-between font-genseki-body-s-regular'>
               <p>9/20(日)</p>
@@ -89,7 +90,7 @@ const TourContentPage = ({ params }: TPageProps) => {
               </button>
             </div>
             <h3 className='font-family-noto-serif text-2xl xl:text-[40px] font-bold leading-[1.2] text-figma-secondary-500'>
-              ＄119,000
+              ＄{tourProduct.priceMin?.toLocaleString() || '無此報價'}
               <span className='font-family-genseki text-[16px] xl:text-[20px] leading-[1.2] xl:leading-[1.5] ml-2'>
                 起
               </span>

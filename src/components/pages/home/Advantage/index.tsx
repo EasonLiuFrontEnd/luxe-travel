@@ -30,26 +30,19 @@ const Advantage = ({ className }: TAdvantageProps) => {
   const dragStartX = useRef(0)
   const dragStartScrollLeft = useRef(0)
 
-  const { query: advantagesQuery, mock } = useAdvantages()
-  const {
-    data: advantagesData,
-    isLoading: isAdvantagesLoading,
-    error: advantagesError,
-  } = advantagesQuery
+  const { query: advantagesQuery } = useAdvantages()
+  const { data: advantagesData, isLoading: isAdvantagesLoading } =
+    advantagesQuery
 
   useScrollLock(isInDetectionZone && !isMobile)
 
   const displayData = useMemo(() => {
-    if (advantagesError) {
-      return transformAdvantageData(mock.rows)
-    }
-
     if (isAdvantagesLoading) {
       return []
     }
 
     return transformAdvantageData(advantagesData || [])
-  }, [advantagesError, advantagesData, isAdvantagesLoading, mock.rows])
+  }, [advantagesData, isAdvantagesLoading])
 
   useEffect(() => {
     const checkMobileLayout = () => {
