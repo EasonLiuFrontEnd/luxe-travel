@@ -24,6 +24,7 @@ type TTourInfoProps = {
   map?: TTourProduct['map']
   feedback?: TFeedback
   description?: string
+  priceMin: number
 }
 
 const TourInfo = ({
@@ -33,6 +34,7 @@ const TourInfo = ({
   map,
   feedback,
   description,
+  priceMin,
 }: TTourInfoProps) => {
   const [selectedTourId, setSelectedTourId] = useState<string>(
     tours[0]?.id || '',
@@ -112,6 +114,7 @@ const TourInfo = ({
         category={category}
         tours={tours}
         selectedTourId={selectedTourId}
+        priceMin={priceMin}
         className='order-1 xl:order-2'
       />
     </div>
