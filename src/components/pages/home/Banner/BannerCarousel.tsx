@@ -119,7 +119,11 @@ const BannerCarousel = ({
         <button
           onClick={() => {
             if (currentBanner?.linkUrl) {
-              window.open(currentBanner.linkUrl, '_blank', 'noopener,noreferrer')
+              window.open(
+                currentBanner.linkUrl,
+                '_blank',
+                'noopener,noreferrer',
+              )
             }
           }}
           className={cn(

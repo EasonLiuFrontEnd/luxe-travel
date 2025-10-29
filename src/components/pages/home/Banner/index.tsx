@@ -83,16 +83,6 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
     return effectiveData[currentBannerIndex] || effectiveData[0] || mock.rows[0]
   }, [effectiveData, currentBannerIndex, mock.rows])
 
-  const bannerImages = useMemo(() => {
-    if (bannersError) {
-      return ['/home/banners/banner.jpg']
-    }
-    if (effectiveData && effectiveData.length > 0) {
-      return effectiveData.map((banner) => banner.imageUrl)
-    }
-    return []
-  }, [bannersError, effectiveData])
-
   const dynamicPadding = useMemo(
     () =>
       `${APP_CONFIG.SCROLL.BANNER_HEIGHT * 0.1 + (1 - logoProgress) * APP_CONFIG.SCROLL.LOGO_TRANSITION_END * 0.2}px`,
@@ -334,8 +324,8 @@ const Banner = ({ logoProgress: propLogoProgress }: TBannerComponent) => {
           </div>
         </div>
 
-        <BannerCarousel 
-          banners={effectiveData} 
+        <BannerCarousel
+          banners={effectiveData}
           autoPlayInterval={10000}
           onSlideChange={setCurrentBannerIndex}
         />
