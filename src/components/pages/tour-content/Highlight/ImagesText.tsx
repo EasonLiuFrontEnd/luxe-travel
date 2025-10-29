@@ -9,13 +9,13 @@ const ImagesText = ({ highlight }: TImagesTextProps) => {
   const contentLines = highlight.content.split('\n')
 
   return (
-    <div className='flex max-xl:flex-col xl:justify-between max-xl:gap-y-9 pb-10 xl:py-10 mx-4 xl:mx-10 2xl:mx-[240px]'>
+    <div className='flex max-xl:flex-col xl:justify-between max-xl:gap-y-9 pb-10 xl:py-10 mx-4 xl:mx-10 2xl:mx-60'>
       {highlight.imageUrls && highlight.imageUrls.length > 0 && (
         <div className='order-2 xl:order-1 flex flex-col gap-y-9 xl:gap-y-12'>
           {highlight.imageUrls.map((imageUrl, index) => {
             if (index === 0) {
               return (
-                <div key={imageUrl} className='max-xl:pr-[60px]'>
+                <div key={imageUrl} className='max-xl:self-end max-xl:pr-10'>
                   <Image
                     src={imageUrl}
                     alt={`${highlight.title}-1`}
@@ -27,7 +27,7 @@ const ImagesText = ({ highlight }: TImagesTextProps) => {
               )
             } else if (index === 1) {
               return (
-                <div key={imageUrl} className='max-xl:pl-[60px]'>
+                <div key={imageUrl} className='max-xl:pl-10'>
                   <Image
                     src={imageUrl}
                     alt={`${highlight.title}-2`}

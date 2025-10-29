@@ -49,7 +49,7 @@ const TextImages = ({ highlight }: TTextImagesProps) => {
           {highlight.imageUrls.map((imageUrl, index) => {
             if (index === 0) {
               return (
-                <div key={imageUrl} className='max-xl:pr-[60px]'>
+                <div key={imageUrl} className='max-xl:self-start max-xl:pr-10'>
                   <Image
                     src={imageUrl}
                     alt={`${highlight.title}-1`}
@@ -61,7 +61,7 @@ const TextImages = ({ highlight }: TTextImagesProps) => {
               )
             } else if (index === 1) {
               return (
-                <div key={imageUrl} className='max-xl:pl-[60px]'>
+                <div key={imageUrl} className='max-xl:pl-10'>
                   <Image
                     src={imageUrl}
                     alt={`${highlight.title}-2`}
