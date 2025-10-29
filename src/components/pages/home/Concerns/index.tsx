@@ -5,6 +5,7 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useConcerns } from '@/api/home/useConcerns'
 import { useScrollDrivenAnimation } from '@/hooks/useScrollDrivenAnimation'
 import StickyNotes from './StickyNotes'
+import '@/styles/components.css'
 
 const Concerns = () => {
   const { isMobile } = useMediaQuery()
@@ -21,11 +22,6 @@ const Concerns = () => {
     return concernsData || []
   }, [concernsData, isConcernsLoading])
 
-  const gradientStyle = {
-    background:
-      'linear-gradient(to bottom, transparent 0%, transparent calc(100% - 26px), #e5d9bf calc(100% - 26px), #e5d9bf 100%)',
-  }
-
   const backgroundStyle = {
     background: 'linear-gradient(to bottom, #F2F2F2 0%, #F7F4EC 100%)',
   }
@@ -33,8 +29,8 @@ const Concerns = () => {
   const gridBackgroundStyle = {
     backgroundSize: '48px 48px',
     backgroundImage: `
-      linear-gradient(to right, #E5D9BF 1px, transparent 1px),
-      linear-gradient(to bottom, #E5D9BF 1px, transparent 1px)
+      linear-gradient(to right, var(--color-figma-secondary-300) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-figma-secondary-300) 1px, transparent 1px)
     `,
     WebkitMaskImage: `
       linear-gradient(to bottom, #fff 0%, transparent 100%)
@@ -61,12 +57,12 @@ const Concerns = () => {
       >
         {isMobile ? (
           <>
-            <span style={gradientStyle}>歐洲自由行</span>
+            <span className='gradient-title-border'>歐洲自由行</span>
             <br />
-            <span style={gradientStyle}>規劃煩惱多？</span>
+            <span className='gradient-title-border'>規劃煩惱多？</span>
           </>
         ) : (
-          <span style={gradientStyle}>歐洲自由行規劃煩惱多？</span>
+          <span className='gradient-title-border'>歐洲自由行規劃煩惱多？</span>
         )}
       </h2>
       <div className='flex flex-col items-center gap-8 xl:gap-7 xl:flex-row xl:justify-center w-full'>

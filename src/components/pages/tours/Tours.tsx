@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import TourCard from './TourCard'
-import GroupTourCard from './GroupTourCard'
+import GroupTourCard from '@/components/shared/cards/GroupTourCard'
 import type { TTourData, TTourType } from './config'
 import { useRouter } from 'next/navigation'
 

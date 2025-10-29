@@ -246,8 +246,8 @@ const HighlightMarquee = () => {
               className={cn(
                 'group pt-3 px-4 pb-4 xl:pt-[14px] xl:pl-7 xl:pr-[20px] xl:pb-[18px] mr-4 xl:mr-7 border rounded-[41px] transition-colors',
                 canScrollPrev
-                  ? 'border-figma-secondary-950 text-[#926D3C] cursor-pointer'
-                  : 'border-figma-secondary-300 text-[#E5D9BF] cursor-not-allowed',
+                  ? 'border-figma-secondary-950 text-figma-secondary-950 cursor-pointer'
+                  : 'border-figma-secondary-300 text-figma-secondary-300 cursor-not-allowed',
               )}
             >
               {isMobile ? (
@@ -291,8 +291,8 @@ const HighlightMarquee = () => {
               className={cn(
                 'group pt-3 px-4 pb-4 xl:pt-[14px] xl:pl-7 xl:pr-[20px] xl:pb-[18px] xl:mr-7 border rounded-[41px] transition-colors',
                 canScrollNext
-                  ? 'border-figma-secondary-950 text-[#926D3C] cursor-pointer'
-                  : 'border-figma-secondary-300 text-[#E5D9BF] cursor-not-allowed',
+                  ? 'border-figma-secondary-950 text-figma-secondary-950 cursor-pointer'
+                  : 'border-figma-secondary-300 text-figma-secondary-300 cursor-not-allowed',
               )}
             >
               <div
