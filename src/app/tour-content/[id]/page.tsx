@@ -67,6 +67,7 @@ const TourContentPage = ({ params }: TPageProps) => {
         map={tourProduct.map || undefined}
         feedback={tourProduct.feedback}
         description={tourProduct.description}
+        priceMin={tourProduct.priceMin}
       />
       {hasHighlights && (
         <Highlight highlights={tourProduct.highlights} productId={id} />
@@ -89,7 +90,7 @@ const TourContentPage = ({ params }: TPageProps) => {
               </button>
             </div>
             <h3 className='font-family-noto-serif text-2xl xl:text-[40px] font-bold leading-[1.2] text-figma-secondary-500'>
-              ＄119,000
+              ＄{tourProduct.priceMin?.toLocaleString() || '無此報價'}
               <span className='font-family-genseki text-[16px] xl:text-[20px] leading-[1.2] xl:leading-[1.5] ml-2'>
                 起
               </span>
