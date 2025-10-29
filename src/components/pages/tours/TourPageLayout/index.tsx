@@ -23,8 +23,6 @@ import type {
   TProduct,
   TProductSearchParams,
   TRegionData,
-  TProductSearchResponse,
-  TCountriesResponse,
 } from '@/api/free-tours'
 import type { TApiResponse } from '@/api/type'
 
