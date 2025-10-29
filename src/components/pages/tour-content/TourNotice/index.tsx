@@ -3,7 +3,7 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { cn } from '@/lib/utils'
 
 type TTourNoticeProps = {
-  category: 'GROUP' | 'FREE'
+  category: 'GROUP' | 'FREE' | 'RCAR'
   reminder: string
   policy: string
 }

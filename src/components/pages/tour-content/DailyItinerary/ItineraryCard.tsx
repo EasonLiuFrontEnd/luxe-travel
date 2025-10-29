@@ -18,7 +18,7 @@ type TItineraryCardProps = TBaseComponent & {
 const ItineraryCard = ({ itinerary, attractions }: TItineraryCardProps) => {
   const carouselRef = useRef<TItineraryCarouselRef>(null)
   const [current, setCurrent] = useState(0)
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(attractions?.length || 0)
   const { isMobile } = useMediaQuery()
 
   const formatDayNumber = (day: number): string => {
@@ -69,10 +69,10 @@ const ItineraryCard = ({ itinerary, attractions }: TItineraryCardProps) => {
             {itinerary.title}
           </span>
         </h3>
-        {!isMobile && count > 0 && (
+        {!isMobile && attractions && attractions.length > 1 && (
           <CarouselControls
             current={current}
-            count={count}
+            count={count || attractions.length}
             onPrevious={handlePrevious}
             onNext={handleNext}
             className='min-w-[146px] pr-7'
@@ -105,16 +105,16 @@ const ItineraryCard = ({ itinerary, attractions }: TItineraryCardProps) => {
                   參考行車時間距離
                 </p>
               </div>
-              <div className='flex flex-col gap-y-8 xl:gap-y-7 font-family-noto-serif text-[18px] xl:text-[20px] font-semibold xl:font-medium leading-[1.5] xl:leading-[1.2] text-figma-primary-950 whitespace-nowrap'>
+              <div className='flex flex-col gap-y-8 xl:gap-y-7 font-family-noto-serif text-[18px] xl:text-[20px] font-semibold xl:font-medium leading-[1.5] xl:leading-[1.2] text-figma-primary-950'>
                 {itinerary.routes.map((route) => (
                   <div key={route.id} className='flex items-center gap-x-4'>
-                    <p>{route.depart}</p>
+                    <p className='min-w-11 xl:min-min-w-12'>{route.depart}</p>
                     <div className='w-full text-center font-genseki-body-m-medium text-figma-primary-500'>
                       <p>{route.duration}</p>
                       <div className={styles['horizontal-line']}></div>
                       <p>{route.distance}</p>
                     </div>
-                    <p>{route.arrive}</p>
+                    <p className='min-w-11 xl:min-min-w-12'>{route.arrive}</p>
                   </div>
                 ))}
               </div>
@@ -151,10 +151,10 @@ const ItineraryCard = ({ itinerary, attractions }: TItineraryCardProps) => {
                 精選行程
               </p>
             </div>
-            {isMobile && count > 0 && (
+            {isMobile && attractions && attractions.length > 1 && (
               <CarouselControls
                 current={current}
-                count={count}
+                count={count || attractions.length}
                 onPrevious={handlePrevious}
                 onNext={handleNext}
               />

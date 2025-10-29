@@ -10,7 +10,7 @@ type TNavigationItem = {
 }
 
 type TNavigationSidebarProps = {
-  category: 'GROUP' | 'FREE'
+  category: 'GROUP' | 'FREE' | 'RCAR'
   hasHighlights: boolean
 }
 
