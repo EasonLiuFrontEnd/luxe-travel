@@ -26,15 +26,12 @@ const InteractiveMap = ({
     y: number
   } | null>(null)
 
-  const { query: mapQuery, mock: mapMock } = useMap()
+  const { query: mapQuery } = useMap()
 
   const selectedRegionData = useMemo(() => {
     if (!selectedRegion) return null
 
-    const data =
-      mapQuery.error && process.env.NODE_ENV !== 'production'
-        ? mapMock.rows
-        : mapQuery.data || []
+    const data = mapQuery.data || []
 
     if (!data) return null
 
@@ -50,7 +47,7 @@ const InteractiveMap = ({
       description: article.title,
       image: article.imageUrl,
     }
-  }, [selectedRegion, mapQuery.data, mapQuery.error, mapMock.rows])
+  }, [selectedRegion, mapQuery.data])
 
   useLayoutEffect(() => {
     if (selectedRegion && !clickPosition) {

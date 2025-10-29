@@ -18,7 +18,7 @@ import type {
 } from '@/api/tour-content'
 
 type TTourInfoProps = {
-  category: 'GROUP' | 'FREE'
+  category: 'GROUP' | 'FREE' | 'RCAR'
   tours: TTour[]
   flights: TFlight[]
   map?: TTourProduct['map']
@@ -51,8 +51,8 @@ const TourInfo = ({
         {category === 'GROUP' && (
           <DepartureDate tours={tours} onTourSelect={handleTourSelect} />
         )}
-        {category === 'FREE' && feedback && <Feedback feedback={feedback} />}
-        {category === 'FREE' && description && (
+        {category !== 'GROUP' && feedback && <Feedback feedback={feedback} />}
+        {category !== 'GROUP' && description && (
           <PriceIncludes description={description} />
         )}
         <Flight flights={flights} />

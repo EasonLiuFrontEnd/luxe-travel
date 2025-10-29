@@ -29,7 +29,7 @@ const Navigation = ({
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const { push } = useRouter()
 
-  const { query: menuQuery, mock } = useMenu()
+  const { query: menuQuery } = useMenu()
   const {
     data: menuData,
     isLoading: isMenuLoading,
@@ -37,16 +37,12 @@ const Navigation = ({
   } = menuQuery
 
   const { navItems, dropdownMenus } = useMemo(() => {
-    if (menuError) {
-      return transformMenuData(mock.data)
-    }
-
-    if (isMenuLoading) {
+    if (menuError || isMenuLoading) {
       return { navItems: [], dropdownMenus: {} }
     }
 
     return transformMenuData(menuData || [])
-  }, [menuError, menuData, isMenuLoading, mock.data])
+  }, [menuError, menuData, isMenuLoading])
 
   const openSearch = () => {
     setIsSearchOpen(true)

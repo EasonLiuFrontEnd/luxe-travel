@@ -49,19 +49,19 @@ const TourContentPage = ({ params }: TPageProps) => {
     tourProduct.highlights && tourProduct.highlights.length > 0
 
   return (
-    <div className='relative bg-figma-neutral-50'>
+    <div className='relative bg-figma-neutral-50 max-xl:pb-[100px]'>
       <NavigationSidebar
-        category={tourProduct.category as 'GROUP' | 'FREE'}
+        category={tourProduct.category}
         hasHighlights={hasHighlights}
       />
       <Banner
-        category={tourProduct.category as 'GROUP' | 'FREE'}
+        category={tourProduct.category}
         namePrefix={tourProduct.namePrefix}
         name={tourProduct.name}
         mainImageUrl={tourProduct.mainImageUrl}
       />
       <TourInfo
-        category={tourProduct.category as 'GROUP' | 'FREE'}
+        category={tourProduct.category}
         tours={tourProduct.tour}
         flights={tourProduct.flights}
         map={tourProduct.map || undefined}
@@ -75,12 +75,12 @@ const TourContentPage = ({ params }: TPageProps) => {
         <DailyItinerary itineraries={tourProduct.itineraries} />
       )}
       <TourNotice
-        category={tourProduct.category as 'GROUP' | 'FREE'}
+        category={tourProduct.category}
         reminder={tourProduct.reminder}
         policy={tourProduct.policy}
       />
       {isMobile && (
-        <div className='flex justify-between items-end p-7'>
+        <div className='fixed bottom-0 left-0 right-0 flex justify-between items-end p-7 bg-figma-neutral-50 shadow-[0_-4px_12px_rgba(0,0,0,0.1)] z-50'>
           <div className='flex flex-col'>
             <div className='flex justify-between font-genseki-body-s-regular'>
               <p>9/20(日)</p>

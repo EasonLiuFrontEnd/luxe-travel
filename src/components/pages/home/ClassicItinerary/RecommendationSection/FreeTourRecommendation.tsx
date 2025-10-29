@@ -9,22 +9,16 @@ import styles from './styles.module.css'
 const FreeTourRecommendation = () => {
   const router = useRouter()
   const { selectedCountryId } = useSelectedCountry()
-  const { query: booksQuery, mock: booksMock } = useBooks()
+  const { query: booksQuery } = useBooks()
 
   const currentCountryName = useMemo(() => {
-    const data =
-      booksQuery.error && process.env.NODE_ENV !== 'production'
-        ? booksMock.rows
-        : booksQuery.data || []
+    const data = booksQuery.data || []
     const selectedBook = data.find((book) => book.id === selectedCountryId)
     return selectedBook?.title || ''
-  }, [booksQuery.data, booksQuery.error, booksMock.rows, selectedCountryId])
+  }, [booksQuery.data, selectedCountryId])
 
   const currentFreeTours = useMemo(() => {
-    const data =
-      booksQuery.error && process.env.NODE_ENV !== 'production'
-        ? booksMock.rows
-        : booksQuery.data || []
+    const data = booksQuery.data || []
     const selectedBook = data.find((book) => book.id === selectedCountryId)
 
     return (selectedBook?.freeProducts || [])
@@ -40,7 +34,7 @@ const FreeTourRecommendation = () => {
         hoverTitle: tour.hoverTitle,
         hoverDescription: tour.hoverDescription,
       }))
-  }, [booksQuery.data, booksQuery.error, booksMock.rows, selectedCountryId])
+  }, [booksQuery.data, selectedCountryId])
 
   return (
     <div className='bg-white box-border flex flex-col gap-8 justify-between items-center pb-6 pt-0 px-4 xl:px-6 relative rounded-[12px] xl:rounded-2xl w-full h-full'>
