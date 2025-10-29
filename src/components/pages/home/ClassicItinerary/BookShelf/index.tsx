@@ -13,10 +13,9 @@ type TStyle = React.CSSProperties & {
 
 type TBookShelfProps = {
   trackRef?: React.RefObject<HTMLDivElement>
-  isMobile?: boolean
 }
 
-const BookShelf = ({ trackRef, isMobile = false }: TBookShelfProps) => {
+const BookShelf = ({ trackRef }: TBookShelfProps) => {
   const [activeCardId, setActiveCardId] = useState<string | null>(null)
   const [showArrow, setShowArrow] = useState(false)
   const [isVerticalLayout, setIsVerticalLayout] = useState(false)
@@ -47,30 +46,30 @@ const BookShelf = ({ trackRef, isMobile = false }: TBookShelfProps) => {
 
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {
-      if (!isMobile || !trackRef?.current) return
+      if (!trackRef?.current) return
       setIsDragging(true)
       setStartX(e.pageX - trackRef.current.offsetLeft)
       setScrollLeft(trackRef.current.scrollLeft)
     },
-    [isMobile, trackRef],
+    [trackRef],
   )
 
   const handleMouseLeave = useCallback(() => {
-    if (isMobile) setIsDragging(false)
-  }, [isMobile])
+    setIsDragging(false)
+  }, [])
 
   const handleMouseUp = useCallback(() => {
-    if (isMobile) setIsDragging(false)
-  }, [isMobile])
+    setIsDragging(false)
+  }, [])
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
-      if (!isDragging || !isMobile || !trackRef?.current) return
+      if (!isDragging || !trackRef?.current) return
       const x = e.pageX - trackRef.current.offsetLeft
       const walk = (x - startX) * 2
       trackRef.current.scrollLeft = scrollLeft - walk
     },
-    [isDragging, isMobile, startX, scrollLeft, trackRef],
+    [isDragging, startX, scrollLeft, trackRef],
   )
 
   useEffect(() => {
@@ -151,18 +150,12 @@ const BookShelf = ({ trackRef, isMobile = false }: TBookShelfProps) => {
           </svg>
         </div>
       )}
-      <div
-        className={`relative w-full ${isMobile ? 'overflow-x-auto' : 'overflow-hidden'}`}
-      >
+      <div className='relative w-full overflow-x-auto'>
         <div
           ref={trackRef}
-          className={`${isMobile ? styles.trackMobile : styles.track} ${
-            isDragging && isMobile
-              ? 'cursor-grabbing'
-              : isMobile
-                ? 'cursor-grab'
-                : ''
-          } ${isMobile ? 'scroll-snap-type-x-mandatory select-none' : ''}`}
+          className={`${styles.track} ${
+            isDragging ? 'cursor-grabbing' : 'cursor-grab'
+          } scroll-snap-type-x-mandatory select-none`}
           onMouseDown={handleMouseDown}
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}

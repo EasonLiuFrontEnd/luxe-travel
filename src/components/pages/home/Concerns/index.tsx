@@ -10,8 +10,7 @@ import '@/styles/components.css'
 const Concerns = () => {
   const { isMobile } = useMediaQuery()
   const { query: concernsQuery } = useConcerns()
-  const { containerRef, notePositions, getNoteTransformY } =
-    useScrollDrivenAnimation()
+  const { containerRef } = useScrollDrivenAnimation()
   const { data: concernsData, isLoading: isConcernsLoading } = concernsQuery
 
   const effectiveData = useMemo(() => {
@@ -78,10 +77,6 @@ const Concerns = () => {
               rotation={rotations[index]}
               color={colors[index]}
               offsetY={isMobile ? '0' : offsetYs[index]}
-              position={isMobile ? 100 : notePositions[index]}
-              transformY={
-                isMobile ? 0 : getNoteTransformY(notePositions[index])
-              }
             />
           )
         })}

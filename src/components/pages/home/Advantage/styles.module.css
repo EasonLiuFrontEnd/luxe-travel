@@ -3,11 +3,15 @@
   position: relative;
   z-index: 20;
   gap: 60px;
-  transition: transform 0.3s ease-out;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  user-select: none;
 }
 
-.trackNoTransition {
-  transition: none;
+.track::-webkit-scrollbar {
+  display: none;
 }
 
 .cardHeight {
