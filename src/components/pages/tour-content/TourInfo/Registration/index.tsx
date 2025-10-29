@@ -9,6 +9,7 @@ type TRegistrarionProps = {
   category: 'GROUP' | 'FREE' | 'RCAR'
   tours: TTour[]
   selectedTourId?: string
+  priceMin: number
   className?: string
 }
 
@@ -24,6 +25,7 @@ const Registration = ({
   category,
   tours,
   selectedTourId,
+  priceMin,
   className,
 }: TRegistrarionProps) => {
   const { isMobile } = useMediaQuery()
@@ -193,18 +195,9 @@ const Registration = ({
       </div>
       {!isMobile && (
         <div className='flex justify-between'>
-          <h3
-            className={cn(
-              'font-noto-serif-h3-bold',
-              adultColor === 'text-figma-primary-300'
-                ? 'text-figma-primary-300'
-                : 'text-figma-secondary-500',
-            )}
-          >
-            <PriceDisplay value={tour.adult} className={adultColor} />
-            {adultColor === 'text-figma-primary-950' && (
-              <span className='font-genseki-h6-regular ml-2'>起</span>
-            )}
+          <h3 className='font-noto-serif-h3-bold text-figma-secondary-500'>
+            ＄{priceMin?.toLocaleString() || '無此報價'}
+            <span className='font-genseki-h6-regular ml-2'>起</span>
           </h3>
           <button className='box-content w-[336px] min-w-[128px] font-genseki-h6-regular text-figma-primary-0 py-[9px] px-7 rounded-[60px] bg-figma-function-available-normal hover:bg-figma-function-available-light cursor-pointer'>
             我要報名
