@@ -23,7 +23,7 @@ import BeerIcon from '@/components/shared/icons/theme/BeerIcon'
 const ThemePage = () => {
   return (
     <div className={styles.background}>
-      <div className='w-full max-w-[1920px] mx-auto px-[clamp(12px,2.5vw,48px)] pt-[112px] pb-8'>
+      <div className='w-full max-w-[1920px] mx-auto px-[clamp(12px,2.5vw,48px)] pt-[37px] xl:pt-[112px] pb-8'>
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -45,12 +45,19 @@ const ThemePage = () => {
         </Breadcrumb>
       </div>
 
-      <div className='relative w-full max-w-[1920px] mx-auto px-[clamp(12px,2.5vw,48px)] flex flex-col items-center gap-7 pb-8'>
-        <BicycleIcon className={styles.iconHover} />
-        <CarIcon className={styles.iconHover} />
-        <FlowerIcon className={styles.iconHover} />
-        <BeerIcon className={styles.iconHover} />
-        
+      <div className='relative w-full max-w-[1920px] mx-auto px-[clamp(12px,2.5vw,48px)] flex flex-col items-center gap-4 xl:gap-7 pb-8'>
+        <div className='h-[76px] xl:h-auto w-full px-7 xl:px-0'>
+          <div className='flex justify-center xl:flow-root gap-8 xl:gap-0'>
+            <CarIcon className={styles.iconHover} />
+            <FlowerIcon className={styles.iconHover} />
+          </div>
+
+          <div className='flex xl:flow-root gap-[203px] xl:gap-0 absolute left-[50%] -translate-x-1/2 top-[26px] xl:relative xl:top-0 xl:left-auto xl:translate-x-0'>
+            <BicycleIcon className={styles.iconHover} />
+            <BeerIcon className={styles.iconHover} />
+          </div>
+        </div>
+
         <div className='flex justify-center gap-2'>
           <span className='font-noto-serif-h2-bold text-figma-secondary-500'>
             德國
@@ -65,8 +72,8 @@ const ThemePage = () => {
         </span>
       </div>
 
-      <section className='w-full max-w-[1920px] mx-auto px-[clamp(12px,2.5vw,48px)] flex flex-col-reverse xl:flex-row justify-center items-center gap-6 pb-[40px] relative'>
-        <div className='w-full h-[343px] absolute left-0 bottom-[-240px]'>
+      <section className='w-full max-w-[1920px] mx-auto px-[clamp(12px,2.5vw,48px)] flex flex-col-reverse xl:flex-row justify-center items-center gap-[38px] xl:gap-6 pb-[40px] relative'>
+        <div className='w-full h-[343px] absolute left-0 bottom-[-500px] xl:bottom-[-240px]'>
           <div
             className={cn(
               'w-full h-full absolute inset-0 opacity-10',
@@ -112,11 +119,11 @@ const ThemePage = () => {
 
           <div
             className={cn(
-              'w-full h-full aspect-[368/404] max-w-[368px] max-h-[404px] relative rounded-2xl overflow-hidden mt-[56px] group/text-card',
+              'w-full h-full aspect-[351/620] xl:aspect-[368/404] max-w-[351px] max-h-[620px] xl:max-w-[368px] xl:max-h-[404px] relative rounded-2xl overflow-hidden mt-[56px] group/text-card',
               styles.bannerImage02,
             )}
           >
-            <div className='font-genseki-body-l-regular text-figma-primary-950 bg-figma-secondary-300 absolute bottom-0 left-0 w-full max-h-[202px] group-hover/text-card:max-h-[404px] h-full py-6 px-7 rounded-2xl transition-all duration-500 ease-in-out'>
+            <div className='font-genseki-body-l-regular text-figma-primary-950 bg-figma-secondary-300 absolute bottom-0 left-0 w-full max-h-[418px] xl:max-h-[202px] group-hover/text-card:max-h-[620px] xl:group-hover/text-card:max-h-[404px] h-full py-6 px-7 rounded-2xl transition-all duration-500 ease-in-out'>
               <p className='line-clamp-6 group-hover/text-card:line-clamp-none'>
                 一年一度在慕尼黑舉辦的啤酒節活動(Oktoberfest),每年都吸引數百萬人湧進這充滿典雅風情的大城市。現場如大型的戶外遊樂場~
                 啤酒帳篷、充滿著彩色燈光的遊樂設施，歡迎各國觀光客前來共遊,體驗這色彩繽紛的啤酒世界。彩繽紛的啤酒世界。
@@ -160,6 +167,39 @@ const ThemePage = () => {
               className='w-full h-full object-cover absolute inset-0 opacity-0 group-hover/banner04:opacity-100 transition-opacity duration-300'
             />
           </div>
+        </div>
+      </section>
+
+      <section className='flex justify-center items-end gap-4 w-full xl:hidden overflow-hidden relative mb-[64px]'>
+        <div className='w-full max-w-[256px] relative'>
+          <span className='font-luxurious-deco-l-regular text-figma-secondary-500 absolute top-[-24px] left-1/2 -translate-x-1/2 whitespace-nowrap'>
+            9/20 - 10/5
+          </span>
+
+          <div
+            className={cn(
+              'w-full h-full aspect-[256/256] max-w-[256px] max-h-[256px] rounded-2xl mt-[48px]',
+              styles.bannerImage02,
+            )}
+          ></div>
+        </div>
+
+        <div className='w-full max-w-[280px]'>
+          <div
+            className={cn(
+              'w-full h-full aspect-[280/313] max-w-[280px] max-h-[313px] rounded-2xl',
+              styles.bannerImage04,
+            )}
+          ></div>
+        </div>
+
+        <div className='w-full max-w-[256px]'>
+          <div
+            className={cn(
+              'w-full h-full aspect-[256/256] max-w-[256px] max-h-[256px] rounded-2xl',
+              styles.bannerImage02,
+            )}
+          ></div>
         </div>
       </section>
 
