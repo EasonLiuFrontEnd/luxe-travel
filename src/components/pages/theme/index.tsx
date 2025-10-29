@@ -124,7 +124,7 @@ const ThemePage = () => {
             )}
           >
             <div className='font-genseki-body-l-regular text-figma-primary-950 bg-figma-secondary-300 absolute bottom-0 left-0 w-full max-h-[418px] xl:max-h-[202px] group-hover/text-card:max-h-[620px] xl:group-hover/text-card:max-h-[404px] h-full py-6 px-7 rounded-2xl transition-all duration-500 ease-in-out'>
-              <p className='line-clamp-6 group-hover/text-card:line-clamp-none'>
+              <p className='line-clamp-14 xl:line-clamp-6 group-hover/text-card:line-clamp-none'>
                 一年一度在慕尼黑舉辦的啤酒節活動(Oktoberfest),每年都吸引數百萬人湧進這充滿典雅風情的大城市。現場如大型的戶外遊樂場~
                 啤酒帳篷、充滿著彩色燈光的遊樂設施，歡迎各國觀光客前來共遊,體驗這色彩繽紛的啤酒世界。彩繽紛的啤酒世界。
               </p>
