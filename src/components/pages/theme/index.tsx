@@ -46,14 +46,14 @@ const ThemePage = () => {
       </div>
 
       <div className='relative w-full max-w-[1920px] mx-auto px-[clamp(12px,2.5vw,48px)] flex flex-col items-center gap-4 xl:gap-7 pb-8'>
-        <div className='h-[76px] xl:h-auto w-full px-7 xl:px-0'>
-          <div className='flex justify-center xl:flow-root gap-8 xl:gap-0'>
+        <div className='h-[76px] xl:h-auto w-full px-7 xl:px-0 flex xl:flow-root gap-8 xl:gap-0 justify-center'>
+          <div className='flex xl:flow-root gap-8 xl:gap-0'>
+            <BicycleIcon className={styles.iconHover} />
             <CarIcon className={styles.iconHover} />
-            <FlowerIcon className={styles.iconHover} />
           </div>
 
-          <div className='flex xl:flow-root gap-[203px] xl:gap-0 absolute left-[50%] -translate-x-1/2 top-[26px] xl:relative xl:top-0 xl:left-auto xl:translate-x-0'>
-            <BicycleIcon className={styles.iconHover} />
+          <div className='flex xl:flow-root gap-8 xl:gap-0'>
+            <FlowerIcon className={styles.iconHover} />
             <BeerIcon className={styles.iconHover} />
           </div>
         </div>

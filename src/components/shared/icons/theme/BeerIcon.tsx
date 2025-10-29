@@ -8,7 +8,7 @@ const BeerIcon = ({ className }: TBeerIcon) => {
   return (
     <div
       className={cn(
-        'xl:absolute xl:top-[10px] xl:right-[36px] w-[50px] h-[50px] xl:w-[100px] xl:h-[100px] border-[2px] border-figma-secondary-500 rounded-full flex items-center justify-center',
+        'relative xl:absolute top-[26px] xl:top-[10px] xl:right-[36px] w-[50px] h-[50px] xl:w-[100px] xl:h-[100px] border-[2px] border-figma-secondary-500 rounded-full flex items-center justify-center',
         className,
       )}
     >
