@@ -15,6 +15,10 @@ import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import DraggableCardStack from './DraggableCardStack'
 import ThemeToursList from './ThemeToursList'
+import BicycleIcon from '@/components/shared/icons/theme/BicycleIcon'
+import CarIcon from '@/components/shared/icons/theme/CarIcon'
+import FlowerIcon from '@/components/shared/icons/theme/FlowerIcon'
+import BeerIcon from '@/components/shared/icons/theme/BeerIcon'
 
 const ThemePage = () => {
   return (
@@ -41,7 +45,12 @@ const ThemePage = () => {
         </Breadcrumb>
       </div>
 
-      <div className='w-full max-w-[1920px] mx-auto px-[clamp(12px,2.5vw,48px)] flex flex-col items-center gap-7 pb-8'>
+      <div className='relative w-full max-w-[1920px] mx-auto px-[clamp(12px,2.5vw,48px)] flex flex-col items-center gap-7 pb-8'>
+        <BicycleIcon className={styles.iconHover} />
+        <CarIcon className={styles.iconHover} />
+        <FlowerIcon className={styles.iconHover} />
+        <BeerIcon className={styles.iconHover} />
+        
         <div className='flex justify-center gap-2'>
           <span className='font-noto-serif-h2-bold text-figma-secondary-500'>
             德國
@@ -72,7 +81,7 @@ const ThemePage = () => {
           ></div>
         </div>
 
-        <div className='hidden xl:block rounded-2xl overflow-hidden aspect-[256/256] w-full h-full max-w-[256px] max-h-[256px] relative group/banner01'>
+        <div className='hidden xl:block rounded-2xl overflow-hidden aspect-[256/256] w-full h-full max-w-[256px] max-h-[256px] relative group/banner01 mt-[77px]'>
           <Image
             src='/theme/bg.png'
             alt='banner-bg-01'
@@ -125,26 +134,32 @@ const ThemePage = () => {
           <div
             className={cn(
               'w-full h-full aspect-[368/412] max-w-[368px] max-h-[412px] rounded-2xl mt-[56px]',
-              styles.bannerImage03,
+              styles.bannerImage04,
             )}
           ></div>
         </div>
 
-        <div className='hidden xl:block rounded-2xl overflow-hidden aspect-[256/256] w-full h-full max-w-[256px] max-h-[256px] relative group/banner04'>
-          <Image
-            src='/theme/card.png'
-            alt='banner-bg-04'
-            width={256}
-            height={256}
-            className='w-full h-full object-cover absolute inset-0 group-hover/banner04:opacity-0 transition-opacity duration-300'
-          />
-          <Image
-            src='/theme/bg.png'
-            alt='banner-card-04'
-            width={256}
-            height={256}
-            className='w-full h-full object-cover absolute inset-0 opacity-0 group-hover/banner04:opacity-100 transition-opacity duration-300'
-          />
+        <div className='hidden xl:block w-full max-w-[256px] relative'>
+          <a href='#' className='absolute top-0 right-0 rounded-full overflow-hidden'>
+            <Image src='/theme/dropdown.svg' alt='dropdown' width={60} height={60} />
+          </a>
+
+          <div className='rounded-2xl overflow-hidden aspect-[256/256] w-full h-full max-w-[256px] max-h-[256px] relative group/banner04 mt-[77px]'>
+            <Image
+              src='/theme/card.png'
+              alt='banner-bg-04'
+              width={256}
+              height={256}
+              className='w-full h-full object-cover absolute inset-0 group-hover/banner04:opacity-0 transition-opacity duration-300'
+            />
+            <Image
+              src='/theme/bg.png'
+              alt='banner-card-04'
+              width={256}
+              height={256}
+              className='w-full h-full object-cover absolute inset-0 opacity-0 group-hover/banner04:opacity-100 transition-opacity duration-300'
+            />
+          </div>
         </div>
       </section>
 
