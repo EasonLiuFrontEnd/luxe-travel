@@ -158,13 +158,18 @@ const Navigation = ({
                 <div
                   className={`flex justify-between items-center font-noto-serif-body-m-medium py-[12px] px-[40px] cursor-pointer
                     ${activeDropdown === item.label ? 'text-figma-secondary-950' : ''}`}
-                  onClick={() =>
-                    hasDropdown
-                      ? setActiveDropdown(
-                          activeDropdown === item.label ? null : item.label,
-                        )
-                      : onMenuToggle()
-                  }
+                  onClick={() => {
+                    if (hasDropdown) {
+                      setActiveDropdown(
+                        activeDropdown === item.label ? null : item.label,
+                      )
+                    } else {
+                      if (item.href && item.href !== '#') {
+                        handlePageNavigation(item.href)
+                      }
+                      onMenuToggle()
+                    }
+                  }}
                 >
                   {item.label}
                   {hasDropdown && (
