@@ -96,9 +96,10 @@ const TourInfo = ({
             >
               貼心安排
             </h5>
-            <ul className='box-content xl:h-[289px] list-disc font-family-genseki text-[16px] xl:text-[20px] leading-[1.5] text-figma-primary-950 pt-7 px-4 pb-10 xl:pt-9 xl:px-9 xl:pb-11 ml-6'>
-              <li>需要從後端補資料</li>
-            </ul>
+            <div
+              className='box-content xl:h-[289px] list-disc font-family-genseki text-[16px] xl:text-[20px] leading-[1.5] text-figma-primary-950 pt-7 px-4 pb-10 xl:pt-9 xl:px-9 xl:pb-11 ml-6'
+              dangerouslySetInnerHTML={{ __html: description || '' }}
+            ></div>
             <div className='absolute left-[-5px] bottom-[-10px] xl:left-[-10px] xl:bottom-[-22px] flex items-center gap-x-5'>
               <p className='font-family-noto-serif text-[32px] xl:text-[64px] max-xl:font-medium leading-[1.2] text-figma-secondary-100'>
                 Made to

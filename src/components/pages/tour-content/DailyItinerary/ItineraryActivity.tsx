@@ -35,7 +35,13 @@ const ItineraryActivity = ({
       ? '入內參觀'
       : visitType === 'OUTSIDE'
         ? '下車參觀'
-        : '拍照打卡'
+        : visitType === 'PHOTO'
+          ? '拍照打卡'
+          : visitType === 'SELF_PAY'
+            ? '自費參觀'
+            : visitType === 'FREE'
+              ? '免費參觀'
+              : '車覽'
 
   return (
     <div

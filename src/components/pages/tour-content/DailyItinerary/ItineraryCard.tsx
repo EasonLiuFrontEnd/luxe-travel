@@ -55,17 +55,17 @@ const ItineraryCard = ({ itinerary, attractions }: TItineraryCardProps) => {
 
   return (
     <div className='min-h-[700px] mx-4 xl:ml-[152px] xl:mr-9 rounded-2xl bg-figma-neutral-0'>
-      <div className='flex justify-between'>
+      <div className='flex justify-between pr-10'>
         <h3
           className={cn(
-            'max-xl:max-w-[312px] relative flex items-center max-xl:flex-wrap pl-4 pr-7 xl:px-7 rounded-ee-2xl bg-figma-secondary-100',
+            'relative flex items-center max-xl:flex-wrap pl-4 pr-7 xl:px-7 rounded-ee-2xl bg-figma-secondary-100',
             styles['concave-border'],
           )}
         >
           <span className='font-family-luxurious text-5xl xl:text-8xl xl:leading-[1.2] max-xl:tracking-[4.8px] text-figma-secondary-500 mr-4 xl:mr-6'>
             {formatDayNumber(itinerary.day)}
           </span>
-          <span className='font-family-noto-serif text-[18px] xl:text-[40px] font-semibold xl:font-bold leading-[1.5] xl:leading-[1.2] text-figma-primary-500'>
+          <span className='font-family-noto-serif text-[18px] xl:text-[40px] font-semibold xl:font-bold leading-normal xl:leading-[1.2] text-figma-primary-500'>
             {itinerary.title}
           </span>
         </h3>
