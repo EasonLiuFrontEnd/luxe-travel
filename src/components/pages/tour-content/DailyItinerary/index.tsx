@@ -12,6 +12,20 @@ type TDailyItineraryProps = {
 const DailyItinerary = ({ itineraries }: TDailyItineraryProps) => {
   const [openPlace, setOpenPlace] = useState<TItineraryAttraction | null>(null)
 
+  const filterFeatureAttractions = useCallback(
+    (attractions: TItineraryAttraction[]): TItineraryAttraction[] => {
+      return attractions.filter((attr) => attr.visitType === 'FEATURED')
+    },
+    [],
+  )
+
+  const filterNonFeatureAttractions = useCallback(
+    (attractions: TItineraryAttraction[]): TItineraryAttraction[] => {
+      return attractions.filter((attr) => attr.visitType !== 'FEATURED')
+    },
+    [],
+  )
+
   const groupAttractionsByVisitType = useCallback(
     (
       attractions: TItineraryAttraction[],
@@ -20,7 +34,7 @@ const DailyItinerary = ({ itineraries }: TDailyItineraryProps) => {
         string,
         { visitType: string; attractions: TItineraryAttraction[] }
       >()
-      const visitTypeOrder = ['INSIDE', 'PHOTO', 'OUTSIDE']
+      const visitTypeOrder = ['INSIDE', 'PHOTO', 'OUTSIDE', 'SELF_PAY', 'FREE', 'PASSBY']
 
       attractions.forEach((attraction) => {
         if (!groupMap.has(attraction.visitType)) {
@@ -62,20 +76,20 @@ const DailyItinerary = ({ itineraries }: TDailyItineraryProps) => {
           >
             <ItineraryCard
               itinerary={itinerary}
-              attractions={itinerary.attractions}
+              attractions={filterFeatureAttractions(itinerary.attractions)}
             />
             {itinerary.attractions && itinerary.attractions.length > 0 && (
               <>
-                {groupAttractionsByVisitType(itinerary.attractions).map(
-                  (group, groupIndex) => (
-                    <ItineraryActivity
-                      key={`${group.visitType}-${groupIndex}`}
-                      attractions={group.attractions}
-                      openPlace={openPlace}
-                      setOpenPlace={setOpenPlace}
-                    />
-                  ),
-                )}
+                {groupAttractionsByVisitType(
+                  filterNonFeatureAttractions(itinerary.attractions),
+                ).map((group, groupIndex) => (
+                  <ItineraryActivity
+                    key={`${group.visitType}-${groupIndex}`}
+                    attractions={group.attractions}
+                    openPlace={openPlace}
+                    setOpenPlace={setOpenPlace}
+                  />
+                ))}
               </>
             )}
             <div className='mt-10 mx-4 mb-[30px] xl:mt-12 xl:mx-[152px] xl:mb-10'>

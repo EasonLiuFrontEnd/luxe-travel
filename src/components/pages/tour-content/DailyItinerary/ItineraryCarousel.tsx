@@ -85,21 +85,6 @@ const ItineraryCarousel = forwardRef<
                   />
                 )}
               </div>
-              <div className='absolute left-4 bottom-4 flex gap-x-2 p-2 rounded-[4px] bg-figma-secondary-200'>
-                <Image
-                  src='/tour-content/flag.svg'
-                  alt='flag'
-                  width={20}
-                  height={20}
-                />
-                <p className='font-genseki-body-s-bold text-figma-primary-950'>
-                  {item.visitType === 'INSIDE'
-                    ? '入內參觀'
-                    : item.visitType === 'OUTSIDE'
-                      ? '下車參觀'
-                      : '拍照打卡'}
-                </p>
-              </div>
             </div>
             <p className='font-family-genseki text-[16px] xl:text-[18px] leading-[1.5] text-figma-primary-950 mb-1'>
               {item.attraction.content}

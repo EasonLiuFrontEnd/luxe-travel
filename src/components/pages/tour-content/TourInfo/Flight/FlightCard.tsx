@@ -53,8 +53,8 @@ const FlightCard = ({ flight, className = '' }: TFlightCardProps) => {
             <div className='flex items-center'>
               <Image
                 key={`flight-airline-${flight.id}`}
-                src={''}
-                alt='EVA-icon'
+                src='/tour-content/EVA Air.jpg'
+                alt={flight.airlineName}
                 width={93}
                 height={72}
                 className='w-5'

@@ -1,6 +1,6 @@
 export type TFlightDirection = 'OUTBOUND' | 'RETURN'
 
-export type TVisitType = 'INSIDE' | 'OUTSIDE' | 'PHOTO'
+export type TVisitType = 'INSIDE' | 'OUTSIDE' | 'PHOTO' | 'SELF_PAY' | 'FREE' | 'PASSBY' | 'FEATURED'
 
 export type TTour = {
   id: string
