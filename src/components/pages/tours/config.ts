@@ -75,7 +75,12 @@ export const convertProductToTourData = (
                 ? '已滿團'
                 : '熱銷中'
 
-        return { date: dateString, status }
+        return {
+          id: tour.id,
+          productId: tour.productId,
+          date: dateString,
+          status,
+        }
       })
     }
 

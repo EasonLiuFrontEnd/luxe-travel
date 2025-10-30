@@ -94,7 +94,14 @@ const Registration = ({
               <p className='font-genseki-body-m-medium max-xl:mr-[10px]'>
                 出發日期
               </p>
-              <button className='font-genseki-body-s-regular text-figma-secondary-950 underline cursor-pointer'>
+              <button
+                onClick={() => {
+                  document
+                    .getElementById('tour-info')
+                    ?.scrollIntoView({ behavior: 'smooth' })
+                }}
+                className='font-genseki-body-s-regular text-figma-secondary-950 underline cursor-pointer'
+              >
                 更改出發日
               </button>
             </div>

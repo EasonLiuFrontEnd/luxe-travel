@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import GroupTourCard from '@/components/shared/cards/GroupTourCard'
 import { convertProductToTourData } from '@/components/pages/tours/config'
 import { useThemeToursSearch } from '@/api/theme'
-import type { TTourData } from '@/components/pages/tours/config'
+import type { TTourData, TTourDate } from '@/components/pages/tours/config'
 
 const ThemeToursList = () => {
   const router = useRouter()
@@ -44,6 +44,14 @@ const ThemeToursList = () => {
     [router],
   )
 
+  const handleDateClick = useCallback(
+    (dateItem: TTourDate) => {
+      sessionStorage.setItem('tour-needs-refresh', 'true')
+      router.push(`/tour-content/${dateItem.productId}?tourId=${dateItem.id}`)
+    },
+    [router],
+  )
+
   if (tours.length === 0) {
     return (
       <div className='text-center py-20 font-genseki-body-l-regular text-figma-primary-950'>
@@ -65,6 +73,7 @@ const ThemeToursList = () => {
           dates={tour.dates || []}
           mainImageUrl={tour.mainImageUrl || '/theme/bg.png'}
           onDetailsClick={() => handleDetailsClick(tour.id)}
+          onDateClick={handleDateClick}
         />
       ))}
     </div>

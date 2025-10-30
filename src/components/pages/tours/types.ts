@@ -21,6 +21,8 @@ export type TFilter = {
 export type TSelectedFilters = TFilter[]
 
 export type TTourDate = {
+  id: string
+  productId: string
   date: string
   status: '已成團' | '熱銷中' | '已滿團'
 }

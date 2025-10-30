@@ -25,6 +25,7 @@ type TTourInfoProps = {
   feedback?: TFeedback
   description?: string
   priceMin: number
+  initialTourId?: string | null
 }
 
 const TourInfo = ({
@@ -35,9 +36,12 @@ const TourInfo = ({
   feedback,
   description,
   priceMin,
+  initialTourId,
 }: TTourInfoProps) => {
   const [selectedTourId, setSelectedTourId] = useState<string>(
-    tours[0]?.id || '',
+    initialTourId ||
+      tours.filter((tour) => tour.status === 1 || tour.status === 2)[0]?.id ||
+      '',
   )
 
   const handleTourSelect = (id: string) => {
@@ -51,7 +55,11 @@ const TourInfo = ({
     >
       <div className='order-2 xl:order-1 w-full xl:max-w-[48.7vw] box-content flex flex-col gap-y-5 xl:pt-3.5 xl:px-7 xl:pb-7'>
         {category === 'GROUP' && (
-          <DepartureDate tours={tours} onTourSelect={handleTourSelect} />
+          <DepartureDate
+            tours={tours}
+            onTourSelect={handleTourSelect}
+            initialTourId={initialTourId}
+          />
         )}
         {category !== 'GROUP' && feedback && <Feedback feedback={feedback} />}
         {category !== 'GROUP' && description && (

@@ -19,13 +19,20 @@ type TTimeSlotData = {
 type TDepartureDateProps = {
   tours: TTour[]
   onTourSelect?: (id: string) => void
+  initialTourId?: string | null
 }
 
-const DepartureDate = ({ tours, onTourSelect }: TDepartureDateProps) => {
+const DepartureDate = ({
+  tours,
+  onTourSelect,
+  initialTourId,
+}: TDepartureDateProps) => {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>()
   const [canScrollNext, setCanScrollNext] = useState(false)
   const [selectedTourId, setSelectedTourId] = useState<string>(
-    tours[0]?.id || '',
+    initialTourId ||
+      tours.filter((tour) => tour.status === 1 || tour.status === 2)[0]?.id ||
+      '',
   )
 
   const timeSlots: TTimeSlotData[] = useMemo(() => {
@@ -39,14 +46,13 @@ const DepartureDate = ({ tours, onTourSelect }: TDepartureDateProps) => {
       const formattedDate = `${month}/${day}(${weekday})`
 
       let status: TTimeSlotData['status']
+
       if (tour.status === 1) {
-        status = '熱銷中'
-      } else if (tour.status === 2) {
         status = '已成團'
-      } else if (tour.status === 3) {
-        status = '已滿團'
+      } else if (tour.status === 2) {
+        status = '熱銷中'
       } else {
-        status = '取消'
+        status = '已滿團'
       }
 
       return {

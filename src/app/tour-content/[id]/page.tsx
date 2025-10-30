@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import NavigationSidebar from '@/components/pages/tour-content/NavigationSidebar'
 import Banner from '@/components/pages/tour-content/Banner'
 import TourInfo from '@/components/pages/tour-content/TourInfo'
@@ -18,8 +18,10 @@ type TPageProps = {
 const TourContentPage = ({ params }: TPageProps) => {
   const { isMobile } = useMediaQuery()
   const router = useRouter()
+  const searchParams = useSearchParams()
   const resolvedParams = React.use(params)
   const { id } = resolvedParams
+  const tourId = searchParams.get('tourId')
 
   const { data: tourProduct, isLoading, error } = useTourProduct(id)
 
@@ -68,6 +70,7 @@ const TourContentPage = ({ params }: TPageProps) => {
         feedback={tourProduct.feedback}
         description={tourProduct.description}
         priceMin={tourProduct.priceMin}
+        initialTourId={tourId}
       />
       {hasHighlights && (
         <Highlight highlights={tourProduct.highlights} productId={id} />
@@ -85,7 +88,14 @@ const TourContentPage = ({ params }: TPageProps) => {
           <div className='flex flex-col'>
             <div className='flex justify-between font-genseki-body-s-regular'>
               <p>9/20(日)</p>
-              <button className='text-figma-secondary-950 underline cursor-pointer'>
+              <button
+                onClick={() => {
+                  document
+                    .getElementById('tour-info')
+                    ?.scrollIntoView({ behavior: 'smooth' })
+                }}
+                className='text-figma-secondary-950 underline cursor-pointer'
+              >
                 更改出發日
               </button>
             </div>
