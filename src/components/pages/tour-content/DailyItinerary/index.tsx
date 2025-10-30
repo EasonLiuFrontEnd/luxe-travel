@@ -34,7 +34,14 @@ const DailyItinerary = ({ itineraries }: TDailyItineraryProps) => {
         string,
         { visitType: string; attractions: TItineraryAttraction[] }
       >()
-      const visitTypeOrder = ['INSIDE', 'PHOTO', 'OUTSIDE', 'SELF_PAY', 'FREE', 'PASSBY']
+      const visitTypeOrder = [
+        'INSIDE',
+        'PHOTO',
+        'OUTSIDE',
+        'SELF_PAY',
+        'FREE',
+        'PASSBY',
+      ]
 
       attractions.forEach((attraction) => {
         if (!groupMap.has(attraction.visitType)) {
