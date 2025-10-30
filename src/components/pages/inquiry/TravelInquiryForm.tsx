@@ -10,7 +10,7 @@ import { BudgetSection } from './BudgetSection'
 import { IndependentTravelSection } from './IndependentTravelSection'
 import { Form } from '../../../components/ui/Form'
 import RequirementsSection from './RequirementsSection'
-import GroupTravelSection from './GroupTravelSection'
+import { GroupTravelSection } from './GroupTravelSection'
 
 type DeepPartial<T> = T extends object
   ? { [P in keyof T]?: DeepPartial<T[P]> }
@@ -37,9 +37,7 @@ type TContactSource =
 
 type TBudgetRange = '10~12萬' | '12~15萬' | '15~20萬' | '20萬以上'
 
-type TEuropeanRegion = 'western' | 'central' | 'southern' | 'northern'
-
-type TCountry =
+export type TCountry =
   | 'uk'
   | 'france'
   | 'ireland'
@@ -92,7 +90,7 @@ type TGroupTravel = {
   departureDate?: string
 }
 
-type TTravelInquiryFormData = {
+export type TTravelInquiryFormData = {
   basicInfo: TBasicInfo
   budget: TBudget
   independentTravel: TIndependentTravel
@@ -229,39 +227,38 @@ const travelInquiryFormSchema = z.object({
   requirementsDescription: z.string().optional(),
 })
 
-const defaultTravelInquiryFormData: DeepPartial<TTravelInquiryFormData> =
-  {
-    basicInfo: {
-      travelType: 'europe-free',
-      contactName: '',
-      gender: undefined,
-      phoneNumber: '',
-      lineId: '',
-      contactMethod: undefined,
-      contactTime: '',
-      contactSource: undefined,
-      otherSource: '',
-    },
-    budget: {
-      budget: undefined,
-      countries: [],
-    },
-    independentTravel: {
-      adultCount: 1,
-      childCount: 0,
-      travelDays: 1,
-      departureDate: '',
-      wishlist: '',
-      specialRequirements: '',
-    },
-    groupTravel: {
-      adultCount: 1,
-      childCount: 0,
-      itinerary: '',
-      departureDate: '',
-    },
-    requirementsDescription: '',
-  }
+const defaultTravelInquiryFormData: DeepPartial<TTravelInquiryFormData> = {
+  basicInfo: {
+    travelType: 'europe-free',
+    contactName: '',
+    gender: undefined,
+    phoneNumber: '',
+    lineId: '',
+    contactMethod: undefined,
+    contactTime: '',
+    contactSource: undefined,
+    otherSource: '',
+  },
+  budget: {
+    budget: undefined,
+    countries: [],
+  },
+  independentTravel: {
+    adultCount: 1,
+    childCount: 0,
+    travelDays: 1,
+    departureDate: '',
+    wishlist: '',
+    specialRequirements: '',
+  },
+  groupTravel: {
+    adultCount: 1,
+    childCount: 0,
+    itinerary: '',
+    departureDate: '',
+  },
+  requirementsDescription: '',
+}
 
 export const TRAVEL_TYPE_OPTIONS = [
   { value: 'europe-free', label: '歐洲自由行' },
@@ -455,5 +452,3 @@ export const TravelInquiryForm = ({
     </div>
   )
 }
-
-

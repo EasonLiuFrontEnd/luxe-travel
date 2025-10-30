@@ -182,27 +182,3 @@ export type TTourProductApiResponse = {
   status: boolean
   data: TTourProduct
 }
-
-type TApiError = {
-  message: string
-  code?: string
-  details?: unknown
-}
-
-type TApiState<T> = {
-  data: T | null
-  isLoading: boolean
-  error: TApiError | null
-}
-
-type TTourFormData = {
-  adult: number
-  childWithBed: number
-  childNoBed: number
-  infant: number
-  departDate: string
-  contactName: string
-  contactPhone: string
-  contactEmail: string
-  note?: string
-}

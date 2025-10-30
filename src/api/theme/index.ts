@@ -1,10 +1,9 @@
-import { useQuery, useMutation } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
 import apiClient from '../client'
 import type {
   TProduct,
   TProductSearchParams,
-  TRegionData,
   TProductSearchResponse,
 } from '../free-tours'
 import type { TApiResponse } from '../type'
@@ -39,18 +38,4 @@ export const useThemeToursSearch = () => {
   })
 
   return { mutation }
-}
-
-const useThemeToursCountries = () => {
-  const query = useQuery<
-    TRegionData[],
-    AxiosError<TApiResponse<TRegionData[]>>
-  >({
-    queryKey: ['theme-tours-countries'],
-    queryFn: async () => {
-      return []
-    },
-  })
-
-  return { query }
 }

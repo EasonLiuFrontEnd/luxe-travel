@@ -1,6 +1,3 @@
-import type { UseQueryResult } from '@tanstack/react-query'
-import type { AxiosError } from 'axios'
-
 type TPagination = {
   page: number
   pageSize: number
@@ -14,11 +11,6 @@ export type TApiResponse<T> = {
   rows?: T[]
   data?: T[]
   pagination?: TPagination | null
-}
-
-type TUseHomeQueryResult<TData, TMock> = {
-  query: UseQueryResult<TData, AxiosError<TApiResponse<TData>>>
-  mock: TMock
 }
 
 export type TAdvantages = {
@@ -105,77 +97,4 @@ export type TBooks = {
   updatedAt: string
   groupProducts: TProduct[]
   freeProducts: TProduct[]
-}
-
-type TAdvantagesResponse = TApiResponse<TAdvantages> & {
-  rows: TAdvantages[]
-}
-
-type TConcernsResponse = TApiResponse<TConcern> & {
-  rows: TConcern[]
-}
-
-type TMenuResponse = TApiResponse<TMenuItem> & {
-  data: TMenuItem[]
-}
-
-type TBannersResponse = TApiResponse<TBanners> & {
-  rows: TBanners[]
-}
-
-type TBooksResponse = TApiResponse<TBooks> & {
-  rows: TBooks[]
-}
-
-type TIntroduction = {
-  id: string
-  countryId: string
-  countryName: string
-  imageUrl: string
-  description: string
-  order: number
-  createdAt: string
-  updatedAt: string
-}
-
-type TFreeTour = {
-  id: string
-  countryId: string
-  imageUrl: string
-  tagText: string
-  title: string
-  description: string
-  price: string
-  hoverTitle?: string
-  hoverDescription?: string
-  order: number
-  createdAt: string
-  updatedAt: string
-}
-
-type TGroupTour = {
-  id: string
-  countryId: string
-  imageUrl: string
-  tagText: string
-  title: string
-  description: string
-  price: string
-  hoverTitle?: string
-  hoverDescription?: string
-  order: number
-  createdAt: string
-  updatedAt: string
-}
-
-type TIntroductionResponse = TApiResponse<TIntroduction> & {
-  rows: TIntroduction[]
-}
-
-type TFreeTourResponse = TApiResponse<TFreeTour> & {
-  rows: TFreeTour[]
-}
-
-type TGroupTourResponse = TApiResponse<TGroupTour> & {
-  rows: TGroupTour[]
 }

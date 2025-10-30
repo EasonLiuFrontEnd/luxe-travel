@@ -3,25 +3,25 @@
 import { useState } from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import DropdownCloseIcon from '../../icons/header/DropdownCloseIcon'
-
 type TSubmenuItem = {
-  id: string
-  title: string
-  linkUrl: string
+  label: string
+  href: string
 }
 
 type TDropdownItem = {
-  id: string
-  title: string
-  linkUrl: string
-  submenu?: TSubmenuItem[]
+  label: string
+  href: string
+  hasSubmenu?: boolean
+  submenuItems?: TSubmenuItem[]
 }
 
 type TDropdownMenu = {
-  items: TDropdownItem[]
   className?: string
+  isVisible: boolean
+  items: TDropdownItem[]
+  onClose: () => void
+  onPageNavigation?: (href: string) => void
 }
-
 const DropdownMenu = ({
   isVisible,
   items,

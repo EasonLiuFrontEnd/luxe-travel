@@ -25,13 +25,3 @@ export const APP_CONFIG = {
     slow: 500,
   },
 } as const
-
-const Z_INDEX = {
-  dropdown: 1000,
-  sticky: 1020,
-  fixed: 1030,
-  modal: 1040,
-  popover: 1050,
-  tooltip: 1060,
-  toast: 1070,
-} as const

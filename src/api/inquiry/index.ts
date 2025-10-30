@@ -63,15 +63,3 @@ export const getTravelTypeLabel = (travelType: string): string => {
   }
   return mapping[travelType] || travelType
 }
-
-const homeInquiryApiMock: TApiResponse<unknown> = {
-  status: true,
-  message: '家庭旅遊諮詢提交成功',
-  data: [],
-}
-
-const travelInquiryApiMock: TApiResponse<unknown> = {
-  status: true,
-  message: '團體旅遊諮詢提交成功',
-  data: [],
-}

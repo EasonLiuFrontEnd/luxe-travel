@@ -8,38 +8,6 @@ export type TScrollContext = {
   logoProgress: number
 }
 
-type TNavItem = {
-  name: string
-  href: string
-  hasSubmenu?: boolean
-}
-
-type TService = {
-  title: string
-  desc: string
-}
-
-type TDestination = {
-  name: string
-  desc: string
-  color: string
-}
-
-type TPageRoute =
-  | '/'
-  | '/about'
-  | '/services'
-  | '/destinations'
-  | '/contact'
-
-type TTailwindGradient =
-  | 'from-blue-400 to-blue-600'
-  | 'from-green-400 to-green-600'
-  | 'from-purple-400 to-purple-600'
-  | 'from-red-400 to-red-600'
-  | 'from-pink-400 to-pink-600'
-  | 'from-yellow-400 to-yellow-600'
-
 type TFlipBookSize = 'fixed' | 'stretch'
 
 export type TFlipBookOrientation = 'portrait' | 'landscape'

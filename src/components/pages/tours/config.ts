@@ -1,12 +1,8 @@
 import type { TTourDate, TTourData, TTravelerReview } from './types'
-import { REGIONS, SORT_OPTIONS } from './constants'
+import { SORT_OPTIONS } from './constants'
 import { getCountryCodes, convertCountriesToFilters } from './utils'
 
-export type {
-  TSelectedFilters,
-  TTourData,
-  TTourDate,
-} from './types'
+export type { TSelectedFilters, TTourData, TTourDate } from './types'
 export { SORT_OPTIONS, getCountryCodes, convertCountriesToFilters }
 
 export type TTourType = 'free-tours' | 'group-tours' | 'rcar-tours'
