@@ -13,7 +13,7 @@ import { TBanners } from '@/api/type'
 import styles from './styles.module.css'
 import Image from 'next/image'
 
-export type TBannerCarousel = {
+type TBannerCarousel = {
   banners?: TBanners[]
   autoPlayInterval?: number
   className?: string

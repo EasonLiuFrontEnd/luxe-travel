@@ -208,5 +208,4 @@ const Navigation = ({
   )
 }
 
-export type { TNavigation }
 export default Navigation

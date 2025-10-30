@@ -10,7 +10,7 @@ export type TCountry = {
   code?: string
 }
 
-export type TFilterType = 'country' | 'price' | 'other'
+type TFilterType = 'country' | 'price' | 'other'
 
 export type TFilter = {
   id: string

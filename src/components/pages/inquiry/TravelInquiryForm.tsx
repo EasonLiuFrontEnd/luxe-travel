@@ -10,24 +10,24 @@ import { BudgetSection } from './BudgetSection'
 import { IndependentTravelSection } from './IndependentTravelSection'
 import { Form } from '../../../components/ui/Form'
 import RequirementsSection from './RequirementsSection'
-import GroupTravelSection from './GroupTravelSection'
+import { GroupTravelSection } from './GroupTravelSection'
 
 type DeepPartial<T> = T extends object
   ? { [P in keyof T]?: DeepPartial<T[P]> }
   : T
 
-export type TTravelType =
+type TTravelType =
   | 'europe-free'
   | 'chartered'
   | 'deluxe-group'
   | 'theme'
   | 'mitsui-cruise'
 
-export type TGender = '小姐' | '先生'
+type TGender = '小姐' | '先生'
 
-export type TContactMethod = '手機' | 'LINE' | '都可以'
+type TContactMethod = '手機' | 'LINE' | '都可以'
 
-export type TContactSource =
+type TContactSource =
   | '我是凱旋集團會員'
   | 'LINE訊息'
   | 'FB訊息'
@@ -35,9 +35,7 @@ export type TContactSource =
   | '廣告'
   | '其他'
 
-export type TBudgetRange = '10~12萬' | '12~15萬' | '15~20萬' | '20萬以上'
-
-export type TEuropeanRegion = 'western' | 'central' | 'southern' | 'northern'
+type TBudgetRange = '10~12萬' | '12~15萬' | '15~20萬' | '20萬以上'
 
 export type TCountry =
   | 'uk'
@@ -59,7 +57,7 @@ export type TCountry =
   | 'croatia'
   | 'nordic'
 
-export type TBasicInfo = {
+type TBasicInfo = {
   travelType: TTravelType
   contactName: string
   gender?: TGender
@@ -71,12 +69,12 @@ export type TBasicInfo = {
   otherSource?: string
 }
 
-export type TBudget = {
+type TBudget = {
   budget?: TBudgetRange
   countries?: TCountry[]
 }
 
-export type TIndependentTravel = {
+type TIndependentTravel = {
   adultCount?: number
   childCount: number
   travelDays?: number
@@ -85,7 +83,7 @@ export type TIndependentTravel = {
   specialRequirements?: string
 }
 
-export type TGroupTravel = {
+type TGroupTravel = {
   adultCount?: number
   childCount: number
   itinerary?: string
@@ -221,7 +219,7 @@ const groupTravelSchema = z.object({
   departureDate: z.string().optional(),
 })
 
-export const travelInquiryFormSchema = z.object({
+const travelInquiryFormSchema = z.object({
   basicInfo: basicInfoSchema,
   budget: budgetSchema,
   independentTravel: independentTravelSchema,
@@ -229,39 +227,38 @@ export const travelInquiryFormSchema = z.object({
   requirementsDescription: z.string().optional(),
 })
 
-export const defaultTravelInquiryFormData: DeepPartial<TTravelInquiryFormData> =
-  {
-    basicInfo: {
-      travelType: 'europe-free',
-      contactName: '',
-      gender: undefined,
-      phoneNumber: '',
-      lineId: '',
-      contactMethod: undefined,
-      contactTime: '',
-      contactSource: undefined,
-      otherSource: '',
-    },
-    budget: {
-      budget: undefined,
-      countries: [],
-    },
-    independentTravel: {
-      adultCount: 1,
-      childCount: 0,
-      travelDays: 1,
-      departureDate: '',
-      wishlist: '',
-      specialRequirements: '',
-    },
-    groupTravel: {
-      adultCount: 1,
-      childCount: 0,
-      itinerary: '',
-      departureDate: '',
-    },
-    requirementsDescription: '',
-  }
+const defaultTravelInquiryFormData: DeepPartial<TTravelInquiryFormData> = {
+  basicInfo: {
+    travelType: 'europe-free',
+    contactName: '',
+    gender: undefined,
+    phoneNumber: '',
+    lineId: '',
+    contactMethod: undefined,
+    contactTime: '',
+    contactSource: undefined,
+    otherSource: '',
+  },
+  budget: {
+    budget: undefined,
+    countries: [],
+  },
+  independentTravel: {
+    adultCount: 1,
+    childCount: 0,
+    travelDays: 1,
+    departureDate: '',
+    wishlist: '',
+    specialRequirements: '',
+  },
+  groupTravel: {
+    adultCount: 1,
+    childCount: 0,
+    itinerary: '',
+    departureDate: '',
+  },
+  requirementsDescription: '',
+}
 
 export const TRAVEL_TYPE_OPTIONS = [
   { value: 'europe-free', label: '歐洲自由行' },
@@ -298,7 +295,7 @@ export const BUDGET_OPTIONS = [
   { value: '20萬以上', label: '20萬以上' },
 ]
 
-export const WESTERN_EUROPE_COUNTRIES = [
+const WESTERN_EUROPE_COUNTRIES = [
   { value: 'uk', label: '英國' },
   { value: 'france', label: '法國' },
   { value: 'ireland', label: '愛爾蘭' },
@@ -307,7 +304,7 @@ export const WESTERN_EUROPE_COUNTRIES = [
   { value: 'luxembourg', label: '盧森堡' },
 ]
 
-export const CENTRAL_EUROPE_COUNTRIES = [
+const CENTRAL_EUROPE_COUNTRIES = [
   { value: 'germany', label: '德國' },
   { value: 'austria', label: '奧地利' },
   { value: 'switzerland', label: '瑞士' },
@@ -316,7 +313,7 @@ export const CENTRAL_EUROPE_COUNTRIES = [
   { value: 'baltic', label: '波羅地海三小國' },
 ]
 
-export const SOUTHERN_EUROPE_COUNTRIES = [
+const SOUTHERN_EUROPE_COUNTRIES = [
   { value: 'italy', label: '義大利' },
   { value: 'spain', label: '西班牙' },
   { value: 'portugal', label: '葡萄牙' },
@@ -324,7 +321,7 @@ export const SOUTHERN_EUROPE_COUNTRIES = [
   { value: 'croatia', label: '克羅埃西亞' },
 ]
 
-export const NORTHERN_EUROPE_COUNTRIES = [{ value: 'nordic', label: '北歐' }]
+const NORTHERN_EUROPE_COUNTRIES = [{ value: 'nordic', label: '北歐' }]
 
 export const EUROPEAN_REGIONS = {
   western: {
@@ -352,7 +349,7 @@ export const ALL_COUNTRIES = [
   ...NORTHERN_EUROPE_COUNTRIES,
 ]
 
-export type TTravelInquiryFormProps = {
+type TTravelInquiryFormProps = {
   onSubmit?: (data: TTravelInquiryFormData) => void | Promise<void>
   className?: string
   heroTopPosition?: string
@@ -455,5 +452,3 @@ export const TravelInquiryForm = ({
     </div>
   )
 }
-
-export default TravelInquiryForm

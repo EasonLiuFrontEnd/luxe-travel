@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 
-export type TCarIcon = {
+type TCarIcon = {
   className?: string
 }
 

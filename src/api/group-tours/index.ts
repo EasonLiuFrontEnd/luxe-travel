@@ -3,7 +3,7 @@ import type { AxiosError } from 'axios'
 import apiClient from '../client'
 import type { TApiResponse } from '../type'
 
-export type TProductSearchParams = {
+type TProductSearchParams = {
   category?: string
   destination?: string
   budgetMin?: number
@@ -15,24 +15,24 @@ export type TProductSearchParams = {
   order?: 'asc' | 'desc'
 }
 
-export type TCountryData = {
+type TCountryData = {
   code: string
   nameZh: string
   nameEn: string
 }
 
-export type TRegionData = {
+type TRegionData = {
   region: string
   countries: TCountryData[]
 }
 
-export type TCountriesResponse = {
+type TCountriesResponse = {
   status: number
   total: number
   data: TRegionData[]
 }
 
-export type TTour = {
+type TTour = {
   id: string
   productId: string
   code: string
@@ -50,7 +50,7 @@ export type TTour = {
   updatedAt: string
 }
 
-export type TFlight = {
+type TFlight = {
   id: string
   productId: string
   direction: string
@@ -72,7 +72,7 @@ export type TFlight = {
   updatedAt: string
 }
 
-export type THighlight = {
+type THighlight = {
   id: string
   productId: string
   imageUrls: string[]
@@ -85,7 +85,7 @@ export type THighlight = {
   updatedAt: string
 }
 
-export type TFeedback = {
+type TFeedback = {
   id: string
   title: string
   nickname: string
@@ -93,7 +93,7 @@ export type TFeedback = {
   linkUrl: string
 }
 
-export type TProduct = {
+type TProduct = {
   id: string
   isFeatured: boolean
   code: string
@@ -125,7 +125,7 @@ export type TProduct = {
   highlights: THighlight[]
 }
 
-export type TProductSearchResponse = {
+type TProductSearchResponse = {
   page: number
   limit: number
   total: number

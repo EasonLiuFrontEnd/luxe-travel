@@ -10,7 +10,7 @@ import AirplaneIcon from '@/components/shared/icons/banner/AirplaneIcon'
 import BannerCarousel from './BannerCarousel'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 
-export type TBannerComponent = {
+type TBannerComponent = {
   logoProgress?: number
   className?: string
 }

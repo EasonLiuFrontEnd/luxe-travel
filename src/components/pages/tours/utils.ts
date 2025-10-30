@@ -1,15 +1,4 @@
-import type { TCountry, TFilter } from './types'
-import { REGIONS } from './constants'
-
-export const getCountryById = (countryId: string): TCountry | null => {
-  for (const region of REGIONS) {
-    const country = region.countries.find((c) => c.id === countryId)
-    if (country) {
-      return country
-    }
-  }
-  return null
-}
+import type { TFilter } from './types'
 
 export const getCountryCodes = (countryCodes: string[]): string[] => {
   return countryCodes

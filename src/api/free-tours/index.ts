@@ -15,7 +15,7 @@ export type TProductSearchParams = {
   order?: 'asc' | 'desc'
 }
 
-export type TCountryData = {
+type TCountryData = {
   code: string
   nameZh: string
   nameEn: string
@@ -26,13 +26,13 @@ export type TRegionData = {
   countries: TCountryData[]
 }
 
-export type TCountriesResponse = {
+type TCountriesResponse = {
   status: number
   total: number
   data: TRegionData[]
 }
 
-export type TTour = {
+type TTour = {
   id: string
   productId: string
   code: string
@@ -50,7 +50,7 @@ export type TTour = {
   updatedAt: string
 }
 
-export type TFlight = {
+type TFlight = {
   id: string
   productId: string
   direction: string
@@ -72,7 +72,7 @@ export type TFlight = {
   updatedAt: string
 }
 
-export type THighlight = {
+type THighlight = {
   id: string
   productId: string
   imageUrls: string[]
@@ -85,7 +85,7 @@ export type THighlight = {
   updatedAt: string
 }
 
-export type TFeedback = {
+type TFeedback = {
   id: string
   title: string
   nickname: string

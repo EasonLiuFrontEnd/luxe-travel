@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export type TConsultButton = {
+type TConsultButton = {
   className?: string
 }
 

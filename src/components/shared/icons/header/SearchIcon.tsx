@@ -1,4 +1,4 @@
-export type TSearchIcon = {
+type TSearchIcon = {
   color?: string
   size?: string
   className?: string

@@ -234,4 +234,3 @@ export const IndependentTravelSection = () => {
     </div>
   )
 }
-export default IndependentTravelSection

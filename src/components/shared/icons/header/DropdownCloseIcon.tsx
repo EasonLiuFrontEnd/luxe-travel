@@ -1,4 +1,4 @@
-export type TDropdownCloseIcon = {
+type TDropdownCloseIcon = {
   isMobile?: boolean
   className?: string
   onClick?: () => void
