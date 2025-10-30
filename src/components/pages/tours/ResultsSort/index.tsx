@@ -6,13 +6,13 @@ import { useClickOutside } from '@/hooks/useClickOutside'
 import CloseIcon from '@/components/shared/icons/common/CloseIcon'
 import SortIcon from '@/components/shared/icons/common/SortIcon'
 
-export type TSelectedFilter = {
+type TSelectedFilter = {
   id: string
   label: string
   type: 'country' | 'price' | 'other'
 }
 
-export type TSelectedFilters = TSelectedFilter[]
+type TSelectedFilters = TSelectedFilter[]
 
 type TResultsSortProps = {
   className?: string

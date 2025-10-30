@@ -7,7 +7,7 @@ type TSelectedCountryState = {
   setSelectedCountryId: (countryId: string) => void
 }
 
-export const useSelectedCountryStore = create<TSelectedCountryState>((set) => ({
+const useSelectedCountryStore = create<TSelectedCountryState>((set) => ({
   selectedCountryId: '',
   setSelectedCountryId: (countryId: string) =>
     set({ selectedCountryId: countryId }),

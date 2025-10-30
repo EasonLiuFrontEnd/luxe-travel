@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 
-export type TBicycleIcon = {
+type TBicycleIcon = {
   className?: string
 }
 

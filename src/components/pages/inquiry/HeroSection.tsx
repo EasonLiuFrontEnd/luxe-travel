@@ -2,7 +2,7 @@
 import { cn } from '@/lib/utils'
 import styles from './styles.module.css'
 
-export type THeroSectionProps = {
+type THeroSectionProps = {
   className?: string
   topPosition?: string
 }
@@ -54,4 +54,4 @@ export const HeroSection = ({
   )
 }
 
-export default HeroSection
+

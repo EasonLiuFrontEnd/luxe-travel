@@ -1,4 +1,4 @@
-export const POPULAR_DESTINATIONS = [
+const POPULAR_DESTINATIONS = [
   {
     name: '英國',
     desc: '體驗英倫風情與皇室文化',

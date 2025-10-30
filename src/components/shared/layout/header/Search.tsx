@@ -7,7 +7,7 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useScrollLock } from '@/hooks/useScrollLock'
 import { cn } from '@/lib/utils'
 
-export type TSearch = {
+type TSearch = {
   isOpen: boolean
   onClose: () => void
 }

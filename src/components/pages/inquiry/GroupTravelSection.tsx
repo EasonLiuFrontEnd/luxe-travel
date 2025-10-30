@@ -184,4 +184,4 @@ export const GroupTravelSection = () => {
   )
 }
 
-export default GroupTravelSection
+

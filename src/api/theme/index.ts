@@ -41,7 +41,7 @@ export const useThemeToursSearch = () => {
   return { mutation }
 }
 
-export const useThemeToursCountries = () => {
+const useThemeToursCountries = () => {
   const query = useQuery<
     TRegionData[],
     AxiosError<TApiResponse<TRegionData[]>>

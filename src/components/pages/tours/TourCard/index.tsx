@@ -9,7 +9,7 @@ import type { TTravelerReview } from '../types'
 import styles from './style.module.css'
 import IconCta from '@/components/shared/icons/IconCta'
 
-export type TTourCardProps = {
+type TTourCardProps = {
   title: string
   subtitle: string
   description: string

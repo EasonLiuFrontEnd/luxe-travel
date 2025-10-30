@@ -6,9 +6,8 @@ export type {
   TSelectedFilters,
   TTourData,
   TTourDate,
-  TTravelerReview,
 } from './types'
-export { REGIONS, SORT_OPTIONS, getCountryCodes, convertCountriesToFilters }
+export { SORT_OPTIONS, getCountryCodes, convertCountriesToFilters }
 
 export type TTourType = 'free-tours' | 'group-tours' | 'rcar-tours'
 
@@ -120,7 +119,7 @@ export const convertProductToTourData = (
   }
 }
 
-export const TOUR_TYPE_CONFIG = {
+const TOUR_TYPE_CONFIG = {
   'free-tours': {
     title: '歐洲自由行',
     logoPath: '/tours/logo.png',

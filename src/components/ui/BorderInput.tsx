@@ -6,7 +6,7 @@ type TBorderInputProps = React.ComponentProps<'input'> & {
   counterMax?: number
 }
 
-export const BorderInput = forwardRef<HTMLInputElement, TBorderInputProps>(
+const BorderInput = forwardRef<HTMLInputElement, TBorderInputProps>(
   ({ className, showCounter = false, counterMax = 100, ...props }, ref) => {
     const currentLength = props.value ? String(props.value).length : 0
 

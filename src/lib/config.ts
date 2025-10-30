@@ -26,7 +26,7 @@ export const APP_CONFIG = {
   },
 } as const
 
-export const Z_INDEX = {
+const Z_INDEX = {
   dropdown: 1000,
   sticky: 1020,
   fixed: 1030,

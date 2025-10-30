@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge'
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs))
 
-export const debounce = <T extends (...args: never[]) => unknown>(
+const debounce = <T extends (...args: never[]) => unknown>(
   func: T,
   wait: number,
 ): ((...args: Parameters<T>) => void) => {
@@ -15,7 +15,7 @@ export const debounce = <T extends (...args: never[]) => unknown>(
   }
 }
 
-export const throttle = <T extends (...args: never[]) => unknown>(
+const throttle = <T extends (...args: never[]) => unknown>(
   func: T,
   limit: number,
 ): ((...args: Parameters<T>) => void) => {
@@ -29,10 +29,10 @@ export const throttle = <T extends (...args: never[]) => unknown>(
   }
 }
 
-export const formatPath = (path: string) =>
+const formatPath = (path: string) =>
   path.startsWith('/') ? path : `/${path}`
 
-export const isExternalLink = (href: string) =>
+const isExternalLink = (href: string) =>
   /^https?:\/\//.test(href) || href.includes('mailto:') || href.includes('tel:')
 
 export const generatePageTitle = (pageName?: string) => {
@@ -40,7 +40,7 @@ export const generatePageTitle = (pageName?: string) => {
   return pageName ? `${pageName} | ${baseTitle}` : baseTitle
 }
 
-export const scrollToElement = (elementId: string, offset: number = 0) => {
+const scrollToElement = (elementId: string, offset: number = 0) => {
   const element = document.getElementById(elementId)
   if (!element) return
 

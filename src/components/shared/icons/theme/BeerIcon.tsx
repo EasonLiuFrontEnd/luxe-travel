@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 
-export type TBeerIcon = {
+type TBeerIcon = {
   className?: string
 }
 

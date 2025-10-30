@@ -1,7 +1,7 @@
 import type { UseQueryResult } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
 
-export type TPagination = {
+type TPagination = {
   page: number
   pageSize: number
   total: number
@@ -16,7 +16,7 @@ export type TApiResponse<T> = {
   pagination?: TPagination | null
 }
 
-export type TUseHomeQueryResult<TData, TMock> = {
+type TUseHomeQueryResult<TData, TMock> = {
   query: UseQueryResult<TData, AxiosError<TApiResponse<TData>>>
   mock: TMock
 }
@@ -107,27 +107,27 @@ export type TBooks = {
   freeProducts: TProduct[]
 }
 
-export type TAdvantagesResponse = TApiResponse<TAdvantages> & {
+type TAdvantagesResponse = TApiResponse<TAdvantages> & {
   rows: TAdvantages[]
 }
 
-export type TConcernsResponse = TApiResponse<TConcern> & {
+type TConcernsResponse = TApiResponse<TConcern> & {
   rows: TConcern[]
 }
 
-export type TMenuResponse = TApiResponse<TMenuItem> & {
+type TMenuResponse = TApiResponse<TMenuItem> & {
   data: TMenuItem[]
 }
 
-export type TBannersResponse = TApiResponse<TBanners> & {
+type TBannersResponse = TApiResponse<TBanners> & {
   rows: TBanners[]
 }
 
-export type TBooksResponse = TApiResponse<TBooks> & {
+type TBooksResponse = TApiResponse<TBooks> & {
   rows: TBooks[]
 }
 
-export type TIntroduction = {
+type TIntroduction = {
   id: string
   countryId: string
   countryName: string
@@ -138,7 +138,7 @@ export type TIntroduction = {
   updatedAt: string
 }
 
-export type TFreeTour = {
+type TFreeTour = {
   id: string
   countryId: string
   imageUrl: string
@@ -153,7 +153,7 @@ export type TFreeTour = {
   updatedAt: string
 }
 
-export type TGroupTour = {
+type TGroupTour = {
   id: string
   countryId: string
   imageUrl: string
@@ -168,14 +168,14 @@ export type TGroupTour = {
   updatedAt: string
 }
 
-export type TIntroductionResponse = TApiResponse<TIntroduction> & {
+type TIntroductionResponse = TApiResponse<TIntroduction> & {
   rows: TIntroduction[]
 }
 
-export type TFreeTourResponse = TApiResponse<TFreeTour> & {
+type TFreeTourResponse = TApiResponse<TFreeTour> & {
   rows: TFreeTour[]
 }
 
-export type TGroupTourResponse = TApiResponse<TGroupTour> & {
+type TGroupTourResponse = TApiResponse<TGroupTour> & {
   rows: TGroupTour[]
 }

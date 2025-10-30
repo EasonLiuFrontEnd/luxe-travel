@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 
 import type { TBaseComponent } from '@/types'
 
-export type TPageProps = TBaseComponent & {
+type TPageProps = TBaseComponent & {
   pageNumber?: number | string
   background?: string
   pageContentClassName?: string

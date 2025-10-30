@@ -1,6 +1,6 @@
-export type TFlightDirection = 'OUTBOUND' | 'RETURN'
+type TFlightDirection = 'OUTBOUND' | 'RETURN'
 
-export type TVisitType =
+type TVisitType =
   | 'INSIDE'
   | 'OUTSIDE'
   | 'PHOTO'
@@ -62,7 +62,7 @@ export type THighlight = {
   updatedAt: string
 }
 
-export type TMap = {
+type TMap = {
   id: string
   productId: string
   imageUrl: string
@@ -71,7 +71,7 @@ export type TMap = {
   updatedAt: string
 }
 
-export type TRoute = {
+type TRoute = {
   id: string
   itineraryId: string
   depart: string
@@ -82,7 +82,7 @@ export type TRoute = {
   updatedAt: string
 }
 
-export type TAttraction = {
+type TAttraction = {
   id: string
   code: string
   nameZh: string
@@ -183,19 +183,19 @@ export type TTourProductApiResponse = {
   data: TTourProduct
 }
 
-export type TApiError = {
+type TApiError = {
   message: string
   code?: string
   details?: unknown
 }
 
-export type TApiState<T> = {
+type TApiState<T> = {
   data: T | null
   isLoading: boolean
   error: TApiError | null
 }
 
-export type TTourFormData = {
+type TTourFormData = {
   adult: number
   childWithBed: number
   childNoBed: number

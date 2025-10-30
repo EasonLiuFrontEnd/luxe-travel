@@ -1,7 +1,7 @@
 import type { TCountry, TFilter } from './types'
 import { REGIONS } from './constants'
 
-export const getCountryById = (countryId: string): TCountry | null => {
+const getCountryById = (countryId: string): TCountry | null => {
   for (const region of REGIONS) {
     const country = region.countries.find((c) => c.id === countryId)
     if (country) {
