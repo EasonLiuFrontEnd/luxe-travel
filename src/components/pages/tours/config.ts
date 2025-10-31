@@ -68,7 +68,7 @@ export const convertProductToTourData = (
               ? '熱銷中'
               : tour.status === 3
                 ? '已滿團'
-                : '熱銷中'
+                : '取消'
 
         return {
           id: tour.id,

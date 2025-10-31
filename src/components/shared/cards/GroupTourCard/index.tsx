@@ -248,9 +248,12 @@ const GroupTourCard = ({
                 onMouseUp={handleMouseUp}
                 onMouseLeave={handleMouseLeave}
               >
-                {dates.slice(0, 8).map((dateItem, index) => {
-                  const cardStyles = getDateCardStyle(dateItem.status)
-                  return (
+                {dates
+                  .filter((dateItem) => dateItem.status !== '取消')
+                  .slice(0, 8)
+                  .map((dateItem, index) => {
+                    const cardStyles = getDateCardStyle(dateItem.status)
+                    return (
                     <div
                       key={index}
                       className={cn(

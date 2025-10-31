@@ -36,7 +36,9 @@ const DepartureDate = ({
   )
 
   const timeSlots: TTimeSlotData[] = useMemo(() => {
-    return tours.map((tour) => {
+    return tours
+      .filter((tour) => tour.status !== 4)
+      .map((tour) => {
       const departDate = new Date(tour.departDate)
       const month = departDate.getMonth() + 1
       const day = departDate.getDate()
@@ -51,8 +53,10 @@ const DepartureDate = ({
         status = '已成團'
       } else if (tour.status === 2) {
         status = '熱銷中'
-      } else {
+      } else if (tour.status === 3) {
         status = '已滿團'
+      } else {
+        status = '取消'
       }
 
       return {
