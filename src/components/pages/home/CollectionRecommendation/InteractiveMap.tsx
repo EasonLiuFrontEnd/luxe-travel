@@ -156,7 +156,7 @@ const InteractiveMap = ({
                   className='flex items-center justify-end px-3 py-1 rounded-[18px] cursor-pointer group group/cta hidden
                                   md:flex'
                 >
-                  <div className='text-[#926d3c] text-base font-medium leading-[1.5]'>
+                  <div className='text-figma-secondary-950 text-base font-medium leading-[1.5]'>
                     查看行程
                   </div>
                   <div className='w-[24.68px] group-hover/cta:w-[37.68px] transition-all duration-300 ml-2 overflow-hidden'>

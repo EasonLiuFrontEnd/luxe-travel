@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react'
 import TourCard from './TourCard'
-import GroupTourCard from './GroupTourCard'
-import type { TTourData, TTourType } from './config'
+import GroupTourCard from '@/components/shared/cards/GroupTourCard'
+import type { TTourData, TTourType, TTourDate } from './config'
 import { useRouter } from 'next/navigation'
 
 type TToursProps = {
@@ -52,6 +52,11 @@ const Tours = ({ tours = [], tourType, className }: TToursProps) => {
     router.push(`/tour-content/${tourId}`)
   }
 
+  const handleDateClick = (dateItem: TTourDate) => {
+    sessionStorage.setItem('tour-needs-refresh', 'true')
+    router.push(`/tour-content/${dateItem.productId}?tourId=${dateItem.id}`)
+  }
+
   const handleReviewClick = () => {}
 
   const renderTourCard = (tour: TTourData) => {
@@ -71,6 +76,7 @@ const Tours = ({ tours = [], tourType, className }: TToursProps) => {
           key={`${tour.id}-${refreshKey}`}
           {...commonProps}
           dates={tour.dates}
+          onDateClick={handleDateClick}
         />
       )
     }

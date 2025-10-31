@@ -1,7 +1,4 @@
-import type { UseQueryResult } from '@tanstack/react-query'
-import type { AxiosError } from 'axios'
-
-export type TPagination = {
+type TPagination = {
   page: number
   pageSize: number
   total: number
@@ -14,11 +11,6 @@ export type TApiResponse<T> = {
   rows?: T[]
   data?: T[]
   pagination?: TPagination | null
-}
-
-export type TUseHomeQueryResult<TData, TMock> = {
-  query: UseQueryResult<TData, AxiosError<TApiResponse<TData>>>
-  mock: TMock
 }
 
 export type TAdvantages = {
@@ -105,77 +97,4 @@ export type TBooks = {
   updatedAt: string
   groupProducts: TProduct[]
   freeProducts: TProduct[]
-}
-
-export type TAdvantagesResponse = TApiResponse<TAdvantages> & {
-  rows: TAdvantages[]
-}
-
-export type TConcernsResponse = TApiResponse<TConcern> & {
-  rows: TConcern[]
-}
-
-export type TMenuResponse = TApiResponse<TMenuItem> & {
-  data: TMenuItem[]
-}
-
-export type TBannersResponse = TApiResponse<TBanners> & {
-  rows: TBanners[]
-}
-
-export type TBooksResponse = TApiResponse<TBooks> & {
-  rows: TBooks[]
-}
-
-export type TIntroduction = {
-  id: string
-  countryId: string
-  countryName: string
-  imageUrl: string
-  description: string
-  order: number
-  createdAt: string
-  updatedAt: string
-}
-
-export type TFreeTour = {
-  id: string
-  countryId: string
-  imageUrl: string
-  tagText: string
-  title: string
-  description: string
-  price: string
-  hoverTitle?: string
-  hoverDescription?: string
-  order: number
-  createdAt: string
-  updatedAt: string
-}
-
-export type TGroupTour = {
-  id: string
-  countryId: string
-  imageUrl: string
-  tagText: string
-  title: string
-  description: string
-  price: string
-  hoverTitle?: string
-  hoverDescription?: string
-  order: number
-  createdAt: string
-  updatedAt: string
-}
-
-export type TIntroductionResponse = TApiResponse<TIntroduction> & {
-  rows: TIntroduction[]
-}
-
-export type TFreeTourResponse = TApiResponse<TFreeTour> & {
-  rows: TFreeTour[]
-}
-
-export type TGroupTourResponse = TApiResponse<TGroupTour> & {
-  rows: TGroupTour[]
 }

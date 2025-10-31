@@ -25,6 +25,7 @@ type TTourInfoProps = {
   feedback?: TFeedback
   description?: string
   priceMin: number
+  initialTourId?: string | null
 }
 
 const TourInfo = ({
@@ -35,9 +36,12 @@ const TourInfo = ({
   feedback,
   description,
   priceMin,
+  initialTourId,
 }: TTourInfoProps) => {
   const [selectedTourId, setSelectedTourId] = useState<string>(
-    tours[0]?.id || '',
+    initialTourId ||
+      tours.filter((tour) => tour.status === 1 || tour.status === 2)[0]?.id ||
+      '',
   )
 
   const handleTourSelect = (id: string) => {
@@ -51,7 +55,11 @@ const TourInfo = ({
     >
       <div className='order-2 xl:order-1 w-full xl:max-w-[48.7vw] box-content flex flex-col gap-y-5 xl:pt-3.5 xl:px-7 xl:pb-7'>
         {category === 'GROUP' && (
-          <DepartureDate tours={tours} onTourSelect={handleTourSelect} />
+          <DepartureDate
+            tours={tours}
+            onTourSelect={handleTourSelect}
+            initialTourId={initialTourId}
+          />
         )}
         {category !== 'GROUP' && feedback && <Feedback feedback={feedback} />}
         {category !== 'GROUP' && description && (
@@ -96,9 +104,10 @@ const TourInfo = ({
             >
               貼心安排
             </h5>
-            <ul className='box-content xl:h-[289px] list-disc font-family-genseki text-[16px] xl:text-[20px] leading-[1.5] text-figma-primary-950 pt-7 px-4 pb-10 xl:pt-9 xl:px-9 xl:pb-11 ml-6'>
-              <li>需要從後端補資料</li>
-            </ul>
+            <div
+              className='box-content xl:h-[289px] list-disc font-family-genseki text-[16px] xl:text-[20px] leading-[1.5] text-figma-primary-950 pt-7 px-4 pb-10 xl:pt-9 xl:px-9 xl:pb-11 ml-6'
+              dangerouslySetInnerHTML={{ __html: description || '' }}
+            ></div>
             <div className='absolute left-[-5px] bottom-[-10px] xl:left-[-10px] xl:bottom-[-22px] flex items-center gap-x-5'>
               <p className='font-family-noto-serif text-[32px] xl:text-[64px] max-xl:font-medium leading-[1.2] text-figma-secondary-100'>
                 Made to

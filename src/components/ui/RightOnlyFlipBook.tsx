@@ -8,7 +8,7 @@ import { PageFlip } from '@/components/ui/PageFlip'
 
 import type { TPageFlipRef } from '@/types'
 
-export type TFlipBookPage = {
+type TFlipBookPage = {
   id: string
   pageNumber?: string
   background?: string
@@ -16,7 +16,7 @@ export type TFlipBookPage = {
   content: ReactNode
 }
 
-export type TRightOnlyFlipBookProps = {
+type TRightOnlyFlipBookProps = {
   className?: string
   pages: TFlipBookPage[]
   width?: number

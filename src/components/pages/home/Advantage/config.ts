@@ -7,7 +7,7 @@ const gradientOverlays = [
   'to-[#333333]',
 ]
 
-export const getGradientOverlay = (order: number): string => {
+const getGradientOverlay = (order: number): string => {
   return gradientOverlays[order - 1] || 'to-[#333333]'
 }
 

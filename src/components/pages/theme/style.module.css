@@ -1,0 +1,60 @@
+.background {
+  background: linear-gradient(
+    180deg,
+    var(--color-figma-neutral-50) 0%,
+    var(--color-figma-secondary-100) 100%
+  );
+}
+
+.bookImage01 {
+  background-image: url('/theme/book.svg');
+  background-position: -180px 100%;
+  background-repeat: repeat-x;
+}
+
+.bookImage02 {
+  background-image: url('/theme/book.svg');
+  background-position: 150px -250%;
+  background-repeat: repeat-x;
+}
+
+.bannerImage02 {
+  background-image: url('/theme/bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.bannerImage04 {
+  background-image: url('/theme/card.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.bannerTitle::before {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.bannerTitle::after {
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+.iconHover {
+  transition: all 0.3s ease;
+
+  svg path {
+    transition: fill 0.3s ease;
+  }
+
+  &:hover {
+    border-color: var(--color-figma-secondary-300);
+    background-color: var(--color-figma-secondary-300);
+    transition: all 0.3s ease;
+
+    svg path {
+      fill: var(--color-figma-secondary-950);
+      transition: fill 0.3s ease;
+    }
+  }
+}

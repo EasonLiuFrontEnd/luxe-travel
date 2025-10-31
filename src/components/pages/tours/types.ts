@@ -10,14 +10,7 @@ export type TCountry = {
   code?: string
 }
 
-export type TSlideContent = {
-  id: number
-  title: string
-  subtitle: string
-  description: string
-}
-
-export type TFilterType = 'country' | 'price' | 'other'
+type TFilterType = 'country' | 'price' | 'other'
 
 export type TFilter = {
   id: string
@@ -28,6 +21,8 @@ export type TFilter = {
 export type TSelectedFilters = TFilter[]
 
 export type TTourDate = {
+  id: string
+  productId: string
   date: string
   status: '已成團' | '熱銷中' | '已滿團'
 }

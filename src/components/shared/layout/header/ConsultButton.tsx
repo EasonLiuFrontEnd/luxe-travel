@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export type TConsultButton = {
+type TConsultButton = {
   className?: string
 }
 
@@ -11,7 +11,7 @@ const ConsultButton = ({ className = '' }: TConsultButton) => {
     >
       <div className='flex items-center justify-end xl:px-[48px] px-3'>
         <Link href='/inquiry'>
-          <div className='p-4 rounded-b-2xl cursor-pointer bg-figma-secondary-500 hover:bg-figma-secondary-950 transition duration-300'>
+          <div className='p-3 xl:p-4 rounded-b-2xl cursor-pointer bg-figma-secondary-500 hover:bg-figma-secondary-950 transition duration-300'>
             <span className='font-genseki-body-m-medium text-figma-primary-0 px-4 py-0'>
               諮詢單
             </span>

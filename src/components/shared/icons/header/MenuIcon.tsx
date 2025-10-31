@@ -1,4 +1,4 @@
-export type TMenuIcon = {
+type TMenuIcon = {
   isOpen?: boolean
   onClick?: () => void
   className?: string

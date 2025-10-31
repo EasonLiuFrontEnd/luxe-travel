@@ -7,7 +7,7 @@ import { useBookShelfScroll } from '@/hooks/useBookShelfScroll'
 import '@/styles/components.css'
 import { RefObject } from 'react'
 const BookShelfSection = () => {
-  const { bookShelfRef, trackRef, isMobile } = useBookShelfScroll()
+  const { bookShelfRef, trackRef } = useBookShelfScroll()
 
   return (
     <div
@@ -32,10 +32,7 @@ const BookShelfSection = () => {
       </div>
 
       <div className='flex flex-col-reverse xl:flex-row'>
-        <BookShelf
-          trackRef={trackRef as RefObject<HTMLDivElement>}
-          isMobile={isMobile}
-        />
+        <BookShelf trackRef={trackRef as RefObject<HTMLDivElement>} />
 
         <Introduction />
       </div>

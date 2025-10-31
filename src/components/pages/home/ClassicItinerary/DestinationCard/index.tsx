@@ -1,6 +1,6 @@
 'use client'
 
-export type TDestinationCard = {
+type TDestinationCard = {
   number: string
   destination: string
   englishName: string

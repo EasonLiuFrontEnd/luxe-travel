@@ -2,20 +2,13 @@
   display: flex;
   align-items: end;
   gap: 12px;
-  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.trackMobile {
-  display: flex;
-  align-items: flex-end;
-  gap: 12px;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
 }
 
-.trackMobile::-webkit-scrollbar {
+.track::-webkit-scrollbar {
   display: none;
 }
 

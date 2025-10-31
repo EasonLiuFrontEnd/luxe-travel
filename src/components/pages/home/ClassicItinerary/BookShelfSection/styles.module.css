@@ -10,7 +10,7 @@
   transform: translateY(-50%);
   width: 60px;
   height: 1px;
-  background-color: #e5d9bf;
+  background-color: var(--color-figma-secondary-300);
 }
 
 .decoBar::before {

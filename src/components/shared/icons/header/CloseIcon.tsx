@@ -1,4 +1,4 @@
-export type TCloseIcon = {
+type TCloseIcon = {
   size?: string
   className?: string
   onClick?: () => void
