@@ -39,33 +39,33 @@ const DepartureDate = ({
     return tours
       .filter((tour) => tour.status !== 4)
       .map((tour) => {
-      const departDate = new Date(tour.departDate)
-      const month = departDate.getMonth() + 1
-      const day = departDate.getDate()
-      const weekday = ['日', '一', '二', '三', '四', '五', '六'][
-        departDate.getDay()
-      ]
-      const formattedDate = `${month}/${day}(${weekday})`
+        const departDate = new Date(tour.departDate)
+        const month = departDate.getMonth() + 1
+        const day = departDate.getDate()
+        const weekday = ['日', '一', '二', '三', '四', '五', '六'][
+          departDate.getDay()
+        ]
+        const formattedDate = `${month}/${day}(${weekday})`
 
-      let status: TTimeSlotData['status']
+        let status: TTimeSlotData['status']
 
-      if (tour.status === 1) {
-        status = '已成團'
-      } else if (tour.status === 2) {
-        status = '熱銷中'
-      } else if (tour.status === 3) {
-        status = '已滿團'
-      } else {
-        status = '取消'
-      }
+        if (tour.status === 1) {
+          status = '已成團'
+        } else if (tour.status === 2) {
+          status = '熱銷中'
+        } else if (tour.status === 3) {
+          status = '已滿團'
+        } else {
+          status = '取消'
+        }
 
-      return {
-        id: tour.id,
-        date: formattedDate,
-        status,
-        href: '#',
-      }
-    })
+        return {
+          id: tour.id,
+          date: formattedDate,
+          status,
+          href: '#',
+        }
+      })
   }, [tours])
 
   const handleSelectTour = (id: string) => {
