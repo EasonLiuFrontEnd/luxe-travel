@@ -19,7 +19,7 @@
   color: #333333;
 }
 
-.books:hover {
+.activeBook {
   background-image:
     linear-gradient(219.25deg, rgba(189, 160, 94, 0.6) 0%, #bda05e 66.69%),
     url('/shared/icons/background-plus.svg');
@@ -46,7 +46,7 @@
   transition: color 0.3s ease;
 }
 
-.books:hover .descriptionText {
+.activeBook .descriptionText {
   color: #ffffff;
 }
 

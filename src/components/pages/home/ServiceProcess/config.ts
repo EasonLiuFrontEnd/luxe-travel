@@ -40,7 +40,7 @@ export const getStepStyles = (number: string) => {
     case '01':
       return 'min-h-[480px] xl:max-w-[208px] xl:aspect-[208/570]'
     case '02':
-      return 'min-h-[573px] xl:max-w-[268px] xl:aspect-[268/609] xl:rotate-[-5deg] xl:hover:rotate-0 xl:mb-[10.5px] xl:hover:mb-0 xl:ml-[20px] xl:hover:ml-0 xl:mr-[24px] xl:hover:mr-0'
+      return 'min-h-[573px] xl:max-w-[268px] xl:aspect-[268/609] xl:rotate-[-5deg] xl:mb-[10.5px] xl:ml-[20px] xl:mr-[24px]'
     case '03':
       return 'min-h-[411px] xl:max-w-[288px] xl:aspect-[288/485]'
     case '04':
