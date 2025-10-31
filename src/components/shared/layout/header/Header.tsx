@@ -7,7 +7,7 @@ import ConsultButton from '@/components/shared/layout/header/ConsultButton'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useScrollbarWidth } from '@/hooks/useScrollbarWidth'
 
-export type THeader = {
+type THeader = {
   isHomePage: boolean
   logoScale?: number
   logoProgress?: number

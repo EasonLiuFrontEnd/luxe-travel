@@ -6,7 +6,7 @@ type TScrollState = {
   isScrolling: boolean
 }
 
-export const useThrottledScroll = (): TScrollState => {
+const useThrottledScroll = (): TScrollState => {
   const [scrollY, setScrollY] = useState(0)
   const [isScrolling, setIsScrolling] = useState(false)
   const frameId = useRef<number | null>(null)

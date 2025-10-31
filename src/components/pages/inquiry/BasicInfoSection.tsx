@@ -288,4 +288,3 @@ export const BasicInfoSection = () => {
     </FormSection>
   )
 }
-export default BasicInfoSection

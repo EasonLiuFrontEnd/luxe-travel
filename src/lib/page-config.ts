@@ -1,6 +1,6 @@
 import { APP_CONFIG } from './config'
 
-export type TPageType =
+type TPageType =
   | 'home'
   | 'about'
   | 'destinations'
@@ -11,7 +11,7 @@ export type TPageType =
   | 'rcar-tours'
   | 'default'
 
-export type TPageConfig = {
+type TPageConfig = {
   type: TPageType
   hasScrollAnimation: boolean
   hasTransparentHeader: boolean
@@ -21,7 +21,7 @@ export type TPageConfig = {
   scrollToTopBg: string
 }
 
-export const PAGE_CONFIGS: Record<string, TPageConfig> = {
+const PAGE_CONFIGS: Record<string, TPageConfig> = {
   '/': {
     type: 'home',
     hasScrollAnimation: true,
@@ -105,7 +105,7 @@ export const PAGE_CONFIGS: Record<string, TPageConfig> = {
   },
 }
 
-export const DEFAULT_PAGE_CONFIG: TPageConfig = {
+const DEFAULT_PAGE_CONFIG: TPageConfig = {
   type: 'default',
   hasScrollAnimation: false,
   hasTransparentHeader: false,

@@ -183,5 +183,3 @@ export const GroupTravelSection = () => {
     </div>
   )
 }
-
-export default GroupTravelSection

@@ -1,11 +1,11 @@
 import type { TMenuItem } from '@/api/type'
 
-export type TNavItem = {
+type TNavItem = {
   label: string
   href: string
 }
 
-export type TDropdownItem = {
+type TDropdownItem = {
   label: string
   href: string
   hasSubmenu?: boolean
@@ -15,7 +15,7 @@ export type TDropdownItem = {
   }[]
 }
 
-export type TTransformedMenus = {
+type TTransformedMenus = {
   navItems: TNavItem[]
   dropdownMenus: Record<string, TDropdownItem[]>
 }

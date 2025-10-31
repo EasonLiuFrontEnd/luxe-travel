@@ -117,4 +117,3 @@ export const BudgetSection = () => {
     </FormSection>
   )
 }
-export default BudgetSection
