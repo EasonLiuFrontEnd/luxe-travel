@@ -248,40 +248,43 @@ const GroupTourCard = ({
                 onMouseUp={handleMouseUp}
                 onMouseLeave={handleMouseLeave}
               >
-                {dates.slice(0, 8).map((dateItem, index) => {
-                  const cardStyles = getDateCardStyle(dateItem.status)
-                  return (
-                    <div
-                      key={index}
-                      className={cn(
-                        'group/date flex flex-col items-center rounded w-[84px] shrink-0 relative cursor-pointer transition-all duration-300',
-                        dateItem.status === '已滿團'
-                          ? styles.dateCardSoldOut
-                          : styles.dateCardAvailable,
-                      )}
-                      onClick={() => onDateClick?.(dateItem)}
-                    >
+                {dates
+                  .filter((dateItem) => dateItem.status !== '取消')
+                  .slice(0, 8)
+                  .map((dateItem, index) => {
+                    const cardStyles = getDateCardStyle(dateItem.status)
+                    return (
                       <div
-                        className={`${cardStyles.bgColor} ${cardStyles.hoverBg} border-b ${cardStyles.borderColor} flex items-center justify-center px-3 py-1 rounded-t w-full transition-all duration-300`}
+                        key={index}
+                        className={cn(
+                          'group/date flex flex-col items-center rounded w-[84px] shrink-0 relative cursor-pointer transition-all duration-300',
+                          dateItem.status === '已滿團'
+                            ? styles.dateCardSoldOut
+                            : styles.dateCardAvailable,
+                        )}
+                        onClick={() => onDateClick?.(dateItem)}
                       >
                         <div
-                          className={`font-noto-serif-body-m-medium ${cardStyles.textColor} transition-all duration-300`}
+                          className={`${cardStyles.bgColor} ${cardStyles.hoverBg} border-b ${cardStyles.borderColor} flex items-center justify-center px-3 py-1 rounded-t w-full transition-all duration-300`}
                         >
-                          {dateItem.date}
+                          <div
+                            className={`font-noto-serif-body-m-medium ${cardStyles.textColor} transition-all duration-300`}
+                          >
+                            {dateItem.date}
+                          </div>
                         </div>
-                      </div>
-                      <div
-                        className={`${cardStyles.bgColor} ${cardStyles.hoverBg} flex items-center justify-center px-2 py-0.5 rounded-b w-full transition-all duration-300`}
-                      >
                         <div
-                          className={`font-genseki-body-s-regular ${cardStyles.textColor} transition-all duration-300`}
+                          className={`${cardStyles.bgColor} ${cardStyles.hoverBg} flex items-center justify-center px-2 py-0.5 rounded-b w-full transition-all duration-300`}
                         >
-                          {dateItem.status}
+                          <div
+                            className={`font-genseki-body-s-regular ${cardStyles.textColor} transition-all duration-300`}
+                          >
+                            {dateItem.status}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )
-                })}
+                    )
+                  })}
 
                 {!isScrollAtEnd && (
                   <div className='absolute right-[50px] xl:right-[38px] top-0 w-[150px] h-full bg-gradient-to-r from-transparent to-white pointer-events-none transition-opacity duration-300' />

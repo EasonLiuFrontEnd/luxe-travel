@@ -24,7 +24,7 @@ export type TTourDate = {
   id: string
   productId: string
   date: string
-  status: '已成團' | '熱銷中' | '已滿團'
+  status: '已成團' | '熱銷中' | '已滿團' | '取消'
 }
 
 export type TTravelerReview = {
