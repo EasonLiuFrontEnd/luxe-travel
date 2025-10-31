@@ -17,6 +17,7 @@ type TGroupTourCardProps = {
   dates: TTourDate[]
   mainImageUrl: string
   onDetailsClick?: () => void
+  onDateClick?: (dateItem: TTourDate) => void
   className?: string
 }
 
@@ -29,6 +30,7 @@ const GroupTourCard = ({
   dates,
   mainImageUrl,
   onDetailsClick,
+  onDateClick,
   className,
 }: TGroupTourCardProps) => {
   const getDateCardStyle = (status: string) => {
@@ -257,6 +259,7 @@ const GroupTourCard = ({
                           ? styles.dateCardSoldOut
                           : styles.dateCardAvailable,
                       )}
+                      onClick={() => onDateClick?.(dateItem)}
                     >
                       <div
                         className={`${cardStyles.bgColor} ${cardStyles.hoverBg} border-b ${cardStyles.borderColor} flex items-center justify-center px-3 py-1 rounded-t w-full transition-all duration-300`}
